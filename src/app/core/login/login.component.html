@@ -1,0 +1,65 @@
+<section class="login-page section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6" *ngIf="!isActivateUrl">
+                 <h3>Login</h3> 
+                <div class="theme-card">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="theme-form">
+                        <div class="form-group">
+                            <label for="email">Email/Username</label>
+                            <!-- <input type="text" class="form-control" id="email" placeholder="Email" required=""> -->
+                            <input type='text' formControlName="username" class='input-field form-control' [ngClass]="{ 'is-invalid': submitted   }"  placeholder='Email Id' required/>
+                        
+                            <div *ngIf="submitted && f.username.errors " class="invalid-feedback">
+                                <div *ngIf="f.username.errors.required" >Email is required</div>
+                               <div *ngIf="f.username.errors.email " >Email must be a valid email address</div> 
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review">Password</label>
+                            <!-- <input type="password" class="form-control" id="review" placeholder="Enter your password" required=""> -->
+                            <input type='password' formControlName="password" class='input-field form-control' [ngClass]="{ 'is-invalid': submitted  }" placeholder='Enter Password'/>
+                            <div *ngIf="submitted && f.password.errors " class="invalid-feedback">
+                                <div *ngIf="f.password.errors.required " >Password is required</div>
+                                <div *ngIf="f.password.errors.minlength" >Password must be at least 4 characters</div>
+                        </div>
+                        <button type="submit" class="btn btn-solid">Login</button>
+                        <a href="/core/forgot/password">Forgot Password</a>
+
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="col-lg-6 offset-lg-3" *ngIf="isActivateUrl">
+                <h2>Reactivate Your Account</h2>
+                <form class="theme-form" [formGroup]="reactivateEmailForm" (ngSubmit)="reactivateEmail()" >
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && fv.email.errors }"placeholder="Enter email" data-rule="minlen:3"required="">
+                            <div *ngIf="submitted && fv.email.errors" class="invalid-feedback">
+                                <div *ngIf="fv.email.errors">Email is incorrect</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <button [disabled]="loading" type="submit" class="btn btn-solid">Submit</button>
+
+                    </div>
+                </form>
+    
+    
+            </div>
+            
+            <div class="col-lg-6 right-login">
+                <h3>New Customer</h3>
+                <div class="theme-card authentication-right">
+                    <h6 class="title-font">Create A Account</h6>
+                    <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register.</p>
+                    <button class="btn btn-solid"><a href="/core/signup">Create an Account</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->
