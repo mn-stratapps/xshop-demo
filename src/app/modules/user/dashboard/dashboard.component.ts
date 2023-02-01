@@ -23,6 +23,10 @@ export class DashboardComponent implements OnInit {
   emailActivationToken: any;
   showModalBox: boolean = false;
   otp: any;
+  passwordtext = true;
+  current_password:any;
+  new_password:any;
+  confirm_password:any;
   constructor(public httpService:AuthenticationService, public userService:UserService,private router: Router) { }
 
   ngOnInit(): void {
@@ -44,6 +48,9 @@ export class DashboardComponent implements OnInit {
   emailEdit(){
     this.emailtext = !this.emailtext
   }
+  passwordEdit(){
+    this.passwordtext = !this.passwordtext
+  }
   // modalButton1(){
 
   // }
@@ -56,7 +63,6 @@ namesUpdate(){
 this.httpService.namesUpdate(object)
 .subscribe({
   next:(data) =>{
-    data
      console.log(data);
      if(data.message='updates successfully'){
       {
@@ -88,7 +94,6 @@ this.httpService.namesUpdate(object)
 this.httpService.usernameUpdate(object)
 .subscribe({
   next:(data) =>{
-    data
      console.log(data);
      if(data.message='updates successfully'){
       {
@@ -120,7 +125,6 @@ this.httpService.usernameUpdate(object)
 this.httpService.mobilenumberUpdate(object)
 .subscribe({
   next:(data) =>{
-    data
      console.log(data);
      if(data.message === 'Mobile Number Updated Successfully '){
       {
@@ -150,37 +154,7 @@ this.httpService.mobilenumberUpdate(object)
 
 })
   }
-  saveEmail(){
-    const object = {
-      'otp': this.otp,
-};
-
-this.httpService.validateemailOtp(object)
-.subscribe({
-  next:(data) =>{
-    data
-     console.log(data);
-     this.emailActivationToken = data.emailActivationToken;
-        this.httpService.emailActivationToken = data.emailActivationToken;
-  },
-  error:(error)=>{
-    this.error = error;
-    //console.error(error.error)
-    console.log(error)
-    if (error.message='Incorrect OTP, Please try again'){
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Incorrect OTP, Please try again',
-        //footer: '<a href="">Why do I have this issue?</a>'
-      })
-    }
-}
-
-})
-  }
-
-emailUpdate(){
+  emailUpdate(){
     const object = {
       'email': this.userData.email,
 };
@@ -188,7 +162,6 @@ emailUpdate(){
 this.httpService.emailUpdate(object)
 .subscribe({
   next:(data) =>{
-    data
      console.log(data);
      this.emailActivationToken = data.emailActivationToken;
         this.httpService.emailActivationToken = data.emailActivationToken;
@@ -209,6 +182,74 @@ this.httpService.emailUpdate(object)
 
 })
   }
+  saveEmail(){
+    const object = {
+      'otp': this.otp,
+};
+
+this.httpService.validateemailOtp(object)
+.subscribe({
+  next:(data) =>{
+     console.log(data);
+     this.emailActivationToken = data.emailActivationToken;
+        this.httpService.emailActivationToken = data.emailActivationToken;
+  },
+  error:(error)=>{
+    this.error = error;
+    //console.error(error.error)
+    console.log(error)
+    if (error.message='Incorrect OTP, Please try again'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Incorrect OTP, Please try again',
+        //footer: '<a href="">Why do I have this issue?</a>'
+      })
+    }
+}
+
+})
+  }
+  passwordUpdate(){
+    const object = {
+      'current_password': this.current_password,
+      'new_password':this.new_password,
+      'confirm_password':this.confirm_password
+};
+
+this.httpService.passwordUpdate(object)
+.subscribe({
+  next:(data) =>{
+     console.log(data);
+     if(data.message ==='Successfully Changed Your Password'){
+      Swal.fire({
+        icon: 'success',
+        title: 'Congratulations!',
+        text: 'Updated Succcessfully',
+        width: '400px',
+      })
+      this.passwordtext = true;
+      this.httpService.logout();
+      this.router.navigate(['core/login'])
+    }
+  },
+  error:(error)=>{
+    this.error = error;
+    //console.error(error.error)
+    console.log(error)
+    // if (error.message='Email already exists, try another'){
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Entered Email already exists, try another',
+    //     //footer: '<a href="">Why do I have this issue?</a>'
+    //   })
+    // }
+}
+
+})
+  }
+
 
   getUserDetails() {
     const currentUser = localStorage.getItem( 'currentUser' );
@@ -221,7 +262,7 @@ this.httpService.emailUpdate(object)
       },
       error:(error)=>{
         this.error = error;
-        //console.error(error.error)
+        
         console.log(error)       
     }
     })

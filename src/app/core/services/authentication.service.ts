@@ -17,16 +17,36 @@ export class AuthenticationService {
   accessToken: any;
   refreshToken: any;
   emailActivationToken: string;
+  isUserLogin: boolean = false;
   constructor(private router: Router,private http: HttpClient)
     {
       this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUser = null;
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser !== 'undefined') {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(currentUser));
+      this.currentUser = this.currentUserSubject.asObservable();
+  }
     }
 
 
   //   public get currentUserValue(): User {
   //     return this.currentUserSubject.value;
   // }
+  isUserLoggedin(){
+    const currentUser = localStorage.getItem( 'currentUser' );
+
+    // let currentUser  = localStorage.getItem('currentUser');
+    this.isUserLogin = JSON.parse(currentUser).isLoggedin;
+    if(currentUser=="null"){
+      this.isUserLogin=false;
+      return;
+    }else{
+      this.isUserLogin=true;
+      return;
+    }
+  }
 
   login(username: string, password: string) {
       this.headers = new HttpHeaders().set('content-type', 'form-data')
@@ -92,6 +112,12 @@ validateemailOtp(otp:any){
     this.accessToken = JSON.parse( currentUser )['Token'];
   return this.http.put<any>(`${environment.apiUrl}/useremailupdate/`+this.accessToken+'/'+this.emailActivationToken,otp);
 }
+passwordUpdate(user:any){
+  const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    return this.http.put<any>(`${environment.apiUrl}/update/password/`+this.accessToken,user);
+
+}
 getUserDetails(accessToken:any){
   //this.accessToken;
   return this.http.get<any>(`${environment.apiUrl}/role/details/`+accessToken);
@@ -106,6 +132,5 @@ registerVendor(accessToken:any,data:any){
   return this.http.post<any>(`${environment.apiUrl}/vendororgregister/`+accessToken,data)
 
 }
-
 
 }

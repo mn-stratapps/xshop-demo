@@ -1,5 +1,5 @@
- <!-- breadcrumb start -->
- <div class="breadcrumb-section">
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
@@ -61,6 +61,7 @@
                 <div class="faq-content tab-content" id="top-tabContent">
                     <div class="tab-pane fade show active" id="info">
                         <div class="counter-section">
+                         <div class="dashboard">
                             <div class="welcome-msg">
                                 <h4>Hello, MARK JECNO !</h4>
                                 <p>From your My Account Dashboard you have the ability to view a snapshot of your
@@ -100,7 +101,7 @@
                             </div>
                             <div class="box-account box-info">
                                 <div class="box-head">
-                                    <h4>Account Information</h4>
+                                    <h2>Account Information</h2>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -108,9 +109,9 @@
                                             <div class="box-title">
                                                 <h3>Contact Information</h3><a href="#">Edit</a>
                                             </div>
-                                            <div class="box-content">
+                                            <div class="box-content mr-3">
                                                 <h6>First Name: {{userData.first_name}}</h6>
-                                                <h6>last Nme: {{userData.last_name}}</h6>
+                                                <h6>last Name: {{userData.last_name}}</h6>
                                                 <h6>Email: {{userData.email}}</h6>
                                                 <h6>Usernmae: {{userData.username}}</h6>
                                                 <h6>email: {{userData.email}}</h6>
@@ -131,7 +132,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="box mt-3">
+                                <div class="box mt-2">
                                     <div class="box-title">
                                         <h3>Address Book</h3><a href="#">Manage Addresses</a>
                                     </div>
@@ -150,6 +151,7 @@
                                 </div>
                             </div>
                         </div>
+                     </div>
                     </div>
                     <div class="tab-pane fade" id="address">
                         <div class="row">
@@ -666,8 +668,28 @@
                                                 <h4>Personal Information</h4>
                                                 <a class="edit-link" (click)="displayTextbox()" >edit</a>
                                             </div>
-                                            <div class="dashboard-detail">
-                                                <ul>                                                    
+                                            <div class="dashboard-detail mt-4">
+                                                <form class="needs-validation">   
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group row align-items-center mb-4">
+                                                                <label class="col-xl-2 col-md-4 form-label">
+                                                                   First Name</label>
+                                                                <div class="col-md-10">
+                                                                <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.first_name" [value]="userData.first_name" [disabled]='inputtext' > 
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-center mb-4">
+                                                                 <label class="col-xl-2 col-md-4 form-label">Last Name</label>
+                                                                <div class="col-md-10">
+                                                                    <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >   
+                                                                </div>
+                                                            </div>
+                                                          
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <!-- <ul>                                                    
                                                 
                                                     <li>
                                                         <div class="details">
@@ -688,10 +710,10 @@
                                                                 <input autocomplete="off" type="text" class="email-disable" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >                                                                                                                          </div>
                                                         </div>
                                                     </li>
-                                                    </ul>
-                                                    <div *ngIf="!inputtext">
-                                                        <button (click)="namesUpdate()">save</button>
-                                                        <button (click)="displayTextbox()">cancel</button>
+                                                    </ul> -->
+                                                    <div *ngIf="!inputtext" class="product-buttons mb-4">
+                                                        <button (click)="namesUpdate()" class="btn btn-danger btns">save</button>
+                                                        <button (click)="displayTextbox()" class="btn btn-light btns">cancel</button>
                                                     </div>
                                                 </div>                                                
                                             </div>
@@ -702,8 +724,21 @@
                                                     <h4>USer Name</h4>
                                                     <a class="edit-link" (click)="editUsernameEdit()" >edit</a>
                                                 </div>
-                                                <div class="dashboard-detail">
-                                                    <ul>                                                    
+                                                <div class="dashboard-detail mt-4">
+                                                    <form class="needs-validation">   
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label class="col-xl-2 col-md-4 form-label">
+                                                                       User Name</label>
+                                                                    <div class="col-md-10">
+                                                                        <input autocomplete="off" type="text" class="email-disable form-control" name="username"[(ngModel)]="userData.username" [value]="userData.username" [disabled]='usernametext' > 
+                                                                    </div>
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </form>
+                                                    <!-- <ul>                                                    
                                                     
                                                         <li>
                                                             <div class="details">
@@ -715,10 +750,10 @@
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                        </ul>
-                                                        <div *ngIf="!usernametext">
-                                                            <button (click)="usernameUpdate()">save</button>
-                                                            <button (click)="editUsernameEdit()">cancel</button>
+                                                        </ul> -->
+                                                        <div *ngIf="!usernametext" class="product-buttons mb-4">
+                                                            <button (click)="usernameUpdate()"  class="btn btn-danger btns">save</button>
+                                                            <button (click)="editUsernameEdit()" class="btn btn-light btns">cancel</button>
                                                         </div>
                                                     </div>                                                
                                                 </div>
@@ -729,8 +764,21 @@
                                                         <h4>Mobile Number</h4>
                                                         <a class="edit-link" (click)="mobileEdit()" >edit</a>
                                                     </div>
-                                                    <div class="dashboard-detail">
-                                                        <ul>                                                    
+                                                    <div class="dashboard-detail mt-4">
+                                                        <form class="needs-validation">   
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group row align-items-center mb-4">
+                                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                                           Mobile Number</label>
+                                                                        <div class="col-md-10">
+                                                                            <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
+                                                                        </div>
+                                                                    </div>
+                                                                 </div>
+                                                            </div>
+                                                        </form>
+                                                        <!-- <ul>                                                    
                                                         
                                                             <li>
                                                                 <div class="details">
@@ -742,22 +790,36 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                            </ul>
-                                                            <div *ngIf="!mobiletext">
-                                                                <button (click)="mobilenumberUpdate()">save</button>
-                                                                <button (click)="mobileEdit()">cancel</button>
+                                                            </ul> -->
+                                                            <div *ngIf="!mobiletext" class="product-buttons mb-4">
+                                                                <button (click)="mobilenumberUpdate()" class="btn btn-danger btns">save</button>
+                                                                <button (click)="mobileEdit()"class="btn btn-light btns">cancel</button>
                                                             </div>
                                                         </div>                                                
                                                     </div>
-                                            <div class="dashboard-title mt-lg-5 mt-3">
+                                            <div class="dashboard-title">
                                                 <h4>login details</h4>
+                                                <a class="edit-link" (click)="emailEdit()" >edit</a>
                                                 
                                             </div>
                                             <div class="dashboard-detail">
                                                 <div>
                                                     
-                                                    <div class="dashboard-detail">
-                                                        <ul>                                                    
+                                                    <div class="dashboard-detail mt-4">
+                                                        <form class="needs-validation">   
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group row align-items-center mb-4">
+                                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                                            Email Address</label>
+                                                                        <div class="col-md-10">
+                                                                            <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.email" [value]="userData.email" [disabled]='emailtext' >                
+                                                                        </div>
+                                                                    </div>
+                                                                 </div>
+                                                            </div>
+                                                        </form>
+                                                        <!-- <ul>                                                    
                                                         
                                                             <li>
                                                                 <div class="details">
@@ -770,17 +832,15 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                            </ul>
-                                                            <div *ngIf="!emailtext">
-                                                                <button (click)="emailUpdate()"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">save</button>
-                                                                <button (click)="emailEdit()">cancel</button>
+                                                            </ul> -->
+                                                            <div *ngIf="!emailtext" class="product-buttons mb-4">
+                                                                <button (click)="emailUpdate()"type="button" class="btn btn-danger btns" data-bs-toggle="modal" data-bs-target="#exampleModal">save</button>
+                                                                <button (click)="emailEdit()" class="btn btn-light btns">cancel</button>
                                                             </div>
                                                         </div>                                                
                                                     </div>
                                             </div>
-                                            <!-- <button type="button"class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Register otp
-                                              </button> -->
+                                            
                                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                   <div class="modal-content">
@@ -817,31 +877,55 @@
                                                 </div>
                                               </div>
 <!-- password update start-->
-                                              <div>
-                                                <div class="dashboard-title">
-                                                    
-                                                    <h4>Password</h4>
-                                                    <!-- <a class="edit-link" (click)="passwordEdit()" >edit</a> -->
+                                <div>
+                                    <div class="dashboard-title">
+                                        
+                                        <h4>Password</h4>
+                                        <a class="edit-link" (click)="passwordEdit()" >edit</a>
+                                    </div>
+                                    <div class="dashboard-detail" *ngIf="!passwordtext">
+                                        <ul>                                                    
+                                        
+                                            <li>
+                                                <div class="details">
+                                                    <div class="left">
+                                                        <h6>current password</h6>
+                                                    </div>
+                                                    <div class="right" >
+                                                        <input autocomplete="off" type="password" class="email-disable" name="current_password"[(ngModel)]="current_password" [value]="current_password">                                                               
+
+                                                    </div>
                                                 </div>
-                                                <div class="dashboard-detail">
-                                                    <ul>                                                    
-                                                    
-                                                        <li>
-                                                            <div class="details">
-                                                                <div class="left">
-                                                                    <h6>Password</h6>
-                                                                </div>
-                                                                <div class="right" >
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        </ul>
-                                                        <div *ngIf="!mobiletext">
-                                                            <button (click)="mobilenumberUpdate()">save</button>
-                                                            <button (click)="mobileEdit()">cancel</button>
-                                                        </div>
-                                                    </div>                                                
+                                            </li>
+                                            <li>
+                                                <div class="details">
+                                                    <div class="left">
+                                                        <h6>New password</h6>
+                                                    </div>
+                                                    <div class="right" >
+                                                        <input autocomplete="off" type="password" class="email-disable" name="new_password"[(ngModel)]="new_password" [value]="new_password">                                                               
+
+                                                    </div>
                                                 </div>
+                                            </li>
+                                            <li>
+                                                <div class="details">
+                                                    <div class="left">
+                                                        <h6>current password</h6>
+                                                    </div>
+                                                    <div class="right" >
+                                                        <input autocomplete="off" type="password" class="email-disable" name="confirm_password"[(ngModel)]="confirm_password" [value]="confirm_password">                                                               
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            </ul>
+                                            <div>
+                                                <button (click)="passwordUpdate()">save</button>
+                                                <button (click)="passwordEdit()">cancel</button>
+                                            </div>
+                                        </div>                                                
+                                    </div>
  <!-- password update end-->
 
                                         </div>
