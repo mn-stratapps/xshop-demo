@@ -721,7 +721,7 @@
                                             <div>
                                                 <div class="dashboard-title">
                                                     
-                                                    <h4>USer Name</h4>
+                                                    <h4>User Name</h4>
                                                     <a class="edit-link" (click)="editUsernameEdit()" >edit</a>
                                                 </div>
                                                 <div class="dashboard-detail mt-4">
@@ -883,8 +883,47 @@
                                         <h4>Password</h4>
                                         <a class="edit-link" (click)="passwordEdit()" >edit</a>
                                     </div>
-                                    <div class="dashboard-detail" *ngIf="!passwordtext">
-                                        <ul>                                                    
+                                    <div class="dashboard-detail mt-4" *ngIf="!passwordtext">
+                                        <form class="needs-validation">   
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group row align-items-center mb-4">
+                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                          Current Password</label>
+                                                        <div class="col-md-10">
+                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="current_password" [value]="current_password">
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                        </form>
+                                        <form class="needs-validation">   
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group row align-items-center mb-4">
+                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                          New Password</label>
+                                                        <div class="col-md-10">
+                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="current_password" [value]="current_password">                                                      
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                        </form>
+                                        <form class="needs-validation">   
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group row align-items-center mb-4">
+                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                          Confirm Password</label>
+                                                        <div class="col-md-10">
+                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="confirm_password"[(ngModel)]="confirm_password" [value]="confirm_password">  
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                        </form>
+                                        <!-- <ul>                                                    
                                         
                                             <li>
                                                 <div class="details">
@@ -919,10 +958,10 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            </ul>
+                                            </ul> -->
                                             <div>
-                                                <button (click)="passwordUpdate()">save</button>
-                                                <button (click)="passwordEdit()">cancel</button>
+                                                <button (click)="passwordUpdate()" class="btn btn-danger btns">save</button>
+                                                <button (click)="passwordEdit()" class="btn btn-light btns">cancel</button>
                                             </div>
                                         </div>                                                
                                     </div>
