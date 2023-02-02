@@ -34,6 +34,11 @@ export class AuthenticationService {
   //   public get currentUserValue(): User {
   //     return this.currentUserSubject.value;
   // }
+  // blobToFile(theBlob){
+  //    theBlob.lastModifiedDate = new Date();
+  //   theBlob.name = 'file' + '.png';
+  //   return theBlob;
+  //  }
   isUserLoggedin(){
     const currentUser = localStorage.getItem( 'currentUser' );
 
@@ -133,6 +138,7 @@ registerVendor(accessToken:any,data:any){
 
 }
 addProduct(accessToken:any,data:any){
+  // this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
   return this.http.post<any>(`${environment.apiUrl}/adminproducts/`+accessToken,data)
 
 }

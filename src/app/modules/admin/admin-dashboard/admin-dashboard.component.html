@@ -1401,46 +1401,85 @@
                                         <h5 class="f-w-600">General</h5>
                                     </div>
                                     <div class="card-body">
-                                        <form>
-                                            <div class="mb-2 pb-2">
-                                              <label class="form-label"><span>*</span>Product Name</label>
-                                              <input class="form-control" type="text" placeholder="">
-                                            </div>
-                                            <div class="mb-2 pb-2">
-                                                <label class="form-label"><span>*</span>Description</label>
-                                                <input class="form-control" type="text" placeholder="">
-                                              </div>
-                                              <div class="mb-2 pb-2">
-                                                <label class="form-label"><span>*</span>Categories</label>
-                                                <select class="form-select me-2" id="unp-category">
+                                        <form class="theme-form" [formGroup]="addProductForm" (ngSubmit)="addProduct()" enctype="multipart/form-data">
+                                            <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
+                                                <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
+                                                <div class="py-2">
+                                                  <select  class="form-select me-2 form-control" id="category" name="category" formControlName="category" [ngClass]="{ 'is-invalid': submitted && f.category.errors }" required="">
                                                     <option>Select category</option>
-                                                    <option>Clothing</option>
-                                                    <option>Electronics</option>
-                                                    <option>Furniture</option>
-                                                    <option>Gym</option>
+                                                    <option>Mobiles</option>
+                                                    <option>Laptops</option>
+                                                    <!-- <option>Furniture</option>
+                                                    <option>Gym</option> -->
                                                   </select>
-                                              </div>
-                                              <div class="mb-2 py-2">
-                                                <label class="form-label">Quantity</label>
-                                                <input class="form-control" type="number" placeholder="">
-                                              </div>
-                                              <div class="mb-2 pb-2">
-                                                <label class="form-label"><span>*</span>Product Price</label>
-                                                <input class="form-control" type="text" placeholder="">
-                                              </div>
-                                              <div class="mb-2 pb-2">
-                                                <label class="form-label"><span>*</span>Discount Price</label>
-                                                <input class="form-control" type="text" placeholder="">
+                                                  <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.category.errors">Please select category.</div>
+                                                </div>
+                                                </div>
                                               </div>
                                               
-                                              <div class="file-drop-area mb-3">
-                                                <div class="file-drop-icon fa fa-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
-                                                <input class="file-drop-input" type="file">
-                                                <button class="file-drop-btn btn btn-solid btn-sm mb-2" type="button">Or select file
-                                                    <input class="file-drop-input form-control" type="file" id="myFile" (change)="onSelectFile($event)" >
-                                                </button>
-                                                <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
-                                              </div>
+                                                <div class="mb-3 pb-2 form-group">
+                                                  <label class="form-label" for="product_name">Product name</label>
+                                                  <input class="form-control" type="text"id="product_name" name="product_name" formControlName="product_name" [ngClass]="{ 'is-invalid': submitted && f.product_name.errors }" required="">
+                                                  <div class="form-text">Maximum 100 characters.</div>
+                                                  <div *ngIf="submitted && f.product_name.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.product_name.errors.required">Product Name is required</div>
+                                                </div>
+                                                </div>
+                                                
+                                                <div class="mb-3 py-2">
+                                                  <label class="form-label" for="description">Product description</label>
+                                                  <textarea class="form-control" rows="6" id="description" name="description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" required=""></textarea>
+                                                  <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.description.errors.required">Product Description is required</div>
+                                                </div>
+                                                </div>
+                                                <div class="mb-3 py-2">
+                                                  <label class="form-label" for="quantity">Product quantity</label>
+                                                  <textarea class="form-control" rows="4" id="quantity" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': submitted && f.quantity.errors }" required=""></textarea>
+                                                  <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and
+                                                    separated by commas.</div>
+                                                    <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.quantity.errors">Product Quantity required</div>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-sm-6 mb-3">
+                                                    <label class="form-label" for="unit_price">Unit price</label>
+                                                    <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                      <input class="form-control" type="text" id="unit_price" name="unit_price" formControlName="unit_price" [ngClass]="{'is-invalid': submitted && f.unit_price.errors }" required="">
+                                                      <div *ngIf="submitted && f.unit_price.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.unit_price.errors">Please enter Price.</div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="form-text">Average marketplace price for this category is $15.</div>
+                                                  </div>
+                                                  <div class="col-sm-6 mb-3">
+                                                    <label class="form-label" for="dis_price">Discount price</label>
+                                                    <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                      <input class="form-control" type="text" id="dis_price" name="dis_price" formControlName="dis_price" [ngClass]="{'is-invalid': submitted && f.dis_price.errors }" required="">
+                                                      <div *ngIf="submitted && f.dis_price.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.dis_price.errors">Please enter discount price</div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="form-text">Typically 10x of the Standard license price.</div> 
+                                                  </div>
+                                                  <div >
+                                                    <input type='file' id="image1" name="image1" #fileInput  (change)="onFileUpdate($event, '1')" />
+                                                    <img [src]='image1' (click) = 'fileInput.click()' width="100" height="100"/>
+                                                  </div>
+                                                  <div >
+                                                    <input type='file' id="image2" name="image2" #fileInput1  (change)="onFileUpdate($event, '2')" />
+                                                    <img [src]='image2' (click) = 'fileInput.click()' width="100" height="100"/>
+                                                  </div>
+                                                  <div >
+                                                    <input type='file' id="image3" name="image3" #fileInput2  (change)="onFileUpdate($event, '3')" />
+                                                    <img [src]='image3' (click) = 'fileInput.click()' width="100" height="100"/>
+                                                  </div>
+                                                </div>
+                                                
+                                                <button class="btn btn-solid d-block w-20" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload
+                                                  Product</button>
                                             </form>
                                     </div>
                                 </div>
