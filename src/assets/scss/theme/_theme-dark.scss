@@ -1078,6 +1078,7 @@ body {
         th,
         td {
             border-color: $dark-border;
+            color:#cfd4da;
         }
     }
     .compare-page {
@@ -1444,6 +1445,7 @@ body {
     .login-page {
         .theme-card {
             border-color: $dark-border;
+            background-color:$dark-top;
             .theme-form {
                 input {
                     border-color: $dark-border;
@@ -1789,6 +1791,7 @@ body {
     .register-page {
         .theme-card {
             border-color: $dark-border;
+            background-color: $dark-top;
             .theme-form {
                 input {
                     border-color: $dark-border;
@@ -2357,5 +2360,36 @@ body {
                 }
             }
         }
+    }
+    .dashboard-section .dashboard-sidebar {
+        background-color: #232323;
+    }
+    .faq-tab .nav-tabs .nav-item .nav-link.active {
+        background-color: #232323;
+    }
+    .faq-tab .nav-tabs .nav-item .nav-link {
+        background-color: #232323;
+        color: #cfd4da;
+    }
+    .dashboard-section .counter-section .counter-box {
+        background-color: #232323;
+    }
+    .dashboard-section .welcome-msg h4{
+        color:#cfd4da;
+    }
+    .dashboard-section .faq-content .card {
+        background-color: #232323;
+    }
+    .dashboard-section .dashboard-table .table th, .dark .dashboard-section .dashboard-table .table td {
+        color: #cfd4da;
+    }
+    .dashboard-section .card-bg-white {
+        background-color: #232323;
+    }
+    .dashboard-section .card-body{
+        background-color: #232323; 
+    }
+    .dashboard-section .top-sec h3{
+        color: #cfd4da;
     }
 }
