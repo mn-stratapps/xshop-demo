@@ -132,5 +132,8 @@ registerVendor(accessToken:any,data:any){
   return this.http.post<any>(`${environment.apiUrl}/vendororgregister/`+accessToken,data)
 
 }
+addProduct(accessToken:any,data:any){
+  return this.http.post<any>(`${environment.apiUrl}/adminproducts/`+accessToken,data)
 
+}
 }

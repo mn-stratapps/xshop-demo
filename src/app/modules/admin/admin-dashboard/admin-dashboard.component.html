@@ -1254,9 +1254,10 @@
                 </div>
                 <!-- Container-fluid Ends-->
                     </div>
-                    <div class="tab-pane fade card_bg" id="products">
+                    <div  class="tab-pane fade card_bg" id="products">
                           <!--product start-->
-                          <div class="row">
+                          <div *ngIf="!isAddProductUrl">
+                          <div class="row" >
                             <div class="col-lg-6">
                                 <div class="page-header-left">
                                     <h3>Products List
@@ -1274,7 +1275,7 @@
                                                     <input class="form-control-plaintext" type="search" placeholder="Search..">
                                                 </div>
                                             </form>
-                                            <a href="add-digital-product.html" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
+                                            <a (click)="addNewProduct()" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
                                                 Product</a>
                                         </div>
                                         <div class="card-body">
@@ -1381,7 +1382,119 @@
                             </div>
                             <!-- product end -->
                         <!-- Container-fluid Ends-->
+                        </div>
                     </div>
+                    <!-- add product start -->
+                    <div class="container-fluid" *ngIf="isAddProductUrl" >
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>Add Product</h3>
+                                    <button (click)="addNewProduct()">view products</button>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row product-adding">
+                            <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="f-w-600">General</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="mb-2 pb-2">
+                                              <label class="form-label"><span>*</span>Product Name</label>
+                                              <input class="form-control" type="text" placeholder="">
+                                            </div>
+                                            <div class="mb-2 pb-2">
+                                                <label class="form-label"><span>*</span>Description</label>
+                                                <input class="form-control" type="text" placeholder="">
+                                              </div>
+                                              <div class="mb-2 pb-2">
+                                                <label class="form-label"><span>*</span>Categories</label>
+                                                <select class="form-select me-2" id="unp-category">
+                                                    <option>Select category</option>
+                                                    <option>Clothing</option>
+                                                    <option>Electronics</option>
+                                                    <option>Furniture</option>
+                                                    <option>Gym</option>
+                                                  </select>
+                                              </div>
+                                              <div class="mb-2 py-2">
+                                                <label class="form-label">Quantity</label>
+                                                <input class="form-control" type="number" placeholder="">
+                                              </div>
+                                              <div class="mb-2 pb-2">
+                                                <label class="form-label"><span>*</span>Product Price</label>
+                                                <input class="form-control" type="text" placeholder="">
+                                              </div>
+                                              <div class="mb-2 pb-2">
+                                                <label class="form-label"><span>*</span>Discount Price</label>
+                                                <input class="form-control" type="text" placeholder="">
+                                              </div>
+                                              
+                                              <div class="file-drop-area mb-3">
+                                                <div class="file-drop-icon fa fa-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
+                                                <input class="file-drop-input" type="file">
+                                                <button class="file-drop-btn btn btn-solid btn-sm mb-2" type="button">Or select file
+                                                    <input class="file-drop-input form-control" type="file" id="myFile" (change)="onSelectFile($event)" >
+                                                </button>
+                                                <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
+                                              </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="f-w-600">Add Description</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="digital-add needs-validation">
+                                                <!-- <div class="form-group mb-0">
+                                                    <div class="description-sm">
+                                                        <textarea id="editor1" name="editor1" cols="10" rows="4"></textarea>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="f-w-600">Meta Data</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="mb-2 pb-2">
+                                                <label class="form-label">Meta Title</label>
+                                                <input class="form-control" type="text" placeholder="">
+                                                </div>
+                                                <div class="mb-2 pb-2">
+                                                    <label class="form-label">Meta Description</label>
+                                                    <textarea class="form-control" rows="4" cols="12"></textarea>
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <div class="product-buttons">
+                                                        <button type="button" class="btn btn-danger btns">Add</button>
+                                                        <button type="button" class="btn btn-light btns">Discard</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                   </div>
+                                 </div>
+                              </div>
+                            </div>
+                        </div>
+
+
+                    <!-- add product end -->
                     <div class="tab-pane fade card_bg" id="orders">
                                        <!-- order page start -->
                                        <div class="row">
