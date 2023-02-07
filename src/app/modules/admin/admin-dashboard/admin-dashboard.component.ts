@@ -93,6 +93,16 @@ addProduct(){
     {
       next:(data) => {
         console.log(data);
+        if(data.message=='Product Added successfully'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Congratulations!',
+            text: 'Product Added Successfully',
+            width: '400px',
+          })
+          this.viewAdminProducts();
+          this.isAddProductUrl=false;
+        }
       },
       error:(error)=>{
         this.errorMessage = error;
@@ -118,12 +128,12 @@ callimage(type:string){
   reader.onload = _event => {
     if(type=='1')  {
     this.image1 = reader.result as string;
-    console.log(this.image1)
+    // console.log(this.image1)
     }else if(type=='2'){
     this.image2 = reader.result as string;
     }else if(type=='3'){
-      this.image3 = reader.result as string;
-      }
+    this.image3 = reader.result as string;
+    }
   };
   console.log(obj);
 }
@@ -188,28 +198,40 @@ editProduct(){
   this.modalService.dismissAll();
 }
 deleteProductByAdmin(id:any){
-  this.httpService.deleteProductsByAdmin(this.accessToken,id)
-  .subscribe(
-    {
-      next:(data) => {
-        console.log(data);
-        if(data.message =='Product Removed Successfully'){
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'Deleted Product Successfully',
-            width: '400px',
-          })
-        }
-        this.viewAdminProducts();
-      },
-      error:(error)=>{
-        this.error = error;
-        
-        console.log(error) 
-    }
-  });
-  this.modalService.dismissAll();
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+   if(result.isConfirmed){
+    this.httpService.deleteProductsByAdmin(this.accessToken,id)
+    .subscribe(
+      {
+        next:(data) => {
+          console.log(data);
+          if(data.message =='Product Removed Successfully'){
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'Deleted Product Successfully',
+              width: '400px',
+            })
+          }
+          this.viewAdminProducts();
+        },
+        error:(error)=>{
+          this.error = error;
+          
+          console.log(error) 
+      }
+    });
+    this.modalService.dismissAll();
+   }
+  })
 }
 
 }
