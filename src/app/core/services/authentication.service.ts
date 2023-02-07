@@ -16,6 +16,7 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
   accessToken: any;
   refreshToken: any;
+  id:any;
   emailActivationToken: string;
   isUserLogin: boolean = false;
   constructor(private router: Router,private http: HttpClient)
@@ -137,9 +138,19 @@ registerVendor(accessToken:any,data:any){
   return this.http.post<any>(`${environment.apiUrl}/vendororgregister/`+accessToken,data)
 
 }
+//add products by admin
 addProduct(accessToken:any,data:any){
   // this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
   return this.http.post<any>(`${environment.apiUrl}/adminproducts/`+accessToken,data)
+}
 
+viewAdminProducts(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/adminproducts/`+accessToken)
+}
+editProductByAdmin(accessToken:any,id:any,data:any){
+  return this.http.put<any>(`${environment.apiUrl}/adminproductsupdate/`+accessToken+'/'+id,data)
+}
+deleteProductsByAdmin(accessToken:any,id:any){
+  return this.http.delete<any>(`${environment.apiUrl}/adminproductsupdate/`+accessToken+'/'+id)
 }
 }

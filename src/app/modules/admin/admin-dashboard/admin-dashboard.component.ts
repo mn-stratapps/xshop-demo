@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -16,34 +18,18 @@ image1: any;
 image2: any;
 image3: any;
 filename:any;
-// public products = [
-//   {
-//     image1:"",
-//     imgUrl: "",
-//       imgBase64Data: ""
 
-//   },
-//   {
-//     image2:File,
-//     imgUrl: "",
-//       imgBase64Data: ""
-
-//   },
-//   {
-//     image3:File,
-//     imgUrl: "",
-//       imgBase64Data: ""
-
-//   },]
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
   errorMessage: any;
   loading: boolean;
   file: any;
-
+  adminProducts:any;
+  error: any;
+  editProductForm:FormGroup
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
-  private router: Router,private httpService:AuthenticationService){
+  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal){
 
 // const currentUrl = this.router.url;
 // if(currentUrl.includes('admin/addproduct')){
@@ -54,7 +40,9 @@ constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
   }
 ngOnInit(){
   this.initializeAddProductForm();
-  this.addProductForm.get('image1').updateValueAndValidity()
+  this.viewAdminProducts();
+  this.initializeeditProductForm();
+  //this.addProductForm.get('image1').updateValueAndValidity()
 }
 
 initializeAddProductForm(){
@@ -69,6 +57,16 @@ initializeAddProductForm(){
     image2:[''],
     image3:[''],
   });
+}
+initializeeditProductForm(){
+  this.editProductForm=this.formBuilder.group({
+    id:[''],
+    category:[''],
+    product_name:[''],
+    description:[''],
+    unit_price:[''],
+    dis_price:['']
+  })
 }
 get f(){
   return this.addProductForm.controls;
@@ -120,6 +118,7 @@ callimage(type:string){
   reader.onload = _event => {
     if(type=='1')  {
     this.image1 = reader.result as string;
+    console.log(this.image1)
     }else if(type=='2'){
     this.image2 = reader.result as string;
     }else if(type=='3'){
@@ -129,10 +128,88 @@ callimage(type:string){
   console.log(obj);
 }
 onFileUpdate(event:any, type:string) {
+
   const files = event.target.files[0];
-  const reader = new FileReader();
+  //const reader = new FileReader();
   this.file = event.target.files[0];
 this.callimage(type);
+}
+
+viewAdminProducts(){
+  const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+  this.httpService.viewAdminProducts(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.adminProducts = data;
+       console.log(this.adminProducts);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  })
+}
+openModal(exampleModalLabel, products){
+  this.modalService.open(exampleModalLabel,{centered: true,});
+this.editProductForm.patchValue({
+  id:products.id,
+  category:products.category,
+  product_name:products.product_name,
+  description:products.description,
+  unit_price:products.unit_price,
+  dis_price:products.dis_price
+})
+}
+editProduct(){
+  
+   this.httpService.editProductByAdmin(this.accessToken,this.editProductForm.value.id,this.editProductForm.value)
+   .subscribe(
+    {
+      next:(data) => {
+        console.log(data);
+        if(data.message =='Product Details Updated successfully'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Congratulations!',
+            text: 'Updated Product Successfully',
+            width: '400px',
+          })
+        }
+        this.viewAdminProducts();
+      },
+      error:(error)=>{
+        this.error = error;
+        
+        console.log(error) 
+    }
+  });
+  this.modalService.dismissAll();
+}
+deleteProductByAdmin(id:any){
+  this.httpService.deleteProductsByAdmin(this.accessToken,id)
+  .subscribe(
+    {
+      next:(data) => {
+        console.log(data);
+        if(data.message =='Product Removed Successfully'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Deleted Product Successfully',
+            width: '400px',
+          })
+        }
+        this.viewAdminProducts();
+      },
+      error:(error)=>{
+        this.error = error;
+        
+        console.log(error) 
+    }
+  });
+  this.modalService.dismissAll();
 }
 
 }

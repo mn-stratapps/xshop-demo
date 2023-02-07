@@ -1255,7 +1255,7 @@
                 <!-- Container-fluid Ends-->
                     </div>
                     <div  class="tab-pane fade card_bg" id="products">
-                          <!--product start-->
+                          <!-- view product start-->
                           <div *ngIf="!isAddProductUrl">
                           <div class="row" >
                             <div class="col-lg-6">
@@ -1283,96 +1283,32 @@
                                                 <table class="table table-striped ">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">id</th>
-                                                            <th scope="col">product image</th>
-                                                            <th scope="col">product title</th>
-                                                            <th scope="col">entry type</th>
-                                                            <th scope="col">option</th>
-                                                            <th scope="col">stock</th>
+                                                            <th scope="col">ID</th>
+                                                            <th scope="col">Product Name</th>
+                                                            <th scope="col">Description</th>
+                                                            <th scope="col">Unit Price</th>
+                                                            <th scope="col">Available Quantity</th>
+                                                            <th scope="col">Discount Price</th>
+                                                            <th scope="col">Image</th>
+                                                            <th scope="col">Edit/Delete</th>
+
                             
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>31</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>Website</td>
-                                                            <td>Add</td>
-                                                            <td>5</td>
+                                                        <tr *ngFor="let products of adminProducts">
+                                                            <td>{{products.id}}</td>
+                                                            <td>{{products.product_name}}</td>
+                                                            <td>{{products.description}}</td>
+                                                            <td>{{products.unit_price}}</td>
+                                                            <td>{{products.available_qty}}</td>
+                                                            <td>{{products.dis_price}}</td>
+                                                            <td scope="row"><img src="{{products.image1}}"></td>
                                                             <td>
-                                                                <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-hidden="true"></i>
-                                                                <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
+                                                                <i class="fa fa-pencil-square-o me-1 text-primary" (click)="openModal(exampleModalLabel, products)"></i>
+                                                                <i class="fa fa-trash-o ms-1 text-theme"(click)="deleteProductByAdmin(products.id)" aria-hidden="true"></i></td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>172</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>3D Design</td>
-                                                            <td>Destroy</td>
-                                                            <td>11</td>
-                                                            <td>
-                                                                   <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"  aria-hidden="true"></i>
-                                                                    <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>210</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>Graphics Design</td>
-                                                            <td>Destroy</td>
-                                                            <td>154</td>
-                                                            <td>
-                                                                    <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"  aria-hidden="true"></i>
-                                                                    <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>65</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>Logo Design</td>
-                                                            <td>Destroy</td>
-                                                            <td>1</td>
-                                                            <td>
-                                                                   <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"  aria-hidden="true"></i>
-                                                                    <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>424</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>PHP</td>
-                                                            <td>Add</td>
-                                                            <td>24</td>
-                                                            <td>
-                                                                   <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"  aria-hidden="true"></i>
-                                                                    <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>210</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>HTML</td>
-                                                            <td>Destroy</td>
-                                                            <td>27</td>
-                                                            <td>
-                                                                <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-hidden="true"></i>
-                                                                <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4112</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>CSS</td>
-                                                            <td>Add</td>
-                                                            <td>154</td>
-                                                            <td>
-                                                                   <i class="fa fa-pencil-square-o me-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-hidden="true"></i>
-                                                                    <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4570</td>
-                                                            <td scope="row"><img src="../assets/images/web-dev.jpg"></td>
-                                                            <td>Wordpress</td>
-                                                            <td>Destroy</td>
-                                                            <td>6</td>
-                                                            <td>
-                                                                <i class="fa fa-pencil-square-o me-1 text-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal"  aria-hidden="true"></i>
-                                                                <a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                        </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1380,38 +1316,41 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- product end -->
-                            <!--modal popup start-->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!--  view product end -->
+                            <!--edit product modal popup start-->
+                            <ng-template class="modal fade" #exampleModalLabel let-modal tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
+                                    <form [formGroup]="editProductForm" >
+                                  
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel"> Edit Add Product</h5>
-                                      <a aria-label="Close" data-bs-dismiss="modal" class="close e-close close-btn"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></a>
+                                      <h5 class="modal-title" id="exampleModalLabel"> Edit Product</h5>
+                                      <button aria-label="Close" (click)="modal.dismiss()" class="close e-close close-btn"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></button>
                                     </div>
+                                    
                                     <div class="modal-body">
                                         <div  class="col-md-12 col-lg-12 pl-0 pt-0 pr-0 pb-1">
+
                                             <div  class="row">
                                                 <div  class="col-lg-4 col-md-4 col-sm-6 pr-0 justify-content-center">
-                                                    <form>
                                                          <label class="form-label">Categories</label>
-                                                            <select class="form-select me-2" id="unp-category">
-                                                                <option>-- Select category --</option>
+                                                            <select class="form-select me-2" id="category" name="category" formControlName="category">                    
                                                                 <option>Mobiles</option>
                                                                 <option>Laptops</option>
                                                               </select>
-                                                    </form>
+                                                    
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xl-8">
                                                     <label class="form-label">Product Name</label>
-                                                    <input class="form-control" type="number" placeholder="" required> 
+                                                    <input class="form-control" id="product_name" formControlName="product_name" > 
                                                </div>
                                             </div>
+                                            
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                                                     <div class="py-2">
                                                         <label class="form-label">Description</label>
-                                                        <textarea rows="3" id="description" name="description" formcontrolname="description" required="" class="form-control"></textarea>
+                                                        <textarea rows="3" id="description"  formControlName="description"  class="form-control"></textarea>
                                                       </div>
                                                 </div>
                                             </div>
@@ -1419,14 +1358,14 @@
                                                 <div class="col-sm-6">
                                                   <label class="form-label">Unit price</label>
                                                   <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                    <input class="form-control" type="text">
+                                                    <input class="form-control"  id="unit_price"  formControlName="unit_price"  type="text">
                                                   </div>
                                                   <div class="form-text">Average marketplace price for this category is $15.</div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                   <label class="form-label">Discount price</label>
                                                   <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                    <input class="form-control" type="text">
+                                                    <input class="form-control" id="dis_price" formControlName="dis_price"  type="text">
                                                   </div>
                                                   <div class="form-text">Typically 10x of the Standard license price.</div>
                                                 </div>
@@ -1434,14 +1373,15 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-bs-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary" (click)="editProduct()">Save changes</button>
                                     </div>
                                   </div>
+                                </form>
                                 </div>
-                              </div>
+                            </ng-template>
 
-                            <!-- modal popup end-->
+                            <!-- edit product modal popup end-->
                         <!-- Container-fluid Ends-->
                         </div>
                              <!-- add product start -->
