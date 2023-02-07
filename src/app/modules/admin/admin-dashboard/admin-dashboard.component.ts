@@ -162,7 +162,7 @@ viewAdminProducts(){
   })
 }
 openModal(exampleModalLabel, products){
-  this.modalService.open(exampleModalLabel,{centered: true,});
+  this.modalService.open(exampleModalLabel,);
 this.editProductForm.patchValue({
   id:products.id,
   category:products.category,
