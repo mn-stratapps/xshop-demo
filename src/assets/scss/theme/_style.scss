@@ -320,7 +320,7 @@
     }
     
     .form-control {
-        border-radius: 0;
+        border-radius: 5px;
     }
     
     .small-section {
@@ -620,6 +620,7 @@
         background-position: 0;
         -webkit-transition: background 300ms ease-in-out;
         transition: background 300ms ease-in-out;
+        border-radius: 5px;
         &:hover {
             background-position: 100%;
             color: $black !important;
@@ -6531,6 +6532,8 @@
                 margin-bottom: 15px;
                 height: inherit;
                 text-align: center;
+                border-radius: 5px;
+                border-radius: 5px;
             }
             .btn-solid {
                 margin: 0 auto;
@@ -6552,6 +6555,7 @@
             border: none;
             line-height: 1;
             background-color: #fafafa;
+            border-radius: 8px;
             .theme-form {
                 label {
                     text-transform: capitalize;
@@ -6564,8 +6568,9 @@
                     border-color: $round-border;
                     font-size: 12px;
                     padding: 17px 25px;
-                    margin-bottom: 30px;
+                    margin-bottom: 18px;
                     height: inherit;
+                    border-radius: 5px;
                 }
             }
         }
@@ -6600,6 +6605,7 @@
             border: none;
             line-height: 1;
             background-color: #fafafa;
+            border-radius: 8px;
             .theme-form {
                 label {
                     text-transform: capitalize;
@@ -6611,8 +6617,9 @@
                     border-color: $round-border;
                     font-size: 12px;
                     padding: 17px 25px;
-                    margin-bottom: 30px;
+                    margin-bottom: 13px;
                     height: inherit;
+                    border-radius: 5px;
                 }
             }
         }
@@ -6719,6 +6726,7 @@
                 padding: 17px 25px;
                 margin-bottom: 30px;
                 height: inherit;
+                border-radius: 5px;
             }
             textarea {
                 border-color: $round-border;
@@ -14471,11 +14479,6 @@
     .all-package tbody tr td:first-child {
         text-transform: uppercase;
         font-weight: bold;
-    }
-    #products{
-        background: #f8f8f9;
-        padding: 19px;
-        border-radius: 3px;
     }
     .page-header-left h3{
     padding-bottom: 20px;
