@@ -32,8 +32,8 @@
                             <img src="../assets/images/avtar.jpg" alt="" class="img-fluid">
                         </div>
                         <div class="profile-detail">
-                            <h5>Mark Jecno</h5>
-                            <h6>mark.jecno@mail.com</h6>
+                            <h5>{{userData.first_name}}</h5>
+                            <h6>{{userData.email}}</h6>
                         </div>
                     </div>
                     <div class="faq-tab">
@@ -42,7 +42,7 @@
                                     class="nav-link active">Account Info</a></li>
                                     
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#products"
-                                    class="nav-link">Products</a></li>
+                                (click)="viewAdminProducts()"    class="nav-link">Products</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#orders"
                                     class="nav-link">orders</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#wishlist"
@@ -76,7 +76,7 @@
                         <div class="counter-section">
                             <div class="dashboard">
                             <div class="welcome-msg">
-                                <h4>Hello, MARK JECNO !</h4>
+                                <h4>Hello, {{userData.first_name}} !</h4>
                                 <p>From your My Account Dashboard you have the ability to view a snapshot of your
                                     recent
                                     account activity and update your account information. Select a link below to
@@ -123,9 +123,9 @@
                                                 <h3>Contact Information</h3><a href="#">Edit</a>
                                             </div>
                                             <div class="box-content">
-                                                <h6>Mark Jecno</h6>
-                                                <h6>mark-jecno@gmail.com</h6>
-                                                <h6><a href="#">Change Password</a></h6>
+                                                <h6>{{userData.first_name}}</h6>
+                                                <h6>{{userData.email}}</h6>
+                                                <!-- <h6><a href="#">Change Password</a></h6> -->
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +192,7 @@
                                                         <tr>
                                                             <th scope="col">ID</th>
                                                             <th scope="col">Product Name</th>
-                                                            <th scope="col">Category</th>
+                                                            <!-- <th scope="col">Category</th> -->
                                                             <th scope="col">Description</th>
                                                             <th scope="col">Unit Price</th>
                                                             <th scope="col">Available Quantity</th>
@@ -207,12 +207,12 @@
                                                         <tr *ngFor="let products of adminProducts">
                                                             <td>{{products.id}}</td>
                                                             <td>{{products.product_name}}</td>
-                                                            <td>{{products.category}}</td>
+                                                            <!-- <td>{{products.category}}</td> -->
                                                             <td>{{products.description}}</td>
                                                             <td>{{products.unit_price}}</td>
                                                             <td>{{products.available_qty}}</td>
                                                             <td>{{products.dis_price}}</td>
-                                                            <td scope="row"><img src="{{products.image1}}"></td>
+                                                            <td scope="row"><img src="{{products.image1_url}}"></td>
                                                             <td>
                                                                 <i class="fa fa-pencil-square-o me-1 text-primary" (click)="openModal(exampleModalLabel, products)"></i>
                                                                 <i class="fa fa-trash-o ms-1 text-theme"(click)="deleteProductByAdmin(products.id)" aria-hidden="true"></i></td>

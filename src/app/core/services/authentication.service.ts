@@ -19,6 +19,8 @@ export class AuthenticationService {
   id:any;
   emailActivationToken: string;
   isUserLogin: boolean = false;
+  public Products
+
   constructor(private router: Router,private http: HttpClient)
     {
       this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -31,7 +33,11 @@ export class AuthenticationService {
   }
     }
 
-
+    getProducts(){
+      return this.http.get<any>(`${environment.apiUrl}/products/`)
+      
+    }
+    
   //   public get currentUserValue(): User {
   //     return this.currentUserSubject.value;
   // }
@@ -128,6 +134,8 @@ getUserDetails(accessToken:any){
   //this.accessToken;
   return this.http.get<any>(`${environment.apiUrl}/role/details/`+accessToken);
 }
+
+
 editUser(accessToken:any,data:any){
   
   return this.http.put<any>(`${environment.apiUrl}/user_profile/`+accessToken,data)

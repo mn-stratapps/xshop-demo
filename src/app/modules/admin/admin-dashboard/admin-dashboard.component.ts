@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/core/models/user';
 declare var $: any;
 
 @Component({
@@ -18,6 +19,7 @@ image1: any;
 image2: any;
 image3: any;
 filename:any;
+userData: User = new User();
 
   addProductForm:FormGroup;
   submitted: boolean;
@@ -39,12 +41,29 @@ constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
 // }
   }
 ngOnInit(){
+  this.getUserDetails();
   this.initializeAddProductForm();
-  this.viewAdminProducts();
+ // this.viewAdminProducts();
   this.initializeeditProductForm();
   //this.addProductForm.get('image1').updateValueAndValidity()
+  this.products();
 }
-
+getUserDetails() {
+  const currentUser = localStorage.getItem( 'currentUser' );
+  this.accessToken = JSON.parse( currentUser )['Token'];
+  this.httpService.getUserDetails(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.userData = data;
+       console.log(this.userData);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  })
+}
 initializeAddProductForm(){
   this.addProductForm=this.formBuilder.group({
     category:['',Validators.required],
@@ -93,7 +112,7 @@ addProduct(){
     {
       next:(data) => {
         console.log(data);
-        if(data.message=='Product Added successfully'){
+        if(data.message =='Product Added successfully'){
           Swal.fire({
             icon: 'success',
             title: 'Congratulations!',
@@ -107,6 +126,19 @@ addProduct(){
       error:(error)=>{
         this.errorMessage = error;
         this.loading = false;
+    }
+  });
+}
+
+products(){
+  this.httpService.getProducts().subscribe(
+    {
+      next:(data) => {
+        console.log(data);
+     
+      },
+      error:(error)=>{
+        console.log(error)
     }
   });
 }
@@ -157,7 +189,16 @@ viewAdminProducts(){
     error:(error)=>{
       this.error = error;
       
-      console.log(error)       
+      console.log(error)  
+      if(error.error.message === 'Details Not Found') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Data!',
+          text: 'No Products found Please Add products',
+          width: '400px',
+        })
+        this.isAddProductUrl = true;
+      }    
   }
   })
 }

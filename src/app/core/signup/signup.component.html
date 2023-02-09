@@ -8,7 +8,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="email">User Name</label>
-                                <input type="text" class="form-control" id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required="">
+                                <input type="text" class="form-control" id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="User Name" required="">
                                 <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                                     <div *ngIf="f.username.errors">Please enter your username.</div>
                                 </div>
@@ -31,7 +31,7 @@
                             <label for="moile">Mobile</label>
                             <input type="text" class="form-control" id="mobile_number" formControlName="mobile_number" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }" placeholder="Mobile No" required="">
                             <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
-                                <div *ngIf="f.mobile_number.errors">Please enter your Mobile No.</div>
+                                <div *ngIf="f.mobile_number.errors">Please enter valid Mobile No.</div>
                             </div>
                         </div>
                             <div class="col-md-6">

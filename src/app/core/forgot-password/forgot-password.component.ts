@@ -52,7 +52,7 @@ export class ForgotPasswordComponent implements OnInit {
 
    initializeForgotPasswordForm(){
     this.forgotPasswordForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(this.EMAIL_ID_PATTERN)]],
+      email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
   });
   }
 
@@ -84,18 +84,24 @@ this.httpservice.resetPassword(this.forgotPasswordForm.value)
            });
           this.router.navigate(['/login']);
         }
-        else{
-          this.message = data.message;
-          if(data.message.includes("Email ID Not Found")){
-            this.showSignInButton = true;
-          }
-        }
-        this.loading=false;
+        // else{
+        //   this.message = data.message;
+        //   if(data.message.includes("Email ID Not Found")){
+        //     this.showSignInButton = true;
+        //   }
+        // }
+        // this.loading=false;
     },
     error:(error)=>{
       this.message = error.error.message;
      this.loading = false;
      console.error(error)
+     if(error.error.message == 'This Email is Not Registered'){
+      Swal.fire({
+        icon: 'warning',
+        title: "This Email is not Registered"
+       });
+     }
     }
   }
   // next: (data) => {

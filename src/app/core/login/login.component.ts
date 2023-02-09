@@ -176,9 +176,10 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
       },
       error:(error)=>{
        this.error = error;
-       console.error(error)
+      // console.error(error)
+      console.log(error)
        this.loading = false;
-       if(error.message = 'Account is in In-Active, please Activate your account'){
+       if(error.error.message === 'Account is in In-Active!, please Activate your account'){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -186,8 +187,15 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
           //footer: '<a href="">Why do I have this issue?</a>'
         })
         this.router.navigate(['/core/reactivate/account']);
+       }else if(error.error.message === 'Username Not Found' || 'Incorrect Password')
+       {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Incorrect Username/Password',
+          //footer: '<a href="">Why do I have this issue?</a>'
+        })
        }
-
    }
   });
         // console.log(results);
