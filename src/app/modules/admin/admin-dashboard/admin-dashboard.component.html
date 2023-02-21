@@ -190,13 +190,14 @@
                                                 <table class="table table-striped ">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">ID</th>
                                                             <th scope="col">Product Name</th>
-                                                            <!-- <th scope="col">Category</th> -->
-                                                            <th scope="col">Description</th>
-                                                            <th scope="col">Unit Price</th>
+                                                            <th scope="col">Category</th>
+                                                            <!-- <th scope="col">Description</th> -->
+                                                            <th scope="col">Product Type</th>
+                                                            <th scope="col">Color</th>
+                                                            <th scope="col">Price</th>
+                                                            <th scope="col">Discount Percentage</th>
                                                             <th scope="col">Available Quantity</th>
-                                                            <th scope="col">Discount Price</th>
                                                             <th scope="col">Image</th>
                                                             <th scope="col">Edit/Delete</th>
 
@@ -205,14 +206,15 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let products of adminProducts">
-                                                            <td>{{products.id}}</td>
-                                                            <td>{{products.product_name}}</td>
-                                                            <!-- <td>{{products.category}}</td> -->
-                                                            <td>{{products.description}}</td>
-                                                            <td>{{products.unit_price}}</td>
-                                                            <td>{{products.available_qty}}</td>
-                                                            <td>{{products.dis_price}}</td>
-                                                            <td scope="row"><img src="{{products.image1_url}}"></td>
+                                                            <td>{{products?.title}}</td>
+                                                            <td>{{products?.category}}</td>
+                                                            <!-- <td>{{products.description}}</td> -->
+                                                            <td>{{products.type}}</td>
+                                                            <td>{{products?.variants[0].color}}</td>
+                                                            <td>{{products?.price}}</td>
+                                                            <td>{{products?.discount}}%</td>
+                                                            <td>{{products?.stock}}</td>
+                                                            <td scope="row"><img src="{{products.images[0].src}}"></td>
                                                             <td>
                                                                 <i class="fa fa-pencil-square-o me-1 text-primary" (click)="openModal(exampleModalLabel, products)"></i>
                                                                 <i class="fa fa-trash-o ms-1 text-theme"(click)="deleteProductByAdmin(products.id)" aria-hidden="true"></i></td>
@@ -251,7 +253,7 @@
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xl-8">
                                                     <label class="form-label">Product Name</label>
-                                                    <input class="form-control" id="product_name" formControlName="product_name" > 
+                                                    <input class="form-control" id="title" formControlName="titleprice" > 
                                                </div>
                                             </div>
                                             
@@ -267,16 +269,16 @@
                                                 <div class="col-sm-6">
                                                   <label class="form-label">Unit price</label>
                                                   <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                    <input class="form-control"  id="unit_price"  formControlName="unit_price"  type="text">
+                                                    <input class="form-control"  id="price"  formControlName="price"  type="number">
                                                   </div>
-                                                  <div class="form-text">Average marketplace price for this category is $15.</div>
+                                                  <div class="form-text">Enter unit price.</div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                   <label class="form-label">Discount price</label>
                                                   <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                    <input class="form-control" id="dis_price" formControlName="dis_price"  type="text">
+                                                    <input class="form-control" id="discount" formControlName="discount"  type="number">
                                                   </div>
-                                                  <div class="form-text">Typically 10x of the Standard license price.</div>
+                                                  <div class="form-text">Enter discount percentage value withot "%" symbol.</div>
                                                 </div>
                                               </div>
                                         </div>
@@ -311,6 +313,7 @@
                                                     <option selected>-- Select category --</option>
                                                     <option>Mobiles</option>
                                                     <option>Laptops</option>
+                                                    <option>Watches</option>
                                                   </select> 
                                                   <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
                                                     <div *ngIf="f.category.errors">Please select category.</div>
@@ -319,11 +322,11 @@
                                               </div>
                                               
                                                 <div class="mb-3 form-group">
-                                                  <label class="form-label" for="product_name">Product name</label>
-                                                  <input class="form-control" type="text"id="product_name" name="product_name" formControlName="product_name" [ngClass]="{ 'is-invalid': submitted && f.product_name.errors }" required="">
+                                                  <label class="form-label" for="title">Product name</label>
+                                                  <input class="form-control" type="text"id="title" name="title" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" required="">
                                                   <div class="form-text">Maximum 100 characters.</div>
-                                                  <div *ngIf="submitted && f.product_name.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.product_name.errors.required">Product Name is required</div>
+                                                  <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.title.errors.required">Product Name is required</div>
                                                 </div>
                                                 </div>
                                                 
@@ -336,7 +339,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                   <label class="form-label" for="quantity">Product quantity</label>
-                                                  <textarea class="form-control" rows="3" id="quantity" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': submitted && f.quantity.errors }" required=""></textarea>
+                                                  <input class="form-control" type="number" id="quantity" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': submitted && f.quantity.errors }" required="">
                                                   <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and
                                                     separated by commas.</div>
                                                     <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
@@ -345,37 +348,103 @@
                                                 </div>
                                                 <div class="row">
                                                   <div class="col-sm-6 mb-2">
-                                                    <label class="form-label" for="unit_price">Unit price</label>
+                                                    <label class="form-label" for="price">Price</label>
                                                     <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                      <input class="form-control" type="text" id="unit_price" name="unit_price" formControlName="unit_price" [ngClass]="{'is-invalid': submitted && f.unit_price.errors }" required="">
-                                                      <div *ngIf="submitted && f.unit_price.errors" class="invalid-feedback">
-                                                        <div *ngIf="f.unit_price.errors">Please enter Price.</div>
+                                                      <input class="form-control" type="number" id="price" name="price" formControlName="price" [ngClass]="{'is-invalid': submitted && f.price.errors }" required="">
+                                                      <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.price.errors">Please enter Price.</div>
                                                     </div>
                                                     </div>
                                                     <div class="form-text">Average marketplace price for this category is $15.</div>
                                                   </div>
                                                   <div class="col-sm-6 mb-3">
-                                                    <label class="form-label" for="dis_price">Discount price</label>
+                                                    <label class="form-label" for="discount">Discount</label>
                                                     <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                                                      <input class="form-control" type="text" id="dis_price" name="dis_price" formControlName="dis_price" [ngClass]="{'is-invalid': submitted && f.dis_price.errors }" required="">
-                                                      <div *ngIf="submitted && f.dis_price.errors" class="invalid-feedback">
-                                                        <div *ngIf="f.dis_price.errors">Please enter discount price</div>
+                                                      <input class="form-control" type="number" id="discount" name="discount" formControlName="discount" [ngClass]="{'is-invalid': submitted && f.discount.errors }" required="">
+                                                      <div *ngIf="submitted && f.discount.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.discount.errors">Please enter discount price</div>
                                                     </div>
                                                     </div>
                                                     <div class="form-text">Typically 10x of the Standard license price.</div> 
                                                   </div>
-                                                  <div >
-                                                    <input type='file' id="image1" name="image1" #fileInput  (change)="onFileUpdate($event, '1')" />
-                                                    <img [src]='image1' (click) = 'fileInput.click()' width="100" height="100"/>
+
+                                                  <div class="py-2">
+                                                    <label class="form-label" for="type">Type</label>
+                                                    <select  class="form-select me-2" id="type" name="type" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
+                                                      <option selected>-- Select Type --</option>
+                                                      <option>Electronics</option>
+                                                      <option>Gadgets</option>
+                                                      <option>Accessories</option>
+                                                    </select> 
+                                                    <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.type.errors">Please select type.</div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                    <label class="form-label" for="description">Product Brand</label>
+                                                    <input class="form-control" type="text" id="brand" name="brand" formControlName="brand" [ngClass]="{'is-invalid': submitted && f.brand.errors }" required="">
+                                                    <div *ngIf="submitted && f.brand.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.brand.errors.required">Product Description is required</div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="py-2">
+                                                    <label class="form-label" for="description">Is Product In Sale?</label>
+                                                  <div>
+                                                    <input id="true" type="radio" value="true" name="sale" formControlName="sale">
+                                                    <label for="true">Yes</label>
+                                                 </div>
+                                                 <div>
+                                                    <input id="false" type="radio" value="false" name="sale" formControlName="sale">
+                                                    <label for="false">NO</label>
+                                                 </div>
+                                                </div>
+                                                <div class="py-2">
+                                                    <label class="form-label" for="description">Does this product is New</label>
+                                                  <div>
+                                                    <input id="true" type="radio" value="true" name="new" formControlName="new">
+                                                    <label for="true">Yes</label>
+                                                 </div>
+                                                 <div>
+                                                    <input id="false" type="radio" value="false" name="new" formControlName="new">
+                                                    <label for="false">NO</label>
+                                                 </div>
+                                                </div>
+
+                                                <div class="py-2">
+                                                    <label class="form-label" for="collection">collection</label>
+                                                    <select  class="form-select me-2" id="collection" name="type" formControlName="collection" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" required="">
+                                                      <option selected>-- Select collection --</option>
+                                                      <option>new products</option>
+                                                      <option>best sellers</option>
+                                                      <option>featured products</option>
+                                                      <option>on sale</option>
+                                                    </select> 
+                                                    <div *ngIf="submitted && f.collection.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.collection.errors">Please select collection.</div>
+                                                  </div>
+                                                  </div>
+                                                  <div class="mb-3 form-group">
+                                                    <label class="form-label" for="size">Product Size</label>
+                                                    <input class="form-control" type="text"id="size" name="size" formControlName="size" >                                 
+                                                  </div>
+                                                  <div class="mb-3 form-group">
+                                                    <label class="form-label" for="color">Product Color</label>
+                                                    <input class="form-control" type="text"id="color" name="color" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required="">                                 
                                                   </div>
                                                   <div >
+                                                    <input type='file' id="path" name="path" #fileInput  (change)="onFileUpdate($event, '1')" />
+                                                    <img [src]='path' (click) = 'fileInput.click()' width="100" height="100"/>
+                                                  </div>
+                                                  <!-- <div >
                                                     <input type='file' id="image2" name="image2" #fileInput1  (change)="onFileUpdate($event, '2')" />
                                                     <img [src]='image2' (click) = 'fileInput.click()' width="100" height="100"/>
                                                   </div>
                                                   <div >
                                                     <input type='file' id="image3" name="image3" #fileInput2  (change)="onFileUpdate($event, '3')" />
                                                     <img [src]='image3' (click) = 'fileInput.click()' width="100" height="100"/>
-                                                  </div>
+                                                  </div> -->
+                                                
+                                                
                                                 </div>
                                                 
                                                 <button class="btn btn-solid d-block w-20" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload

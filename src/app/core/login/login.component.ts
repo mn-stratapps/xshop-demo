@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   accessToken: any;
   emailActivationToken: any;
   activatedRoute: any;
+  show: boolean = false;
 
   constructor(private formBuilder:FormBuilder,private route: ActivatedRoute,
     private router: Router,private httpService:AuthenticationService) {
@@ -47,10 +48,13 @@ export class LoginComponent implements OnInit {
    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
   }
+  password() {
+    this.show = !this.show;
+}
 initializeLoginForm(){
   this.loginForm = this.formBuilder.group({
     username:['',[Validators.required,]],
-    password:['', [Validators.required, Validators.minLength(4)]]
+    password:['', [Validators.required, Validators.minLength(8)]]
  });
 }
 
@@ -128,13 +132,13 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
   },
   error:(error)=>{
     this.error = error;
-       console.error(error)
+       console.log(error)
        this.loading = false;
-       if (error.message = 'This Email is Not Registered'){
+       if (error.error.message === 'This Email is Not Registered'){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Your Email is not registered, Please create your',
+          text: 'Please Enter Registered Email Id / Create A New Account',
           //footer: '<a href="">Why do I have this issue?</a>'
         })
        }
@@ -179,11 +183,11 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
       // console.error(error)
       console.log(error)
        this.loading = false;
-       if(error.error.message === 'Account is in In-Active!, please Activate your account'){
+       if(error.error.message === 'Account is in In-Active, please Activate your account'){
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
+          title: 'Oops...!',
+          text: 'Please Activate your account to Login',
           //footer: '<a href="">Why do I have this issue?</a>'
         })
         this.router.navigate(['/core/reactivate/account']);

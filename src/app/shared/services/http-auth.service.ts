@@ -34,7 +34,7 @@ export class HttpAuthService implements HttpInterceptor {
                     reason: error && error.error.reason ? error.error.reason : '',
                     status: error.status
                 };
-                if (error.status === 404 || error.message === 'Invalid Access Token' || error.message === 'Session Expired, Please login again') {
+                if (error.error.message === 'Invalid Access Token' || error.error.message === 'Session Expired, Please login again') {
                     
                         Swal.fire({
                             icon: 'error',

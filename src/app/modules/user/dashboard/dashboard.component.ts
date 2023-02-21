@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import Swal from 'sweetalert2';
 import { threadId } from 'worker_threads';
 import { UserService } from '../service/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+declare var $: any;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,7 +30,9 @@ export class DashboardComponent implements OnInit {
   current_password:any;
   new_password:any;
   confirm_password:any;
-  constructor(public httpService:AuthenticationService, public userService:UserService,private router: Router) { }
+  modal: any;
+  @ViewChild('otpModalLabel') otpModalLabel : any;
+  constructor(public httpService:AuthenticationService, public userService:UserService,private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -154,6 +159,10 @@ this.httpService.mobilenumberUpdate(object)
 
 })
   }
+  openModal(otpModalLabel){
+    this.modalService.open(otpModalLabel);
+  }
+
   emailUpdate(){
     const object = {
       'email': this.userData.email,
@@ -165,12 +174,16 @@ this.httpService.emailUpdate(object)
      console.log(data);
      this.emailActivationToken = data.emailActivationToken;
         this.httpService.emailActivationToken = data.emailActivationToken;
+        if(data.message === 'Requested for Email Update'){
+          this.modalService.open(this.otpModalLabel)
+
+        }
   },
   error:(error)=>{
     this.error = error;
     //console.error(error.error)
     console.log(error)
-    if (error.message='Email already exists, try another'){
+    if (error.error.message ==='Email already exists, try another '){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -191,14 +204,25 @@ this.httpService.validateemailOtp(object)
 .subscribe({
   next:(data) =>{
      console.log(data);
-     this.emailActivationToken = data.emailActivationToken;
-        this.httpService.emailActivationToken = data.emailActivationToken;
-  },
+    //  this.emailActivationToken = data.emailActivationToken;
+    //     this.httpService.emailActivationToken = data.emailActivationToken;
+  if(data.message === 'Email Updated Successfully'){
+    Swal.fire({
+      icon: 'success',
+      title: 'Done',
+      text: 'Updated Succesfully',
+    })
+    this.modalService.dismissAll();
+    this.emailtext = true;
+
+    
+  }
+      },
   error:(error)=>{
     this.error = error;
     //console.error(error.error)
     console.log(error)
-    if (error.message='Incorrect OTP, Please try again'){
+    if (error.error.message ==='Incorrect OTP, Please try again'){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -209,7 +233,8 @@ this.httpService.validateemailOtp(object)
 }
 
 })
-  }
+}
+
   passwordUpdate(){
     const object = {
       'current_password': this.current_password,
@@ -235,16 +260,8 @@ this.httpService.passwordUpdate(object)
   },
   error:(error)=>{
     this.error = error;
-    //console.error(error.error)
     console.log(error)
-    // if (error.message='Email already exists, try another'){
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Oops...',
-    //     text: 'Entered Email already exists, try another',
-    //     //footer: '<a href="">Why do I have this issue?</a>'
-    //   })
-    // }
+    
 }
 
 })

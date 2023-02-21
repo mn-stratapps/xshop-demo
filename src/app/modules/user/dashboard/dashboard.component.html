@@ -107,7 +107,7 @@
                                     <div class="col-sm-6">
                                         <div class="box">
                                             <div class="box-title">
-                                                <h3>Contact Information</h3><a href="#">Edit</a>
+                                                <h3>Contact Information</h3>
                                             </div>
                                             <div class="box-content mr-3">
                                                 <h6>First Name: {{userData.first_name}}</h6>
@@ -124,7 +124,7 @@
                                     <div class="col-sm-6">
                                         <div class="box">
                                             <div class="box-title">
-                                                <h3>Newsletters</h3><a href="#">Edit</a>
+                                                <h3>Newsletters</h3>
                                             </div>
                                             <div class="box-content">
                                                 <p>You are currently not subscribed to any newsletter.</p>
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="box mt-2">
                                     <div class="box-title">
-                                        <h3>Address Book</h3><a href="#">Manage Addresses</a>
+                                        <h3>Address Book</h3>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -834,19 +834,19 @@
                                                             </li>
                                                             </ul> -->
                                                             <div *ngIf="!emailtext" class="product-buttons mb-4">
-                                                                <button (click)="emailUpdate()"type="button" class="btn btn-danger btns" data-bs-toggle="modal" data-bs-target="#exampleModal">save</button>
+                                                                <button (click)="emailUpdate()"type="button" class="btn btn-danger btns" >save</button>
                                                                 <button (click)="emailEdit()" class="btn btn-light btns">cancel</button>
                                                             </div>
                                                         </div>                                                
                                                     </div>
                                             </div>
-                                            
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                  <div class="modal-content">
+
+                                            <ng-template class="modal fade" #otpModalLabel let-modal  tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-top modal-lg m-0">
+                                                  <div class="modal-content border-none">
                                                     <div class="modal-header">
-                                                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                      <h5 class="modal-title" id="otpModalLabel">Verify OTP</h5>
+                                                      <button aria-label="Close" (click)="modal.dismiss()" class="close e-close close-btn border-none bg-none"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div  class="col-md-12 col-lg-12 pl-0 pt-0 pr-0 pb-1">
@@ -870,13 +870,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                       <button type="button" class="btn btn-primary" (click)="saveEmail()">Save changes</button>
+                                                      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-bs-dismiss="modal" >Close</button>
+
                                                     </div>
                                                   </div>
                                                 </div>
-                                              </div>
-<!-- password update start-->
+                                              </ng-template>
+                                    <!-- password update start-->
                                 <div>
                                     <div class="dashboard-title">
                                         

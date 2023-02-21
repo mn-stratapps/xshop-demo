@@ -37,9 +37,9 @@ errorMessage:'';
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      mobile_number:['', [ Validators.required,
-        Validators.pattern("^[0-9]*$"),
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      mobile_number:['', [Validators.required,
+        Validators.pattern("^[0-9]{10}$"),
         Validators.minLength(10), Validators.maxLength(10)]]
   });
   }
@@ -56,6 +56,12 @@ errorMessage:'';
     return this.validateOtpForm.controls;
   }
   registerUser(){
+    this.submitted=true;
+     if(this.registerForm.invalid){
+      this.registerForm.markAllAsTouched();
+      return false;
+     }else{
+    
     this.submitted = true;
     this.httpservice.register(this.registerForm.value)
     //.pipe(first())
@@ -79,8 +85,56 @@ errorMessage:'';
       error:(error)=>{
         this.errorMessage = error;
         this.loading = false;
+        console.log(error);
+        // switch(error.error){
+        //   case error.error.username[0] === 'user profile with this username already exists.':{
+        //     Swal.fire({
+        //           icon: 'error',
+        //           title: 'oops!',
+        //           text: 'Username Already Exist Try another',
+        //           width: '400px',
+        //         })
+        //         break;
+        //   }
+        //   case error.error.email[0] === 'Email Id already Exists':{
+        //       Swal.fire({
+        //     icon: 'error',
+        //     title: 'oops!',
+        //     text: 'Email Already Exist Try another',
+        //     width: '400px',
+        //   })
+        //   break;
+        //   }
+        // }
+        if(error.error?.username && error.error?.username[0] ==='user profile with this username already exists.'){
+          Swal.fire({
+            icon: 'error',
+            title: 'oops!',
+            text: 'Username Already Exist Try another',
+            width: '400px',
+          })
+        }else if(error.error?.email && error.error?.email[0] === 'Email Id already Exists'){
+          Swal.fire({
+            icon: 'error',
+            title: 'oops!',
+            text: 'Email Already Exist Try another',
+            width: '400px',
+          })
+        }else if(error.error?.mobile_number && error.error?.mobile_number[0] ==='user profile with this mobile number already exists.'){
+          Swal.fire({
+            icon: 'error',
+            title: 'oops!',
+            text: 'Mobile Number Already Exist Try another',
+            width: '400px',
+          })
+        }
     }
   });
+}
+// }else{
+//   this.loading=false;
+//   this.submitted=false;
+// }
   }
 
   validateOtp(){

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../classes/product';
+import { environment } from 'src/environments/environment';
 
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
@@ -17,9 +18,10 @@ const state = {
 })
 export class ProductService {
 
-  public Currency = { name: 'Dollar', currency: 'USD', price: 1 } // Default Currency
+  public Currency = { name: 'Rupee', currency: 'INR', price: 1 } // Default Currency
   public OpenCart: boolean = false;
   public Products
+  accessToken: any;
 
   constructor(private http: HttpClient,
     private toastrService: ToastrService) { }
@@ -30,14 +32,20 @@ export class ProductService {
     ---------------------------------------------
   */
 
-  // Product
-  private get products(): Observable<Product[]> {
-    this.Products = this.http.get<Product[]>('assets/data/products.json').pipe(map(data => data));
-    this.Products.subscribe(next => { localStorage['products'] = JSON.stringify(next) });
-    return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
-  }
+  Product
+  // private get products(): Observable<Product[]> {
+  //   this.Products = this.http.get<Product[]>('assets/data/products.json').pipe(map(data => data));
+  //   this.Products.subscribe(next => { localStorage['products'] = JSON.stringify(next) });
+  //   return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
+  // }
 
-  // Get Products
+  private get products(): Observable<Product[]> {
+    this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
+    .pipe(map(data => data));
+    this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
+    return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
+     }
+  //Get Products
   public get getProducts(): Observable<Product[]> {
     return this.products;
   }
@@ -131,7 +139,11 @@ export class ProductService {
   */
 
   // Get Cart Items
-  public get cartItems(): Observable<Product[]> {
+  // public get cartItems():Observable<Product[]> {
+
+  // }
+
+    public get cartItems(): Observable<Product[]> {
     const itemsStream = new Observable(observer => {
       observer.next(state.cart);
       observer.complete();
@@ -141,6 +153,9 @@ export class ProductService {
 
   // Add to Cart
   public addToCart(product): any {
+    // const currentUser = localStorage.getItem( 'currentUser' );
+    // this.accessToken = JSON.parse( currentUser )['Token'];
+    // return this.http.post<any>(`${environment.apiUrl}/cart/`+this.accessToken,product.id);
     const cartItem = state.cart.find(item => item.id === product.id);
     const qty = product.quantity ? product.quantity : 1;
     const items = cartItem ? cartItem : product;

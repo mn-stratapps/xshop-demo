@@ -8,7 +8,7 @@
                         <div class="form-group">
                             <label for="email">Email/Username</label>
                             <!-- <input type="text" class="form-control" id="email" placeholder="Email" required=""> -->
-                            <input type='text' formControlName="username" class='input-field form-control' [ngClass]="{ 'is-invalid': submitted   }"  placeholder='Email Id' required/>
+                            <input type='text' formControlName="username" class='input-field form-control' [ngClass]="{ 'is-invalid':f.username.errors && submitted,'is-valid':submitted}" placeholder='Email Id' required/>
                         
                             <div *ngIf="submitted && f.username.errors " class="invalid-feedback">
                                 <div *ngIf="f.username.errors.required" >Email is required</div>
@@ -18,11 +18,14 @@
                         <div class="form-group">
                             <label for="review">Password</label>
                             <!-- <input type="password" class="form-control" id="review" placeholder="Enter your password" required=""> -->
-                            <input type='password' formControlName="password" class='input-field form-control' [ngClass]="{ 'is-invalid': submitted  }" placeholder='Enter Password'/>
+                            <input [type]="show ? 'text' : 'password'" formControlName="password" class='input-field form-control' [ngClass]="{ 'is-invalid':f.password.errors && submitted,'is-valid':submitted}" placeholder='Enter Password'/>
+                            <i class="fa fa-eye-slash" (click)="password()" aria-hidden="true"></i>
                             <div *ngIf="submitted && f.password.errors " class="invalid-feedback">
                                 <div *ngIf="f.password.errors.required " >Password is required</div>
-                                <div *ngIf="f.password.errors.minlength" >Password must be at least 4 characters</div>
+                                <div *ngIf="f.password.errors.minlength" >Password will be at least 8 characters</div>
                         </div>
+                        <!-- <button (click)="password()">{{show ? 'Show' : 'Hide'}}</button> -->
+<br>
                         <button type="submit" class="btn btn-solid">Login</button>
                         <a href="/core/forgot/password" class="fwd">Forgot Password ?</a>
 

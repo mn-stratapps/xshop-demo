@@ -26,10 +26,12 @@ export class BrandsComponent implements OnInit {
     this.products.filter((product) => {
       if (product.brand) {
         const index = uniqueBrands.indexOf(product.brand)
-        if (index === -1) uniqueBrands.push(product.brand)
+         if (index === -1) uniqueBrands.push(product.brand)
+        // console.log(uniqueBrands);
       }
     })
     return uniqueBrands
+    
   }
 
   appliedFilter(event) {
@@ -41,6 +43,7 @@ export class BrandsComponent implements OnInit {
     
     let brands = this.brands.length ? { brand: this.brands.join(",") } : { brand: null };
     this.brandsFilter.emit(brands);
+    //console.log(brands)
   }
 
   // check if the item are selected

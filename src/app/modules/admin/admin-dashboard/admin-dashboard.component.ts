@@ -15,9 +15,7 @@ declare var $: any;
 })
 export class AdminDashboardComponent implements OnInit {
 isAddProductUrl = false;
-image1: any;
-image2: any;
-image3: any;
+path:any;
 filename:any;
 userData: User = new User();
 
@@ -27,7 +25,7 @@ userData: User = new User();
   errorMessage: any;
   loading: boolean;
   file: any;
-  adminProducts:any;
+  adminProducts=[];
   error: any;
   editProductForm:FormGroup
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
@@ -46,7 +44,7 @@ ngOnInit(){
  // this.viewAdminProducts();
   this.initializeeditProductForm();
   //this.addProductForm.get('image1').updateValueAndValidity()
-  this.products();
+  // this.products();
 }
 getUserDetails() {
   const currentUser = localStorage.getItem( 'currentUser' );
@@ -66,25 +64,34 @@ getUserDetails() {
 }
 initializeAddProductForm(){
   this.addProductForm=this.formBuilder.group({
-    category:['',Validators.required],
-    product_name:['',Validators.required],
+    category:['',Validators.required],//mobiles,laptaps,watches
+    title:['',Validators.required],
     description:['',Validators.required],
     quantity:['',Validators.required],
-    unit_price:['',Validators.required],
-    dis_price:['',Validators.required],
-     image1:[''],
-    image2:[''],
-    image3:[''],
+    price:['',Validators.required],
+    discount:['',Validators.required],
+    path:[''],
+    type:['',Validators.required],//electronics,gadgets,accessories
+    brand:['',Validators.required],
+    sale:[''],//radiobutton
+    new:[''],//radiobutton
+    collection:['',Validators.required],//radio
+    size:[''],
+    color:[''],
+
+
+
+    
   });
 }
 initializeeditProductForm(){
   this.editProductForm=this.formBuilder.group({
     id:[''],
     category:[''],
-    product_name:[''],
+    title:[''],
     description:[''],
-    unit_price:[''],
-    dis_price:['']
+    price:[''],
+    discount:['']
   })
 }
 get f(){
@@ -99,14 +106,22 @@ addProduct(){
     this.accessToken = JSON.parse( currentUser )['Token'];
     var formData:any = new FormData();
     formData.append("category",this.addProductForm.get('category').value);
-    formData.append("product_name",this.addProductForm.get('product_name').value);
+    formData.append("title",this.addProductForm.get('title').value);
     formData.append("description",this.addProductForm.get('description').value);
-    formData.append("unit_price",this.addProductForm.get('unit_price').value);
-    formData.append("dis_price",this.addProductForm.get('dis_price').value);
+    formData.append("price",this.addProductForm.get('price').value);
+    formData.append("discount",this.addProductForm.get('discount').value);
+    formData.append("type",this.addProductForm.get('type').value);
+    formData.append("brand",this.addProductForm.get('brand').value);
+    formData.append("sale",this.addProductForm.get('sale').value);
+    formData.append("new",this.addProductForm.get('new').value);
+    formData.append("collection",this.addProductForm.get('collection').value);
+    formData.append("size",this.addProductForm.get('size').value);
+    formData.append("color",this.addProductForm.get('color').value);
+    formData.append("path",this.addProductForm.get('path').value);
     formData.append("quantity",this.addProductForm.get('quantity').value);
-    formData.append("image1",this.addProductForm.get('image1').value);
-    formData.append("image2",this.addProductForm.get('image2').value);
-    formData.append("image3",this.addProductForm.get('image3').value);
+
+
+    
   this.httpService.addProduct(this.accessToken,formData)
   .subscribe(
     {
@@ -121,6 +136,7 @@ addProduct(){
           })
           this.viewAdminProducts();
           this.isAddProductUrl=false;
+          this.editProductForm.reset();
         }
       },
       error:(error)=>{
@@ -130,42 +146,44 @@ addProduct(){
   });
 }
 
-products(){
-  this.httpService.getProducts().subscribe(
-    {
-      next:(data) => {
-        console.log(data);
+// products(){
+//   this.httpService.getProducts().subscribe(
+//     {
+//       next:(data) => {
+//         console.log(data);
      
-      },
-      error:(error)=>{
-        console.log(error)
-    }
-  });
-}
+//       },
+//       error:(error)=>{
+//         console.log(error)
+//     }
+//   });
+// }
 
 callimage(type:string){
   const reader = new FileReader();
   if (File.length === 0) return;
   let obj:any;
   if(type=='1')  {
-   obj= {image1 : this.file}  
-  }else if(type=='2'){
-    obj ={image2 : this.file}
-  }else if(type=='3'){
-    obj ={image3 : this.file}
+   obj= {path : this.file}  
   }
+  // else if(type=='2'){
+  //   obj ={image2 : this.file}
+  // }else if(type=='3'){
+  //   obj ={image3 : this.file}
+  // }
   this.addProductForm.patchValue(obj)
   if(!this.file)return
   reader.readAsDataURL(this.file);
   reader.onload = _event => {
     if(type=='1')  {
-    this.image1 = reader.result as string;
+    this.path = reader.result as string;
     // console.log(this.image1)
-    }else if(type=='2'){
-    this.image2 = reader.result as string;
-    }else if(type=='3'){
-    this.image3 = reader.result as string;
     }
+    // else if(type=='2'){
+    // this.image2 = reader.result as string;
+    // }else if(type=='3'){
+    // this.image3 = reader.result as string;
+    // }
   };
   console.log(obj);
 }
@@ -207,10 +225,10 @@ openModal(exampleModalLabel, products){
 this.editProductForm.patchValue({
   id:products.id,
   category:products.category,
-  product_name:products.product_name,
+  title:products.product_name,
   description:products.description,
-  unit_price:products.unit_price,
-  dis_price:products.dis_price
+  price:products.unit_price,
+  discount:products.dis_price
 })
 }
 editProduct(){

@@ -16,6 +16,10 @@ export interface Product {
     tags?: any[];
     variants?: Variants[];
     images?: Images[];
+    product_name?:string;
+    unit_price?:number;
+    dis_price?:number;
+    image1_url?:string;
 }
 
 export interface Variants {
