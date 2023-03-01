@@ -37,11 +37,17 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService.cartItems.subscribe(response => this.products = response);
-    this.getTotal.subscribe(amount => this.amount = amount);
+    this.productService.cartItems.subscribe(response =>{ this.products = response});
+    console.log('checkout:',this.products)
+    //this.getTotal.subscribe(amount => this.amount = amount);
     this.initConfig();
   }
-
+  // getUserProducts(){
+  //   this.productService.cartItems().subscribe(response =>{
+  //     this.products = response
+  //     console.log(this.products)
+  //   } )
+  // }
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
   }

@@ -148,7 +148,7 @@ registerVendor(accessToken:any,data:any){
 }
 //add products by admin
 addProduct(accessToken:any,data:any){
-  // this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
+   this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
   return this.http.post<any>(`${environment.apiUrl}/adminproducts/`+accessToken,data)
 }
 

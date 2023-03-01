@@ -46,6 +46,8 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
           windowClass: 'theme-modal cart-modal CartModal'
         }).result.then((result) => {
           `Result ${result}`
+          this.productService.setcartItems(this.products)
+
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });

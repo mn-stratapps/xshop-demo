@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, observable, Observable } from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../classes/product';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { response } from 'express';
 
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
@@ -22,9 +24,12 @@ export class ProductService {
   public OpenCart: boolean = false;
   public Products
   accessToken: any;
+  product_id:any;
+  headers: HttpHeaders;
+  mediaUpdate: any;
 
   constructor(private http: HttpClient,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,private authService:AuthenticationService) { }
 
   /*
     ---------------------------------------------
@@ -42,7 +47,7 @@ export class ProductService {
   private get products(): Observable<Product[]> {
     this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
     .pipe(map(data => data));
-    this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
+   // this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
     return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
      }
   //Get Products
@@ -142,54 +147,130 @@ export class ProductService {
   // public get cartItems():Observable<Product[]> {
 
   // }
+  // private get products(): Observable<Product[]> {
+  //   this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
+  //   .pipe(map(data => data));
+  //   this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
+  //   return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
+  //    }
 
-    public get cartItems(): Observable<Product[]> {
-    const itemsStream = new Observable(observer => {
-      observer.next(state.cart);
-      observer.complete();
-    });
-    return <Observable<Product[]>>itemsStream;
-  }
+  //   public get cartItems(): Observable<Product[]> {
+  //   const itemsStream = new Observable(observer => {
+  //     observer.next(state.cart);
+  //     observer.complete();
+  //   });
+  //   return <Observable<Product[]>>itemsStream;  
+  // }
+  public get  cartItems(): Observable<Product[]> {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    return this.http.get<Product[]>(`${environment.apiUrl}/cart/`+this.accessToken)
+    // const itemsStream = new Observable(observer=>{
+    //   observer.next(response);
+    //   observer.complete();
+    //   return <Observable<Product[]>>itemsStream;
+    // })
+    // .pipe(map((result
+    //   ) => {
+    //   //let cartItemss:Product[] =[];
+    //   console.log(result);
+    //   return result
+    // }))
 
-  // Add to Cart
-  public addToCart(product): any {
-    // const currentUser = localStorage.getItem( 'currentUser' );
-    // this.accessToken = JSON.parse( currentUser )['Token'];
-    // return this.http.post<any>(`${environment.apiUrl}/cart/`+this.accessToken,product.id);
+   }
+   private cartItemss = new BehaviorSubject<any>({});
+   productvalue = this.cartItemss.asObservable();
+   setcartItems(obj: any) {
+     this.cartItemss.next(obj);
+   }
+
+
+  //Add to Cart
+  // public addToCart(product): any {
+  //   const cartItem = state.cart.find(item => item.id === product.id);
+  //   const qty = product.quantity ? product.quantity : 1;
+  //   const items = cartItem ? cartItem : product;
+  //   const stock = this.calculateStockCounts(items, qty);
+    
+  //   if(!stock) return false
+
+  //   if (cartItem) {
+  //       cartItem.quantity += qty    
+  //   } else {
+  //     state.cart.push({
+  //       ...product,
+  //       quantity: qty
+  //     })
+  //   }
+
+  //   this.OpenCart = true; // If we use cart variation modal
+  //   localStorage.setItem("cartItems", JSON.stringify(state.cart));
+  //   return true;
+  // }
+
+  public addToCart(product):any{
+    let id = product.id
     const cartItem = state.cart.find(item => item.id === product.id);
     const qty = product.quantity ? product.quantity : 1;
     const items = cartItem ? cartItem : product;
     const stock = this.calculateStockCounts(items, qty);
     
-    if(!stock) return false
+    if(!stock) return false;
+    if(stock){
+   //cartItem.quantity += qty 
+   const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    return this.http.post<any>(`${environment.apiUrl}/cart/`+this.accessToken,{id})
+    .subscribe({
+      next:(data)=>{
+        console.log(data)
+        this.setcartItems(this.products)
 
-    if (cartItem) {
-        cartItem.quantity += qty    
-    } else {
-      state.cart.push({
-        ...product,
-        quantity: qty
-      })
+      },
+      error:(error)=>{
+        console.log(error)
+      }
+    })
+  
     }
-
-    this.OpenCart = true; // If we use cart variation modal
-    localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    return true;
+    // else {
+    //       state.cart.push({
+    //         ...product,
+    //         quantity: qty
+    //       })
+    //     }
+            this.OpenCart = true; // If we use cart variation modal
+            return true;
   }
 
   // Update Cart Quantity
-  public updateCartQuantity(product: Product, quantity: number): Product | boolean {
-    return state.cart.find((items, index) => {
-      if (items.id === product.id) {
-        const qty = state.cart[index].quantity + quantity
-        const stock = this.calculateStockCounts(state.cart[index], quantity)
-        if (qty !== 0 && stock) {
-          state.cart[index].quantity = qty
-        }
-        localStorage.setItem("cartItems", JSON.stringify(state.cart));
-        return true
-      }
-    })
+  public updateCartQuantity(product: Product, quantity: number,accessToken:any){
+    let id=product.id;
+    // const currentUser = localStorage.getItem( 'currentUser' );
+    // this.accessToken = JSON.parse( currentUser )['Token'];
+   return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})
+    // .subscribe(
+    //   {
+    //     next:(data)=>{
+    //       console.log(data)
+    //     },
+    //     error:(error)=>{
+    //       console.log(error);
+    //     }
+
+    //   }
+    // )
+    // return state.cart.find((items, index) => {
+    //   if (items.id === product.id) {
+    //     const qty = state.cart[index].quantity + quantity
+    //     const stock = this.calculateStockCounts(state.cart[index], quantity)
+    //     if (qty !== 0 && stock) {
+    //       state.cart[index].quantity = qty
+    //     }
+    //     localStorage.setItem("cartItems", JSON.stringify(state.cart));
+    //     return true
+    //   }
+    // })
   }
 
     // Calculate Stock Counts
@@ -204,10 +285,13 @@ export class ProductService {
   }
 
   // Remove Cart items
-  public removeCartItem(product: Product): any {
-    const index = state.cart.indexOf(product);
-    state.cart.splice(index, 1);
-    localStorage.setItem("cartItems", JSON.stringify(state.cart));
+  public removeCartItem(product,accessToken): any {
+    let id = product.id
+   return this.http.delete<any>(`${environment.apiUrl}/cartdelete/`+accessToken+'/'+id)
+  
+    // const index = state.cart.indexOf(product);
+    // state.cart.splice(index, 1);
+    // localStorage.setItem("cartItems", JSON.stringify(state.cart));
     return true
   }
 

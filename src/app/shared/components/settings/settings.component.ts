@@ -1,9 +1,10 @@
 import { Component, OnInit, Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { Product } from "../../classes/product";
+import { response } from 'express';
 
 @Component({
   selector: 'app-settings',
@@ -40,16 +41,21 @@ export class SettingsComponent implements OnInit {
     currency: 'USD',
     price: 1 // price of usd
   }]
+  accessToken: any;
+  producSubscription: Subscription;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
     public productService: ProductService) {
-    this.productService.cartItems.subscribe(response => this.products = response);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+   // this.productService.cartItems.subscribe(response => this.products = response);
+  this.producSubscription = this.productService.productvalue.subscribe(response => this.products=response )
   }
-
+ngOnDestroy(){
+  this.producSubscription?.unsubscribe();
+}
   searchToggle(){
     this.search = !this.search;
   }
@@ -65,7 +71,9 @@ export class SettingsComponent implements OnInit {
   }
 
   removeItem(product: any) {
-    this.productService.removeCartItem(product);
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.productService.removeCartItem(product,this.accessToken);
   }
 
   changeCurrency(currency: any) {

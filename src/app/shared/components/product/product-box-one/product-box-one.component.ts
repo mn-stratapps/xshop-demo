@@ -22,6 +22,7 @@ export class ProductBoxOneComponent implements OnInit {
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
   public ImageSrc : string
+  accessToken: any;
 
   constructor(private productService: ProductService) { }
 
@@ -60,8 +61,24 @@ export class ProductBoxOneComponent implements OnInit {
     this.ImageSrc = src;
   }
 
-  addToCart(product: any) {
-    this.productService.addToCart(product);
+  addToCart(product_id: any) {
+    
+    this.productService.addToCart(product_id )
+    .subscribe(
+      {
+        next:(data)=>{
+          console.log(data);
+          //localStorage.setItem("cartItems", JSON.stringify(state.cart));
+           this.productService.setcartItems(this.product)
+
+                return true;
+
+        },
+        error:(error)=>{
+          console.log(error)
+        }
+      }
+    )
   }
 
   addToWishlist(product: any) {
