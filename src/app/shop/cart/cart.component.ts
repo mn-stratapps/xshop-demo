@@ -16,7 +16,7 @@ export class CartComponent implements OnInit {
   accessToken: any;
   TotalAmount:any;
   constructor(public productService: ProductService) {
-     this.productService.cartItems.subscribe(response => this.products = response);
+    // this.productService.cartItems.subscribe(response => this.products = response);
   }
   ngOnInit(): void {
     this.getUserProducts();
@@ -25,8 +25,7 @@ export class CartComponent implements OnInit {
     this.productService.cartItems.subscribe(response =>{
       this.products = response
       console.log(this.products)
-      // this.productService.setcartItems(this.products)
-
+      this.productService.setcartItems(this.products)
     } )
     this.productService.cartTotalAmount().subscribe(response =>{
       this.TotalAmount = (Math.round(response * 100) / 100).toFixed(2)

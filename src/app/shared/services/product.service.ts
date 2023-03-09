@@ -7,6 +7,7 @@ import { Product } from '../classes/product';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { response } from 'express';
+import { timeStamp } from 'console';
 
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
@@ -47,7 +48,7 @@ export class ProductService {
   private get products(): Observable<Product[]> {
     this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
     .pipe(map(data => data));
-   // this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
+    this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
     return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
      }
   //Get Products
@@ -72,33 +73,55 @@ export class ProductService {
   */
 
   // Get Wishlist Items
-  public get wishlistItems(): Observable<Product[]> {
-    const itemsStream = new Observable(observer => {
-      observer.next(state.wishlist);
-      observer.complete();
-    });
-    return <Observable<Product[]>>itemsStream;
+
+  // public get wishlistItems(): Observable<Product[]> {
+  //   const itemsStream = new Observable(observer => {
+  //     observer.next(state.wishlist);
+  //     observer.complete();
+  //   });
+  //   return <Observable<Product[]>>itemsStream;
+  // }
+  public get  wishlistItems(): Observable<Product[]> {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    return this.http.get<Product[]>(`${environment.apiUrl}/wishlist/`+this.accessToken)
   }
 
+  
   // Add to Wishlist
-  public addToWishlist(product): any {
+  // public addToWishlist(product): any {
+  //   const wishlistItem = state.wishlist.find(item => item.id === product.id)
+  //   if (!wishlistItem) {
+  //     state.wishlist.push({
+  //       ...product
+  //     })
+  //   }
+  //   this.toastrService.success('Product has been added in wishlist.');
+  //   localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+  //   return true
+  // }
+
+public addToWishlist(product): any {
     const wishlistItem = state.wishlist.find(item => item.id === product.id)
     if (!wishlistItem) {
-      state.wishlist.push({
-        ...product
-      })
+    const id = product.id
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+      return this.http.post<any>(`${environment.apiUrl}/wishlist/`+this.accessToken,{id})
+      
     }
-    this.toastrService.success('Product has been added in wishlist.');
-    localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+    // localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
     return true
   }
 
   // Remove Wishlist items
-  public removeWishlistItem(product: Product): any {
-    const index = state.wishlist.indexOf(product);
-    state.wishlist.splice(index, 1);
-    localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
-    return true
+  public removeWishlistItem(product: Product,accessToken): any {   
+    let id = product.id
+   return this.http.delete<any>(`${environment.apiUrl}/deletewishlist/`+accessToken+'/'+id)   
+    // const index = state.wishlist.indexOf(product);
+    // state.wishlist.splice(index, 1);
+    // localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+    // return true
   }
 
   /*
@@ -165,18 +188,6 @@ export class ProductService {
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     return this.http.get<Product[]>(`${environment.apiUrl}/cart/`+this.accessToken)
-    // const itemsStream = new Observable(observer=>{
-    //   observer.next(response);
-    //   observer.complete();
-    //   return <Observable<Product[]>>itemsStream;
-    // })
-    // .pipe(map((result
-    //   ) => {
-    //   //let cartItemss:Product[] =[];
-    //   console.log(result);
-    //   return result
-    // }))
-
    }
    private cartItemss = new BehaviorSubject<any>({});
    productvalue = this.cartItemss.asObservable();
@@ -214,7 +225,6 @@ export class ProductService {
     const qty = product.quantity ? product.quantity : 1;
     const items = cartItem ? cartItem : product;
     const stock = this.calculateStockCounts(items, qty);
-    
     if(!stock) return false;
     if(stock){
    //cartItem.quantity += qty 
@@ -224,8 +234,9 @@ export class ProductService {
     .subscribe({
       next:(data)=>{
         console.log(data)
-        this.setcartItems(this.products)
-
+        this.cartItems.subscribe(response=>this.setcartItems(response))
+         //this.setcartItems(product)
+        // console.log('settings',this.products)
       },
       error:(error)=>{
         console.log(error)
@@ -249,6 +260,8 @@ export class ProductService {
     // const currentUser = localStorage.getItem( 'currentUser' );
     // this.accessToken = JSON.parse( currentUser )['Token'];
    return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})
+   this.cartItems.subscribe(response=>this.setcartItems(response))
+
     // .subscribe(
     //   {
     //     next:(data)=>{
@@ -288,7 +301,6 @@ export class ProductService {
   public removeCartItem(product,accessToken): any {
     let id = product.id
    return this.http.delete<any>(`${environment.apiUrl}/cartdelete/`+accessToken+'/'+id)
-  
     // const index = state.cart.indexOf(product);
     // state.cart.splice(index, 1);
     // localStorage.setItem("cartItems", JSON.stringify(state.cart));
@@ -298,7 +310,7 @@ export class ProductService {
   // Total amount 
   public cartTotalAmount(): Observable<number> {
     return this.cartItems.pipe(map((product: Product[]) => {
-      return product.reduce((prev, curr: Product) => {
+      return product?.reduce((prev, curr: Product) => {
         let price = curr.price;
         if(curr.discount) {
           price = curr.price - (curr.price * curr.discount / 100)

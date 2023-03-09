@@ -238,7 +238,7 @@ editProduct(){
     {
       next:(data) => {
         console.log(data);
-        if(data.message =='Product Details Updated successfully'){
+        if(data.message ==='Product Details Updated successfully'){
           Swal.fire({
             icon: 'success',
             title: 'Congratulations!',

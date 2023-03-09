@@ -21,26 +21,26 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadTranslator()
+    // this.loadTranslator()
   }
 
   mainMenuToggle(): void {
     this.navServices.mainMenuToggle = !this.navServices.mainMenuToggle;
   }
-  loadTranslator(){
-    var element = document.getElementById('gtranslate_wrapper');
+  // loadTranslator(){
+  //   var element = document.getElementById('gtranslate_wrapper');
 
-     // if(element==null){
-        const s = this.renderer2.createElement('script');
-        s.type = 'text/javascript';
-        s.src = 'https://cdn.gtranslate.net/widgets/latest/dwf.js';
-        s.text = ``;
-        s.id = 'gtranslate_wrapper';
-        this.renderer2.appendChild(this._document.body, s);
-      // }else{
-      //   element.parentNode.removeChild(element);
-      // }
-  }
+  //    // if(element==null){
+  //       const s = this.renderer2.createElement('script');
+  //       s.type = 'text/javascript';
+  //       s.src = 'https://cdn.gtranslate.net/widgets/latest/dwf.js';
+  //       s.text = ``;
+  //       s.id = 'gtranslate_wrapper';
+  //       this.renderer2.appendChild(this._document.body, s);
+  //     // }else{
+  //     //   element.parentNode.removeChild(element);
+  //     // }
+  // }
   // Click Toggle menu (Mobile)
   toggletNavActive(item) {
     item.active = !item.active;

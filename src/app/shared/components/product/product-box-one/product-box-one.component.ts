@@ -3,6 +3,7 @@ import { QuickViewComponent } from "../../modal/quick-view/quick-view.component"
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 import { Product } from "../../../classes/product";
 import { ProductService } from "../../../services/product.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-box-one',
@@ -24,7 +25,7 @@ export class ProductBoxOneComponent implements OnInit {
   public ImageSrc : string
   accessToken: any;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     if(this.loader) {
@@ -69,7 +70,7 @@ export class ProductBoxOneComponent implements OnInit {
         next:(data)=>{
           console.log(data);
           //localStorage.setItem("cartItems", JSON.stringify(state.cart));
-           this.productService.setcartItems(this.product)
+          // this.productService.setcartItems(this.product)
 
                 return true;
 
@@ -82,7 +83,23 @@ export class ProductBoxOneComponent implements OnInit {
   }
 
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+    this.productService.addToWishlist(product)
+    .subscribe({
+      next:(data)=>{
+        console.log(data)
+        if(data.message === 'Added to wishlist'){
+          this.toastrService.success('Product has been added in wishlist.');
+
+        }
+      },
+      error:(error)=>{
+        console.log(error)
+        if (error.error.message === 'product already exists in wishlist'){
+          this.toastrService.warning('Product already exists in wishlist');
+
+        }
+      }
+    })
   }
 
   addToCompare(product: any) {

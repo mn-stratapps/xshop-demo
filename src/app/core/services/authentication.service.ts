@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
  import { environment } from 'src/environments/environment';
+import { Useraddress } from '../models/useraddress';
 
 
 @Injectable({
@@ -32,12 +33,6 @@ export class AuthenticationService {
       this.currentUser = this.currentUserSubject.asObservable();
   }
     }
-
-    getProducts(){
-      return this.http.get<any>(`${environment.apiUrl}/products/`)
-      
-    }
-    
   //   public get currentUserValue(): User {
   //     return this.currentUserSubject.value;
   // }
@@ -134,10 +129,20 @@ getUserDetails(accessToken:any){
   //this.accessToken;
   return this.http.get<any>(`${environment.apiUrl}/role/details/`+accessToken);
 }
+getAddress(accessToken:any):Observable<Useraddress[]>{
+  return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)
+}
+addAddress(accessToken,data):any{
+  return this.http.post<any>(`${environment.apiUrl}/useraddress/`+accessToken,data)
+}
+editAddress(accessToken,data,aid):any{
+  return this.http.put<any>(`${environment.apiUrl}/updateaddress/`+accessToken+'/'+aid,data)
+}
+deleteaddress(accessToken,aid){
+  return this.http.delete<any>(`${environment.apiUrl}/updateaddress/`+accessToken+'/'+aid)
+}
 
-
-editUser(accessToken:any,data:any){
-  
+editUser(accessToken:any,data:any){  
   return this.http.put<any>(`${environment.apiUrl}/user_profile/`+accessToken,data)
 }
 

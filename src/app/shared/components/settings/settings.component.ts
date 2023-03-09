@@ -1,5 +1,5 @@
-import { Component, OnInit, Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Injectable, PLATFORM_ID, Inject, Renderer2 } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
@@ -45,16 +45,34 @@ export class SettingsComponent implements OnInit {
   producSubscription: Subscription;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
+  private renderer2: Renderer2,@Inject(DOCUMENT) private _document:any,
     private translate: TranslateService,
     public productService: ProductService) {
   }
 
   ngOnInit() {
    // this.productService.cartItems.subscribe(response => this.products = response);
-  this.producSubscription = this.productService.productvalue.subscribe(response => this.products=response )
+  this.producSubscription = this.productService.productvalue.subscribe(response => this.products=response)
+  this.loadTranslator();
+  }
+  loadTranslator(){
+    var element = document.getElementById('gtranslate_wrapper');
+
+     // if(element==null){
+        const s = this.renderer2.createElement('script');
+        s.type = 'text/javascript';
+        s.src = 'https://cdn.gtranslate.net/widgets/latest/dwf.js';
+        s.text = ``;
+        s.id = 'gtranslate_wrapper';
+        this.renderer2.appendChild(this._document.body, s);
+      // }else{
+      //   element.parentNode.removeChild(element);
+      // }
   }
 ngOnDestroy(){
+  if(this.producSubscription){
   this.producSubscription?.unsubscribe();
+  }
 }
   searchToggle(){
     this.search = !this.search;

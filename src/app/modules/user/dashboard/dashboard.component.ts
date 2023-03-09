@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -6,6 +6,11 @@ import Swal from 'sweetalert2';
 import { threadId } from 'worker_threads';
 import { UserService } from '../service/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Country, State, City }  from 'country-state-city';
+import { Useraddress } from 'src/app/core/models/useraddress';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Product } from 'src/app/shared/classes/product';
+import { ProductService } from 'src/app/shared/services/product.service';
 declare var $: any;
 
 @Component({
@@ -14,9 +19,11 @@ declare var $: any;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  public products: Product[] = [];
+  wishlistProducts: Product[] = [];
   public openDashboard: boolean = false;
   userData: User = new User();
+  public Address: Useraddress[] = [];
   accessToken: any;
   error: any;
   inputtext = true;
@@ -31,13 +38,51 @@ export class DashboardComponent implements OnInit {
   new_password:any;
   confirm_password:any;
   modal: any;
+  loading: boolean;
+  submitted = false;
+  addAddressForm:FormGroup;
+  editProductForm:FormGroup;
+  isAddNewAddress = false;
+  isEditAddress : boolean;
+  countries = Country.getAllCountries();
+  states = null;
+  cities = null;
+  @ViewChild('country') country: ElementRef
+  @ViewChild('city') city: ElementRef
+  @ViewChild('state') state: ElementRef
   @ViewChild('otpModalLabel') otpModalLabel : any;
-  constructor(public httpService:AuthenticationService, public userService:UserService,private router: Router,private modalService: NgbModal) { }
+  selectedState: any;
+  selectedCountry: any;
+  aid: any;
+  defaultAddress = false;
+  constructor(public httpService:AuthenticationService,private formBuilder:FormBuilder, public userService:UserService,public productService:ProductService,private router: Router,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getUserDetails();
+    this.getAddress();
+    this.initializeAddAddressForm();
+    this.getWishlistProducts();
   }
-
+  getWishlistProducts(){
+    this.productService.wishlistItems.subscribe(response => this.wishlistProducts = response);
+  }
+  
+  moveToSelectedTab(tabName: string) {
+    for (let i =0; i< document.querySelectorAll('.mat-tab-label-content').length; i++) {
+        if ((<HTMLElement>document.querySelectorAll('.mat-tab-label-content')[i]).innerText == tabName) {
+          (<HTMLElement>document.querySelectorAll('.mat-tab-label')[i]).click();
+        }
+      }
+  }
+  logoutfromDashboard(){
+    this.httpService.logout();
+  }
+  async addToCart(product: any) {
+    const status = await this.productService.addToCart(product);
+    if(status) {
+      this.router.navigate(['/shop/cart']);
+    }
+  }
   ToggleDashboard() {
     this.openDashboard = !this.openDashboard;
   }  
@@ -56,8 +101,27 @@ export class DashboardComponent implements OnInit {
   passwordEdit(){
     this.passwordtext = !this.passwordtext
   }
+  addNewAddress(){
+    this.isAddNewAddress = !this.isAddNewAddress;
+    this.addAddressForm.reset();
+    this.isEditAddress = false;
+  }
   // modalButton1(){
+    onCountryChange($event): void {
+      this.states = State.getStatesOfCountry(JSON.parse(this.country.nativeElement.value).isoCode);
+      this.selectedCountry = JSON.parse(this.country.nativeElement.value);
+      //this.cities = this.selectedState = this.selectedCity = null;
+    }
+  
+    onStateChange($event): void {
+      this.cities = City.getCitiesOfState(JSON.parse(this.country.nativeElement.value).isoCode, JSON.parse(this.state.nativeElement.value).isoCode)      // this.selectedState = JSON.parse(this.state.nativeElement.value);
+      this.selectedState = JSON.parse(this.state.nativeElement.value);
 
+      // this.selectedCity = null;
+    }
+    onCityChange($event): void {
+     // this.selectedCity = JSON.parse(this.city.nativeElement.value)
+    }
   // }
 namesUpdate(){
     const object = {
@@ -279,9 +343,155 @@ this.httpService.passwordUpdate(object)
       },
       error:(error)=>{
         this.error = error;
-        
+        this.loading = false;
         console.log(error)       
     }
     })
   }
+  getAddress(){
+    this.httpService.getAddress(this.accessToken)
+    .subscribe({ 
+      next:(data)=>{
+        this.Address = data;
+        console.log(this.Address)
+
+       }
+    })
+    
+  }
+initializeAddAddressForm(){
+this.addAddressForm = this.formBuilder.group({
+    type:['',Validators.required],
+    name:['',Validators.required],
+    mobile:['', [Validators.required,
+    Validators.pattern("^[0-9]{10}$"),
+    Validators.minLength(10), Validators.maxLength(10)]],
+    address:['',Validators.required],
+    landmark:['',Validators.required],
+    area:['',Validators.required],
+    city:['',Validators.required],
+    state:['',Validators.required],
+    country:['',Validators.required],
+    pincode:['',Validators.required],
+    is_default:['']
+})
+}
+get f(){
+  return this.addAddressForm.controls;
+}
+onSubmit(){
+  this.submitted=true;
+  if(!this.isEditAddress){
+  if(this.addAddressForm.invalid){
+    this.addAddressForm.markAllAsTouched();
+    return false;
+  }else{
+    this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+  this.httpService.addAddress(this.accessToken,this.addAddressForm.value).
+  subscribe({
+    next:(data)=>{
+      console.log(data)
+      if(data.message==='Address added Successfully'){
+        Swal.fire({
+          icon: 'success',
+          title: 'Congratulations!',
+          text: 'Address added Successfully',
+          width: '400px',
+        })
+        this.getAddress();
+        this.isAddNewAddress = false;
+      }
+    },
+    error:(error) => {
+      console.log(error)
+    }
+  })
+}}
+else if(this.isEditAddress){
+  if(this.addAddressForm.invalid){
+    this.addAddressForm.markAllAsTouched();
+    return false;
+  }else{
+    this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+    
+    this.httpService.editAddress(this.accessToken,this.addAddressForm.value,this.aid).
+  subscribe({
+    next:(data)=>{
+      console.log(data)
+      if(data.message === 'Updated Sucessfully'){
+        Swal.fire({
+          icon: 'success',
+          title: 'Done!',
+          text: 'Updated Successfully',
+          width: '400px',
+        })
+        this.getAddress();
+        this.isAddNewAddress = false;
+      }
+    },
+    error:(error) => {
+      console.log(error)
+    }
+  })
+}  
+}
+}
+
+deleteaddress(aid:any){
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+   if(result.isConfirmed){
+    this.httpService.deleteaddress(this.accessToken,aid)
+    .subscribe(
+      {
+        next:(data) => {
+          console.log(data);
+          if(data.message ==='Address Deleted Successful'){
+            Swal.fire({
+              icon: 'success',
+              title: 'Done!',
+              text: 'Deleted Successfully',
+              width: '400px',
+            })
+            this.getAddress();
+          }
+        },
+        error:(error)=>{
+          this.error = error;
+          
+          console.log(error) 
+      }
+    });
+   }
+  })
+
+}
+
+editaddress(address){
+  this.isEditAddress = true;
+  this.isAddNewAddress = true;
+  const countrys = this.countries.find(item => JSON.stringify(item) === JSON.stringify(address.country));
+  this.aid = address.id;
+  this.addAddressForm.patchValue({
+    type:address.type_id,
+    name:address.name,
+    mobile:address.mobile,
+    address:address.address,
+    landmark:address.landmark,
+    area:address.area,
+    city:address.city,
+    state:address.state,
+    country:countrys,
+    pincode:address.pincode
+  })
+}
+
+
 }

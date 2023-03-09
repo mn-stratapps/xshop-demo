@@ -46,13 +46,13 @@
                                     class="nav-link">My Orders</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#wishlist"
                                     class="nav-link">My Wishlist</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#payment"
-                                    class="nav-link">Saved Cards</a></li>
+                            <!-- <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#payment"
+                                    class="nav-link">Saved Cards</a></li> -->
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#profile"
                                     class="nav-link">Profile</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#security"
                                     class="nav-link">Security</a> </li>
-                            <li class="nav-item"><a href="" class="nav-link">Log Out</a> </li>
+                            <li class="nav-item"><a href="" (click)="logoutfromDashboard()" class="nav-link">Log Out</a> </li>
                         </ul>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                                     <div class="counter-box">
                                         <img src="../assets/images/icon/order-icon.png" class="img-fluid">
                                         <div>
-                                            <h3>50</h3>
+                                            <h3>{{wishlistProducts?.length}}</h3>
                                             <h5>Wishlist</h5>
                                         </div>
                                     </div>
@@ -115,9 +115,6 @@
                                                 <h6>Email: {{userData.email}}</h6>
                                                 <h6>Usernmae: {{userData.username}}</h6>
                                                 <h6>email: {{userData.email}}</h6>
-
-
-                                                <h6><a href="#">Change Password</a></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -138,14 +135,31 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h6>Default Billing Address</h6>
+                                            <h4>Default Billing Address</h4>
                                             <address>You have not set a default billing address.<br><a href="#">Edit
                                                     Address</a></address>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h6>Default Shipping Address</h6>
-                                            <address>You have not set a default shipping address.<br><a
-                                                    href="#">Edit Address</a></address>
+                                            <h4>Default Shipping Address</h4>
+                                            <div  *ngFor="let address of Address">
+                                                <div *ngIf='address?.is_default'>
+                                                <div class="top">
+                                                    <h6>{{address.name}} <span>{{address.type_id}}</span></h6>
+                                                </div>
+                                                <div class="middle">
+                                                    <div class="address">
+                                                        <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
+                                                        <p>{{address.city}}, {{address.country}}</p>
+                                                        <p>{{address.pincode}}</p>
+                                                    </div>
+                                                    <div class="number">
+                                                        <p>mobile: <span>{{address.mobile}}</span></p>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <!-- <address><br><a
+                                                data-bs-toggle="tab" data-bs-target="#address">Edit Address</a></address> -->
                                         </div>
                                     </div>
                                 </div>
@@ -154,68 +168,203 @@
                      </div>
                     </div>
                     <div class="tab-pane fade" id="address">
+                        <!-- view Adress Start -->
+                        <div *ngIf="!isAddNewAddress">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-0">
                                     <div class="card-body">
                                         <div class="top-sec">
                                             <h3>Address Book</h3>
-                                            <a href="#" class="btn btn-sm btn-solid">+ add new</a>
+                                            <a (click)="addNewAddress()" class="btn btn-sm btn-solid">+ Add New</a>
                                         </div>
                                         <div class="address-book-section">
                                             <div class="row g-4">
-                                                <div class="select-box active col-xl-4 col-md-6">
+                                                <div class="select-box active col-xl-4 col-md-6" *ngFor="let address of Address">
                                                     <div class="address-box">
                                                         <div class="top">
-                                                            <h6>mark jecno <span>home</span></h6>
+                                                            <h6>{{address.name}} <span>{{address.type_id}}</span></h6>
                                                         </div>
                                                         <div class="middle">
                                                             <div class="address">
-                                                                <p>549 Sulphur Springs Road</p>
-                                                                <p>Downers Grove, IL</p>
-                                                                <p>60515</p>
+                                                                <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
+                                                                <p>{{address.city}}, {{address.country}}</p>
+                                                                <p>{{address.pincode}}</p>
                                                             </div>
                                                             <div class="number">
-                                                                <p>mobile: <span>+91 123 - 456 - 7890</span></p>
+                                                                <p>mobile: <span>{{address.mobile}}</span></p>
                                                             </div>
                                                         </div>
                                                         <div class="bottom">
-                                                            <a href="javascript:void(0)"
-                                                                data-bs-target="#edit-address"
-                                                                data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">remove</a>
+                                                            <a (click)="editaddress(address)" class="bottom_btn">edit</a>
+                                                            <a (click)="deleteaddress(address.id)" class="bottom_btn">remove</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="select-box col-xl-4 col-md-6">
-                                                    <div class="address-box">
-                                                        <div class="top">
-                                                            <h6>mark jecno <span>office</span></h6>
-                                                        </div>
-                                                        <div class="middle">
-                                                            <div class="address">
-                                                                <p>549 Sulphur Springs Road</p>
-                                                                <p>Downers Grove, IL</p>
-                                                                <p>60515</p>
-                                                            </div>
-                                                            <div class="number">
-                                                                <p>mobile: <span>+91 123 - 456 - 7890</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="bottom">
-                                                            <a href="javascript:void(0)"
-                                                                data-bs-target="#edit-address"
-                                                                data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">remove</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        </div>
+                        <!-- view Adress End -->
+                        <!-- ADD NEW Adress Start -->
+                        <div class="container-fluid" *ngIf="isAddNewAddress">
+                            <div class="row product-adding">
+                                <div class="col-xl-12">
+                                 <div class="card-body">
+                                    <a (click)="addNewAddress()" class="btn btn-sm btn-solid">View Your Addresses</a>
+                                        <form class="theme-form" [formGroup]="addAddressForm" (ngSubmit)="onSubmit()">
+                                            <div class="row">
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Full name </div>
+                                                    <input class="form-control" type="text"id="title" name="name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required="">
+                                                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.name.errors.required">Name is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Mobile NUmber </div>
+                                                    <input class="form-control" type="tel"id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" required="">
+                                                    <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.mobile.errors?.required">Mobile No is required</div>
+                                                        <div *ngIf="f.mobile.errors?.pattern">Please Enter Valid Mobile No .</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Flat, House No., Building, Company, Apartment
+                                                    </div>
+                                                    <input class="form-control" type="text"id="address" name="address" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" required="">
+                                                    <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.address.errors.required">address is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Area, Street, Sector, Village</div>
+                                                    <input class="form-control" type="area"id="area" name="name" formControlName="area" [ngClass]="{ 'is-invalid': submitted && f.area.errors }" required="">
+                                                    <div *ngIf="submitted && f.area.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.area.errors.required">Area, Street, Sector, Village is required</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Landmark</div>
+                                                    <input class="form-control" type="text"id="landmark" name="landmark" formControlName="landmark" [ngClass]="{ 'is-invalid': submitted && f.landmark.errors }" required="">
+                                                    <div *ngIf="submitted && f.landmark.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.landmark.errors.required">landmark is required</div>
+                                                    </div>
+                                                </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                            <fieldset>
+                                                                <label for="country">Country:</label><br /><br />
+                                                                <select
+                                                                  #country
+                                                                  class="form-control"
+                                                                  name="country"
+                                                                  id="country"
+                                                                  formControlName="country"
+                                                                  [ngClass]="{ 'is-invalid': submitted && f.country.errors }" required=""
+                                                                  (change)="onCountryChange($event)">
+                                                                  <option [value]="null">-- Select Your Country --</option>
+                                                                  <option *ngFor="let country of countries" [value]="country | json">
+                                                                    {{ country.flag }}&nbsp;&nbsp;{{ country.name }}
+                                                                  </option>
+                                                                </select>
+                                                                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.country.errors">Please select country.</div>
+                                                                </div>
+                                                              </fieldset>
+                                                              
+                                                        </div>
+                                                        <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                            <fieldset>
+                                                                <label for="state">State:</label><br /><br />
+                                                                <select
+                                                                  *ngIf="states"
+                                                                  #state
+                                                                  class="form-control"
+                                                                  name="state"
+                                                                  id="state"
+                                                                  formControlName="state"
+                                                                  [ngClass]="{ 'is-invalid': submitted && f.state.errors }" required=""
+                                                                  (change)="onStateChange($event)">
+                                                                  <option [value]="null">-- Select Your State --</option>
+                                                                  <option *ngFor="let state of states" [value]="state | json">
+                                                                    {{ state.name }}
+                                                                  </option>
+                                                                </select>
+                                                                <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.state.errors">Please select stste.</div>
+                                                                </div>
+                                                              </fieldset>
+                                                           </div>
+                                                           <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                            <fieldset>
+                                                                <label for="city">City:</label><br /><br />
+                                                                <select
+                                                                  *ngIf="cities"
+                                                                  #city
+                                                                  class="form-control"
+                                                                  name="city"
+                                                                  id="city"
+                                                                  formControlName="city"
+                                                                  [ngClass]="{ 'is-invalid': submitted && f.city.errors }" required=""
+                                                                  (change)="onCityChange($event)">
+                                                                  <option [value]="null">-- Select Your City --</option>
+                                                                  <option *ngFor="let city of cities" [value]="city.name">
+                                                                    {{ city.name }}
+                                                                  </option>
+                                                                </select>
+                                                                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.city.errors">Please select city.</div>
+                                                                </div>
+                                                              </fieldset>
+                                                            </div>
+
+                                                    </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <div class="field-label">Pin Code </div>
+                                                        <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
+                                                        <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.pincode.errors.required">pincode is required</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Add delivery instructions</div>
+                                                     <h5>Preferences are used to plan your delivery. However, shipments can sometimes arrive early or later than planned.</h5>
+                                                    </div>
+                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <div class="field-label">Address Type</div>
+                                                        <select name="type" class="form-select me-2" formControlName="type"
+                                                        [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
+                                                            <option  selected=""> Select an Address Type</option>
+                                                            <option value="HOME"> Home (7 am – 9 pm delivery) </option>
+                                                            <option value="OFFICE" > Office/Commercial (10 AM - 6 PM delivery)</option>    
+                                                        </select>
+                                                        <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.type.errors">Please select type.</div>
+                                                        </div>
+                                                     </div>
+                                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <div class="field-label">Set As Default?</div>
+                                                        <input type="checkbox" id="is_default" name="is_default" formControlName="is_default" [(ngModel)]="defaultAddress" [checked]="true"> Make Address As Default
+                                                        
+                                                    </div>
+                                                   </div>
+                                                   <button type="submit" class="btn btn-solid mt-2">Save Address</button>
+                                        </form>
+                                    </div>
+                                </div>
+                             </div>
+                            </div>
+                        <!-- Edit Adress End -->
+
+
                     </div>
                     <div class="tab-pane fade" id="orders">
                         <div class="row">
@@ -420,154 +569,32 @@
                                                 <thead>
                                                     <tr class="table-head">
                                                         <th scope="col">image</th>
-                                                        <th scope="col">Order Id</th>
+                                                        <th scope="col">availability</th>
                                                         <th scope="col">Product Details</th>
                                                         <th scope="col">Price</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody *ngFor="let wishlist of wishlistProducts">
                                                     <tr>
                                                         <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/2.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
+                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-')]">
+                                                              <img class="blur-up lazyloaded" [src]="wishlist.images[0].src" [alt]="wishlist.images[0].alt">
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <span class="mt-0">#125021</span>
+                                                            <p>{{ wishlist.stock > 0 ? 'in stock' : 'out of stock' }}</p>
                                                         </td>
                                                         <td>
-                                                            <span>Purple polo tshirt</span>
+                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-')]">{{ wishlist.title | titlecase }}</a>
                                                         </td>
                                                         <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
+                                                            <span class="theme-color fs-6">{{ (wishlist.price | discount:wishlist) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span>
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)"
-                                                                class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/2.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span class="mt-0">#125367</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>Sleevless white top</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                                class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/2.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span>#125948</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>multi color polo tshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                                class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/2.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span>#127569</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>Candy red solid tshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                                class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/2.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span>#125753</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>multicolored polo tshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                                class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/2.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span>#125021</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>Men's Sweatshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                                class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
+                                                            <a  class="btn btn-xs btn-solid" (click)="addToCart(wishlist)" >
+                                                                Move To Cart
+                                                              </a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -578,7 +605,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="payment">
+                    <!-- <div class="tab-pane fade" id="payment">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-0">
@@ -655,7 +682,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="tab-pane fade" id="profile">
                         <div class="row">
                             <div class="col-12">
