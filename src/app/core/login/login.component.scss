@@ -1,16 +1,19 @@
 .form-group .fwd {
-    float: right;
-    line-height: 1.5;
-    font-size: 15px;
-    color: #222222;
-    font-weight: 500;
+  float: right;
+  line-height: 1.5;
+  font-size: 15px;
+  color: #222222;
+  font-weight: 500;
 }
 .btn-solid a{
-    color:#ffffff;  
-  }
-  .btn-solid a:hover{
-    color:#222222;  
-  }
-  .invalid-feedback{
-    margin:10px 0px;
-  }
+  color:#ffffff;  
+}
+.btn-solid a:hover{
+  color:#222222;  
+}
+.field-icon{
+    float: right;
+    position: relative;
+    right: 9px;
+    top: -43px;
+}

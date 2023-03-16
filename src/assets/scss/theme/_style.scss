@@ -4869,7 +4869,7 @@
         .form-control {
             padding: 13px;
             width: 345px;
-            border-radius: 0;
+            border-radius: 4px;
             border: 1px solid $white-dark;
             &.name-cls {
                 width: 265px;
@@ -6532,8 +6532,8 @@
                 margin-bottom: 15px;
                 height: inherit;
                 text-align: center;
-                border-radius: 5px;
-                border-radius: 5px;
+                border-radius: 4px;
+                
             }
             .btn-solid {
                 margin: 0 auto;
@@ -6560,7 +6560,7 @@
                 label {
                     text-transform: capitalize;
                     color: $font-color;
-                    font-size: 14px;
+                    font-size: 15px;
                     font-weight: 600;
                     margin-bottom: 8px;
                 }
@@ -6568,9 +6568,9 @@
                     border-color: $round-border;
                     font-size: 12px;
                     padding: 17px 25px;
-                    margin-bottom: 18px;
+                    margin-bottom: 8px;
                     height: inherit;
-                    border-radius: 5px;
+                    border-radius: 4px;
                 }
             }
         }
@@ -6610,7 +6610,7 @@
                 label {
                     text-transform: capitalize;
                     color: $font-color;
-                    font-size: 14px;
+                    font-size: 15px;
                     font-weight: 600;
                 }
                 input {
@@ -6619,7 +6619,7 @@
                     padding: 17px 25px;
                     margin-bottom: 13px;
                     height: inherit;
-                    border-radius: 5px;
+                    border-radius: 4px;
                 }
             }
         }
@@ -6726,7 +6726,7 @@
                 padding: 17px 25px;
                 margin-bottom: 30px;
                 height: inherit;
-                border-radius: 5px;
+                border-radius: 4px;
             }
             textarea {
                 border-color: $round-border;
@@ -7971,6 +7971,7 @@
                     padding: 0 22px;
                     height: 45px;
                     border: 1px solid #dddddd;
+                    border-radius: 4px;
                 }
             }
             select,
@@ -8278,7 +8279,7 @@
         }
         .box {
             a {
-                color: var(--theme-deafult);
+                color:#ff4c3b;
                 margin-top: 5px;
                 display: block;
             }
@@ -9194,8 +9195,10 @@
                 align-items: center;
                 h4 {
                     text-transform: capitalize;
-                    font-weight: 700;
+                    font-weight: 510;
                     margin-bottom: 0;
+                    font-size: 17px;
+
                 }
                 span {
                     margin-left: 30px;
@@ -9321,7 +9324,7 @@
                     transition: all 0.5s ease;
                     border-radius: 0;
                     background-color: $top-header;
-                    border-top:1px solid #ebebeb;
+                    // border-top:1px solid #ebebeb;
                     padding: 0.8rem;
                     isolation: isolate;
                     
@@ -9331,14 +9334,15 @@
                         border-radius: 0;
                         color: var(--theme-deafult);
                         transition: all 0.5s ease;
-                        border-top:1px solid #ebebeb;
+                        // border-top:1px solid #ebebeb;
                     }
                     &:hover {
                         border: none;
                         border-right: 2px solid var(--theme-deafult);
                         color: var(--theme-deafult);
                         transition: all 0.5s ease;
-                        border-top:1px solid #ebebeb;
+                        // border-top:1px solid #ebebeb;
+                        border-top:none;
                     }
                 }
             }
@@ -14403,20 +14407,20 @@
         height: 25px;
         background: #e8ebf2;
         left: 75px;
-        top: 39px;
+        top: 31px;
     }
     .search-form .form-group:after {
         position: absolute;
         content: "\f002";
         font-family: FontAwesome;
-        top: 41px;
+        top: 33px;
         left: 49px;
         color: #8e8e8e;
     }
     .search-form input {
         border: 1px solid #eff0f1;
         padding: 10px 10px 10px 70px;
-        border-radius: 5px;
+        border-radius: 4px;
         background-color: #f8f8f9;
     }
     .text-theme {
@@ -14424,7 +14428,7 @@
     }
     .card .card-header {
         background-color: #ffffff;
-        padding: 30px;
+        padding: 20px 30px;
         border-bottom: 1px solid #f8f8f9;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
@@ -14482,6 +14486,8 @@
     }
     .page-header-left h3{
     padding-bottom: 20px;
+    font-size: 21px;
+    color: #222222;
     }
     .dashboard-section  .card-body {
         border: none;
@@ -14619,7 +14625,7 @@
     }
     .needs-validation h4 {
         font-weight: 600;
-        margin-bottom: 20px;
+        margin-bottom: 14px;
     }
     .needs-validation .form-control {
         padding: 0.48rem 0.75rem;
@@ -14795,7 +14801,7 @@
             margin-bottom: 20px;
     
             h4 {
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 700;
                 color: $dark-font;
             }
@@ -14818,10 +14824,6 @@
         }
     
         .box {
-            a {
-                color: var(--theme-color);
-            }
-    
             h6 {
                 margin-bottom: 0;
             }
@@ -14834,7 +14836,7 @@
                 position: relative;
                 width: 100%;
                 background-color: $top-header;
-                border-radius: 8px;
+                border-radius: 4px;
     
                 h3 {
                     font-size: 16px;
@@ -14857,7 +14859,7 @@
         .faq-content {
             .tab-pane {
                 .card {
-                    min-height: 60vh;
+                    // min-height: 60vh;
                 }
     
                 .card-body {
@@ -14878,6 +14880,7 @@
                     padding: 15px;
                     background-color: $white;
                     transition: all 0.5s ease;
+                    border-radius: 8px;
     
                     .top {
                         h6 {
@@ -14886,10 +14889,8 @@
                             font-weight: 600;
                             font-size: 14px;
     
-                            span {
+                            button {
                                 float: right;
-                                background-color:#ff4c3b;
-                                color: $white;
                                 padding: 2px 15px;
                                 font-size: 80%;
                                 border-radius: 3px;
@@ -15086,4 +15087,20 @@
 }
 .modal .border-none{
     border:none;
+}
+.field-labels {
+    line-height: 24px;
+    text-transform: capitalize;
+    color: #333;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size:15px;
+}
+.user-table{
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 6px;
+}
+.toast-container {
+    position: fixed!important;
 }

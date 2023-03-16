@@ -5,7 +5,7 @@
                  <h3>Login</h3> 
                 <div class="theme-card">
                     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="theme-form">
-                        <div class="form-group">
+                        <div class="form-group mb-4">
                             <label for="email">Email/Username</label>
                             <!-- <input type="text" class="form-control" id="email" placeholder="Email" required=""> -->
                             <input type='text' formControlName="username" class='input-field form-control' [ngClass]="{ 'is-invalid':f.username.errors && submitted,'is-valid':submitted}" placeholder='Email Id' required/>
@@ -19,7 +19,7 @@
                             <label for="review">Password</label>
                             <!-- <input type="password" class="form-control" id="review" placeholder="Enter your password" required=""> -->
                             <input [type]="show ? 'text' : 'password'" formControlName="password" class='input-field form-control' [ngClass]="{ 'is-invalid':f.password.errors && submitted,'is-valid':submitted}" placeholder='Enter Password'/>
-                            <i class="fa fa-eye-slash" (click)="password()" aria-hidden="true"></i>
+                            <i class="fa fa-eye-slash field-icon" (click)="password()" aria-hidden="true"></i>
                             <div *ngIf="submitted && f.password.errors " class="invalid-feedback">
                                 <div *ngIf="f.password.errors.required " >Password is required</div>
                                 <div *ngIf="f.password.errors.minlength" >Password will be at least 8 characters</div>

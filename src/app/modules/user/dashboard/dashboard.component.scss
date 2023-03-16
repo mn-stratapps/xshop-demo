@@ -7,5 +7,27 @@
     height: 22px;
 }
 .card-body{
-    border-radius: 8px;
+    border-radius:8px;
 }
+.f-w-550{
+    font-size:16px;
+    font-weight: 550;
+}
+.field-label{
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+    font-size: 15px;
+}
+.checkbox{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+.address{
+    font-size: 18px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+

@@ -125,7 +125,7 @@ body {
         ul {
             li {
                 .nav-link {
-                    background-color: $dark-top;
+                     background-color: $dark-top;
                 }
             }
         }
@@ -522,7 +522,7 @@ body {
             color: $white-5;
         }
     }
-    .footer-light {
+    .footer-light {   
         .subscribe {
             border-color: $dark-border;
         }
@@ -1211,6 +1211,7 @@ body {
         .card-header {
             background-color: $dark-top;
             transition: all 0.3s ease;
+            border-bottom: 1px solid #404040;
         }
     }
     .faq-section {
@@ -2395,5 +2396,13 @@ body {
     .dashboard-section .card_bg{
         background-color: #232323;   
     }
-    
+    .faq-tab .nav-tabs .nav-item{
+        border-color: #404040;
+    }
+    .field-labels{
+        color:#cfd4da;
+    }
+    .user-table{
+        background-color: #232323;
+    }
 }
