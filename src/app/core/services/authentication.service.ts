@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
  import { environment } from 'src/environments/environment';
 import { Useraddress } from '../models/useraddress';
-
+import { SettingsComponent } from 'src/app/shared/components/settings/settings.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class AuthenticationService {
   accessToken: any;
   refreshToken: any;
   id:any;
+  public settings:SettingsComponent;
   emailActivationToken: string;
   isUserLogin: boolean = false;
   public Products
@@ -74,6 +75,11 @@ export class AuthenticationService {
       localStorage.removeItem('currentUser');
       //this.userSubject.next(null);
       this.router.navigate(['/core/login']);
+      this.settings.producSubscription.unsubscribe();
+
+  }
+  deactivateAccount(accessToken){
+    return this.http.delete(`${environment.apiUrl}/a/deactivate/`+accessToken)
   }
   //rest password
 resetPassword(user:User) {

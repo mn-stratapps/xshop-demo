@@ -46,10 +46,12 @@ export class ProductService {
   // }
 
   private get products(): Observable<Product[]> {
+    //return this.http.get<Product[]>(`${environment.apiUrl}/products/`)
     this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
     .pipe(map(data => data));
-    this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
-    return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
+     this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
+     return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
+    //return this.Products;
      }
   //Get Products
   public get getProducts(): Observable<Product[]> {
@@ -241,8 +243,7 @@ public addToWishlist(product): any {
       error:(error)=>{
         console.log(error)
       }
-    })
-  
+    }) 
     }
     // else {
     //       state.cart.push({
@@ -253,7 +254,9 @@ public addToWishlist(product): any {
             this.OpenCart = true; // If we use cart variation modal
             return true;
   }
-
+  addToCartCount(accessToken,id,quantity){
+    return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})
+  }
   // Update Cart Quantity
   public updateCartQuantity(product: Product, quantity: number,accessToken:any){
     let id=product.id;

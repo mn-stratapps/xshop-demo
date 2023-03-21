@@ -19,6 +19,8 @@
     </div>
 </div>
 <!-- breadcrumb End -->
+
+
 <!--  dashboard section start -->
 <section class="dashboard-section section-b-space user-dashboard-section">
     <div class="container">
@@ -105,7 +107,7 @@
                                     <div class="col-sm-6">
                                         <div class="box">
                                             <div class="box-title">
-                                                <h3>Contact Information</h3><a href="#">Edit</a>
+                                                <h3>Contact Information</h3>
                                             </div>
                                             <div class="box-content mr-3">
                                                 <h6>First Name: {{userData.first_name}}</h6>
@@ -119,7 +121,7 @@
                                     <div class="col-sm-6">
                                         <div class="box">
                                             <div class="box-title">
-                                                <h3>Newsletters</h3><a href="#">Edit</a>
+                                                <h3>Newsletters</h3>
                                             </div>
                                             <div class="box-content">
                                                 <p>You are currently not subscribed to any newsletter.</p>
@@ -129,16 +131,16 @@
                                 </div>
                                 <div class="box mt-2">
                                     <div class="box-title">
-                                        <h3>Address Book</h3><a href="#">Manage Addresses</a>
+                                        <h3>Address Book</h3>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h6>Default Billing Address</h6>
-                                            <address>You have not set a default billing address.
-                                                <a class="mt-0" href="#">Edit Address</a></address>
+                                            <h4>Default Billing Address</h4>
+                                            <address>You have not set a default billing address.<br><a href="#">Edit
+                                                    Address</a></address>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h6>Default Shipping Address</h6>
+                                            <h4>Default Shipping Address</h4>
                                             <div  *ngFor="let address of Address">
                                                 <div *ngIf='address?.is_default'>
                                                 <div class="top">
@@ -146,9 +148,9 @@
                                                 </div>
                                                 <div class="middle">
                                                     <div class="address">
-                                                        <p class="mb-0">{{address.address}}, {{address.area}}, {{address.landmark}}</p>
-                                                        <p class="mb-0">{{address.city}}, {{address.country}}</p>
-                                                        <p class="mb-0">{{address.pincode}}</p>
+                                                        <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
+                                                        <p>{{address.city}}, {{address.country}}</p>
+                                                        <p>{{address.pincode}}</p>
                                                     </div>
                                                     <div class="number">
                                                         <p>mobile: <span>{{address.mobile}}</span></p>
@@ -213,21 +215,18 @@
                             <div class="row product-adding">
                                 <div class="col-xl-12">
                                  <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h3 class="address f-w-550">ADD ADDRESS</h3>
                                     <a (click)="addNewAddress()" class="btn btn-sm btn-solid">View Your Addresses</a>
-                                  </div>
                                         <form class="theme-form" [formGroup]="addAddressForm" (ngSubmit)="onSubmit()">
                                             <div class="row">
-                                                <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2 mt-3">
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
                                                     <div class="field-label">Full name </div>
                                                     <input class="form-control" type="text"id="title" name="name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required="">
                                                     <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                                         <div *ngIf="f.name.errors.required">Name is required</div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2 mt-3">
-                                                    <div class="field-label">Mobile Number </div>
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="field-label">Mobile NUmber </div>
                                                     <input class="form-control" type="tel"id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" required="">
                                                     <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
                                                         <div *ngIf="f.mobile.errors?.required">Mobile No is required</div>
@@ -260,10 +259,10 @@
                                                     <div class="row">
                                                         <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
-                                                                <div class="field-label" for="country">Country</div>
+                                                                <label for="country">Country:</label><br /><br />
                                                                 <select
                                                                   #country
-                                                                  class="form-select"
+                                                                  class="form-control"
                                                                   name="country"
                                                                   id="country"
                                                                   formControlName="country"
@@ -278,10 +277,11 @@
                                                                     <div *ngIf="f.country.errors">Please select country.</div>
                                                                 </div>
                                                               </fieldset>
-                                                         </div>
+                                                              
+                                                        </div>
                                                         <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
-                                                                <div class="field-label" for="state">State</div>
+                                                                <label for="state">State:</label><br /><br />
                                                                 <select
                                                                   *ngIf="states"
                                                                   #state
@@ -303,7 +303,7 @@
                                                            </div>
                                                            <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
-                                                                <div class="field-label" for="city">City</div>
+                                                                <label for="city">City:</label><br /><br />
                                                                 <select
                                                                   *ngIf="cities"
                                                                   #city
@@ -323,18 +323,20 @@
                                                                 </div>
                                                               </fieldset>
                                                             </div>
-                                                            <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
-                                                                <div class="field-label">Pin Code </div>
-                                                                <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
-                                                                <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
-                                                                    <div *ngIf="f.pincode.errors.required">pincode is required</div>
-                                                                </div>
-                                                            </div>
-                                                       </div>
+
+                                                    </div>
                                                 <div class="row">
-                                                  <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                        <div class="field-label">Pin Code </div>
+                                                        <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
+                                                        <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.pincode.errors.required">pincode is required</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
                                                     <div class="field-label">Add delivery instructions</div>
-                                                     <h6>Preferences are used to plan your delivery. However, shipments can sometimes arrive early or later than planned.</h6>
+                                                     <h5>Preferences are used to plan your delivery. However, shipments can sometimes arrive early or later than planned.</h5>
                                                     </div>
                                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
                                                         <div class="field-label">Address Type</div>
@@ -349,9 +351,10 @@
                                                         </div>
                                                      </div>
                                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
-                                                      <div class="field-label">Set As Default?</div>
-                                                        <input type="checkbox" id="is_default" class="checkbox" name="is_default" formControlName="is_default" [(ngModel)]="defaultAddress" [checked]="true"> Make Address As Default
-                                                     </div>
+                                                        <div class="field-label">Set As Default?</div>
+                                                        <input type="checkbox" id="is_default" name="is_default" formControlName="is_default" [(ngModel)]="defaultAddress" [checked]="true"> Make Address As Default
+                                                        
+                                                    </div>
                                                    </div>
                                                    <button type="submit" class="btn btn-solid mt-2">Save Address</button>
                                         </form>
@@ -360,7 +363,9 @@
                              </div>
                             </div>
                         <!-- Edit Adress End -->
-                     </div>
+
+
+                    </div>
                     <div class="tab-pane fade" id="orders">
                         <div class="row">
                             <div class="col-12">
@@ -685,91 +690,158 @@
                                     <div class="card-body">
                                         <div class="dashboard-box">
                                             <div>
-                                            <div class="dashboard-title mb-2">
+                                            <div class="dashboard-title">
                                                 
                                                 <h4>Personal Information</h4>
                                                 <a class="edit-link" (click)="displayTextbox()" >edit</a>
                                             </div>
-                                            <div class="dashboard-detail">
+                                            <div class="dashboard-detail mt-4">
                                                 <form class="needs-validation">   
                                                     <div class="row">
-                                                        <div class="col-sm-6 col-xs-12 col-lg-6">
-                                                            <div class="form-group mb-0">
-                                                                <label class="form-label f-w-550">First Name</label>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group row align-items-center mb-4">
+                                                                <label class="col-xl-2 col-md-4 form-label">
+                                                                   First Name</label>
+                                                                <div class="col-md-10">
                                                                 <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.first_name" [value]="userData.first_name" [disabled]='inputtext' > 
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-6 col-xs-12 col-lg-6">
-                                                              <div class="form-group mb-0">
-                                                                 <label class="form-label f-w-550">Last Name</label>
+                                                            <div class="form-group row align-items-center mb-4">
+                                                                 <label class="col-xl-2 col-md-4 form-label">Last Name</label>
+                                                                <div class="col-md-10">
                                                                     <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >   
                                                                 </div>
                                                             </div>
-                                                            <div *ngIf="!inputtext" class="product-buttons mb-3 mt-3">
-                                                                <button (click)="namesUpdate()" class="btn btn-danger btns">save</button>
-                                                                <button (click)="displayTextbox()" class="btn btn-light btns">cancel</button>
-                                                            </div>
+                                                          
+                                                        </div>
                                                     </div>
                                                 </form>
-                                                    
+                                                <!-- <ul>                                                    
+                                                
+                                                    <li>
+                                                        <div class="details">
+                                                            <div class="left">
+                                                                <h6>First Name</h6>
+                                                            </div>
+                                                            <div class="right" >
+                                                                <input autocomplete="off" type="text" class="email-disable" name="first_name"[(ngModel)]="userData.first_name" [value]="userData.first_name" [disabled]='inputtext' >                                                               
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="details">
+                                                            <div class="left">
+                                                                <h6>Last Name</h6>
+                                                            </div>
+                                                            <div class="right" >
+                                                                <input autocomplete="off" type="text" class="email-disable" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >                                                                                                                          </div>
+                                                        </div>
+                                                    </li>
+                                                    </ul> -->
+                                                    <div *ngIf="!inputtext" class="product-buttons mb-4">
+                                                        <button (click)="namesUpdate()" class="btn btn-danger btns">save</button>
+                                                        <button (click)="displayTextbox()" class="btn btn-light btns">cancel</button>
+                                                    </div>
                                                 </div>                                                
                                             </div>
 
                                             <div>
-                                               
-                                                <div class="dashboard-detail mt-3">
+                                                <div class="dashboard-title">
+                                                    
+                                                    <h4>User Name</h4>
+                                                    <a class="edit-link" (click)="editUsernameEdit()" >edit</a>
+                                                </div>
+                                                <div class="dashboard-detail mt-4">
                                                     <form class="needs-validation">   
                                                         <div class="row">
-                                                            <div class="col-xs-12 col-sm-6 col-lg-6">
-                                                                <div class="dashboard-title mb-2">
-                                                    
-                                                                    <h4>User Name</h4>
-                                                                    <a class="edit-link" (click)="editUsernameEdit()" >edit</a>
-                                                                </div>
-                                                                <div class="form-group mb-3">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label class="col-xl-2 col-md-4 form-label">
+                                                                       User Name</label>
+                                                                    <div class="col-md-10">
                                                                         <input autocomplete="off" type="text" class="email-disable form-control" name="username"[(ngModel)]="userData.username" [value]="userData.username" [disabled]='usernametext' > 
-                                                                </div>
-                                                                        
-                                                                <div *ngIf="!usernametext" class="product-buttons mb-4">
-                                                                    <button (click)="usernameUpdate()"  class="btn btn-danger btns">save</button>
-                                                                    <button (click)="editUsernameEdit()" class="btn btn-light btns">cancel</button>
+                                                                    </div>
                                                                 </div>
                                                              </div>
-                                                             <div class="col-xs-12 col-sm-6 col-lg-6">
-                                                                <div class="dashboard-title mb-2">
-                                                        
-                                                                    <h4>Mobile Number</h4>
-                                                                    <a class="edit-link" (click)="mobileEdit()" >edit</a>
+                                                        </div>
+                                                    </form>
+                                                    <!-- <ul>                                                    
+                                                    
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>User Name</h6>
                                                                 </div>
-                                                                <div class="form-group  mb-3">
-                                                                    <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
+                                                                <div class="right" >
+                                                                    <input autocomplete="off" type="text" class="email-disable" name="username"[(ngModel)]="userData.username" [value]="userData.username" [disabled]='usernametext' >                                                               
+                                                                </div>
                                                             </div>
+                                                        </li>
+                                                        </ul> -->
+                                                        <div *ngIf="!usernametext" class="product-buttons mb-4">
+                                                            <button (click)="usernameUpdate()"  class="btn btn-danger btns">save</button>
+                                                            <button (click)="editUsernameEdit()" class="btn btn-light btns">cancel</button>
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+
+                                                <div>
+                                                    <div class="dashboard-title">
+                                                        
+                                                        <h4>Mobile Number</h4>
+                                                        <a class="edit-link" (click)="mobileEdit()" >edit</a>
+                                                    </div>
+                                                    <div class="dashboard-detail mt-4">
+                                                        <form class="needs-validation">   
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group row align-items-center mb-4">
+                                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                                           Mobile Number</label>
+                                                                        <div class="col-md-10">
+                                                                            <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
+                                                                        </div>
+                                                                    </div>
+                                                                 </div>
+                                                            </div>
+                                                        </form>
+                                                        <!-- <ul>                                                    
+                                                        
+                                                            <li>
+                                                                <div class="details">
+                                                                    <div class="left">
+                                                                        <h6>Mobile Number</h6>
+                                                                    </div>
+                                                                    <div class="right" >
+                                                                        <input autocomplete="off" type="text" class="email-disable" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >                                                               
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            </ul> -->
                                                             <div *ngIf="!mobiletext" class="product-buttons mb-4">
                                                                 <button (click)="mobilenumberUpdate()" class="btn btn-danger btns">save</button>
                                                                 <button (click)="mobileEdit()"class="btn btn-light btns">cancel</button>
                                                             </div>
-                                                             </div>
-
-                                                        </div>
-                                                    </form>
-                                            
-                                                    </div>                                                
-                                                </div>
-                                                <div>
-                                            </div>
-                                            <div class="dashboard-title mb-0">
+                                                        </div>                                                
+                                                    </div>
+                                            <div class="dashboard-title">
                                                 <h4>login details</h4>
                                                 <a class="edit-link" (click)="emailEdit()" >edit</a>
                                                 
                                             </div>
                                             <div class="dashboard-detail">
                                                 <div>
-                                                      <div class="dashboard-detail mt-2">
+                                                    
+                                                    <div class="dashboard-detail mt-4">
                                                         <form class="needs-validation">   
                                                             <div class="row">
                                                                 <div class="col-sm-12">
-                                                                    <div class="form-group mb-3">
+                                                                    <div class="form-group row align-items-center mb-4">
+                                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                                            Email Address</label>
+                                                                        <div class="col-md-10">
                                                                             <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.email" [value]="userData.email" [disabled]='emailtext' >                
+                                                                        </div>
                                                                     </div>
                                                                  </div>
                                                             </div>

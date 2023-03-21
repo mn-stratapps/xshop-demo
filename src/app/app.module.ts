@@ -10,7 +10,7 @@ import { TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/shop.component';
 import { PagesComponent } from './pages/pages.component';
@@ -39,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingBarRouterModule,
     FormsModule,
     ReactiveFormsModule,
+    ImageCropperModule,
    // CoreModuleModule,
     ToastrModule.forRoot({
       timeOut: 3000,

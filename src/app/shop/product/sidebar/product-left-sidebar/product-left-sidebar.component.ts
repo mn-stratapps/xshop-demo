@@ -23,15 +23,21 @@ export class ProductLeftSidebarComponent implements OnInit {
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
+  accessToken: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
     public productService: ProductService) {
-    this.route.data.subscribe(response => this.product = response.data);
+    // this.route.data.subscribe(response => this.product = response.data);
   }
 
   ngOnInit(): void {
     console.log("dddd", this.product)
+    this.getProductDetails();
+    
   }
+getProductDetails(){
+  this.route.data.subscribe(response => this.product = response.data);
+}
 
   // Get Product Color
   Color(variants) {
@@ -62,17 +68,36 @@ export class ProductLeftSidebarComponent implements OnInit {
   // Increament
   increment() {
     this.counter++;
+    
   }
 
   // Decrement
   decrement() {
     if (this.counter > 1) this.counter--;
   }
-
+  // addToCartCount(){
+  // console.log(this.counter);
+  // }
+  
   // Add to cart
-  async addToCart(product: any) {
-    product.quantity = this.counter || 1;
-    const status = await this.productService.addToCart(product);
+  async addToCartCount(product: any) {
+    const quantity = this.counter || 1;
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    const status = await this.productService.updateCartQuantity(product,quantity,this.accessToken)
+    .subscribe(
+      {
+        next:(data)=>{
+          console.log(data)
+          
+        },
+        error:(error)=>{
+          console.log(error);
+      
+        }
+
+      }
+    )
     if (status)
       this.router.navigate(['/shop/cart']);
   }

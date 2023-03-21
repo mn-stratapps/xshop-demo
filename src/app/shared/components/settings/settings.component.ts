@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, PLATFORM_ID, Inject, Renderer2 } from '@angular/core';
+import { Component, OnInit, Injectable, PLATFORM_ID, Inject, Renderer2,OnDestroy } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { response } from 'express';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
 
   public products: Product[] = [];
   public search: boolean = false;
@@ -69,11 +69,11 @@ export class SettingsComponent implements OnInit {
       //   element.parentNode.removeChild(element);
       // }
   }
-ngOnDestroy(){
+  ngOnDestroy(){
   if(this.producSubscription){
-  this.producSubscription?.unsubscribe();
+  this.producSubscription.unsubscribe();
   }
-}
+  }
   searchToggle(){
     this.search = !this.search;
   }

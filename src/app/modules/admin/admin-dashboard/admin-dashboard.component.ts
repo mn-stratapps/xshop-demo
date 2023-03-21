@@ -6,6 +6,10 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { User } from 'src/app/core/models/user';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+
+
+
 declare var $: any;
 
 @Component({
@@ -18,7 +22,8 @@ isAddProductUrl = false;
 path:any;
 filename:any;
 userData: User = new User();
-
+imageChangedEvent: any = '';
+  croppedImage: any = '';
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -27,7 +32,7 @@ userData: User = new User();
   file: any;
   adminProducts=[];
   error: any;
-  editProductForm:FormGroup
+  editProductForm:FormGroup;
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
   private router: Router,private httpService:AuthenticationService,private modalService: NgbModal){
 
@@ -188,11 +193,27 @@ callimage(type:string){
   console.log(obj);
 }
 onFileUpdate(event:any, type:string) {
-
+  this.imageChangedEvent = event;
   const files = event.target.files[0];
   //const reader = new FileReader();
   this.file = event.target.files[0];
 this.callimage(type);
+}
+fileChangeEvent(event: any): void {
+  this.imageChangedEvent = event;
+}
+
+imageCropped(event: ImageCroppedEvent) {
+  this.croppedImage = event.base64;
+}
+imageLoaded() {
+  // show cropper
+}
+cropperReady() {
+  // cropper ready
+}
+loadImageFailed() {
+  // show message
 }
 
 viewAdminProducts(){

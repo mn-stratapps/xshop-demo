@@ -492,6 +492,40 @@ editaddress(address){
     pincode:address.pincode
   })
 }
+deactivateAccount(){
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, deactivate!'
+  }).then((result) => {
+   if(result.isConfirmed){
+    this.httpService.deactivateAccount(this.accessToken)
+      .subscribe(
+      {
+        next:(data) => {
+          console.log(data);
+          if(data ==='Account deactivated Successfully'){
+            Swal.fire({
+              icon: 'success',
+              title: 'Done!',
+              text: 'Dactivated Successfully',
+              width: '400px',
+            })
+          }
+          this.httpService.logout();
+        },
+        error:(error)=>{
+          this.error = error;
+          console.log(error) 
+      }
+    });
+   }
+  })
 
+}
 
 }
