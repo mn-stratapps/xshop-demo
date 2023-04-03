@@ -17,7 +17,7 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
 
   constructor(public productService: ProductService) {
     this.productService.getProducts.subscribe(response => {
-      this.products = response.filter(item => item.type == 'electronics');
+      this.products = response.filter(item => item.type == 'Electronics');
       // Get Product Collection
       this.products.filter((item) => {
         item.collection.filter((collection) => {

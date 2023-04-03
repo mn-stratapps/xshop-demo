@@ -1,17 +1,16 @@
 import { identifierName } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { User } from 'src/app/core/models/user';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
-
-
-
+import { User, Userlist } from 'src/app/core/models/user';
+// import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../image-cropper/interfaces';
+import { base64ToFile } from '../../image-cropper/utils/blob.utils';
+import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
 declare var $: any;
-
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -22,8 +21,8 @@ isAddProductUrl = false;
 path:any;
 filename:any;
 userData: User = new User();
-imageChangedEvent: any = '';
-  croppedImage: any = '';
+userList=[];
+ordersList= [];
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -33,9 +32,22 @@ imageChangedEvent: any = '';
   adminProducts=[];
   error: any;
   editProductForm:FormGroup;
+  imagename:string;
+  imageChangedEvent: any = '';
+    croppedImage: any = '';
+    canvasRotation = 0;
+    rotation = 0;
+    scale = 1;
+    showCropper = false;
+    containWithinAspectRatio = false;
+    transform: ImageTransform = {};
+    page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
+@ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
-  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal){
-
+  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal,){
 // const currentUrl = this.router.url;
 // if(currentUrl.includes('admin/addproduct')){
 //   this.isAddProductUrl = true;
@@ -46,11 +58,21 @@ constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
 ngOnInit(){
   this.getUserDetails();
   this.initializeAddProductForm();
- // this.viewAdminProducts();
+  this.getUsersList();
   this.initializeeditProductForm();
+  this.getOrdersList();
   //this.addProductForm.get('image1').updateValueAndValidity()
   // this.products();
 }
+// onTableDataChange(event: any) {
+//   this.page = event;
+//   this.getUsersList();
+// }
+// onTableSizeChange(event: any): void {
+//   this.tableSize = event.target.value;
+//   this.page = 1;
+//   this.getUsersList();
+// }
 getUserDetails() {
   const currentUser = localStorage.getItem( 'currentUser' );
   this.accessToken = JSON.parse( currentUser )['Token'];
@@ -66,6 +88,34 @@ getUserDetails() {
       console.log(error)       
   }
   })
+}
+getUsersList(){
+  this.httpService.getUserslist(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.userList = data;
+       console.log(this.userList);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  }) 
+}
+getOrdersList(){
+  this.httpService.getOrdersList(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.ordersList = data;
+       console.log(this.ordersList);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  }) 
 }
 initializeAddProductForm(){
   this.addProductForm=this.formBuilder.group({
@@ -107,8 +157,14 @@ addNewProduct(){
 }
 addProduct(){
   this.submitted=true;
+  if(this.addProductForm.invalid){
+    this.addProductForm.markAllAsTouched();
+      return false;
+  }else{
+    this.submitted=true;  
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
+    console.log('patchvalue',this.addProductForm.get('path'));
     var formData:any = new FormData();
     formData.append("category",this.addProductForm.get('category').value);
     formData.append("title",this.addProductForm.get('title').value);
@@ -122,7 +178,8 @@ addProduct(){
     formData.append("collection",this.addProductForm.get('collection').value);
     formData.append("size",this.addProductForm.get('size').value);
     formData.append("color",this.addProductForm.get('color').value);
-    formData.append("path",this.addProductForm.get('path').value);
+   // formData.append("path",this.addProductForm.get('path').value);
+    formData.append("path", this.addProductForm.get('path').value, this.imagename);
     formData.append("quantity",this.addProductForm.get('quantity').value);
 
 
@@ -150,6 +207,7 @@ addProduct(){
     }
   });
 }
+}
 
 // products(){
 //   this.httpService.getProducts().subscribe(
@@ -169,7 +227,9 @@ callimage(type:string){
   if (File.length === 0) return;
   let obj:any;
   if(type=='1')  {
-   obj= {path : this.file}  
+   obj= {path : this.file} 
+  this.addProductForm.patchValue(obj)
+   console.log('file',this.file) 
   }
   // else if(type=='2'){
   //   obj ={image2 : this.file}
@@ -192,29 +252,137 @@ callimage(type:string){
   };
   console.log(obj);
 }
-onFileUpdate(event:any, type:string) {
-  this.imageChangedEvent = event;
-  const files = event.target.files[0];
-  //const reader = new FileReader();
-  this.file = event.target.files[0];
-this.callimage(type);
-}
-fileChangeEvent(event: any): void {
-  this.imageChangedEvent = event;
-}
+// onFileUpdate(event:any, type:string) {
+//   this.imageChangedEvent = event;
+//    const files = event.target.files[0];
+//   const reader = new FileReader();
+//    this.file = event.target.files[0];   
+// this.file=base64ToFile(this.croppedImage)
+// let croppedFile = this.croppedImage;
+// croppedFile = this.httpService.convertBase64ToFileObject(croppedFile);
+//  croppedFile = this.httpService.blobToFile(croppedFile);
+//  const obj= {path : croppedFile} 
+//  this.addProductForm.patchValue(obj)
+// console.log(obj)
 
+//   // this.callimage(type);
+// }
+onFileUpdate(event,type:string){
+  const image:any = new Image();
+  const file:File = event.target.files[0];
+  const isSupportfile = file.type;
+  if (isSupportfile === 'image/jpg' || isSupportfile === 'image/jpeg' || isSupportfile === 'image/webp' || isSupportfile === 'image/png') {
+      this.imageChangedEvent = event;
+  } else {
+    this.showCropper = false;
+  }
+}
+saveImage(){
+  if(this.croppedImage!=""){
+    // this.loadingcrop = true;
+    let fileObj:any;
+    fileObj = this.httpService.convertBase64ToFileObject(this.croppedImage);
+    fileObj = this.httpService.blobToFile(fileObj);
+    const obj= {path : fileObj} 
+    this.addProductForm.patchValue(obj)
+    console.log(obj.path.name);
+    this.imagename = obj.path.name
+}
+}
+// fileChangeEvent(event: any): void {
+//   this.imageChangedEvent = event;
+// }
+
+////image-cropper//
 imageCropped(event: ImageCroppedEvent) {
   this.croppedImage = event.base64;
+
+  //console.log(event,base64ToFile(event.base64));
 }
+
 imageLoaded() {
-  // show cropper
+  this.showCropper = true;
+  console.log('Image loaded');
 }
-cropperReady() {
-  // cropper ready
+
+cropperReady(sourceImageDimensions: Dimensions) {
+  console.log('Cropper ready', sourceImageDimensions);
 }
+
 loadImageFailed() {
-  // show message
+  console.log('Load failed');
 }
+
+rotateLeft() {
+  this.canvasRotation--;
+  this.flipAfterRotate();
+}
+
+rotateRight() {
+  this.canvasRotation++;
+  this.flipAfterRotate();
+}
+
+private flipAfterRotate() {
+  const flippedH = this.transform.flipH;
+  const flippedV = this.transform.flipV;
+  this.transform = {
+      ...this.transform,
+      flipH: flippedV,
+      flipV: flippedH
+  };
+}
+
+
+flipHorizontal() {
+  this.transform = {
+      ...this.transform,
+      flipH: !this.transform.flipH
+  };
+}
+
+flipVertical() {
+  this.transform = {
+      ...this.transform,
+      flipV: !this.transform.flipV
+  };
+}
+
+resetImage() {
+  this.scale = 1;
+  this.rotation = 0;
+  this.canvasRotation = 0;
+  this.transform = {};
+}
+
+zoomOut() {
+  this.scale -= .1;
+  this.transform = {
+      ...this.transform,
+      scale: this.scale
+  };
+}
+
+zoomIn() {
+  this.scale += .1;
+  this.transform = {
+      ...this.transform,
+      scale: this.scale
+  };
+}
+
+toggleContainWithinAspectRatio() {
+  this.containWithinAspectRatio = !this.containWithinAspectRatio;
+}
+
+updateRotation() {
+  this.transform = {
+      ...this.transform,
+      rotate: this.rotation
+  };
+}
+
+//image-cropper//
 
 viewAdminProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );

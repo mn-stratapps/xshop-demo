@@ -71,6 +71,7 @@
                       <del *ngIf="product?.discount">{{ product?.price * productService.Currency?.price | currency: productService.Currency?.currency:'symbol' }}</del>
                       <span>{{ product?.discount }}% off</span>
                   </h4>
+                  <h5>Sold By: {{product?.sold_by}}</h5>
                   <h3>
                       {{ (product?.price | discount:product) * productService.Currency?.price | currency: productService.Currency?.currency:'symbol' }}
                   </h3>

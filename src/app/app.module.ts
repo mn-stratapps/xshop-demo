@@ -10,7 +10,6 @@ import { TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/shop.component';
 import { PagesComponent } from './pages/pages.component';
@@ -18,6 +17,8 @@ import { ElementsComponent } from './elements/elements.component';
 //import { CoreModuleModule } from './core/core-module/core-module.module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpAuthService } from './shared/services/http-auth.service';
+import { ImageCropperModule } from './modules/image-cropper/image-cropper.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -40,6 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     ImageCropperModule,
+    NgxPaginationModule,
    // CoreModuleModule,
     ToastrModule.forRoot({
       timeOut: 3000,

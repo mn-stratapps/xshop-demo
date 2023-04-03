@@ -34,14 +34,23 @@ export class AuthenticationService {
       this.currentUser = this.currentUserSubject.asObservable();
   }
     }
-  //   public get currentUserValue(): User {
-  //     return this.currentUserSubject.value;
-  // }
-  // blobToFile(theBlob){
-  //    theBlob.lastModifiedDate = new Date();
-  //   theBlob.name = 'file' + '.png';
-  //   return theBlob;
-  //  }
+    blobToFile(theBlob){
+      theBlob.lastModifiedDate = new Date();
+      theBlob.name = theBlob.lastModifiedDate.getTime()+'.jpeg';
+      return theBlob;
+      
+     }
+    convertBase64ToFileObject(dataURI) {
+      const byteString = atob(dataURI.split(',')[1]);
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {  ia[i] = byteString.charCodeAt(i);  }
+      const blob = new Blob([ab], {type: mimeString});
+      return (<File> blob);
+    }
+
+
   isUserLoggedin(){
     const currentUser = localStorage.getItem( 'currentUser' );
 
@@ -134,6 +143,12 @@ passwordUpdate(user:any){
 getUserDetails(accessToken:any){
   //this.accessToken;
   return this.http.get<any>(`${environment.apiUrl}/role/details/`+accessToken);
+}
+getUserslist(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/list-users/`+accessToken);
+}
+getOrdersList(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/list-orders/`+accessToken);
 }
 getAddress(accessToken:any):Observable<Useraddress[]>{
   return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)

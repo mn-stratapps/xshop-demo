@@ -14888,7 +14888,15 @@
                             color: $dark-font;
                             font-weight: 600;
                             font-size: 14px;
-    
+                            
+                            span{
+                                float: right;
+                                background-color: red;
+                                color: #fff;
+                                padding: 2px 15px;
+                                font-size: 80%;
+                                border-radius: 3px;
+                             }
                             button {
                                 float: right;
                                 padding: 2px 15px;

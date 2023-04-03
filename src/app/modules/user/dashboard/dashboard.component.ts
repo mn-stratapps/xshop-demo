@@ -211,7 +211,7 @@ this.httpService.mobilenumberUpdate(object)
     this.error = error;
        console.error(error)
       
-       if (error.message = 'Mobile Number already exists'){
+       if (error.message === 'Mobile Number already exists'){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',

@@ -135,11 +135,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h4>Default Billing Address</h4>
-                                            <address>You have not set a default billing address.<br><a href="#">Edit
-                                                    Address</a></address>
-                                        </div>
-                                        <div class="col-sm-6">
                                             <h4>Default Shipping Address</h4>
                                             <div  *ngFor="let address of Address">
                                                 <div *ngIf='address?.is_default'>
@@ -158,6 +153,9 @@
                                                 </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          
                                             <!-- <address><br><a
                                                 data-bs-toggle="tab" data-bs-target="#address">Edit Address</a></address> -->
                                         </div>
@@ -1086,12 +1084,12 @@
                                                                 </label>
                                                             </div>
                                                             <button type="button"
-                                                                class="btn btn-solid btn-xs">Deactivate
+                                                               (click)="deactivateAccount()" class="btn btn-solid btn-xs">Deactivate
                                                                 Account</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="account-setting">
+                                                <!-- <div class="account-setting">
                                                     <h5>Delete account</h5>
                                                     <div class="row">
                                                         <div class="col">
@@ -1126,7 +1124,7 @@
                                                                 class="btn btn-solid btn-xs">Delete Account</button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

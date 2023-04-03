@@ -75,7 +75,7 @@ initializeReactivateEmailForm(){
     this.httpService.getUserDetails(this.accessToken)
     .subscribe({
       next:(data) => {
-        console.log(data);
+        //console.log(data);
         //superadmin
         if(data.role === 1){
           this.router.navigate(['/home/super_admin'])
@@ -90,7 +90,7 @@ initializeReactivateEmailForm(){
         }
         //user
         else if(data.role === 4){
-          this.router.navigate(['/home/fashion'])
+          this.router.navigate(['/home/electronics'])
         }
         else{
           console.log("role not defined")
@@ -197,6 +197,14 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
           icon: 'error',
           title: 'Oops...',
           text: 'Incorrect Username/Password',
+          //footer: '<a href="">Why do I have this issue?</a>'
+        })
+       }
+       else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong, Try again',
           //footer: '<a href="">Why do I have this issue?</a>'
         })
        }

@@ -10,7 +10,7 @@ const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'home/fashion',
+    redirectTo: 'home/electronics',
     pathMatch: 'full'
   },
   {

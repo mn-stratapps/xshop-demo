@@ -20,6 +20,7 @@ export interface Product {
     unit_price?:number;
     dis_price?:number;
     image1_url?:string;
+    sold_by?:string;
 }
 
 export interface Variants {
