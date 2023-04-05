@@ -79,10 +79,16 @@ initializeReactivateEmailForm(){
         //superadmin
         if(data.role === 1){
           this.router.navigate(['/home/super_admin'])
+          .then(() => {
+            window.location.reload();
+          });
         }
         //admin
         else if(data.role === 2){
           this.router.navigate(['admin/dashboard'])
+          .then(() => {
+            window.location.reload();
+          });
         }
         //vendor&user
         else if(data.role === 3){
@@ -91,6 +97,9 @@ initializeReactivateEmailForm(){
         //user
         else if(data.role === 4){
           this.router.navigate(['/home/electronics'])
+          .then(() => {
+            window.location.reload();
+          });
         }
         else{
           console.log("role not defined")
@@ -104,8 +113,6 @@ initializeReactivateEmailForm(){
   }
   });
   }
-
-
   reactivateEmail(){
     this.submitted=true;
     if(this.reactivateEmailForm.invalid){

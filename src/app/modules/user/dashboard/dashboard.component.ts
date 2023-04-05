@@ -21,6 +21,7 @@ declare var $: any;
 export class DashboardComponent implements OnInit {
   public products: Product[] = [];
   wishlistProducts: Product[] = [];
+  myProducts: Product[] =[];
   public openDashboard: boolean = false;
   userData: User = new User();
   public Address: Useraddress[] = [];
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit {
   isAddNewAddress = false;
   isEditAddress : boolean;
   countries = Country.getAllCountries();
+  show: boolean = false;
   states = null;
   cities = null;
   @ViewChild('country') country: ElementRef
@@ -62,11 +64,15 @@ export class DashboardComponent implements OnInit {
     this.getAddress();
     this.initializeAddAddressForm();
     this.getWishlistProducts();
+    this.getmyOrders();
   }
   getWishlistProducts(){
     this.productService.wishlistItems.subscribe(response => this.wishlistProducts = response);
   }
-  
+  password() {
+    this.show = !this.show;
+}
+
   moveToSelectedTab(tabName: string) {
     for (let i =0; i< document.querySelectorAll('.mat-tab-label-content').length; i++) {
         if ((<HTMLElement>document.querySelectorAll('.mat-tab-label-content')[i]).innerText == tabName) {
@@ -147,8 +153,29 @@ this.httpService.namesUpdate(object)
   },
   error:(error)=>{
     this.error = error;
-    //console.error(error.error)
     console.log(error)
+    if(error.error?.first_name && error.error?.first_name[0] ==='This field may not be blank.'){
+      {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'First name is empty',
+          //footer: '<a href="">Why do I have this issue?</a>'
+        })
+        this.usernametext = true;
+      }
+     }else if(error.error?.last_name && error.error?.last_name[0] ==='This field may not be blank.'){
+      {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Last name is empty',
+          //footer: '<a href="">Why do I have this issue?</a>'
+        })
+        this.usernametext = true;
+      }
+     }
+    
     
 }
 
@@ -178,9 +205,20 @@ this.httpService.usernameUpdate(object)
   },
   error:(error)=>{
     this.error = error;
-    //console.error(error.error)
     console.log(error)
-    
+    if(error.error.message='Username already exists, try another '){
+      {
+        {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Username already Exist! Try another',
+          //footer: '<a href="">Why do I have this issue?</a>'
+        })
+        this.usernametext = true;
+      }
+      }
+     }
 }
 
 })
@@ -211,12 +249,24 @@ this.httpService.mobilenumberUpdate(object)
     this.error = error;
        console.error(error)
       
-       if (error.message === 'Mobile Number already exists'){
+       if (error.error.message === 'Mobile Number already exists'){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Entered Mobile Number already Exists',
-          //footer: '<a href="">Why do I have this issue?</a>'
+        })
+       }else if(error.error?.mobile_number && error.error?.mobile_number[0] ==='A valid integer is required.'){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Enter Mobile Number',
+        })
+
+       }else if(error.error.message === 'mobile number should be 10 digits'){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Enter Valid Mobile Number',
         })
        }
 }
@@ -324,14 +374,29 @@ this.httpService.passwordUpdate(object)
   },
   error:(error)=>{
     this.error = error;
-    console.log(error)
-    
+    console.log(error);
+    if(error.error.message === 'check password length'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter 8 digit password',
+      })
+    }else if(error.error.message === 'There was an error with your Password combination'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'New Password && Comfirm Password not matched',
+      })
+    }else if(error.error.message === 'Incorrect Current Password'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'current password does not matched',
+      })   
+}  
 }
-
 })
-  }
-
-
+}
   getUserDetails() {
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
@@ -358,6 +423,16 @@ this.httpService.passwordUpdate(object)
        }
     })
     
+  }
+  getmyOrders(){
+    this.httpService.getmyOrders(this.accessToken)
+    .subscribe({ 
+      next:(data)=>{
+        this.myProducts = data;
+        console.log(this.myProducts)
+
+       }
+    })
   }
 initializeAddAddressForm(){
 this.addAddressForm = this.formBuilder.group({

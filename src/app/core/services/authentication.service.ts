@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
  import { environment } from 'src/environments/environment';
 import { Useraddress } from '../models/useraddress';
 import { SettingsComponent } from 'src/app/shared/components/settings/settings.component';
+import { Product } from 'src/app/shared/classes/product';
 
 @Injectable({
   providedIn: 'root'
@@ -83,10 +84,13 @@ export class AuthenticationService {
       // remove user from local storage to log user out
       localStorage.removeItem('currentUser');
       //this.userSubject.next(null);
-      this.router.navigate(['/core/login']);
+      this.router.navigate(['/core/login'])
+      .then(() => {
+        window.location.reload();
+      });     
       this.settings.producSubscription.unsubscribe();
-
   }
+  
   deactivateAccount(accessToken){
     return this.http.delete(`${environment.apiUrl}/a/deactivate/`+accessToken)
   }
@@ -152,6 +156,9 @@ getOrdersList(accessToken:any){
 }
 getAddress(accessToken:any):Observable<Useraddress[]>{
   return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)
+}
+getmyOrders(accessToken:any):Observable<Product[]>{
+  return this.http.get<Product[]>(`${environment.apiUrl}/myorders/`+accessToken)
 }
 addAddress(accessToken,data):any{
   return this.http.post<any>(`${environment.apiUrl}/useraddress/`+accessToken,data)

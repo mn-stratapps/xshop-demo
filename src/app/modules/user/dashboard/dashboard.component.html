@@ -176,7 +176,12 @@
                                             <h3>Address Book</h3>
                                             <a (click)="addNewAddress()" class="btn btn-sm btn-solid">+ Add New</a>
                                         </div>
-                                        <div class="address-book-section">
+                                        <div class="col-md-12 empty-cart-cls text-center" *ngIf='!Address.length'>
+                                            <img src="assets/images/empty-wishlist.png" alt="Empty cart" title="Emprt cart">
+                                            <h3 class="mt-4"><b>You Have Not Added Any Addresses </b></h3>
+                                            <h4>Please click on ADD NEW TO ADD YOUR ADDRESS.</h4>
+                                          </div>
+                                        <div *ngIf='Address.length' class="address-book-section">
                                             <div class="row g-4">
                                                 <div class="select-box active col-xl-4 col-md-6" *ngFor="let address of Address">
                                                     <div class="address-box">
@@ -562,7 +567,12 @@
                                         <div class="top-sec">
                                             <h3>My Wishlist</h3>
                                         </div>
-                                        <div class="table-responsive-xl">
+                                        <div class="col-md-12 empty-cart-cls text-center" *ngIf='!wishlistProducts.length'>
+                                            <img src="assets/images/empty-wishlist.png" alt="Empty cart" title="Emprt cart">
+                                            <h3 class="mt-4"><b>Wishlist is Empty</b></h3>
+                                            <h4>Explore more shortlist some items.</h4>
+                                          </div>
+                                        <div *ngIf='wishlistProducts.length' class="table-responsive-xl">
                                             <table class="table cart-table wishlist-table">
                                                 <thead>
                                                     <tr class="table-head">
@@ -797,7 +807,7 @@
                                                                         <label class="col-xl-2 col-md-4 form-label">
                                                                            Mobile Number</label>
                                                                         <div class="col-md-10">
-                                                                            <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
+                                                                            <input autocomplete="off" type="tel" pattern="[7-9]{1}[0-9]{9}" required class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
                                                                         </div>
                                                                     </div>
                                                                  </div>
@@ -870,7 +880,7 @@
                                                 <div class="modal-dialog modal-dialog-top modal-lg m-0">
                                                   <div class="modal-content border-none">
                                                     <div class="modal-header">
-                                                      <h5 class="modal-title" id="otpModalLabel">Verify OTP</h5>
+                                                      <h5 class="modal-title" id="otpModalLabel">Verify OTP:</h5>
                                                       <button aria-label="Close" (click)="modal.dismiss()" class="close e-close close-btn border-none bg-none"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -880,14 +890,14 @@
                                                                     <form>
                                                                         <div class="mb-2 pb-2">
                                                                           <label class="form-label">verify Otp</label>
-                                                                          <input class="form-control" autocomplete="off" type="text" class="email-disable" name="otp"[(ngModel)]="otp" [value]="otp">                                                               
+                                                                          <input style="margin: 5px;" class="form-control" autocomplete="off" type="text" class="email-disable" name="otp"[(ngModel)]="otp" [value]="otp">                                                               
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-lg-4 col-md-4 pr-0 justify-content-center">
-                                                                    <a   (click)="emailUpdate()" class="btn btn-sm btn-solid mt-md-0 mt-2">Resend Otp</a>
+                                                                    <a  style="padding: 2px;" (click)="emailUpdate()" class="btn btn-sm btn-solid mt-md-0 mt-2">Resend Otp</a>
                                                                 </div>
                                             
                                                             </div>
@@ -895,7 +905,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                      <button type="button" class="btn btn-primary" (click)="saveEmail()">Save changes</button>
+                                                      <button type="button" class="btn btn-primary" (click)="saveEmail()">Verify</button>
                                                       <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-bs-dismiss="modal" >Close</button>
 
                                                     </div>
@@ -930,7 +940,9 @@
                                                         <label class="col-xl-2 col-md-4 form-label">
                                                           New Password</label>
                                                         <div class="col-md-10">
-                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="new_password" [value]="new_password">                                                      
+                                                            <input [type]="show ? 'text' : 'password'" autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="new_password" [value]="new_password">                                                      
+                                                            <i style="float: right;position: relative; top:-27px;left: -12px;" class="fa fa-eye-slash" (click)="password()" aria-hidden="true"></i>
+
                                                         </div>
                                                     </div>
                                                  </div>
@@ -943,7 +955,7 @@
                                                         <label class="col-xl-2 col-md-4 form-label">
                                                           Confirm Password</label>
                                                         <div class="col-md-10">
-                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="confirm_password"[(ngModel)]="confirm_password" [value]="confirm_password">  
+                                                            <input autocomplete="off"  type="password" class="email-disable form-control" name="confirm_password"[(ngModel)]="confirm_password" [value]="confirm_password">  
                                                         </div>
                                                     </div>
                                                  </div>

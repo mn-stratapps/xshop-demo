@@ -18,7 +18,7 @@ export class HeaderOneComponent implements OnInit {
   constructor(public authservice:AuthenticationService) { }
 
   ngOnInit(): void {
-    //this.isUserLoggedin();
+    this.isUserLoggedin();
 
   }
 
@@ -34,13 +34,16 @@ export class HeaderOneComponent implements OnInit {
   	  this.stick = false;
   	}
   }
-  // isUserLoggedin(){
-  //   let currentUser  = localStorage.getItem('currentUser');
-  //   this.isUserLogin = JSON.parse(currentUser).isLoggedin;
-  //   if(currentUser=="null"){
-  //     this.isUserLogin=false;
-  //   }
-  // }
+  isUserLoggedin(){
+    let currentUser  = localStorage.getItem('currentUser');
+    //this.isUserLogin = JSON.parse(currentUser).isLoggedin;
+    if(!currentUser){
+      this.isUserLogin=false;
+    }
+    if(currentUser){
+      this.isUserLogin=true;
+    }
+  }
   logout(){
     this.authservice.logout();
   }

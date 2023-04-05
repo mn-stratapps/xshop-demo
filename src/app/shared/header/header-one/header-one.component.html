@@ -22,17 +22,16 @@
             <li class="onhover-dropdown mobile-account">
               <i class="fa fa-user" aria-hidden="true"></i> My Account
               <ul class="onhover-show-div">
-                
-                <li >
-                  <!-- {{isUserLogin}} -->
+               
+                <li *ngIf="!isUserLogin" >
                   <a  href="/core/login" data-lng="en" >
                     Login
                   </a></li>
-                 <li > <a href="/core/signup" data-lng="en">
+                 <li *ngIf="!isUserLogin"> <a href="/core/signup" data-lng="en">
                     Register
                   </a></li>
                 
-                <li >
+                <li *ngIf="isUserLogin">
                   <a  data-lng="es" (click)="logout()" >
                     Logout
                   </a>
