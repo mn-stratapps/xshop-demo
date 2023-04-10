@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="faq-content tab-content" id="top-tabContent">
-                    <div class="tab-pane fade show active" id="info">
+                    <div class="tab-pane fade show active card_bg" id="info">
                         <div class="counter-section">
                          <div class="dashboard">
                             <div class="welcome-msg">
@@ -113,7 +113,7 @@
                                                 <h6>First Name: {{userData.first_name}}</h6>
                                                 <h6>last Name: {{userData.last_name}}</h6>
                                                 <h6>Email: {{userData.email}}</h6>
-                                                <h6>Usernmae: {{userData.username}}</h6>
+                                                <h6>Username: {{userData.username}}</h6>
                                                 <h6>email: {{userData.email}}</h6>
                                             </div>
                                         </div>
@@ -143,9 +143,9 @@
                                                 </div>
                                                 <div class="middle">
                                                     <div class="address">
-                                                        <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
-                                                        <p>{{address.city}}, {{address.country}}</p>
-                                                        <p>{{address.pincode}}</p>
+                                                        <p class="m-0">{{address.address}}, {{address.area}}, {{address.landmark}}</p>
+                                                        <p class="m-0">{{address.city}}, {{address.country}}</p>
+                                                        <p class="m-0">{{address.pincode}}</p>
                                                     </div>
                                                     <div class="number">
                                                         <p>mobile: <span>{{address.mobile}}</span></p>
@@ -213,23 +213,26 @@
                         </div>
                         </div>
                         <!-- view Adress End -->
-                        <!-- ADD NEW Adress Start -->
-                        <div class="container-fluid" *ngIf="isAddNewAddress">
+                         <!-- ADD NEW Adress Start -->
+                         <div class="container-fluid" *ngIf="isAddNewAddress">
                             <div class="row product-adding">
-                                <div class="col-xl-12">
+                                <div class="col-xl-12 p-0">
                                  <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="address f-w-600">ADD ADDRESS</h3>
                                     <a (click)="addNewAddress()" class="btn btn-sm btn-solid">View Your Addresses</a>
+                                  </div>
                                         <form class="theme-form" [formGroup]="addAddressForm" (ngSubmit)="onSubmit()">
                                             <div class="row">
-                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2 mt-3">
                                                     <div class="field-label">Full name </div>
                                                     <input class="form-control" type="text"id="title" name="name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required="">
                                                     <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                                         <div *ngIf="f.name.errors.required">Name is required</div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
-                                                    <div class="field-label">Mobile NUmber </div>
+                                                <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2 mt-3">
+                                                    <div class="field-label">Mobile Number </div>
                                                     <input class="form-control" type="tel"id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" required="">
                                                     <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
                                                         <div *ngIf="f.mobile.errors?.required">Mobile No is required</div>
@@ -262,10 +265,10 @@
                                                     <div class="row">
                                                         <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
-                                                                <label for="country">Country:</label><br /><br />
+                                                                <div class="field-label" for="country">Country</div>
                                                                 <select
                                                                   #country
-                                                                  class="form-control"
+                                                                  class="form-select"
                                                                   name="country"
                                                                   id="country"
                                                                   formControlName="country"
@@ -280,11 +283,10 @@
                                                                     <div *ngIf="f.country.errors">Please select country.</div>
                                                                 </div>
                                                               </fieldset>
-                                                              
-                                                        </div>
+                                                         </div>
                                                         <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
-                                                                <label for="state">State:</label><br /><br />
+                                                                <div class="field-label" for="state">State</div>
                                                                 <select
                                                                   *ngIf="states"
                                                                   #state
@@ -306,7 +308,7 @@
                                                            </div>
                                                            <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
-                                                                <label for="city">City:</label><br /><br />
+                                                                <div class="field-label" for="city">City</div>
                                                                 <select
                                                                   *ngIf="cities"
                                                                   #city
@@ -326,20 +328,18 @@
                                                                 </div>
                                                               </fieldset>
                                                             </div>
-
-                                                    </div>
+                                                            <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                                <div class="field-label">Pin Code </div>
+                                                                <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
+                                                                <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.pincode.errors.required">pincode is required</div>
+                                                                </div>
+                                                            </div>
+                                                       </div>
                                                 <div class="row">
-                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
-                                                        <div class="field-label">Pin Code </div>
-                                                        <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
-                                                        <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
-                                                            <div *ngIf="f.pincode.errors.required">pincode is required</div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                  <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                                     <div class="field-label">Add delivery instructions</div>
-                                                     <h5>Preferences are used to plan your delivery. However, shipments can sometimes arrive early or later than planned.</h5>
+                                                     <h6>Preferences are used to plan your delivery. However, shipments can sometimes arrive early or later than planned.</h6>
                                                     </div>
                                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
                                                         <div class="field-label">Address Type</div>
@@ -354,10 +354,9 @@
                                                         </div>
                                                      </div>
                                                      <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
-                                                        <div class="field-label">Set As Default?</div>
-                                                        <input type="checkbox" id="is_default" name="is_default" formControlName="is_default" [(ngModel)]="defaultAddress" [checked]="true"> Make Address As Default
-                                                        
-                                                    </div>
+                                                      <div class="field-label">Set As Default?</div>
+                                                        <input type="checkbox" id="is_default" class="checkbox" name="is_default" formControlName="is_default" [(ngModel)]="defaultAddress" [checked]="true"> Make Address As Default
+                                                     </div>
                                                    </div>
                                                    <button type="submit" class="btn btn-solid mt-2">Save Address</button>
                                         </form>
@@ -377,7 +376,7 @@
                                         <div class="top-sec">
                                             <h3>My Orders</h3>
                                         </div>
-                                        <div style="height: 637px;overflow-y: scroll;" class="table-responsive-xl">
+                                        <div style="height: 637px;overflow-y: scroll;" class="table-responsive">
                                             <table class="table cart-table order-table">
                                                 <thead>
                                                     <tr class="table-head">
@@ -621,158 +620,91 @@
                                     <div class="card-body">
                                         <div class="dashboard-box">
                                             <div>
-                                            <div class="dashboard-title">
+                                            <div class="dashboard-title mb-2">
                                                 
                                                 <h4>Personal Information</h4>
                                                 <a class="edit-link" (click)="displayTextbox()" >edit</a>
                                             </div>
-                                            <div class="dashboard-detail mt-4">
+                                            <div class="dashboard-detail">
                                                 <form class="needs-validation">   
                                                     <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group row align-items-center mb-4">
-                                                                <label class="col-xl-2 col-md-4 form-label">
-                                                                   First Name</label>
-                                                                <div class="col-md-10">
+                                                        <div class="col-sm-6 col-xs-12 col-lg-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="form-label f-w-550">First Name</label>
                                                                 <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.first_name" [value]="userData.first_name" [disabled]='inputtext' > 
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row align-items-center mb-4">
-                                                                 <label class="col-xl-2 col-md-4 form-label">Last Name</label>
-                                                                <div class="col-md-10">
+                                                            <div class="col-sm-6 col-xs-12 col-lg-6">
+                                                              <div class="form-group mb-0">
+                                                                 <label class="form-label f-w-550">Last Name</label>
                                                                     <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >   
                                                                 </div>
                                                             </div>
-                                                          
-                                                        </div>
+                                                            <div *ngIf="!inputtext" class="product-buttons mb-3 mt-3">
+                                                                <button (click)="namesUpdate()" class="btn btn-danger btns">save</button>
+                                                                <button (click)="displayTextbox()" class="btn btn-light btns">cancel</button>
+                                                            </div>
                                                     </div>
                                                 </form>
-                                                <!-- <ul>                                                    
-                                                
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>First Name</h6>
-                                                            </div>
-                                                            <div class="right" >
-                                                                <input autocomplete="off" type="text" class="email-disable" name="first_name"[(ngModel)]="userData.first_name" [value]="userData.first_name" [disabled]='inputtext' >                                                               
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Last Name</h6>
-                                                            </div>
-                                                            <div class="right" >
-                                                                <input autocomplete="off" type="text" class="email-disable" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >                                                                                                                          </div>
-                                                        </div>
-                                                    </li>
-                                                    </ul> -->
-                                                    <div *ngIf="!inputtext" class="product-buttons mb-4">
-                                                        <button (click)="namesUpdate()" class="btn btn-danger btns">save</button>
-                                                        <button (click)="displayTextbox()" class="btn btn-light btns">cancel</button>
-                                                    </div>
+                                                    
                                                 </div>                                                
                                             </div>
 
                                             <div>
-                                                <div class="dashboard-title">
-                                                    
-                                                    <h4>User Name</h4>
-                                                    <a class="edit-link" (click)="editUsernameEdit()" >edit</a>
-                                                </div>
-                                                <div class="dashboard-detail mt-4">
+                                               
+                                                <div class="dashboard-detail mt-3">
                                                     <form class="needs-validation">   
                                                         <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <div class="form-group row align-items-center mb-4">
-                                                                    <label class="col-xl-2 col-md-4 form-label">
-                                                                       User Name</label>
-                                                                    <div class="col-md-10">
+                                                            <div class="col-xs-12 col-sm-6 col-lg-6">
+                                                                <div class="dashboard-title mb-2">
+                                                    
+                                                                    <h4>User Name</h4>
+                                                                    <a class="edit-link" (click)="editUsernameEdit()" >edit</a>
+                                                                </div>
+                                                                <div class="form-group mb-3">
                                                                         <input autocomplete="off" type="text" class="email-disable form-control" name="username"[(ngModel)]="userData.username" [value]="userData.username" [disabled]='usernametext' > 
-                                                                    </div>
+                                                                </div>
+                                                                        
+                                                                <div *ngIf="!usernametext" class="product-buttons mb-4">
+                                                                    <button (click)="usernameUpdate()"  class="btn btn-danger btns">save</button>
+                                                                    <button (click)="editUsernameEdit()" class="btn btn-light btns">cancel</button>
                                                                 </div>
                                                              </div>
-                                                        </div>
-                                                    </form>
-                                                    <!-- <ul>                                                    
-                                                    
-                                                        <li>
-                                                            <div class="details">
-                                                                <div class="left">
-                                                                    <h6>User Name</h6>
-                                                                </div>
-                                                                <div class="right" >
-                                                                    <input autocomplete="off" type="text" class="email-disable" name="username"[(ngModel)]="userData.username" [value]="userData.username" [disabled]='usernametext' >                                                               
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        </ul> -->
-                                                        <div *ngIf="!usernametext" class="product-buttons mb-4">
-                                                            <button (click)="usernameUpdate()"  class="btn btn-danger btns">save</button>
-                                                            <button (click)="editUsernameEdit()" class="btn btn-light btns">cancel</button>
-                                                        </div>
-                                                    </div>                                                
-                                                </div>
-
-                                                <div>
-                                                    <div class="dashboard-title">
+                                                             <div class="col-xs-12 col-sm-6 col-lg-6">
+                                                                <div class="dashboard-title mb-2">
                                                         
-                                                        <h4>Mobile Number</h4>
-                                                        <a class="edit-link" (click)="mobileEdit()" >edit</a>
-                                                    </div>
-                                                    <div class="dashboard-detail mt-4">
-                                                        <form class="needs-validation">   
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="form-group row align-items-center mb-4">
-                                                                        <label class="col-xl-2 col-md-4 form-label">
-                                                                           Mobile Number</label>
-                                                                        <div class="col-md-10">
-                                                                            <input autocomplete="off" type="tel" pattern="[7-9]{1}[0-9]{9}" required class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
-                                                                        </div>
-                                                                    </div>
-                                                                 </div>
-                                                            </div>
-                                                        </form>
-                                                        <!-- <ul>                                                    
-                                                        
-                                                            <li>
-                                                                <div class="details">
-                                                                    <div class="left">
-                                                                        <h6>Mobile Number</h6>
-                                                                    </div>
-                                                                    <div class="right" >
-                                                                        <input autocomplete="off" type="text" class="email-disable" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >                                                               
-                                                                    </div>
+                                                                    <h4>Mobile Number</h4>
+                                                                    <a class="edit-link" (click)="mobileEdit()" >edit</a>
                                                                 </div>
-                                                            </li>
-                                                            </ul> -->
+                                                                <div class="form-group  mb-3">
+                                                                    <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
+                                                            </div>
                                                             <div *ngIf="!mobiletext" class="product-buttons mb-4">
                                                                 <button (click)="mobilenumberUpdate()" class="btn btn-danger btns">save</button>
                                                                 <button (click)="mobileEdit()"class="btn btn-light btns">cancel</button>
                                                             </div>
-                                                        </div>                                                
-                                                    </div>
-                                            <div class="dashboard-title">
+                                                             </div>
+
+                                                        </div>
+                                                    </form>
+                                            
+                                                    </div>                                                
+                                                </div>
+                                                <div>
+                                            </div>
+                                            <div class="dashboard-title mb-0">
                                                 <h4>login details</h4>
                                                 <a class="edit-link" (click)="emailEdit()" >edit</a>
                                                 
                                             </div>
                                             <div class="dashboard-detail">
                                                 <div>
-                                                    
-                                                    <div class="dashboard-detail mt-4">
+                                                      <div class="dashboard-detail mt-2">
                                                         <form class="needs-validation">   
                                                             <div class="row">
                                                                 <div class="col-sm-12">
-                                                                    <div class="form-group row align-items-center mb-4">
-                                                                        <label class="col-xl-2 col-md-4 form-label">
-                                                                            Email Address</label>
-                                                                        <div class="col-md-10">
+                                                                    <div class="form-group mb-3">
                                                                             <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.email" [value]="userData.email" [disabled]='emailtext' >                
-                                                                        </div>
                                                                     </div>
                                                                  </div>
                                                             </div>
@@ -803,7 +735,7 @@
                                                 <div class="modal-dialog modal-dialog-top modal-lg m-0">
                                                   <div class="modal-content border-none">
                                                     <div class="modal-header">
-                                                      <h5 class="modal-title" id="otpModalLabel">Verify OTP:</h5>
+                                                      <h5 class="modal-title" id="otpModalLabel">Verify OTP</h5>
                                                       <button aria-label="Close" (click)="modal.dismiss()" class="close e-close close-btn border-none bg-none"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -813,14 +745,14 @@
                                                                     <form>
                                                                         <div class="mb-2 pb-2">
                                                                           <label class="form-label">verify Otp</label>
-                                                                          <input style="margin: 5px;" class="form-control" autocomplete="off" type="text" class="email-disable" name="otp"[(ngModel)]="otp" [value]="otp">                                                               
+                                                                          <input class="form-control" autocomplete="off" type="text" class="email-disable" name="otp"[(ngModel)]="otp" [value]="otp">                                                               
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-lg-4 col-md-4 pr-0 justify-content-center">
-                                                                    <a  style="padding: 2px;" (click)="emailUpdate()" class="btn btn-sm btn-solid mt-md-0 mt-2">Resend Otp</a>
+                                                                    <a   (click)="emailUpdate()" class="btn btn-sm btn-solid mt-md-0 mt-2">Resend Otp</a>
                                                                 </div>
                                             
                                                             </div>
@@ -828,7 +760,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                      <button type="button" class="btn btn-primary" (click)="saveEmail()">Verify</button>
+                                                      <button type="button" class="btn btn-primary" (click)="saveEmail()">Save changes</button>
                                                       <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-bs-dismiss="modal" >Close</button>
 
                                                     </div>
@@ -837,7 +769,7 @@
                                               </ng-template>
                                     <!-- password update start-->
                                 <div>
-                                    <div class="dashboard-title">
+                                    <div class="dashboard-title mb-0">
                                         
                                         <h4>Password</h4>
                                         <a class="edit-link" (click)="passwordEdit()" >edit</a>
@@ -847,7 +779,7 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group row align-items-center mb-4">
-                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                        <label class="col-xl-2 col-md-4 form-label form-label f-w-550">
                                                           Current Password</label>
                                                         <div class="col-md-10">
                                                             <input autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="current_password" [value]="current_password">
@@ -860,12 +792,10 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group row align-items-center mb-4">
-                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                        <label class="col-xl-2 col-md-4 form-label form-label f-w-550">
                                                           New Password</label>
                                                         <div class="col-md-10">
-                                                            <input [type]="show ? 'text' : 'password'" autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="new_password" [value]="new_password">                                                      
-                                                            <i style="float: right;position: relative; top:-27px;left: -12px;" class="fa fa-eye-slash" (click)="password()" aria-hidden="true"></i>
-
+                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="current_password"[(ngModel)]="new_password" [value]="new_password">                                                      
                                                         </div>
                                                     </div>
                                                  </div>
@@ -875,10 +805,10 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group row align-items-center mb-4">
-                                                        <label class="col-xl-2 col-md-4 form-label">
+                                                        <label class="col-xl-2 col-md-4 form-label form-label f-w-550">
                                                           Confirm Password</label>
                                                         <div class="col-md-10">
-                                                            <input autocomplete="off"  type="password" class="email-disable form-control" name="confirm_password"[(ngModel)]="confirm_password" [value]="confirm_password">  
+                                                            <input autocomplete="off" type="password" class="email-disable form-control" name="confirm_password"[(ngModel)]="confirm_password" [value]="confirm_password">  
                                                         </div>
                                                     </div>
                                                  </div>
@@ -926,7 +856,7 @@
                                             </div>
                                         </div>                                                
                                     </div>
- <!-- password update end-->
+                               <!-- password update end-->
 
                                         </div>
                                     </div>
