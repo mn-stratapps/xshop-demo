@@ -1,6 +1,9 @@
 <section class="login-page section-b-space">
     <div class="container">
         <div class="row">
+            <div class="col-lg-6">
+                <img src="assets/images/electronics_2.jpg"  class="img-fluid" alt="">
+            </div>
             <div class="col-lg-6" *ngIf="!isActivateUrl">
                  <h3>Login</h3> 
                 <div class="theme-card">
@@ -34,7 +37,12 @@
                     
                 </div>
             </div>
-            <div class="col-lg-6 offset-lg-3 pwd-page p-0 pb-5" *ngIf="isActivateUrl">
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <img src="assets/images/electronic.1.png" class="img-fluid" alt="">
+                </div>
+            <div class="col-lg-6 pwd-page p-0 pb-5" *ngIf="isActivateUrl">
                 <h2>Reactivate Your Account</h2>
                 <form class="theme-form" [formGroup]="reactivateEmailForm" (ngSubmit)="reactivateEmail()" >
                     <div class="row">

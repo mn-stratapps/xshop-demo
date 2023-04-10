@@ -72,7 +72,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="faq-content tab-content" id="top-tabContent">
-                    <div class="tab-pane fade show active" id="info">
+                    <div class="tab-pane fade show active card_bg" id="info">
                         <div class="counter-section">
                             <div class="dashboard">
                             <div class="welcome-msg">
@@ -161,9 +161,9 @@
                          </div>
                        </div>
                     </div>
-                    <div  class="tab-pane fade card_bg" id="products">
+                    <div  class="tab-pane fade" id="products">
                           <!-- view product start-->
-                          <div *ngIf="!isAddProductUrl">
+                          <div *ngIf="!isAddProductUrl" class="card_bg">
                           <div class="row" >
                             <div class="col-lg-6">
                                 <div class="page-header-left">
@@ -177,10 +177,48 @@
                                 <div class="col-12">
                                     <div class="card dashboard-table mt-0">
                                         <div class="card-header">
-                                            <form class="form-inline search-form search-box">
-                                                <div class="form-group">
-                                                    <input class="form-control-plaintext" type="search" placeholder="Search..">
+                                            <form class="form-inline search-form search-box d-flex">
+                                                <div class="form-group mr-2">
+                                                    <input class="form-control-plaintext" type="search" placeholder="Product Name">
                                                 </div>
+                                                <!-- <div class="prodcut_price w-20">
+                                                    <input class="form-control" type="search" placeholder="Price">
+                                                </div> -->
+                                                <div class="Categories">
+                                                <select class="form-select me-2" id="category">  
+                                                    <option>--Select Category</option>                     
+                                                    <option>Mobiles</option>
+                                                    <option>Laptops</option>
+                                                    <option>headphones</option>
+                                                  </select>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                                        <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                                        Select Date
+                                                    </button>
+                                                    <form class="dropdown-menu p-4">
+                                                        <div class="d-flex">
+                                                        <div class="input-group date" id="datepicker">
+                                                            <input type="text" class="form-control" id="date"/>
+                                                            <span class="input-group-append">
+                                                              <span class="input-group-text bg-light d-block">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </span>
+                                                            </span>
+                                                          </div>
+                                                          <div class="input-group date" id="datepicker">
+                                                            <input type="text" class="form-control" id="date"/>
+                                                            <span class="input-group-append">
+                                                              <span class="input-group-text bg-light d-block">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </span>
+                                                            </span>
+                                                          </div>
+                                                        </div>
+                                                    </form>
+                                                  </div>
+
                                             </form>
                                             <a (click)="addNewProduct()" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
                                                 Product</a>
@@ -299,15 +337,15 @@
                     <div class="container-fluid" *ngIf="isAddProductUrl" >
                         <div class="row product-adding">
                             <div class="col-xl-12">
-                                <div class="card">
+                                <div class="card m-0">
                                     <div class="card-header">
                                             <h3>Add Product</h3>
                                             <button (click)="addNewProduct()" class="btn btn-solid btns">view products</button>
                                     </div>
                                     <div class="card-body card-bg-white">
                                         <form class="theme-form" [formGroup]="addProductForm"  enctype="multipart/form-data">
-                                            <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
-                                                <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2>
+                                            <div class="d-sm-flex flex-wrap justify-content-end align-items-center pb-2">
+                                                <!-- <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2> -->
                                                 <div class="py-2">
                                                   <select  class="form-select me-2" id="category" name="category" formControlName="category" [ngClass]="{ 'is-invalid': submitted && f.category.errors }" required="">
                                                     <option selected>-- Select category --</option>
@@ -320,120 +358,126 @@
                                                 </div>
                                                 </div>
                                               </div>
-                                              
-                                                <div class="mb-3 form-group">
+                                              <div class="row">
+                                                <div class="col-sm-6 mb-2">
                                                   <label class="form-label" for="title">Product name</label>
                                                   <input class="form-control" type="text"id="title" name="title" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" required="">
-                                                  <div class="form-text">Maximum 100 characters.</div>
-                                                  <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                                                 <div class="form-text">Maximum 100 characters.</div>
+                                                   <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
                                                     <div *ngIf="f.title.errors.required">Product Name is required</div>
+                                                 </div>
+                                               </div>
+                                               <div class="col-sm-6 mb-2">
+                                                   <label class="form-label" for="quantity">Product quantity</label>
+                                                   <input class="form-control" type="number" id="quantity" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': submitted && f.quantity.errors }" required="">
+                                                   <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and
+                                                     separated by commas.</div>
+                                                     <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                                                       <div *ngIf="f.quantity.errors">Product Quantity required</div>
+                                                   </div>
+                                                 </div>
+                                               </div>
+                                               <div class="row">
+                                               <div class="col-sm-6 mb-2">
+                                                   <label class="form-label" for="price">Price</label>
+                                                   <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                     <input class="form-control" type="number" id="price" name="price" formControlName="price" [ngClass]="{'is-invalid': submitted && f.price.errors }" required="">
+                                                     <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                                                       <div *ngIf="f.price.errors">Please enter Price.</div>
+                                                   </div>
+                                                   </div>
+                                                   <div class="form-text">Average marketplace price for this category is $15.</div>
+                                                 </div>
+                                                 <div class="col-sm-6 mb-3">
+                                                   <label class="form-label" for="discount">Discount</label>
+                                                   <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                                     <input class="form-control" type="number" id="discount" name="discount" formControlName="discount" [ngClass]="{'is-invalid': submitted && f.discount.errors }" required="">
+                                                     <div *ngIf="submitted && f.discount.errors" class="invalid-feedback">
+                                                       <div *ngIf="f.discount.errors">Please enter discount price</div>
+                                                   </div>
+                                                   </div>
+                                                   <div class="form-text">Typically 10x of the Standard license price.</div> 
+                                                 </div>
+                                               </div>
+                                               <div class="row">
+                                                   <div class="col-sm-6 mb-2">
+                                                         <label class="form-label" for="type">Type</label>
+                                                         <select  class="form-select me-2" id="type" name="type" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
+                                                           <option selected>-- Select Type --</option>
+                                                           <option>Electronics</option>
+                                                           <option>Gadgets</option>
+                                                           <option>Accessories</option>
+                                                         </select> 
+                                                         <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                                           <div *ngIf="f.type.errors">Please select type.</div>
+                                                       </div>
+                                                       </div>
+                                                       <div class="col-sm-6 mb-2">
+                                                         <label class="form-label" for="description">Product Brand</label>
+                                                         <input class="form-control" type="text" id="brand" name="brand" formControlName="brand" [ngClass]="{'is-invalid': submitted && f.brand.errors }" required="">
+                                                         <div *ngIf="submitted && f.brand.errors" class="invalid-feedback">
+                                                           <div *ngIf="f.brand.errors.required">Product Description is required</div>
+                                                       </div>
+                                                       </div>
+                                                   </div>
+                                                   <div class="row">
+                                                       <div class="col-sm-4 mb-2">
+                                                           <label class="form-label" for="collection">collection</label>
+                                                           <select  class="form-select me-2" id="collection" name="type" formControlName="collection" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" required="">
+                                                             <option selected>-- Select collection --</option>
+                                                             <option>new products</option>
+                                                             <option>best sellers</option>
+                                                             <option>featured products</option>
+                                                             <option>on sale</option>
+                                                           </select> 
+                                                           <div *ngIf="submitted && f.collection.errors" class="invalid-feedback">
+                                                             <div *ngIf="f.collection.errors">Please select collection.</div>
+                                                         </div>
+                                                         </div>
+                                                         <div class="col-sm-4 mb-2 form-group">
+                                                           <label class="form-label" for="size">Product Size</label>
+                                                           <input class="form-control" type="text"id="size" name="size" formControlName="size" >                                 
+                                                         </div>
+                                                         <div class="col-sm-4 mb-2 form-group">
+                                                           <label class="form-label" for="color">Product Color</label>
+                                                           <input class="form-control" type="text"id="color" name="color" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required="">                                 
+                                                         </div>
+                                                       </div>
+                                                 <div class="py-2">
+                                                   <label class="form-label" for="description">Is Product In Sale?</label>
+                                                 <div>
+                                                   <input id="true" type="radio" value="true" name="sale" class="mr-1" formControlName="sale">
+                                                   <label for="true">Yes</label>
                                                 </div>
+                                                <div>
+                                                   <input id="false" type="radio" value="false" name="sale" class="mr-1" formControlName="sale">
+                                                   <label for="false">NO</label>
                                                 </div>
-                                                
-                                                <div class="mb-3">
-                                                  <label class="form-label" for="description">Product description</label>
-                                                  <textarea class="form-control" rows="3" id="description" name="description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" required=""></textarea>
-                                                  <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.description.errors.required">Product Description is required</div>
+                                               </div>
+                                               <div class="py-2">
+                                                   <label class="form-label" for="description">Does this product is New</label>
+                                                 <div>
+                                                   <input id="true" type="radio" value="true" name="new" class="mr-1" formControlName="new">
+                                                   <label for="true">Yes</label>
                                                 </div>
+                                                <div>
+                                                   <input id="false" type="radio" value="false" name="new" class="mr-1" formControlName="new">
+                                                   <label for="false">NO</label>
                                                 </div>
-                                                <div class="mb-3">
-                                                  <label class="form-label" for="quantity">Product quantity</label>
-                                                  <input class="form-control" type="number" id="quantity" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': submitted && f.quantity.errors }" required="">
-                                                  <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and
-                                                    separated by commas.</div>
-                                                    <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
-                                                      <div *ngIf="f.quantity.errors">Product Quantity required</div>
-                                                  </div>
-                                                </div>
+                                               </div>
+                                               <div class="mb-3">
+                                                   <label class="form-label" for="description">Product description</label>
+                                                   <textarea class="form-control" rows="3" id="description" name="description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" required=""></textarea>
+                                                   <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                                     <div *ngIf="f.description.errors.required">Product Description is required</div>
+                                                 </div>
+                                             </div>
+                                         
+                                            
                                                 <div class="row">
-                                                  <div class="col-sm-6 mb-2">
-                                                    <label class="form-label" for="price">Price</label>
-                                                    <div class="input-group"><span class="input-group-text"><i class="fa fa-rupee"></i></span>
-                                                      <input class="form-control" type="number" id="price" name="price" formControlName="price" [ngClass]="{'is-invalid': submitted && f.price.errors }" required="">
-                                                      <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
-                                                        <div *ngIf="f.price.errors">Please enter Price.</div>
-                                                    </div>
-                                                    </div>
-                                                    <div class="form-text">Average marketplace price </div>
-                                                  </div>
-                                                  <div class="col-sm-6 mb-3">
-                                                    <label class="form-label" for="discount">Discount</label>
-                                                    <div class="input-group"><span class="input-group-text"><i class="fa fa-rupee"></i></span>
-                                                      <input class="form-control" type="number" min="0" max="100" id="discount" name="discount" formControlName="discount" [ngClass]="{'is-invalid': submitted && f.discount.errors }" required="">
-                                                      <div *ngIf="submitted && f.discount.errors" class="invalid-feedback">
-                                                        <div *ngIf="f.discount.errors">Please enter discount price</div>
-                                                    </div>
-                                                    </div>
-                                                    <div class="form-text">Enter discount with out % symbol </div> 
-                                                  </div>
-
-                                                  <div class="py-2">
-                                                    <label class="form-label" for="type">Type</label>
-                                                    <select  class="form-select me-2" id="type" name="type" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
-                                                      <option selected>-- Select Type --</option>
-                                                      <option>Electronics</option>
-                                                      <option>Gadgets</option>
-                                                      <option>Accessories</option>
-                                                    </select> 
-                                                    <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
-                                                      <div *ngIf="f.type.errors">Please select type.</div>
-                                                  </div>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <label class="form-label" for="description">Product Brand</label>
-                                                    <input class="form-control" type="text" id="brand" name="brand" formControlName="brand" [ngClass]="{'is-invalid': submitted && f.brand.errors }" required="">
-                                                    <div *ngIf="submitted && f.brand.errors" class="invalid-feedback">
-                                                      <div *ngIf="f.brand.errors.required">Product Description is required</div>
-                                                  </div>
-                                                  </div>
-                                                  <div class="py-2">
-                                                    <label class="form-label" for="description">Is Product In Sale?</label>
-                                                  <div>
-                                                    <input id="true" type="radio" value="true" name="sale" formControlName="sale">
-                                                    <label for="true">Yes</label>
-                                                 </div>
-                                                 <div>
-                                                    <input id="false" type="radio" value="false" name="sale" formControlName="sale">
-                                                    <label for="false">NO</label>
-                                                 </div>
-                                                </div>
-                                                <div class="py-2">
-                                                    <label class="form-label" for="description">Does this product is New</label>
-                                                  <div>
-                                                    <input id="true" type="radio" value="true" name="new" formControlName="new">
-                                                    <label for="true">Yes</label>
-                                                 </div>
-                                                 <div>
-                                                    <input id="false" type="radio" value="false" name="new" formControlName="new">
-                                                    <label for="false">NO</label>
-                                                 </div>
-                                                </div>
-
-                                                <div class="py-2">
-                                                    <label class="form-label" for="collection">collection</label>
-                                                    <select  class="form-select me-2" id="collection" name="type" formControlName="collection" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" required="">
-                                                      <option selected>-- Select collection --</option>
-                                                      <option>new products</option>
-                                                      <option>best sellers</option>
-                                                      <option>featured products</option>
-                                                      <option>on sale</option>
-                                                    </select> 
-                                                    <div *ngIf="submitted && f.collection.errors" class="invalid-feedback">
-                                                      <div *ngIf="f.collection.errors">Please select collection.</div>
-                                                  </div>
-                                                  </div>
-                                                  <div class="mb-3 form-group">
-                                                    <label class="form-label" for="size">Product Size</label>
-                                                    <input class="form-control" type="text"id="size" name="size" formControlName="size" >                                 
-                                                  </div>
-                                                  <div class="mb-3 form-group">
-                                                    <label class="form-label" for="color">Product Color</label>
-                                                    <input class="form-control" type="text"id="color" name="color" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required="">                                 
-                                                  </div>
                                                   <div >
-                                                    <input type='file' id="path" name="path"  #fileInput  (change)="onFileUpdate($event, '1')" />
-                                                    <img [src]='croppedImage' (click) = 'fileInput.click()' width="100" height="100"/>
+                                                    <input type='file' id="path" class="w-30" name="path"  #fileInput  (change)="onFileUpdate($event, '1')" />
+                                                    <img [src]='croppedImage' (click) = 'fileInput.click()' width="100" height="100" />
                                                   </div>
                                                   <!-- <div >
                                                     <input type='file' id="image2" name="image2" #fileInput1  (change)="onFileUpdate($event, '2')" />
@@ -443,32 +487,29 @@
                                                     <input type='file' id="image3" name="image3" #fileInput2  (change)="onFileUpdate($event, '3')" />
                                                     <img [src]='image3' (click) = 'fileInput.click()' width="100" height="100"/>
                                                   </div> -->
-                                                <button (click)="saveImage()"> upload image</button>
+                                                <button (click)="saveImage()" class="file-drop-input"> upload image</button>
                                                 <div class="col-xl-12">
-                                                <button (click)="rotateLeft()">Rotate left</button>
-                                                <button (click)="rotateRight()">Rotate right</button>
-                                                <button (click)="flipHorizontal()">Flip horizontal</button>
-                                                <button (click)="flipVertical()">Flip vertical</button>
-                                                <br />
-                                                <br />
-                                                <button (click)="toggleContainWithinAspectRatio()">
+                                                <button class="btn btn-solid mr-2 mb-2" (click)="rotateLeft()">Rotate left</button>
+                                                <button class="btn btn-solid mr-2 mb-2" (click)="rotateRight()">Rotate right</button>
+                                                <button class="btn btn-solid mr-2 mb-2" (click)="flipHorizontal()">Flip horizontal</button>
+                                                <button class="btn btn-solid mr-2 mb-2" (click)="flipVertical()">Flip vertical</button>
+                                                <button class="btn btn-solid mr-2 mb-2" (click)="toggleContainWithinAspectRatio()">
                                                   {{
                                                     containWithinAspectRatio
                                                       ? 'Fill Aspect Ratio'
                                                       : 'Contain Within Aspect Ratio'
                                                   }}
                                                 </button>
-                                                <button (click)="resetImage()">Reset image</button>
-                                                <br />
-                                                <br />
-                                                <input
+                                                <button class="btn btn-solid mr-2 mb-2" (click)="resetImage()">Reset image</button>
+                                               
+                                                <input class="rotation"
                                                   [(ngModel)]="rotation"
                                                   placeholder="Rotation"
                                                   type="number"
                                                   (keyup)="updateRotation()"
                                                 />
-                                                <button (click)="zoomOut()">Zoom -</button>
-                                                <button (click)="zoomIn()">Zoom +</button>
+                                                <button class="btn-danger zoomin" (click)="zoomOut()">Zoom -</button>
+                                                <button class="btn-danger zoomin" (click)="zoomIn()">Zoom +</button>
                                            
                                                 <div>
                                                     <image-cropper
@@ -934,7 +975,7 @@
                         <!--user details start-->
                         <div class="col-lg-6">
                             <div class="page-header-left">
-                                <h3 class="f-w-600">User List </h3>
+                                <!-- <h3 class="f-w-600">User List </h3> -->
                             </div>
                         </div>
                                 <div class="row">
@@ -1416,7 +1457,7 @@
                 <div class="col-12">
                     <div class="card dashboard-table mt-0">
                         <div class="card-header">
-                        <h3>Transfer Report</h3>
+                        <h4>Transfer Report</h4>
                       </div>
                         <div class="card-body card-bg-white">
                             <div class="table-responsive table-desi">

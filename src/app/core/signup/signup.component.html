@@ -1,33 +1,43 @@
 <section class="register-page section-b-space">
     <div class="container">
         <div class="row" >
-            <div class="col-lg-12" *ngIf="!isOtpFormUrl">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+                        <img src="assets/images/electronics_2.jpg" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <img src="assets/images/electronic.1.png" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" *ngIf="!isOtpFormUrl">
                 <h3>create account</h3>
                 <div class="theme-card">
                     <form class="theme-form" [formGroup]="registerForm" (ngSubmit)="registerUser()">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="email">User Name</label>
                                 <input type="text" class="form-control" id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors, 'is-valid':submitted }" placeholder="User Name" required="">
                                 <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                                     <div *ngIf="f.username.errors">Please enter your username.</div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="firstName">First Name</label>
                                 <input type="text" class="form-control" id="fname" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors,'is-valid':submitted }" placeholder="First Name"required="">
                                 <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
                                     <div *ngIf="f.first_name.errors.required">First Name is required</div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control" id="lname" formControlName="last_name" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors,'is-valid':submitted }" placeholder="Last Name" required="">
                                 <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
                                     <div *ngIf="f.last_name.errors.required">Last Name is required</div>
                                 </div>
                             </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label for="moible">Mobile</label>
                             <input type="tel" class="form-control" id="mobile_number" formControlName="mobile_number" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors,'is-valid':submitted }" placeholder="Mobile No" required="">
                             <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
@@ -35,7 +45,7 @@
                                 <div *ngIf="f.mobile_number.errors?.pattern">Please Enter Valid Mobile No .</div>
                             </div>
                         </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                 <label for="email">email</label>
                                 <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors,'is-valid':submitted }" placeholder="Email" required="">
@@ -45,13 +55,17 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="review"formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors,'is-valid':submitted }" placeholder="Enter your password" required="">
                                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                     <div *ngIf="f.password.errors?.required">Password is required</div>
                                    <div *ngIf="f.password.errors?.minlength">Password should be obscure and must be at least 8 characters long</div>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="password">Confirm Password</label>
+                                <input type="password" class="form-control" placeholder="Enter your password" required="">
                             </div>
                         </div>
                         <button [disabled]="loading" type="submit" class="btn btn-solid">create Account</button>
