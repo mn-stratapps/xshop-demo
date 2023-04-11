@@ -63,12 +63,16 @@
                                    <div *ngIf="f.password.errors?.minlength">Password should be obscure and must be at least 8 characters long</div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <label for="password">Confirm Password</label>
-                                <input type="password" class="form-control" placeholder="Enter your password" required="">
+                            
+                            <div class="col-md-12 form-group">
+                                <label for="confirmPassword">Confirm Password:</label>
+    
+                                <input class="form-control" type="password" (input)="checkConfirmPassword()"  id="confirm_password" autocomplete="off" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"placeholder="Confirm password" required="" >
+                                <div class="invalid-feedback" *ngIf="confirmPasswordError">Password didn't match</div>
+    
                             </div>
                         </div>
-                        <button [disabled]="loading" type="submit" class="btn btn-solid">create Account</button>
+                        <button [disabled]="registerForm.invalid" [disabled]="loading" type="submit" class="btn btn-solid">Create Account</button>
                         <p class="mt-2 mb-0">Already have an Account?<a href="/core/login" class="fwd">Login Here </a></p>
                     </form>
                 </div>

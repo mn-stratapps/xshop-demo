@@ -40,6 +40,7 @@ export class CartComponent implements OnInit {
 
   // Increament
   increment(product, qty = 1) {
+    
   const currentUser = localStorage.getItem( 'currentUser' );
   this.accessToken = JSON.parse( currentUser )['Token'];
   this.productService.updateCartQuantity(product, qty,this.accessToken)

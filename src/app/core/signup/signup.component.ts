@@ -19,7 +19,7 @@ loading = false;
 submitted = false;
 validateOtpForm:FormGroup;
 emailActivationToken:any;
-// confirmPasswordError = false;
+confirmPasswordError = false;
 errorMessage:'';
   message: any;
   constructor(private formBuilder:FormBuilder,private httpservice:AuthenticationService,private router:Router,private activatedRoute:ActivatedRoute) { 
@@ -38,9 +38,10 @@ errorMessage:'';
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
       mobile_number:['', [Validators.required,
-        Validators.pattern("^[0-9]{10}$"),
-        Validators.minLength(10), Validators.maxLength(10)]]
+      Validators.pattern("^[0-9]{10}$"),
+      Validators.minLength(10), Validators.maxLength(10)]]
   });
   }
   initializeValidateOtpForm(){
@@ -55,9 +56,17 @@ errorMessage:'';
   get fv() {
     return this.validateOtpForm.controls;
   }
+  checkConfirmPassword(){
+    if(this.registerForm.value.confirmPassword === this.registerForm.value.password){
+      this.confirmPasswordError = false;
+    } else{
+      this.confirmPasswordError = true;
+    }
+
+  }
   registerUser(){
     this.submitted=true;
-     if(this.registerForm.invalid){
+     if(this.registerForm.invalid || this.confirmPasswordError){
       this.registerForm.markAllAsTouched();
       return false;
      }else{
@@ -86,39 +95,27 @@ errorMessage:'';
         this.errorMessage = error;
         this.loading = false;
         console.log(error);
-        // switch(error.error){
-        //   case error.error.username[0] === 'user profile with this username already exists.':{
-        //     Swal.fire({
-        //           icon: 'error',
-        //           title: 'oops!',
-        //           text: 'Username Already Exist Try another',
-        //           width: '400px',
-        //         })
-        //         break;
-        //   }
-        //   case error.error.email[0] === 'Email Id already Exists':{
-        //       Swal.fire({
-        //     icon: 'error',
-        //     title: 'oops!',
-        //     text: 'Email Already Exist Try another',
-        //     width: '400px',
-        //   })
-        //   break;
-        //   }
-        // }
         if(error.error?.username && error.error?.username[0] ==='user profile with this username already exists.'){
           Swal.fire({
             icon: 'error',
             title: 'oops!',
-            text: 'Username Already Exist Try another',
+            text: 'Username Already Exist,Please LogIn',
             width: '400px',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['core/login'])
+            }
           })
         }else if(error.error?.email && error.error?.email[0] === 'Email Id already Exists'){
           Swal.fire({
             icon: 'error',
             title: 'oops!',
-            text: 'Email Already Exist Try another',
+            text: 'Email Already Exist!, Please LogIn',
             width: '400px',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['core/login'])
+            }
           })
         }else if(error.error?.mobile_number && error.error?.mobile_number[0] ==='user profile with this mobile number already exists.'){
           Swal.fire({

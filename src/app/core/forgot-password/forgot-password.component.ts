@@ -84,13 +84,7 @@ this.httpservice.resetPassword(this.forgotPasswordForm.value)
            });
           this.router.navigate(['/login']);
         }
-        // else{
-        //   this.message = data.message;
-        //   if(data.message.includes("Email ID Not Found")){
-        //     this.showSignInButton = true;
-        //   }
-        // }
-        // this.loading=false;
+        
     },
     error:(error)=>{
       this.message = error.error.message;
@@ -104,25 +98,7 @@ this.httpservice.resetPassword(this.forgotPasswordForm.value)
      }
     }
   }
-  // next: (data) => {
-  //   console.log(data);
-  //   if(data.message ='Password reset email sent'){
-  //     this.userProviderMessage = 'Your password reset email has been sent.';
-  //     this.router.navigate(['/login']);
-  //   }
-  //   else{
-  //     this.message = data.message;
-  //     if(data.message.includes("Email ID Not Found")){
-  //       this.showSignInButton = true;
-  //     }
-  //   }
-  //   this.loading=false;
-  // },
-  // error => {
-  //   this.message = error.error.message;
-  //   this.loading = false;
-  // }
- 
+  
 );
 }
 

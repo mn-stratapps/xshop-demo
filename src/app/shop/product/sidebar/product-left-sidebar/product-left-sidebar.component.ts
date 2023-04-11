@@ -67,6 +67,7 @@ getProductDetails(){
 
   // Increament
   increment() {
+    if (this.counter < 10) 
     this.counter++;
     
   }

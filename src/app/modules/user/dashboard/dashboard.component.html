@@ -376,7 +376,7 @@
                                         <div class="top-sec">
                                             <h3>My Orders</h3>
                                         </div>
-                                        <div style="height: 637px;overflow-y: scroll;" class="table-responsive">
+                                        <div style="height: 637px;position: sticky;top: 0px;" class="table-responsive">
                                             <table class="table cart-table order-table">
                                                 <thead>
                                                     <tr class="table-head">
@@ -389,7 +389,7 @@
                                                         <th scope="col">View</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody style="overflow-y: scroll;">
                                                     <tr *ngFor="let myproducts of myProducts">
                                                         <td>
                                                             <a>
@@ -405,74 +405,21 @@
                                                         </td>
                                                         <td>
                                                             <span
-                                                                class="badge rounded-pill custom-badge" [ngClass]="{'bg-danger': myproducts.order_status === 'pending'}">{{myproducts.order_status}}</span>
+                                                                class="badge rounded-pill custom-badge" [ngClass]="{ 'bg-danger': myproducts.order_status === 'Pending' , 'bg-secondary': myproducts.order_status === 'Cancelled','bg-success': myproducts.order_status === 'Order placed'}">{{myproducts.order_status}}</span>
                                                         </td>
                                                         <td>
                                                             <span
-                                                                class="badge rounded-pill custom-badge" [ngClass]="{'bg-danger':myproducts.order_status === 'pending','bg-success':myproducts.shipment_status === 'pending','bg-secondary':myproducts.shipment_status === 'pending'}">{{myproducts.shipment_status}}</span>
+                                                                class="badge rounded-pill custom-badge" [ngClass]="{'bg-danger':myproducts.shipment_status === 'Pending','bg-success':myproducts.shipment_status === 'Shipped','bg-secondary':myproducts.shipment_status === 'Cancelled'}">{{myproducts.shipment_status}}</span>
                                                         </td>
                                                         <td>
-                                                            <span class="theme-color fs-6">₹{{myproducts.item_price}}</span>
+                                                            <span class="theme-color fs-6">₹{{myproducts.item_price | number: '1.0-2'}}</span>
                                                         </td>
                                                         <td>
                                                             <a href="javascript:void(0)">
                                                                 <i class="fa fa-eye text-theme"></i>
                                                             </a>
                                                         </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/sm.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span class="mt-0">#125367</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="fs-6">Sleevless white top</span>
-                                                        </td>
-                                                        <td>
-                                                            <span
-                                                                class="badge rounded-pill bg-danger custom-badge">Pending</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <i class="fa fa-eye text-theme"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>                                              
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/sm.jpg"
-                                                                    class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span>#125021</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="fs-6">Men's Sweatshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span
-                                                                class="badge rounded-pill bg-secondary custom-badge">Canceled</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <i class="fa fa-eye text-theme"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    </tr>                                                   
                                                 </tbody>
                                             </table>
                                         </div>
