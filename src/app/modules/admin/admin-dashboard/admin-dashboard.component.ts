@@ -61,9 +61,6 @@ ngOnInit(){
   this.getUsersList();
   this.initializeeditProductForm();
   this.getOrdersList();
-  $(function(){
-		$('#datepicker').datepicker();
-	});
   //this.addProductForm.get('image1').updateValueAndValidity()
   // this.products();
 }

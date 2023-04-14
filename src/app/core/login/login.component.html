@@ -2,8 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <img src="assets/images/electronics_2.jpg"  class="img-fluid" alt="">
+                <div class="elec_banner">
+                <img src="assets/images/electronic.1.png"  class="img-fluid" alt="">
             </div>
+        </div>
             <div class="col-lg-6" *ngIf="!isActivateUrl">
                  <h3>Login</h3> 
                 <div class="theme-card">
@@ -37,13 +39,8 @@
                     
                 </div>
             </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-lg-6">
-                    <img src="assets/images/electronic.1.png" class="img-fluid" alt="">
-                </div>
-            <div class="col-lg-6 pwd-page p-0 pb-5" *ngIf="isActivateUrl">
-                <h2>Reactivate Your Account</h2>
+            <div class="col-lg-6 pwd-page p-0 px-3" *ngIf="isActivateUrl">
+                <h2 style="font-size:24px;">Reactivate Your Account</h2>
                 <form class="theme-form" [formGroup]="reactivateEmailForm" (ngSubmit)="reactivateEmail()" >
                     <div class="row">
                         <div class="col-md-12 form-group">
@@ -61,11 +58,48 @@
     
     
             </div>
+            </div>
+            <div class="row mt-4" *ngIf="!isActivateUrl">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="elec_banner1">
+                            <img src="assets/images/electronics_2.png" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                        <div class="col-lg-6">
+                            <div class="elec_banner1">
+                            <img src="assets/images/electronics_2.png" class="img-fluid" alt="">
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+             
+            <!-- <div class="col-lg-6 pwd-page p-0 pb-5" *ngIf="isActivateUrl">
+                <h2>Reactivate Your Account</h2>
+                <form class="theme-form" [formGroup]="reactivateEmailForm" (ngSubmit)="reactivateEmail()" >
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && fv.email.errors }"placeholder="Enter email" data-rule="minlen:3"required="">
+                            <div *ngIf="submitted && fv.email.errors" class="invalid-feedback">
+                                <div *ngIf="fv.email.errors">Email is incorrect</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <button [disabled]="loading" type="submit" class="btn btn-solid">Submit</button>
+
+                    </div>
+                </form>
+    
+    
+            </div> -->
             
-            <div class="col-lg-6 right-login ">
+            <div class="col-lg-6 right-login " *ngIf="!isActivateUrl">
                 <h3>New Customer</h3>
                 <div class="theme-card authentication-right">
-                    <h6 class="title-font">Create A Account</h6>
+                    <h6 class="title-font">Create An Account</h6>
                     <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register.</p>
                     <button class="btn btn-solid"><a href="/core/signup">Create an Account</a></button>
                 </div>

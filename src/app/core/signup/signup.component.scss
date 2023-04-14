@@ -7,3 +7,22 @@
     text-underline-position: underline;
     cursor: pointer;
   }
+  .elec_banner1 img{
+    margin-top:46px;
+    border-radius: 5px;
+    }
+    .mb-none{
+      border-radius: 5px;
+    }
+    @media (max-width: 1024px) {
+      .elec_banner1 img{
+        margin-top:0px;
+        display: none;
+      }
+      .mb-none{
+        display: none;
+      }
+      .mb-4{
+        margin-bottom: 0px!important;
+      }
+    }

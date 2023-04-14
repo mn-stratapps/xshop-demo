@@ -17,3 +17,24 @@
     right: 9px;
     top: -43px;
 }
+.elec_banner img{
+margin-top:43px;
+border-radius: 5px;
+}
+.elec_banner1 img{
+margin-top:46px;
+border-radius: 5px;
+}
+@media (max-width:1024px) {
+  .elec_banner img{
+    margin-top:0px;
+    margin-bottom: 22px;
+    display: none;
+  }
+  .elec_banner1 img{
+    display: none;
+    }
+    .mt-4{
+      margin-top: 0px!important;
+    }
+}

@@ -4,10 +4,23 @@
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
-                        <img src="assets/images/electronics_2.jpg" class="img-fluid" alt="">
+                        <div class="elec_banner1">
+                            <img src="assets/images/electronic.1.png" class="img-fluid" alt="">
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12">
-                        <img src="assets/images/electronic.1.png" class="img-fluid" alt="">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-none">
+                                <img src="assets/images/electronics_2.png" class="img-fluid" alt="">
+                            </div>
+                        </div>
+                            <div class="col-lg-6">
+                                <div class="mb-none">
+                                <img src="assets/images/electronics_2.png" class="img-fluid" alt="">
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -16,13 +29,6 @@
                 <div class="theme-card">
                     <form class="theme-form" [formGroup]="registerForm" (ngSubmit)="registerUser()">
                         <div class="row">
-                            <div class="col-md-12">
-                                <label for="email">User Name</label>
-                                <input type="text" class="form-control" id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors, 'is-valid':submitted }" placeholder="User Name" required="">
-                                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                                    <div *ngIf="f.username.errors">Please enter your username.</div>
-                                </div>
-                            </div>
                             <div class="col-md-12">
                                 <label for="firstName">First Name</label>
                                 <input type="text" class="form-control" id="fname" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors,'is-valid':submitted }" placeholder="First Name"required="">
@@ -35,6 +41,13 @@
                                 <input type="text" class="form-control" id="lname" formControlName="last_name" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors,'is-valid':submitted }" placeholder="Last Name" required="">
                                 <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
                                     <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="email">User Name</label>
+                                <input type="text" class="form-control" id="username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors, 'is-valid':submitted }" placeholder="User Name" required="">
+                                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                                    <div *ngIf="f.username.errors">Please enter your username.</div>
                                 </div>
                             </div>
                         <div class="col-md-12">
@@ -77,10 +90,9 @@
                     </form>
                 </div>
             </div>
-        </div>
 <!--for validation account by entering otp-->
-      <div class="pwd-page pt-5">
-        <div class="col-lg-6 offset-lg-3" *ngIf="isOtpFormUrl">
+        <div class="col-lg-6" *ngIf="isOtpFormUrl">
+            <div class="pwd-page pt-5">
             <h2>Verify Your Account</h2>
             <form class="theme-form" [formGroup]="validateOtpForm" (ngSubmit)="validateOtp()" >
                 <div class="row">
@@ -96,8 +108,7 @@
                 </div>
             </form>
         </div>
+      </div>
     </div>
-
-
-    </div>
+  </div>
 </section>
