@@ -43,3 +43,17 @@
     appearance: none;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.card .card-header {
+    padding: 0px 0px 10px 0px!important;
+}
+.search-form .form-group:before {
+    left: 53px!important;
+    top: 12px!important;
+}
+.search-form .form-group:after {
+    top: 13px!important;
+    left: 24px!important;
+}
+.card-body{
+    padding: 10px 0px 10px 0px!important;
+}
