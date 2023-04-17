@@ -23,6 +23,7 @@ filename:any;
 userData: User = new User();
 userList=[];
 ordersList= [];
+salesList= [];
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -30,6 +31,7 @@ ordersList= [];
   loading: boolean;
   file: any;
   adminProducts=[];
+  allProducts=[];
   error: any;
   editProductForm:FormGroup;
   imagename:string;
@@ -61,6 +63,9 @@ ngOnInit(){
   this.getUsersList();
   this.initializeeditProductForm();
   this.getOrdersList();
+  $(function(){
+		$('#datepicker').datepicker();
+	});
   //this.addProductForm.get('image1').updateValueAndValidity()
   // this.products();
 }
@@ -109,6 +114,20 @@ getOrdersList(){
     next:(data) =>{
       this.ordersList = data;
        console.log(this.ordersList);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  }) 
+}
+getSales(){
+  this.httpService.getSalesList(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.salesList = data;
+       console.log(this.salesList);
     },
     error:(error)=>{
       this.error = error;
@@ -444,6 +463,30 @@ editProduct(){
     }
   });
   this.modalService.dismissAll();
+}
+viewAllProducts(){
+  const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+  this.httpService.viewAllProducts(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.allProducts = data;
+       console.log(this.allProducts);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)  
+      if(error.error.message === 'Details Not Found') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Data!',
+          text: 'No Products found Please Add products',
+          width: '400px',
+        })
+      }    
+  }
+  })
 }
 deleteProductByAdmin(id:any){
   Swal.fire({

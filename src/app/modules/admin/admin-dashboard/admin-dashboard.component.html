@@ -42,11 +42,13 @@
                                     class="nav-link active">Account Info</a></li>
                                     
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#products"
-                                (click)="viewAdminProducts()"    class="nav-link">Products</a></li>
+                                (click)="viewAdminProducts()"    class="nav-link">My Products</a></li>
+                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#allproducts"
+                                    (click)="viewAllProducts()"    class="nav-link">All Products</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#orders"
                                     class="nav-link">orders</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#sales"
-                                    class="nav-link">Sales</a></li>
+                                (click)="getSales()"class="nav-link">Sales</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#payment"
                                     class="nav-link">Coupons</a></li>
                             <!-- <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#profile"
@@ -97,8 +99,8 @@
                                     <div class="counter-box">
                                         <img src="../assets/images/homework-icon.png" class="img-fluid">
                                         <div>
-                                            <h3>5</h3>
-                                            <h5>Pending Orders</h5>
+                                            <h3></h3>
+                                            <h5>Pending Order</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -181,42 +183,45 @@
                                                 <div class="form-group mr-2">
                                                     <input class="form-control-plaintext" type="search" placeholder="Product Name">
                                                 </div>
-                                                </form>
-                                                <!-- <div class="Categories">
+                                                <!-- <div class="prodcut_price w-20">
+                                                    <input class="form-control" type="search" placeholder="Price">
+                                                </div> -->
+                                                <div class="Categories">
                                                 <select class="form-select me-2" id="category">  
-                                                    <option>--Select Category--</option>                     
+                                                    <option>--Select Category</option>                     
                                                     <option>Mobiles</option>
                                                     <option>Laptops</option>
                                                     <option>headphones</option>
                                                   </select>
                                                 </div>
-                                                <div class="Prices">
-                                                    <select class="form-select me-2" id="Prices">  
-                                                        <option>--Select Prices--</option>                     
-                                                        <option>Under ₹1,000</option>
-                                                        <option>₹1,000 - ₹5,000</option>
-                                                        <option>₹5,000 - ₹10,000</option>
-                                                        <option>₹10,000 - ₹20,000</option>
-                                                        <option>Over ₹20,000</option>
-                                                      </select>
-                                                    </div>
                                                 <div class="dropdown">
                                                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                                                         <i class="fa fa-calendar me-1 select-icon mr-2"></i>
                                                         Select Date
                                                     </button>
-                                                    <form class="dropdown-menu p-3">
+                                                    <form class="dropdown-menu p-4">
                                                         <div class="d-flex">
                                                         <div class="input-group date" id="datepicker">
-                                                            <input type="date" class="form-control date_input" id="date" placeholder="From"/>
+                                                            <input type="text" class="form-control" id="date"/>
+                                                            <span class="input-group-append">
+                                                              <span class="input-group-text bg-light d-block">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </span>
+                                                            </span>
                                                           </div>
-                                                          <div class="input-group date date-field" id="datepicker">
-                                                            <input type="date" class="form-control date_input" id="date" palceholder="To"/>
+                                                          <div class="input-group date" id="datepicker">
+                                                            <input type="text" class="form-control" id="date"/>
+                                                            <span class="input-group-append">
+                                                              <span class="input-group-text bg-light d-block">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </span>
+                                                            </span>
                                                           </div>
                                                         </div>
                                                     </form>
-                                                  </div> -->
+                                                  </div>
 
+                                            </form>
                                             <a (click)="addNewProduct()" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
                                                 Product</a>
                                         </div>
@@ -542,6 +547,108 @@
                         </div>
                    <!-- add product end -->
                     </div>
+
+                    <div  class="tab-pane fade" id="allproducts">
+                        <!-- view product start-->
+                        <div class="card_bg">
+                        <div class="row" >
+                          <div class="col-lg-6">
+                              <div class="page-header-left">
+                                  <h3>All Products List
+                                  
+                                  </h3>
+                              </div>
+                          </div> 
+                     </div>
+                          <div class="row">
+                              <div class="col-12">
+                                  <div class="card dashboard-table mt-0">
+                                      <div class="card-header">
+                                          <form class="form-inline search-form search-box d-flex">
+                                              <div class="form-group mr-2">
+                                                  <input class="form-control-plaintext" type="search" placeholder="Product Name">
+                                              </div>
+                                              <!-- <div class="prodcut_price w-20">
+                                                  <input class="form-control" type="search" placeholder="Price">
+                                              </div> -->
+                                              <div class="Categories">
+                                              <select class="form-select me-2" id="category">  
+                                                  <option>--Select Category</option>                     
+                                                  <option>Mobiles</option>
+                                                  <option>Laptops</option>
+                                                  <option>headphones</option>
+                                                </select>
+                                              </div>
+                                              <div class="dropdown">
+                                                  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                                      <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                                      Select Date
+                                                  </button>
+                                                  <form class="dropdown-menu p-4">
+                                                      <div class="d-flex">
+                                                      <div class="input-group date" id="datepicker">
+                                                          <input type="text" class="form-control" id="date"/>
+                                                          <span class="input-group-append">
+                                                            <span class="input-group-text bg-light d-block">
+                                                              <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                          </span>
+                                                        </div>
+                                                        <div class="input-group date" id="datepicker">
+                                                          <input type="text" class="form-control" id="date"/>
+                                                          <span class="input-group-append">
+                                                            <span class="input-group-text bg-light d-block">
+                                                              <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                          </span>
+                                                        </div>
+                                                      </div>
+                                                  </form>
+                                                </div>
+
+                                          </form>
+                                          
+                                      </div>
+                                      <div class="card-body card-bg-white">
+                                          <div style="height: 637px;overflow-y: scroll;" class="table-responsive table-desi">
+                                              <table class="table table-striped ">
+                                                  <thead>
+                                                      <tr>
+                                                          <th scope="col">Product Name</th>
+                                                          <th scope="col">Category</th>
+                                                          <!-- <th scope="col">Description</th> -->
+                                                          <th scope="col">Product Type</th>
+                                                          <th scope="col">Color</th>
+                                                          <th scope="col">Price</th>
+                                                          <th scope="col">Discount Percentage</th>
+                                                          <th scope="col">Available Quantity</th>
+                                                          <th scope="col">Image</th>
+                                                          <th scope="col">Edit/Delete</th>
+
+                          
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr *ngFor="let products of allProducts">
+                                                          <td>{{products?.title}}</td>
+                                                          <td>{{products?.category}}</td>
+                                                          <td>{{products.type}}</td>
+                                                          <td>{{products?.variants[0].color}}</td>
+                                                          <td>{{products?.price}}</td>
+                                                          <td>{{products?.discount}}%</td>
+                                                          <td>{{products?.stock}}</td>
+                                                          <td scope="row"><img src="{{products.images[0].src}}"></td>
+                                                      </tr>
+
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>                                                 
+                      </div>                       
+                  </div>
                     <div class="tab-pane fade card_bg" id="orders">
                                        <!-- order page start -->
                                        <div class="row">
@@ -648,8 +755,8 @@
                                 <div class="card-body card-bg-white">
                                     <div class="table-responsive table-desi">
                                         <table class="table table-striped ">
-                                            <thead>
-                                                <tr>
+                                            <thead style="position: sticky;top:0px">
+                                                <tr >
                                                     <th scope="col">Order id</th>
                                                     <th scope="col">Transaction Id</th>
                                                     <th scope="col">Invoice</th>
@@ -659,38 +766,18 @@
                                                     <th scope="col">Amount</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th>841</th>
-                                                    <td> #31534221621</td>
-                                                    <td> #IN31534221</td>
-                                                    <td>Apr 22,19</td>
+                                            <tbody style="overflow-y: scroll;">
+                                                <tr *ngFor="let sales of salesList">
+                                                    <th>{{sales.order_id}}</th>
+                                                    <td> #{{sales.transaction_id}}</td>
+                                                    <td> #{{sales.order_id}}</td>
+                                                    <td>{{sales.date | date}}</td>
                                                     <td>Paypal</td>
-                                                    <td>Process</td>
-                                                    <td>$7841/-</td>
-                                                </tr>
-                                                
+                                                    <td>{{sales.delivery_status}}</td>
+                                                    <td>₹{{sales.amount}}</td>
+                                                </tr>    
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div  class="d-flex justify-content-between p-2">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                              <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Previous">
-                                                  <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                              </li>
-                                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                              <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Next">
-                                                  <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                              </li>
-                                            </ul>
-                                          </nav>
                                     </div>
                                 </div>
                             </div>
@@ -816,158 +903,6 @@
                         </div> 
                           <!-- list page end-->
                     </div>
-                    <!-- <div class="tab-pane fade" id="profile">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card mt-0">
-                                    <div class="card-body">
-                                        <div class="dashboard-box">
-                                            <div class="dashboard-title">
-                                                <h4>profile</h4>
-                                                <a class="edit-link" href="#">edit</a>
-                                            </div>
-                                            <div class="dashboard-detail">
-                                                <ul>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>company name</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>Fashion Store</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>email address</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>mark.jecno@gmail.com</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Country / Region</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>Downers Grove, IL</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Year Established</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>2018</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Total Employees</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>101 - 200 People</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>category</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>clothing</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>street address</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>549 Sulphur Springs Road</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>city/state</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>Downers Grove, IL</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>zip</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>60515</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="dashboard-title mt-lg-5 mt-3">
-                                                <h4>login details</h4>
-                                                <a class="edit-link" href="#">edit</a>
-                                            </div>
-                                            <div class="dashboard-detail">
-                                                <ul>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Email Address</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>mark.jecno@gmail.com <a class="edit-link"
-                                                                        href="#">edit</a></h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Phone No.</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>+01 4485 5454<a class="edit-link"
-                                                                        href="#">Edit</a></h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Password</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>******* <a class="edit-link" href="#">Edit</a>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    
                     <div class="tab-pane fade card_bg" id="users">
                         <!--user details start-->
                         <div class="col-lg-6">
