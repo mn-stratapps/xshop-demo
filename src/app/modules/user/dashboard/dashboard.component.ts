@@ -11,6 +11,7 @@ import { Useraddress } from 'src/app/core/models/useraddress';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shared/classes/product';
 import { ProductService } from 'src/app/shared/services/product.service';
+import { HttpClient } from '@angular/common/http';
 declare var $: any;
 
 @Component({
@@ -57,7 +58,12 @@ export class DashboardComponent implements OnInit {
   selectedCountry: any;
   aid: any;
   defaultAddress = false;
-  constructor(public httpService:AuthenticationService,private formBuilder:FormBuilder, public userService:UserService,public productService:ProductService,private router: Router,private modalService: NgbModal) { }
+  ipAddress:any;
+  geoData:any;
+  autofill:boolean=false;
+  constructor(public httpService:AuthenticationService,private formBuilder:FormBuilder,
+     public userService:UserService,public productService:ProductService,private router: Router,
+     private modalService: NgbModal,private http :HttpClient) { }
 
   ngOnInit(): void {
     this.getUserDetails();
@@ -111,6 +117,34 @@ export class DashboardComponent implements OnInit {
     this.isAddNewAddress = !this.isAddNewAddress;
     this.addAddressForm.reset();
     this.isEditAddress = false;
+    this.getIPaddress();
+  }
+  resetautofill(){
+    this.autofill=false;
+  }
+  getIPaddress(){
+    this.http.get<{ip:string}>('https://jsonip.com')
+    .subscribe( data => {
+      console.log(data);
+      this.ipAddress = data
+    })
+  }
+  getGeoAddress(){
+    this.autofill=true;
+    if(this.ipAddress!=null){
+      this.http.get<any>('http://ip-api.com/json/'+this.ipAddress.ip).subscribe( data => {
+        console.log(data);
+        this.geoData = data;
+        this.addAddressForm.patchValue({
+          country:this.geoData.country,
+          state:this.geoData.regionName,
+          pincode:this.geoData.zip,
+          city:this.geoData.city,
+        });
+      })
+      
+    }
+   
   }
   // modalButton1(){
     onCountryChange($event): void {
@@ -462,7 +496,17 @@ onSubmit(){
     this.addAddressForm.markAllAsTouched();
     return false;
   }else{
+
+    if(this.autofill=false){
     this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+    }else{
+      this.addAddressForm.patchValue({
+        country:this.geoData.country,
+        state:this.geoData.regionName,
+        pincode:this.geoData.zip,
+        city:this.geoData.city,
+      });
+    }
   this.httpService.addAddress(this.accessToken,this.addAddressForm.value).
   subscribe({
     next:(data)=>{
@@ -476,6 +520,8 @@ onSubmit(){
         })
         this.getAddress();
         this.isAddNewAddress = false;
+        this.addAddressForm.reset();
+        this.f.addAddressForm.markAsUntouched()
       }
     },
     error:(error) => {

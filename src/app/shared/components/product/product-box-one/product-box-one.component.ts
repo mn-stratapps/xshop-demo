@@ -61,7 +61,6 @@ export class ProductBoxOneComponent implements OnInit {
   ChangeVariantsImage(src) {
     this.ImageSrc = src;
   }
-
   addToCart(product_id: any) {
     
     this.productService.addToCart(product_id )
@@ -96,7 +95,6 @@ export class ProductBoxOneComponent implements OnInit {
         console.log(error)
         if (error.error.message === 'product already exists in wishlist'){
           this.toastrService.warning('Product already exists in wishlist');
-
         }
       }
     })

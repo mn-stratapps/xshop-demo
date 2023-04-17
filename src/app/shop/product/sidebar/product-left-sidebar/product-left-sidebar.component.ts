@@ -4,6 +4,7 @@ import { ProductDetailsMainSlider, ProductDetailsThumbSlider } from '../../../..
 import { Product } from '../../../../shared/classes/product';
 import { ProductService } from '../../../../shared/services/product.service';
 import { SizeModalComponent } from "../../../../shared/components/modal/size-modal/size-modal.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -26,7 +27,7 @@ export class ProductLeftSidebarComponent implements OnInit {
   accessToken: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
-    public productService: ProductService) {
+    public productService: ProductService,private toastrService: ToastrService) {
     // this.route.data.subscribe(response => this.product = response.data);
   }
 
@@ -100,7 +101,10 @@ getProductDetails(){
       }
     )
     if (status)
-      this.router.navigate(['/shop/cart']);
+    {
+      this.toastrService.success('Product has been added in cart.');
+
+    }
   }
 
   // Buy Now

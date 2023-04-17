@@ -191,7 +191,7 @@
                                                         <div class="middle">
                                                             <div class="address">
                                                                 <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
-                                                                <p>{{address.city}}, {{address.country}}</p>
+                                                                <p>{{address.city}}, {{address.state}}, {{address.country}}</p>
                                                                 <p>{{address.pincode}}</p>
                                                             </div>
                                                             <div class="number">
@@ -221,6 +221,9 @@
                                     <div class="d-flex justify-content-between">
                                         <h3 class="address f-w-600">ADD ADDRESS</h3>
                                     <a (click)="addNewAddress()" class="btn btn-sm btn-solid">View Your Addresses</a>
+                                  </div>
+                                  <div>
+                                    <a (click)="getGeoAddress()" class="btn btn-sm btn-solid">Autofill</a>
                                   </div>
                                         <form class="theme-form" [formGroup]="addAddressForm" (ngSubmit)="onSubmit()">
                                             <div class="row">
@@ -262,7 +265,7 @@
                                                     </div>
                                                 </div>
                                                     </div>
-                                                    <div class="row">
+                                                    <div *ngIf="!autofill" class="row">
                                                         <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                             <fieldset>
                                                                 <div class="field-label" for="country">Country</div>
@@ -288,7 +291,6 @@
                                                             <fieldset>
                                                                 <div class="field-label" for="state">State</div>
                                                                 <select
-                                                                  *ngIf="states"
                                                                   #state
                                                                   class="form-control"
                                                                   name="state"
@@ -310,7 +312,6 @@
                                                             <fieldset>
                                                                 <div class="field-label" for="city">City</div>
                                                                 <select
-                                                                  *ngIf="cities"
                                                                   #city
                                                                   class="form-control"
                                                                   name="city"
@@ -328,6 +329,94 @@
                                                                 </div>
                                                               </fieldset>
                                                             </div>
+                                                        </div>
+                                                        <div *ngIf="autofill" class="row">
+                                                            <a (click)="resetautofill()">reset autofill</a>
+                                                            <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                                <!-- <fieldset>
+                                                                    <div class="field-label" for="country">Country</div>
+                                                                    <select
+                                                                      #country
+                                                                      class="form-select"
+                                                                      name="country"
+                                                                      id="country"
+                                                                      formControlName="country"
+                                                                      [ngClass]="{ 'is-invalid': submitted && f.country.errors }" required=""
+                                                                      >
+                                                                      <option [value]="null">-- Select Your Country --</option>
+                                                                      <option [value]="country.name">
+                                                                        {{ country.flag }}&nbsp;&nbsp;{{ country.name }}
+                                                                      </option>
+                                                                    </select>
+                                                                    <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                                        <div *ngIf="f.country.errors">Please select country.</div>
+                                                                    </div>
+                                                                  </fieldset> -->
+                                                                  <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                                    <div class="field-label">Country</div>
+                                                                    <input class="form-control" type="text"id="country" name="country" formControlName="country" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" required="">
+                                                                    <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                                        <div *ngIf="f.country.errors.required">Please select country</div>
+                                                                    </div>
+                                                                </div>
+                                                             </div>
+                                                            <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                                <fieldset>
+                                                                    <!-- <div class="field-label" for="state">State</div> -->
+                                                                    <!-- <select
+                                                                      #state
+                                                                      class="form-control"
+                                                                      name="state"
+                                                                      id="state"
+                                                                      formControlName="state"
+                                                                      [ngClass]="{ 'is-invalid': submitted && f.state.errors }" required=""
+                                                                      >
+                                                                      <option [value]="null">-- Select Your State --</option>
+                                                                      <option  [value]="state.name">
+                                                                        {{ state.name }}
+                                                                      </option>
+                                                                    </select> -->
+                                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                                        <div class="field-label">State</div>
+                                                                        <input class="form-control" type="text"id="state" name="state" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" required="">
+                                                                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                                            <div *ngIf="f.state.errors.required">Please select state</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                                        <div *ngIf="f.state.errors">Please select stste.</div>
+                                                                    </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                               <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                                <!-- <fieldset>
+                                                                    <div class="field-label" for="city">City</div>
+                                                                    <select
+                                                                      #city
+                                                                      class="form-control"
+                                                                      name="city"
+                                                                      id="city"
+                                                                      formControlName="city"
+                                                                      [ngClass]="{ 'is-invalid': submitted && f.city.errors }" required=""
+                                                                      >
+                                                                      <option [value]="null">-- Select Your City --</option>
+                                                                      <option [value]="city.name">
+                                                                        {{ city.name }}
+                                                                      </option>
+                                                                    </select>
+                                                                    <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                                        <div *ngIf="f.city.errors">Please select city.</div>
+                                                                    </div>
+                                                                  </fieldset> -->
+                                                                  <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                                    <div class="field-label">City</div>
+                                                                    <input class="form-control" type="text"id="city" name="state" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" required="">
+                                                                    <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                                        <div *ngIf="f.city.errors.required">Please select state</div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                                 <div class="field-label">Pin Code </div>
                                                                 <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
@@ -335,7 +424,7 @@
                                                                     <div *ngIf="f.pincode.errors.required">pincode is required</div>
                                                                 </div>
                                                             </div>
-                                                       </div>
+                                                       
                                                 <div class="row">
                                                   <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                                     <div class="field-label">Add delivery instructions</div>
@@ -345,8 +434,8 @@
                                                         <div class="field-label">Address Type</div>
                                                         <select name="type" class="form-select me-2" formControlName="type"
                                                         [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
-                                                            <option  selected=""> Select an Address Type</option>
-                                                            <option value="HOME"> Home (7 am – 9 pm delivery) </option>
+                                                        <option [value]="null">-- Select Address Type --</option>
+                                                        <option value="HOME"> Home (7 am – 9 pm delivery) </option>
                                                             <option value="OFFICE" > Office/Commercial (10 AM - 6 PM delivery)</option>    
                                                         </select>
                                                         <div *ngIf="submitted && f.type.errors" class="invalid-feedback">

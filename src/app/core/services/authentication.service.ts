@@ -154,6 +154,9 @@ getUserslist(accessToken:any){
 getOrdersList(accessToken:any){
   return this.http.get<any>(`${environment.apiUrl}/list-orders/`+accessToken);
 }
+getSalesList(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/list-sales/`+accessToken);
+}
 getAddress(accessToken:any):Observable<Useraddress[]>{
   return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)
 }
@@ -187,6 +190,9 @@ addProduct(accessToken:any,data:any){
 
 viewAdminProducts(accessToken:any){
   return this.http.get<any>(`${environment.apiUrl}/adminproducts/`+accessToken)
+}
+viewAllProducts(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/allproducts/`+accessToken)
 }
 editProductByAdmin(accessToken:any,id:any,data:any){
   return this.http.put<any>(`${environment.apiUrl}/adminproductsupdate/`+accessToken+'/'+id,data)
