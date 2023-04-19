@@ -13,7 +13,7 @@ import { OrderService } from "../../shared/services/order.service";
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
-
+  isAdd:boolean = false;
   public checkoutForm:  UntypedFormGroup;
   public products: Product[] = [];
   // public payPalConfig ? : IPayPalConfig;
@@ -41,6 +41,13 @@ export class CheckoutComponent implements OnInit {
     console.log('checkout:',this.products)
     //this.getTotal.subscribe(amount => this.amount = amount);
     this.initConfig();
+  }
+  //add address
+  addNewAddress(){
+    this.isAdd = true;
+  }
+  reviewAddress(){
+   this.isAdd= false;
   }
   // getUserProducts(){
   //   this.productService.cartItems().subscribe(response =>{

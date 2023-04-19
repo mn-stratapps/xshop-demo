@@ -9,10 +9,15 @@
   }
   .elec_banner1 img{
     margin-top:46px;
-    border-radius: 5px;
+    border-radius:8px;
     }
-    .mb-none{
-      border-radius: 5px;
+    .mb-none img{
+      border-radius:8px;
+    }
+    @media (max-width: 760px) {
+      .d_block{
+        display:block !important;
+      }
     }
     @media (max-width: 1024px) {
       .elec_banner1 img{
