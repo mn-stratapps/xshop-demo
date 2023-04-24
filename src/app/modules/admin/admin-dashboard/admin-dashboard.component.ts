@@ -24,6 +24,8 @@ userData: User = new User();
 userList=[];
 ordersList= [];
 salesList= [];
+from_date:string;
+to_date:string;
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -197,12 +199,8 @@ addProduct(){
     formData.append("collection",this.addProductForm.get('collection').value);
     formData.append("size",this.addProductForm.get('size').value);
     formData.append("color",this.addProductForm.get('color').value);
-   // formData.append("path",this.addProductForm.get('path').value);
     formData.append("path", this.addProductForm.get('path').value, this.imagename);
-    formData.append("quantity",this.addProductForm.get('quantity').value);
-
-
-    
+    formData.append("quantity",this.addProductForm.get('quantity').value); 
   this.httpService.addProduct(this.accessToken,formData)
   .subscribe(
     {
@@ -218,6 +216,7 @@ addProduct(){
           this.viewAdminProducts();
           this.isAddProductUrl=false;
           this.editProductForm.reset();
+          this.addProductForm.reset();
         }
       },
       error:(error)=>{

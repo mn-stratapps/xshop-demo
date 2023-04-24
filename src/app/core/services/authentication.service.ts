@@ -157,7 +157,7 @@ getOrdersList(accessToken:any){
 getSalesList(accessToken:any){
   return this.http.get<any>(`${environment.apiUrl}/list-sales/`+accessToken);
 }
-getAddress(accessToken:any):Observable<Useraddress[]>{
+getUserAddress(accessToken:any):Observable<Useraddress[]>{
   return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)
 }
 getmyOrders(accessToken:any):Observable<Product[]>{

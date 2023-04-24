@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpAuthService } from './shared/services/http-auth.service';
 import { ImageCropperModule } from './modules/image-cropper/image-cropper.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { GoogleMapsModule } from '@angular/google-maps';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -29,7 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     ShopComponent,
     PagesComponent,
-    ElementsComponent
+    ElementsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     ImageCropperModule,
     NgxPaginationModule,
+    GoogleMapsModule,
    // CoreModuleModule,
     ToastrModule.forRoot({
       timeOut: 3000,

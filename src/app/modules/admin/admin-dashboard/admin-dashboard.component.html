@@ -201,11 +201,11 @@
                                                         <div class="d-flex">
                                                         <div class="date" id="datepicker">
                                                             <label>From</label>
-                                                            <input type="date" class="form-control date_input" id="date" placeholder="From"/>
+                                                            <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"/>
                                                           </div>
                                                           <div class="date date-field" id="datepicker">
                                                             <label>To</label>
-                                                            <input type="date" class="form-control date_input" id="date" palceholder="To"/>
+                                                            <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To"/>
                                                           </div>
                                                         </div>
                                                     </form>
@@ -533,6 +533,7 @@
                                                 <input class="rotation"
                                                   [(ngModel)]="rotation"
                                                   placeholder="Rotation"
+                                                  [ngModelOptions]="{standalone: true}"
                                                   type="number"
                                                   (keyup)="updateRotation()"
                                                 />
@@ -545,8 +546,8 @@
                                                     [maintainAspectRatio]="true"
                                                     [containWithinAspectRatio]="containWithinAspectRatio"
                                                     [aspectRatio]="4 / 4"
-                                                    [resizeToWidth]="128"
-                                                    [cropperMinWidth]="128"
+                                                    [resizeToWidth]="800"
+                                                    [cropperMinWidth]="500"
                                                     [onlyScaleDown]="true"
                                                     [roundCropper]="false"
                                                     [canvasRotation]="canvasRotation"

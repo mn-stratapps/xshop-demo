@@ -35,7 +35,9 @@
         <i class="ti-shopping-cart"></i>
       </a>
       <a title="Add to Wishlist" (click)="addToWishlist(product)">
-        <i class="ti-heart" aria-hidden="true"></i>
+        <i  class="fa fa-heart"  aria-hidden="true"></i>
+        <!-- <i *ngIf="!wishlistproducts.length" class="fa fa-heart" aria-hidden="true"></i> -->
+ 
       </a>
       <a title="Quick View" (click)="QuickView.openModal()">
         <i class="ti-search" aria-hidden="true"></i>

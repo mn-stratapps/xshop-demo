@@ -24,7 +24,7 @@ export class ProductBoxOneComponent implements OnInit {
 
   public ImageSrc : string
   accessToken: any;
-
+  public wishlistproducts: Product[] = [];
   constructor(private productService: ProductService,private toastrService: ToastrService) { }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class ProductBoxOneComponent implements OnInit {
       setTimeout(() => { this.loader = false; }, 2000); // Skeleton Loader
     }
   }
-
+  
   // Get Product Color
   Color(variants) {
     const uniqColor = [];
@@ -70,15 +70,25 @@ export class ProductBoxOneComponent implements OnInit {
           console.log(data);
           //localStorage.setItem("cartItems", JSON.stringify(state.cart));
           // this.productService.setcartItems(this.product)
-
                 return true;
-
         },
         error:(error)=>{
           console.log(error)
         }
       }
     )
+  }
+  getWishlistProducts(){
+    this.productService.wishlistItems
+    .subscribe({
+      next:(data)=>{
+        this.wishlistproducts= data;
+        console.log(this.wishlistproducts)
+      },
+      error:(error)=>{
+        console.log(error)
+      }
+    })    
   }
 
   addToWishlist(product: any) {

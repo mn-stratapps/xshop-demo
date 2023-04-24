@@ -176,12 +176,12 @@
                                             <h3>Address Book</h3>
                                             <a (click)="addNewAddress()" class="btn btn-sm btn-solid">+ Add New</a>
                                         </div>
-                                        <div class="col-md-12 empty-cart-cls text-center" *ngIf='!Address.length'>
+                                        <div class="col-md-12 empty-cart-cls text-center" *ngIf='!Address?.length'>
                                             <img src="assets/images/empty-wishlist.png" alt="Empty cart" title="Emprt cart">
                                             <h3 class="mt-4"><b>You Have Not Added Any Addresses </b></h3>
                                             <h4>Please click on ADD NEW TO ADD YOUR ADDRESS.</h4>
                                           </div>
-                                        <div *ngIf='Address.length' class="address-book-section">
+                                        <div *ngIf='Address?.length' class="address-book-section">
                                             <div class="row g-4">
                                                 <div class="select-box active col-xl-4 col-md-6" *ngFor="let address of Address">
                                                     <div class="address-box">
@@ -223,7 +223,29 @@
                                     <a (click)="addNewAddress()" class="btn btn-sm btn-solid">View Your Addresses</a>
                                   </div>
                                   <div>
-                                    <a (click)="getGeoAddress()" class="btn btn-sm btn-solid">Autofill</a>
+                                    <a (click)="startgeolocation()" class="btn btn-sm btn-solid">Detect Your Location / Choose On Map</a>
+                                  </div>
+                                  <div *ngIf="googlemaps">
+                                    <div>
+                                        <input type="text" class="my-search-box" (keydown.enter)="$event.preventDefault()" placeholder="Search Location"
+                                          type="text" #search />
+                                      </div>
+                                      <google-map #myGoogleMap height="300px" width="100%" [zoom]="zoom" [center]="center" [options]="options"
+                                      (mapClick)="eventHandler($event,'mapClick')" (mapDblclick)="eventHandler($event,'mapDblclick')"
+                                      (mapDrag)="eventHandler($event,'mapDrag')" (mapDragend)="eventHandler($event,'mapDragend')"
+                                      (mapRightclick)="eventHandler($event,'mapRightclick')"
+                                      (positionChanged)="eventHandler($event,'marker_positionChanged')"
+                                      (zoomChanged)="eventHandler($event,'zoomChanged')">
+                                  
+                                      <map-marker #markerElem="mapMarker" *ngFor="let marker of markers" [position]="marker.position"
+                                        [label]="marker.label" [title]="marker.title" [options]="marker.options"
+                                        (mapDrag)="eventHandler($event,'mapDragMarker')" (mapDragend)="eventHandler($event,'mapDragend')">
+                                      </map-marker>
+                                  
+                                    </google-map>
+                                   <div *ngIf="autofill" style="float:right"> <a (click)="resetautofill()">reset autofill</a>
+                                   </div>
+                                      <h5 *ngIf="address">{{address}}</h5>
                                   </div>
                                         <form class="theme-form" [formGroup]="addAddressForm" (ngSubmit)="onSubmit()">
                                             <div class="row">
@@ -331,7 +353,6 @@
                                                             </div>
                                                         </div>
                                                         <div *ngIf="autofill" class="row">
-                                                            <a (click)="resetautofill()">reset autofill</a>
                                                             <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
                                                                 <!-- <fieldset>
                                                                     <div class="field-label" for="country">Country</div>
@@ -673,7 +694,7 @@
                                                             <div class="col-sm-6 col-xs-12 col-lg-6">
                                                               <div class="form-group mb-0">
                                                                  <label class="form-label f-w-550">Last Name</label>
-                                                                    <input autocomplete="off" type="text" class="email-disable form-control" name="first_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >   
+                                                                    <input autocomplete="off" type="text" class="email-disable form-control" name="last_name"[(ngModel)]="userData.last_name" [value]="userData.last_name" [disabled]='inputtext' >   
                                                                 </div>
                                                             </div>
                                                             <div *ngIf="!inputtext" class="product-buttons mb-3 mt-3">

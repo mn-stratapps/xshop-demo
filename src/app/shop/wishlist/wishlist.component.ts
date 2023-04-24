@@ -26,9 +26,15 @@ export class WishlistComponent implements OnInit {
   this.getWishlistProducts();
   }
   getWishlistProducts(){
-  this.productService.wishlistItems.subscribe(response => this.products = response);
-
-}
+  this.productService.wishlistItems
+  // .subscribe(response => this.products = response);
+  .subscribe({
+    next:(data)=>{
+      this.products= data;
+      console.log(this.products)
+    }
+  })
+  }
 
   async addToCart(product: any) {
     const status = await this.productService.addToCart(product);

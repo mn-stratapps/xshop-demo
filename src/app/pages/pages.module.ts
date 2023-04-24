@@ -10,7 +10,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 // Pages Components
 import { WishlistComponent } from './account/wishlist/wishlist.component';
 import { CartComponent } from './account/cart/cart.component';
-import { DashboardComponent } from '../modules/user/dashboard/dashboard.component';
+// import { DashboardComponent } from '../modules/user/dashboard/dashboard.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -44,7 +44,7 @@ import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonr
 import { BecomeVendorComponent } from '../modules/vendor/become-vendor/become-vendor.component';
 import { VendorProfileComponent } from '../modules/vendor/vendor-profile/vendor-profile.component';
 import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/vendor-dashboard.component';
-import { AdminDashboardComponent } from '../modules/admin/admin-dashboard/admin-dashboard.component';
+// import { AdminDashboardComponent } from '../modules/admin/admin-dashboard/admin-dashboard.component';
 import { ProductsComponent } from './admin/products/products.component';
 import { OrdersComponent } from './admin/orders/orders.component';
 import { SalesComponent } from './admin/sales/sales.component';
@@ -62,7 +62,7 @@ import { ImageCropperModule } from "../modules/image-cropper/image-cropper.modul
     declarations: [
         WishlistComponent,
         CartComponent,
-        DashboardComponent,
+        // DashboardComponent,
         LoginComponent,
         RegisterComponent,
         ProfileComponent,
@@ -94,7 +94,7 @@ import { ImageCropperModule } from "../modules/image-cropper/image-cropper.modul
         BecomeVendorComponent,
         VendorProfileComponent,
         VendorDashboardComponent,
-        AdminDashboardComponent,
+        // AdminDashboardComponent,
         ProductsComponent,
         OrdersComponent,
         SalesComponent,

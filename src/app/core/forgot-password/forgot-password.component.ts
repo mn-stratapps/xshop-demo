@@ -90,7 +90,7 @@ this.httpservice.resetPassword(this.forgotPasswordForm.value)
       this.message = error.error.message;
      this.loading = false;
      console.error(error)
-     if(error.error.message == 'This Email is Not Registered'){
+     if(error.error?.email.message === 'This Email is Not Registered'){
       Swal.fire({
         icon: 'warning',
         title: "This Email is not Registered"
@@ -141,6 +141,7 @@ next:(data) => {
   error:(error)=>{
     this.alertClass = 'alert-danger';
        this.message = error.error.message;
+    
   }
 });
 }

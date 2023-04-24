@@ -25,5 +25,6 @@ export class AppComponent {
       translate.addLangs(['en', 'fr']);
     }
   }
+  
 
 }

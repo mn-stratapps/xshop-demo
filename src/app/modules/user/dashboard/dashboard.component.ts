@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -12,6 +12,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/shared/classes/product';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { HttpClient } from '@angular/common/http';
+import {
+  GoogleMap,
+  MapInfoWindow,
+  MapGeocoder,
+  MapGeocoderResponse,
+} from '@angular/google-maps';
 declare var $: any;
 
 @Component({
@@ -50,6 +56,39 @@ export class DashboardComponent implements OnInit {
   show: boolean = false;
   states = null;
   cities = null;
+  googlemaps = false;
+  ///maps//
+  address = '';
+  latitude!: any;
+  longitude!: any;
+  zoom = 12;
+  maxZoom = 15;
+  minZoom = 8;
+  center!: google.maps.LatLngLiteral;
+  options: google.maps.MapOptions = {
+    zoomControl: true,
+    scrollwheel: false,
+    disableDoubleClickZoom: true,
+    mapTypeId: 'hybrid',
+  };
+  markers = [] as any;
+  @ViewChild('search')
+  public searchElementRef!: ElementRef;
+  @ViewChild('myGoogleMap', { static: false })
+  map!: GoogleMap;
+  @ViewChild(MapInfoWindow, { static: false })
+  info!: MapInfoWindow;
+  // country1: string | undefined;
+  // postalcode: string | undefined;
+  addresses: string | undefined;
+  geocountry:string;
+  geopostalcode:string;
+  geostate:string;
+  geocity:string;
+  geohno:string;
+  geolandmark:string;
+  geoarea:string;
+  ///mapend////
   @ViewChild('country') country: ElementRef
   @ViewChild('city') city: ElementRef
   @ViewChild('state') state: ElementRef
@@ -63,15 +102,249 @@ export class DashboardComponent implements OnInit {
   autofill:boolean=false;
   constructor(public httpService:AuthenticationService,private formBuilder:FormBuilder,
      public userService:UserService,public productService:ProductService,private router: Router,
-     private modalService: NgbModal,private http :HttpClient) { }
+     private modalService: NgbModal,private http :HttpClient,
+     private ngZone: NgZone, private geoCoder: MapGeocoder) { }
 
-  ngOnInit(): void {
+    //  ngAfterViewInit(): void {
+    //   // Binding autocomplete to search input control
+    //   let autocomplete = new google.maps.places.Autocomplete(
+    //     this.searchElementRef.nativeElement
+    //   );
+    //   // Align search box to center
+    //   this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+    //     this.searchElementRef.nativeElement
+    //   );
+    //   autocomplete.addListener('place_changed', () => {
+    //     this.ngZone.run(() => {
+    //       //get the place result
+    //       let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+  
+    //       //verify result
+    //       if (place.geometry === undefined || place.geometry === null) {
+    //         return;
+    //       }
+  
+    //       console.log({ place }, place.geometry.location?.lat());
+  
+    //       //set latitude, longitude and zoom
+    //       this.latitude = place.geometry.location?.lat();
+    //       this.longitude = place.geometry.location?.lng();
+  
+    //       // Set marker position
+    //       this.setMarkerPosition(this.latitude, this.longitude);
+  
+    //       this.center = {
+    //         lat: this.latitude,
+    //         lng: this.longitude,
+    //       };
+    //     });
+    //   });
+    // }
+  ngOnInit() {
     this.getUserDetails();
-    this.getAddress();
+    this.getUserAddress();
     this.initializeAddAddressForm();
     this.getWishlistProducts();
     this.getmyOrders();
+    
   }
+
+  startgeolocation(){
+    this.googlemaps=true;
+    this.autofill=true;
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        
+      };
+      // Set marker position
+      this.setMarkerPosition(this.latitude, this.longitude);
+      this.getAddress(this.latitude, this.longitude);
+    });
+
+     // Binding autocomplete to search input control
+     let autocomplete = new google.maps.places.Autocomplete(
+      this.searchElementRef.nativeElement
+    );
+    // Align search box to center
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+      this.searchElementRef.nativeElement
+    );
+    autocomplete.addListener('place_changed', () => {
+      this.ngZone.run(() => {
+        //get the place result
+        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+        //verify result
+        if (place.geometry === undefined || place.geometry === null) {
+          return;
+        }
+
+        console.log({ place }, place.geometry.location?.lat());
+
+        //set latitude, longitude and zoom
+        this.latitude = place.geometry.location?.lat();
+        this.longitude = place.geometry.location?.lng();
+
+        // Set marker position
+        this.setMarkerPosition(this.latitude, this.longitude);
+
+        this.center = {
+          lat: this.latitude,
+          lng: this.longitude,
+        };
+      });
+    });
+  }
+  setMarkerPosition(latitude: any, longitude: any) {
+    // Set marker position
+    this.markers = [
+      {
+        position: {
+          lat: latitude,
+          lng: longitude,
+        },
+        options: {
+          animation: google.maps.Animation.DROP,
+          draggable: true,
+        },
+      },
+    ];
+  }
+
+  eventHandler(event: any, name: string) {
+    // console.log(event, name);
+
+    switch (name) {
+      case 'mapDblclick': // Add marker on double click event
+        break;
+
+      case 'mapDragMarker':
+        break;
+
+      case 'mapDragend':
+        this.getAddress(event.latLng.lat(), event.latLng.lng());
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  getAddress(latitude: any, longitude: any) {
+    this.geoCoder
+      .geocode({ location: { lat: latitude, lng: longitude } })
+      .subscribe((addr: MapGeocoderResponse) => {
+        if (addr.status === 'OK') {
+          if (addr.results[0]) {
+            console.log('unformated',addr.results[0])
+            this.zoom = 12;
+            this.address = addr.results[0].formatted_address;
+            console.log(this.address)
+            for( let i=0; i< addr.results[0].address_components.length; i++){
+              
+              // const addrestypes = addr.results[0].address_components[0].types;
+                for(let j =0;j <= addr.results[0].address_components[i].types.length ;j++){
+                  let item = addr.results[0].address_components[i].types[j];
+                  
+                  if(item ==='country'){
+                    this.geocountry = addr.results[0].address_components[i].long_name;
+                    // if(this.geocountry === 'null'){
+                    //   this.geocountry ="not found";
+                    // }                    
+                     console.log('country',this.geocountry)
+
+                  }
+                  if(item ==='postal_code'){
+                    this.geopostalcode = addr.results[0].address_components[i].long_name;
+                    console.log('postalcode',this.geopostalcode)
+                  }
+                  if(item ==='administrative_area_level_1' ){
+                    this.geostate = addr.results[0].address_components[i].long_name;
+                    console.log('state',this.geostate)
+                  }
+                  if(item ==='administrative_area_level_3'){
+                    this.geocity = addr.results[0].address_components[i].long_name;
+                    console.log('city',this.geocity)
+                  }
+                  if(item ==='plus_code'){
+                    this.geohno = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geohno)
+                  }
+                  if(item ==='premise'){
+                    this.geohno = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geohno)
+                  }
+                  if(item ==='plus_code'){
+                    this.geohno = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geohno)
+                  }
+                  if(item ==='subpremise'){
+                    this.geohno = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geohno)
+                  }if(item ==='route'){
+                    this.geohno = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geohno)
+                  }if(item ==='street_number'){
+                    this.geohno = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geohno)
+                  }
+                  if(item ==='sublocality_level_2'){
+                    this.geoarea = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geoarea)                  
+                  }if(item ==='sublocality_level_3'){
+                    this.geoarea = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geoarea)                  
+                  }if(item ==='sublocality_level_3'){
+                    this.geoarea = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geolandmark)                  
+                  }if(item ==='landmark'){
+                    this.geoarea = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geoarea)                  
+                  }if(item ==='sublocality_level_1'){
+                    this.geoarea = addr.results[0].address_components[i].long_name;
+                    console.log('Hno',this.geolandmark)                  
+                  }
+                }
+                this.addAddressForm.patchValue({
+                          country:this.geocountry == null ? "" :this.geocountry,
+                          state:this.geostate,
+                          pincode:this.geopostalcode,
+                          city:this.geocity,
+                          address:this.geohno == null? "":this.geohno,
+                          area:this.geoarea == null? "":this.geoarea,
+                          landmark:this.geolandmark == null?"":this.geolandmark
+                        });
+              }
+          } else {
+            //this.address = null;
+            window.alert('No results found');
+          }
+        } else {
+          //this.address = null;
+          window.alert('Geocoder failed due to: ' + addr.status);
+        }
+      });
+  }
+  // getGeoAddress(){
+  //   this.autofill=true;
+  //   if(this.ipAddress!=null){
+  //     this.http.get<any>('http://ip-api.com/json/'+this.ipAddress.ip).subscribe( data => {
+  //       console.log(data);
+  //       this.geoData = data;
+  //       this.addAddressForm.patchValue({
+  //         country:this.geoData.country,
+  //         state:this.geoData.regionName,
+  //         pincode:this.geoData.zip,
+  //         city:this.geoData.city,
+  //       });
+  //     })  
+  //   } 
+  // }
+
   getWishlistProducts(){
     this.productService.wishlistItems.subscribe(response => this.wishlistProducts = response);
   }
@@ -115,9 +388,9 @@ export class DashboardComponent implements OnInit {
   }
   addNewAddress(){
     this.isAddNewAddress = !this.isAddNewAddress;
-    this.addAddressForm.reset();
+    //this.addAddressForm.reset();
     this.isEditAddress = false;
-    this.getIPaddress();
+     this.getIPaddress();
   }
   resetautofill(){
     this.autofill=false;
@@ -128,23 +401,6 @@ export class DashboardComponent implements OnInit {
       console.log(data);
       this.ipAddress = data
     })
-  }
-  getGeoAddress(){
-    this.autofill=true;
-    if(this.ipAddress!=null){
-      this.http.get<any>('http://ip-api.com/json/'+this.ipAddress.ip).subscribe( data => {
-        console.log(data);
-        this.geoData = data;
-        this.addAddressForm.patchValue({
-          country:this.geoData.country,
-          state:this.geoData.regionName,
-          pincode:this.geoData.zip,
-          city:this.geoData.city,
-        });
-      })
-      
-    }
-   
   }
   // modalButton1(){
     onCountryChange($event): void {
@@ -304,7 +560,6 @@ this.httpService.mobilenumberUpdate(object)
         })
        }
 }
-
 })
   }
   openModal(otpModalLabel){
@@ -447,14 +702,17 @@ this.httpService.passwordUpdate(object)
     }
     })
   }
-  getAddress(){
-    this.httpService.getAddress(this.accessToken)
+  getUserAddress(){
+    this.httpService.getUserAddress(this.accessToken)
     .subscribe({ 
       next:(data)=>{
         this.Address = data;
         console.log(this.Address)
 
-       }
+       },
+       error:(error) => {
+        console.log(error)
+      }
     })
     
   }
@@ -497,16 +755,16 @@ onSubmit(){
     return false;
   }else{
 
-    if(this.autofill=false){
-    this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
-    }else{
-      this.addAddressForm.patchValue({
-        country:this.geoData.country,
-        state:this.geoData.regionName,
-        pincode:this.geoData.zip,
-        city:this.geoData.city,
-      });
-    }
+    // if(this.autofill=false){
+    // this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+    // }else{
+    //   this.addAddressForm.patchValue({
+    //     country:this.geoData.country,
+    //     state:this.geoData.regionName,
+    //     pincode:this.geoData.zip,
+    //     city:this.geoData.city,
+    //   });
+    // }
   this.httpService.addAddress(this.accessToken,this.addAddressForm.value).
   subscribe({
     next:(data)=>{
@@ -518,8 +776,9 @@ onSubmit(){
           text: 'Address added Successfully',
           width: '400px',
         })
-        this.getAddress();
+        this.getUserAddress();
         this.isAddNewAddress = false;
+        this.autofill=false;
         this.addAddressForm.reset();
         this.f.addAddressForm.markAsUntouched()
       }
@@ -547,7 +806,7 @@ else if(this.isEditAddress){
           text: 'Updated Successfully',
           width: '400px',
         })
-        this.getAddress();
+        this.getUserAddress();
         this.isAddNewAddress = false;
       }
     },
@@ -582,7 +841,7 @@ deleteaddress(aid:any){
               text: 'Deleted Successfully',
               width: '400px',
             })
-            this.getAddress();
+            this.getUserAddress();
           }
         },
         error:(error)=>{
