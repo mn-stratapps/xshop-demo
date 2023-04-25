@@ -50,6 +50,12 @@ to_date:string;
   count: number = 0;
   tableSize: number = 7;
   tableSizes: any = [3, 6, 9, 12];
+    //filter
+    filerEnabled = false;
+    //datefield
+    datefieldEnabled = false;
+    //pricefield
+    pricefieldEnabled = false;
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
   category: any;
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
@@ -67,9 +73,6 @@ ngOnInit(){
   this.getUsersList();
   this.initializeeditProductForm();
   this.getOrdersList();
-  $(function(){
-		$('#datepicker').datepicker();
-	});
   //this.addProductForm.get('image1').updateValueAndValidity()
   // this.products();
 }

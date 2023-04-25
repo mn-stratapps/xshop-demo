@@ -57,3 +57,46 @@
 .card-body{
     padding: 10px 0px 10px 0px!important;
 }
+.table {
+      th,
+           td {
+             &:nth-child(1) {
+                text-align: left!important;
+             }
+            }
+        }
+.filter_btn{
+            background-color: #f1f3fa;
+            border-radius: 3px!important;
+            border: 1px solid #e0e0e0!important;
+            padding: 8px 13px;
+            i{
+            font-size: 18px;
+            top: 3px;
+           position: relative;
+            }
+        }
+.filter_btn:hover{
+            background-color: #dbe0ef;
+            border: 1px solid #dbe0ef!important;
+        }
+        @media (max-width: 577px){
+            .filter_btn{
+                padding: 8px 13px;
+            } 
+            .mb_filters{
+                justify-content: unset!important;
+                margin-top:3px;
+            }
+            .form-select{
+                margin-top: 5px;
+            }
+            .dropdown{
+                margin-top: 5px;
+            }
+        }
+        @media (max-width:1024px){
+            .dropdown{
+                margin-top: 10px;
+            }
+        }
