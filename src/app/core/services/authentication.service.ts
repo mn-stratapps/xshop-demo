@@ -188,8 +188,8 @@ addProduct(accessToken:any,data:any){
   return this.http.post<any>(`${environment.apiUrl}/adminproducts/`+accessToken,data)
 }
 
-viewAdminProducts(accessToken:any){
-  return this.http.get<any>(`${environment.apiUrl}/adminproducts/`+accessToken)
+viewAdminProducts(category:any,accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/adminproducts/`+accessToken,category)
 }
 viewAllProducts(accessToken:any){
   return this.http.get<any>(`${environment.apiUrl}/allproducts/`+accessToken)

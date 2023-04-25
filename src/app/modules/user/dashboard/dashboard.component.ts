@@ -391,6 +391,8 @@ export class DashboardComponent implements OnInit {
     //this.addAddressForm.reset();
     this.isEditAddress = false;
      this.getIPaddress();
+     this.googlemaps=false;
+     this.submitted = false;
   }
   resetautofill(){
     this.autofill=false;
@@ -779,8 +781,9 @@ onSubmit(){
         this.getUserAddress();
         this.isAddNewAddress = false;
         this.autofill=false;
+        this.googlemaps= false;
         this.addAddressForm.reset();
-        this.f.addAddressForm.markAsUntouched()
+        this.f.addAddressForm.markAsUntouched();
       }
     },
     error:(error) => {

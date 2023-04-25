@@ -13,7 +13,7 @@
                         <div class="form-group mb-4">
                             <label for="email">Email/Username</label>
                             <!-- <input type="text" class="form-control" id="email" placeholder="Email" required=""> -->
-                            <input type='text' formControlName="username" class='input-field form-control' [ngClass]="{ 'is-invalid':f.username.errors && submitted,'is-valid':submitted}" placeholder='Email Id' required/>
+                            <input type='text' formControlName="username" class='input-field form-control' [ngClass]="{ 'is-invalid':f.username.errors && submitted}" placeholder='Email Id' required/>
                         
                             <div *ngIf="submitted && f.username.errors " class="invalid-feedback">
                                 <div *ngIf="f.username.errors.required" >Email is required</div>
@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="review">Password</label>
                             <!-- <input type="password" class="form-control" id="review" placeholder="Enter your password" required=""> -->
-                            <input [type]="show ? 'text' : 'password'" formControlName="password" class='input-field form-control' [ngClass]="{ 'is-invalid':f.password.errors && submitted,'is-valid':submitted}" placeholder='Enter Password'/>
+                            <input [type]="show ? 'text' : 'password'" formControlName="password" class='input-field form-control' [ngClass]="{ 'is-invalid':f.password.errors && submitted}" placeholder='Enter Password'/>
                             <i style="left: -27px;" class="fa fa-eye-slash field-icon" (click)="password()" aria-hidden="true"></i>
                             <div *ngIf="submitted && f.password.errors " class="invalid-feedback">
                                 <div *ngIf="f.password.errors.required " >Password is required</div>

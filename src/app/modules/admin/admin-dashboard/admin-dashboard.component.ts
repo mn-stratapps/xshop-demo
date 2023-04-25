@@ -32,12 +32,13 @@ to_date:string;
   errorMessage: any;
   loading: boolean;
   file: any;
-  adminProducts=[];
+  adminProducts =[] as any;
   allProducts=[];
   error: any;
   editProductForm:FormGroup;
   imagename:string;
   imageChangedEvent: any = '';
+  // category:string;
     croppedImage: any = '';
     canvasRotation = 0;
     rotation = 0;
@@ -50,6 +51,7 @@ to_date:string;
   tableSize: number = 7;
   tableSizes: any = [3, 6, 9, 12];
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
+  category: any;
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
   private router: Router,private httpService:AuthenticationService,private modalService: NgbModal,){
 // const currentUrl = this.router.url;
@@ -401,11 +403,18 @@ updateRotation() {
 }
 
 //image-cropper//
+onChangeofOptions($event){
+  this.viewAdminProducts();
+}
 
 viewAdminProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
-  this.httpService.viewAdminProducts(this.accessToken)
+    const object = {
+      "category": this.category,
+   // "search": this.searchKey
+    }
+  this.httpService.viewAdminProducts(object,this.accessToken)
   .subscribe({
     next:(data) =>{
       this.adminProducts = data;
