@@ -986,6 +986,8 @@
     
     header {
         background-color: $white;
+        border-bottom: 1px solid rgba(235, 235, 235, 0.8666666667);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 9px;
     }
     
     .left-header {
@@ -5794,6 +5796,7 @@
         padding: 0 30px;
         border: 1px solid lighten($black, 86.5%);
         background-color: $white;
+        border-radius: 8px;
         .product-service {
             padding: 30px 0;
             .media {
@@ -14590,7 +14593,7 @@
         padding: 0.6rem 1.75rem;
         border-radius: 5px;
         letter-spacing: 1px;
-        margin-right: 10px;
+        
     }
     .btn-danger{
     background-color:#ff381d;
@@ -15272,9 +15275,11 @@
 .front img { 
     height: 268px !important;
     object-fit: cover;
+    width: 100%;
    }
 .front{
     background-color: #fff;
+    border-radius: 6px;
 }
 @media (max-width: 577px) {
     .main-menu{
@@ -15305,3 +15310,18 @@
     }
  }
 }
+.img-fluid{
+    border-radius: 8px;
+}
+.footer-light{
+    border-top: 1px solid rgba(235, 235, 235, 0.8666666667);
+   .section-b-space {
+    border-bottom: 1px solid rgba(235, 235, 235, 0.8666666667);
+}
+}
+.btn-secondary{
+    padding: 13px 29px;
+    color: #ffffff !important;
+    letter-spacing: 0.05em;
+    border-radius:5px;
+  }
