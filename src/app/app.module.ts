@@ -20,6 +20,9 @@ import { HttpAuthService } from './shared/services/http-auth.service';
 import { ImageCropperModule } from './modules/image-cropper/image-cropper.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GoogleMapsModule } from '@angular/google-maps';
+import {SocialLoginModule,SocialAuthServiceConfig,} from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login'
+import { CoreModuleModule } from './core/core-module/core-module.module';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -44,6 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImageCropperModule,
     NgxPaginationModule,
     GoogleMapsModule,
+    SocialLoginModule,
+    CoreModuleModule,
    // CoreModuleModule,
     ToastrModule.forRoot({
       timeOut: 3000,
@@ -60,7 +65,20 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     AppRoutingModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpAuthService,multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpAuthService,multi: true},
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('114581051467-mfur92sv175fnujv0coij9eehrrs0v8o.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

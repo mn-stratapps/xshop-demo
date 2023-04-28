@@ -7,6 +7,8 @@ import { threadId } from 'worker_threads';
 import { ThumbnailsMode } from 'ng-gallery';
 import Swal from 'sweetalert2';
 import { error } from 'protractor';
+import {SocialAuthService,GoogleLoginProvider,SocialUser,} from "@abacritt/angularx-social-login";
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
   reactivateEmailForm:FormGroup;
   submitted = false;
   error = '';
+  socialUser!: SocialUser;
   loading = false;
   returnUrl: string;
   accessToken: any;
@@ -27,7 +30,7 @@ export class LoginComponent implements OnInit {
   show: boolean = false;
 
   constructor(private formBuilder:FormBuilder,private route: ActivatedRoute,
-    private router: Router,private httpService:AuthenticationService) {
+    private router: Router,private httpService:AuthenticationService, private socialAuthService: SocialAuthService,private httpClient: HttpClient) {
       const currentUrl = this.router.url;
       if(currentUrl.includes('reactivate/account')){
         this.isActivateUrl = true;
@@ -44,10 +47,34 @@ export class LoginComponent implements OnInit {
       }else{
       this.initializeLoginForm()
       }
+      this.socialAuthService.authState.subscribe((user) => {
+        this.socialUser = user;
+        console.log(this.socialUser)
+        // this.loggedIn = (user != null);
+      });
   // this.httpService.navigateToDashboardIfUserExists();
    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
   }
+
+
+
+  getAccessToken() {
+    this.socialAuthService.getAccessToken(GoogleLoginProvider.PROVIDER_ID).then(accessToken => this.accessToken = accessToken);
+  }
+
+  getGoogleCalendarData(): void {
+    if (!this.accessToken) return;
+
+    this.httpClient
+      .get('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+        headers: { Authorization: `Bearer ${this.accessToken}` },
+      })
+      .subscribe((events) => {
+        alert('Look at your console');
+        console.log('events', events);
+      });
+  }
+
   password() {
     this.show = !this.show;
 }
@@ -57,16 +84,14 @@ initializeLoginForm(){
     password:['', [Validators.required, Validators.minLength(8)]]
  });
 }
-
 initializeReactivateEmailForm(){
     this.reactivateEmailForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       emailActivationToken: ['']
   });
-  
 }
 
-  get f() { return this.loginForm.controls; }
+  get f() {return this.loginForm.controls; }
   get fv() {return this.reactivateEmailForm.controls;}
 
   getUserDetails(){
@@ -153,8 +178,16 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
 })
   }
 
-
-  
+  // signInWithGoogle(){
+  //   this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  //       this.socialAuthService.authState.subscribe((user) => {
+  //       this.socialUser = user;
+  //       console.log(this.socialUser);
+  //     });
+  // }
+  refreshToken(): void {
+    this.socialAuthService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) {
@@ -174,16 +207,7 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
     localStorage.setItem('currentUser', JSON.stringify(userToken));
 
     this.getUserDetails();
-    // const currentUser = localStorage.getItem( 'currentUser' );
-    // const token = JSON.parse( currentUser ).access_token;
-    // this.userService.redirectPage(token)
-        // user.authdata = window.btoa(username + ':' + password);
-         //     localStorage.setItem('user', JSON.stringify(user));
-         //     this.userSubject.next(user);
-         //     console.log(user);
-         //     return user;
-        
-      
+ 
       },
       error:(error)=>{
        this.error = error;

@@ -55,8 +55,8 @@
                                     class="nav-link">Users</a></li> -->
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#users"
                                     class="nav-link">Users</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#security"
-                                    class="nav-link">Vendors</a> </li>
+                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#vendors"
+                                    (click)="getVendorList()" class="nav-link">Vendors</a> </li>
                             <!-- <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#media"
                                         class="nav-link">Media</a> </li>  -->
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#localization"
@@ -197,20 +197,20 @@
                                                  <div class="row">
                                                     <div class="col-md-6 col-lg-3">
                                                     <div class="Categories">
-                                                        <select class="form-select me-2" id="category">  
-                                                            <option>-- Select Category --</option>                     
-                                                            <option>Mobiles</option>
-                                                            <option>Laptops</option>
-                                                            <option>headphones</option>
+                                                        <select class="form-select me-2" id="category" [(ngModel)]="category">  
+                                                            <option value="null" selected>-- Select Category --</option>                     
+                                                            <option value="Mobiles">Mobiles</option>
+                                                            <option value="laptops">Laptops</option>
+                                                            <option value="headphones">Headphones</option>
                                                           </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-lg-3">
-                                                        <select  class="form-select me-2" name="type">
-                                                          <option selected>-- Select Product Type --</option>
-                                                          <option>Electronics</option>
-                                                          <option>Gadgets</option>
-                                                          <option>Accessories</option>
+                                                        <select  class="form-select me-2"  id="product_type" [(ngModel)]="product_type">
+                                                          <option selected>-- Select Type --</option>
+                                                          <option value="electronics">Electronics</option>
+                                                          <option value="gadgets">Gadgets</option>
+                                                          <option value="accessories">Accessories</option>
                                                         </select>
                                                      </div>
                                                     <div class="col-md-3 col-lg-2 mr-2">
@@ -243,12 +243,12 @@
                                                                 <div class="row">
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
                                                                         <div class="Prices">
-                                                                          <input type="text" class="form-control" placeholder="From">
+                                                                          <input type="number" name="price_from" id="price_from" [(ngModel)]="price_from" class="form-control" placeholder="From">
                                                                             </div> 
                                                                     </div>
                                                                     <div class="cl-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
                                                                         <div class="Prices">
-                                                                          <input type="text" class="form-control" placeholder="To">
+                                                                          <input type="number" name="price_to" id="price-to" [(ngModel)]="price_to" class="form-control" placeholder="To">
                                                                       </div>
                                                                     </div>
                                                                 </div>
@@ -256,6 +256,10 @@
                                                               </div>
                                                                 </form>
                                                               </div>
+                                                     </div>
+                                                     <div class="col justify-content-end d-flex mt-4">
+                                                        <button (click)="onChangeofOptions()" class="btn btn-solid mr-2">Apply Filters</button>
+                                                        <button class="btn btn-solid">Cancel</button>
                                                      </div>
                                                  </div>
                                                 </div>
@@ -277,13 +281,11 @@
                                                             <th scope="col">Available Quantity</th>
                                                             <th scope="col">Image</th>
                                                             <th scope="col">Edit/Delete</th>
-
-                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr *ngFor="let products of adminProducts">
-                                                            <td>{{products?.title}}</td>
+                                                            <td>{{products?.title | slice:0:26}}</td>
                                                             <td>{{products?.category}}</td>
                                                             <!-- <td>{{products.description}}</td> -->
                                                             <td>{{products.type}}</td>
@@ -325,8 +327,7 @@
                                                             <select class="form-select me-2" id="category" formControlName="category">                       
                                                                 <option>Mobiles</option>
                                                                 <option>Laptops</option>
-                                                              </select>
-                                                    
+                                                            </select>   
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xl-8">
                                                     <label class="form-label">Product Name</label>
@@ -1107,7 +1108,7 @@
                                                                 <td scope="row"><img  class="imgTable" src="../assets/images/web-dev.jpg"></td>
                                                                 <td>{{userslist.first_name}}</td>
                                                                 <td>{{userslist.last_name}}</td>
-                                                                <td>{{userslist.email}}</td>
+                                                                <td style="text-transform: none;">{{userslist.email}}</td>
                                                                 <td *ngIf="userslist.last_Login === 0" > Active Today</td>
                                                                 <td *ngIf="userslist.last_Login > 0" >{{userslist.last_Login}} Days ago</td>
                                                                 <td>{{userslist.mobile_number}}</td>
@@ -1131,7 +1132,7 @@
                                 </div> 
                           <!--user details end-->
                     </div>
-                    <div class="tab-pane fade card_bg" id="security">
+                    <div class="tab-pane fade card_bg" id="vendors">
                               <!-- vendor List start-->
                               <div class="col-lg-6">
                                 <!-- <div class="page-header-left">
@@ -1150,126 +1151,31 @@
                                                         <table class="table table-striped">
                                                             <thead>
                                                                 <tr>
-                                                                    <th scope="col">Vendors</th>
-                                                                    <th scope="col"> Products</th>
                                                                     <th scope="col">Company Name</th>
-                                                                    <th scope="col">Date</th>
-                                                                    <th scope="col">Wallet Balance</th>
-                                                                    <th scope="col">Revenue</th>
-                                                                    <th scope="col">Actions</th>
+                                                                    <th scope="col">Mobile</th>
+                                                                    <th scope="col">Company Email</th>
+                                                                    <th scope="col">Tax-ID</th>
+                                                                    <th scope="col">Tax Status</th>
+                                                                    <th scope="col">Status</th>
+                                                                    <!-- <th scope="col">Actions</th> -->
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Anna Mull</td>
-                                                                    <td>1670</td>
-                                                                    <td>Zotware</td>
-                                                                    <td>8/10/18</td>
-                                                                    <td>$576132</td>
-                                                                    <td>$9761266</td>
-                                                                    <td>
+                                                                <tr *ngFor="let vendorslist of vendorsList">
+                                                                    <td>{{vendorslist.org_name}}</td>
+                                                                    <td>{{vendorslist.mobile}}</td>
+                                                                    <td style="text-transform: none;">{{vendorslist.email}}</td>
+                                                                    <td>{{vendorslist.tax_id}}</td>
+                                                                    <td>{{vendorslist.tax_status}}</td>
+                                                                    <td *ngIf="vendorslist.is_active">Active</td>
+                                                                    <td *ngIf="!vendorslist.is_active">In-Active</td>
+                                                                    <!-- <td>
                                                                         <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Cotton Caly</td>
-                                                                    <td>9710</td>
-                                                                    <td>Green-Plus</td>
-                                                                    <td>6/5/18</td>
-                                                                    <td>$780250</td>
-                                                                    <td>$8793611</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Gray Brody</td>
-                                                                    <td>579</td>
-                                                                    <td>Conecom</td>
-                                                                    <td>25/2/18</td>
-                                                                    <td>$245508</td>
-                                                                    <td>$1279520</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Lane Skylar</td>
-                                                                    <td>8972</td>
-                                                                    <td>Golddex</td>
-                                                                    <td>30/3/18</td>
-                                                                    <td>$7812483</td>
-                                                                    <td>$8761424</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Lane Skylar</td>
-                                                                    <td>8678</td>
-                                                                    <td>Plexzap</td>
-                                                                    <td>4/8/18</td>
-                                                                    <td>$89340</td>
-                                                                    <td>$10265255</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Paige Turner</td>
-                                                                    <td>4680</td>
-                                                                    <td>Finhigh</td>
-                                                                    <td>11/7/18</td>
-                                                                    <td>$87616</td>
-                                                                    <td>$947611</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Perez Alonzo</td>
-                                                                    <td>3476</td>
-                                                                    <td>Betatech</td>
-                                                                    <td>17/9/18</td>
-                                                                    <td>$32451</td>
-                                                                    <td>$647212</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row"><img  class="imgTable mr-2" src="../assets/images/web-dev.jpg">Petey Cruiser</td>
-                                                                    <td>1670</td>
-                                                                    <td>Warephase</td>
-                                                                    <td>8/10/18</td>
-                                                                    <td>$576132</td>
-                                                                    <td>$9761266</td>
-                                                                    <td>
-                                                                        <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
-                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td>
+                                                                        </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td> -->
                                                                 </tr>
                                                                   </tbody>
                                                         </table>
-                                                    </div>
-                                                    <div  class="d-flex justify-content-between p-2">
-                                                        <nav aria-label="Page navigation example">
-                                                            <ul class="pagination">
-                                                              <li class="page-item">
-                                                                <a class="page-link" href="#" aria-label="Previous">
-                                                                  <span aria-hidden="true">&laquo;</span>
-                                                                </a>
-                                                              </li>
-                                                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                              <li class="page-item">
-                                                                <a class="page-link" href="#" aria-label="Next">
-                                                                  <span aria-hidden="true">&raquo;</span>
-                                                                </a>
-                                                              </li>
-                                                            </ul>
-                                                          </nav>
-                                                    </div>
+                                                    </div>                                                    
                                                 </div>
                                             </div>
                                         </div>

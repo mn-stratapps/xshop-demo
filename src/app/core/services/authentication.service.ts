@@ -148,14 +148,17 @@ getUserDetails(accessToken:any){
   //this.accessToken;
   return this.http.get<any>(`${environment.apiUrl}/role/details/`+accessToken);
 }
-getUserslist(accessToken:any){
-  return this.http.get<any>(`${environment.apiUrl}/list-users/`+accessToken);
+getUserslist(object:any,accessToken:any){
+  return this.http.post<any>(`${environment.apiUrl}/f/list-users/`+accessToken,object);
 }
-getOrdersList(accessToken:any){
-  return this.http.get<any>(`${environment.apiUrl}/list-orders/`+accessToken);
+getVendorslist(object:any,accessToken:any){
+  return this.http.post<any>(`${environment.apiUrl}/f/list-vendors/`+accessToken,object);
 }
-getSalesList(accessToken:any){
-  return this.http.get<any>(`${environment.apiUrl}/list-sales/`+accessToken);
+getOrdersList(object:any,accessToken:any){
+  return this.http.post<any>(`${environment.apiUrl}/f/list-orders/`+accessToken,object);
+}
+getSalesList(object:any,accessToken:any){
+  return this.http.post<any>(`${environment.apiUrl}/f/list-sales/`+accessToken,object);
 }
 getUserAddress(accessToken:any):Observable<Useraddress[]>{
   return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)
@@ -188,11 +191,11 @@ addProduct(accessToken:any,data:any){
   return this.http.post<any>(`${environment.apiUrl}/adminproducts/`+accessToken,data)
 }
 
-viewAdminProducts(category:any,accessToken:any){
-  return this.http.get<any>(`${environment.apiUrl}/adminproducts/`+accessToken,category)
+viewAdminProducts(object:any,accessToken:any){
+  return this.http.post<any>(`${environment.apiUrl}/f/adminproducts/`+accessToken,object)
 }
-viewAllProducts(accessToken:any){
-  return this.http.get<any>(`${environment.apiUrl}/allproducts/`+accessToken)
+viewAllProducts(object:any,accessToken:any){  
+  return this.http.post<any>(`${environment.apiUrl}/f/allproducts/`+accessToken,object)
 }
 editProductByAdmin(accessToken:any,id:any,data:any){
   return this.http.put<any>(`${environment.apiUrl}/adminproductsupdate/`+accessToken+'/'+id,data)

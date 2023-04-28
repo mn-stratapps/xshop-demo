@@ -21,11 +21,14 @@ isAddProductUrl = false;
 path:any;
 filename:any;
 userData: User = new User();
-userList=[];
-ordersList= [];
-salesList= [];
+userList=[] as any;
+vendorsList=[] as any;
+ordersList= [] as any;
+salesList= [] as any;
 from_date:string;
 to_date:string;
+price_from:string;
+price_to:string;
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -33,7 +36,7 @@ to_date:string;
   loading: boolean;
   file: any;
   adminProducts =[] as any;
-  allProducts=[];
+  allProducts=[] as any;
   error: any;
   editProductForm:FormGroup;
   imagename:string;
@@ -58,6 +61,7 @@ to_date:string;
     pricefieldEnabled = false;
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
   category: any;
+  product_type: any;
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
   private router: Router,private httpService:AuthenticationService,private modalService: NgbModal,){
 // const currentUrl = this.router.url;
@@ -102,7 +106,12 @@ getUserDetails() {
   })
 }
 getUsersList(){
-  this.httpService.getUserslist(this.accessToken)
+  const object = {
+    "category": this.category,
+//  // "search": this.searchKey
+//     "product_type": this.product_type,
+  }
+  this.httpService.getUserslist(object,this.accessToken)
   .subscribe({
     next:(data) =>{
       this.userList = data;
@@ -115,8 +124,32 @@ getUsersList(){
   }
   }) 
 }
+getVendorList(){
+  const object = {
+//     "category": this.category,
+//  // "search": this.searchKey
+//     "product_type": this.product_type,
+  }
+  this.httpService.getVendorslist(object,this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.vendorsList = data;
+       console.log(this.vendorsList);
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  }) 
+}
 getOrdersList(){
-  this.httpService.getOrdersList(this.accessToken)
+  const object = {
+    "category": this.category,
+//  // "search": this.searchKey
+//     "product_type": this.product_type,
+  }
+  this.httpService.getOrdersList(object,this.accessToken)
   .subscribe({
     next:(data) =>{
       this.ordersList = data;
@@ -129,8 +162,14 @@ getOrdersList(){
   }
   }) 
 }
+
 getSales(){
-  this.httpService.getSalesList(this.accessToken)
+  const object = {
+//     "category": this.category,
+//  // "search": this.searchKey
+//     "product_type": this.product_type,
+  }
+  this.httpService.getSalesList(object,this.accessToken)
   .subscribe({
     next:(data) =>{
       this.salesList = data;
@@ -180,6 +219,7 @@ get f(){
 }
 addNewProduct(){
   this.isAddProductUrl = !this.isAddProductUrl;
+  this.submitted=false;
 }
 addProduct(){
   this.submitted=true;
@@ -231,19 +271,6 @@ addProduct(){
   });
 }
 }
-
-// products(){
-//   this.httpService.getProducts().subscribe(
-//     {
-//       next:(data) => {
-//         console.log(data);
-     
-//       },
-//       error:(error)=>{
-//         console.log(error)
-//     }
-//   });
-// }
 
 callimage(type:string){
   const reader = new FileReader();
@@ -406,7 +433,7 @@ updateRotation() {
 }
 
 //image-cropper//
-onChangeofOptions($event){
+onChangeofOptions(){
   this.viewAdminProducts();
 }
 
@@ -415,7 +442,11 @@ viewAdminProducts(){
     this.accessToken = JSON.parse( currentUser )['Token'];
     const object = {
       "category": this.category,
-   // "search": this.searchKey
+      "type": this.product_type,
+      "from_date":this.from_date,
+      "to_date":this.to_date,
+      "price_from":this.price_from,
+      "price_to":this.price_to
     }
   this.httpService.viewAdminProducts(object,this.accessToken)
   .subscribe({
@@ -478,7 +509,12 @@ editProduct(){
 viewAllProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
-  this.httpService.viewAllProducts(this.accessToken)
+    const object = {
+  //     "category": this.category,
+  //  // "search": this.searchKey
+  //     "product_type": this.product_type,
+    }
+  this.httpService.viewAllProducts(object,this.accessToken)
   .subscribe({
     next:(data) =>{
       this.allProducts = data;
