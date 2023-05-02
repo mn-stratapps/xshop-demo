@@ -196,7 +196,7 @@
                                                 <div class="card card_bg mt-2">
                                                     <div class="row d-flex justify-content-end">
                                                         <div class="col-lg-3 ">
-                                                    <button type="button" class="close btn btn_clss" aria-label="Close">
+                                                    <button (click)="filerEnabled = !filerEnabled" type="button" class="close btn btn_clss" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                       </button>
                                                     </div>
@@ -207,7 +207,7 @@
                                                         <select class="form-select me-2" id="category" [(ngModel)]="category">
                                                             <!-- <option [ngValue]="null">-- Select Category --</option>
                                                              <option *ngFor="let option of options" [ngValue]="option.value">{{ option.label }}</option> -->
-                                                            <option [value]="">-- Select Category --</option>                     
+                                                            <option [value]="null">-- Select Category --</option>                     
                                                             <option value="Mobiles">Mobiles</option>
                                                             <option value="laptops">Laptops</option>
                                                             <option value="headphones">Headphones</option>
@@ -231,8 +231,8 @@
                                                                 Select Date
                                                             </button>
                                                             <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
-                                                                <button type="button" class="close btn btn_cls" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
+                                                                <button (click)="!datefieldEnabled= !datefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close">
+                                                                    <span  aria-hidden="true">&times;</span>
                                                                   </button>
                                                                 <div class="d-flex mt-2">
                                                                 <div class="date" id="datepicker">
@@ -253,7 +253,7 @@
                                                                   Price
                                                                 </button>
                                                                 <form [class.show]="pricefieldEnabled" class="dropdown-menu p-3" style="width:242px;margin-top: 7px;">
-                                                                    <button type="button" class="close btn btn_cls" aria-label="Close"style="position: relative;top:-10px;">
+                                                                    <button (click)="pricefieldEnabled= !pricefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close"style="position: relative;top:-10px;">
                                                                         <span aria-hidden="true">&times;</span>
                                                                       </button>           
                                                               <div class="col-sm-12 col-md-12 col-lg-12">
@@ -277,7 +277,6 @@
                                                      <div class="col-md-3 col-lg-3 px-2">
                                                         <div class="d-flex">
                                                             <button (click)="onChangeofOptions()" class="btn btn-info">Apply Filters</button>
-            
                                                     </div>
                                                     </div>
                                                       <!-- <div class="col justify-content-end d-flex mt-3">

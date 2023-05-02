@@ -28,8 +28,8 @@ ordersList= [] as any;
 salesList= [] as any;
 from_date:string;
 to_date:string;
-price_from:string;
-price_to:string;
+price_from:number;
+price_to:number;
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -62,14 +62,14 @@ price_to:string;
     //pricefield
     pricefieldEnabled = false;
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
-   category: any;
+   category: any ="null";
   // category: string
   //  options = [
   //   { label: 'Mobiles', value: 'Mobiles' },
   //   { label: 'Laptops', value: 'Laptops' },
   //   { label: 'Headphones', value: 'Headphones' },
   // ];
-   product_type: any;
+   product_type: any="null";
   // product_type: string 
   //  option2 = [
   //   { label: 'Electronics', value: 'Electronics' },
@@ -453,17 +453,24 @@ updateRotation() {
 onChangeofOptions(){
   this.viewAdminProducts();
 }
-
+resetFilters(){
+  this.category='',
+  this.product_type ='',
+  this.from_date='',
+  this.to_date='',
+  this.price_from = 0,
+  this.price_to=100000
+}
 viewAdminProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     const object = {
-      "category": this.category,
-      "type": this.product_type,
-      "from_date":this.from_date,
-      "to_date":this.to_date,
-      "price_from":this.price_from,
-      "price_to":this.price_to
+      "category": this.category === null ? "" :this.category,
+      "type": this.product_type === null ? "" :this.product_type,
+      "from_date":this.from_date === null ? "" :this.from_date,
+      "to_date":this.to_date === null ? "" :this.to_date,
+      "price_from":this.price_from === null ? 0 :this.price_from,
+      "price_to":this.price_to === null ? 1000000 :this.price_to
     }
   this.httpService.viewAdminProducts(object,this.accessToken)
   .subscribe({
@@ -472,8 +479,7 @@ viewAdminProducts(){
        console.log(this.adminProducts);
     },
     error:(error)=>{
-      this.error = error;
-      
+      this.error = error;      
       console.log(error)  
       if(error.error.message === 'Details Not Found') {
         Swal.fire({
