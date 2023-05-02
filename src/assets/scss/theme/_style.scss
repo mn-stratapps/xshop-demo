@@ -15357,3 +15357,27 @@
     color: #222222;
     font-weight: 500;
   }
+  .btn_cls{
+    float: right;
+    font-size: 20px;
+    background: #f8f8f8;
+    padding: 0px 8px;
+    border-radius: 3px;
+    right: -4px;
+    position: relative;
+  }
+  .btn_cls:hover{
+  background-color: #f0f3fa;
+  }
+  .btn_clss{
+    float: right;
+    font-size: 24px!important;
+    background:#ffffff;
+    padding: 2px 8px;
+    border-radius: 3px;
+    right: -4px;
+    position: relative;
+  }
+  .btn_clss:hover{
+  background-color:#f0f3fa;
+  }

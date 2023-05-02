@@ -1,10 +1,3 @@
-.form-group .fwd {
-  float: right;
-  line-height: 1.5;
-  font-size: 15px;
-  color: #222222;
-  font-weight: 500;
-}
 .btn-solid a{
   color:#ffffff;  
 }
@@ -41,4 +34,14 @@ height: 209px;
     .mt-4{
       margin-top: 0px!important;
     }
+}
+.login-option h4{
+  font-size: 15px;
+  line-height: 1.7;
+}
+.social_login{
+ float: right;
+}
+.btn-solid {
+  padding: 9px 22px;
 }

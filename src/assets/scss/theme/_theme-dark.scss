@@ -152,6 +152,7 @@ body {
     header {
         background-color: $dark-body;
         transition: all 0.3s ease;
+        border-bottom: 1px solid #404040;
         &.header-5 {
             .pixelstrap {
                 a,
@@ -2364,6 +2365,7 @@ body {
     }
     .dashboard-section .dashboard-sidebar {
         background-color: #232323;
+        border:1px solid #404040;
     }
     .faq-tab .nav-tabs .nav-item .nav-link.active {
         background-color: #232323;
@@ -2389,12 +2391,14 @@ body {
     }
     .dashboard-section .card-body{
         background-color: #232323; 
+        border: 1px solid #404040;
     }
     .dashboard-section .top-sec h3{
         color: #cfd4da;
     }
     .dashboard-section .card_bg{
-        background-color: #232323;   
+        background-color: #232323;
+        border:1px solid #404040;   
     }
     .faq-tab .nav-tabs .nav-item{
         border-color: #404040;
@@ -2405,4 +2409,23 @@ body {
     .user-table{
         background-color: #232323;
     }
+    .form-group .fwd {
+        color: #cfd4da;
+    }
+    .table thead {
+        background-color: #232323;
+    }
+    .footer-light {
+        border-top:#404040;
+    }
+    .footer-light .section-b-space {
+        border-bottom: 1px solid #404040;
+    }
+    .table-responsive{
+        border:1px solid #404040;
+    }
+    .card_border{
+        border: 1px solid #404040!important;
+    }
+   
 }

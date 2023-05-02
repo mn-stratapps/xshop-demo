@@ -194,6 +194,13 @@
                                                 </div>
                                               <div class="collapse" [class.show]="filerEnabled">
                                                 <div class="card card_bg mt-2">
+                                                    <div class="row d-flex justify-content-end">
+                                                        <div class="col-lg-3 ">
+                                                    <button type="button" class="close btn btn_clss" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                    </div>
+                                                </div>
                                                  <div class="row">
                                                     <div class="col-md-6 col-lg-3 px-1"> 
                                                     <div class="Categories">
@@ -224,7 +231,10 @@
                                                                 Select Date
                                                             </button>
                                                             <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
-                                                                <div class="d-flex">
+                                                                <button type="button" class="close btn btn_cls" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                                <div class="d-flex mt-2">
                                                                 <div class="date" id="datepicker">
                                                                     <label>From</label>
                                                                     <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"[max]="maxDate"/>
@@ -237,12 +247,15 @@
                                                             </form>
                                                           </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-2 px-1">
+                                                        <div class="col-md-3 col-lg-1 px-1">
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-primary dropdown-toggle"(click)="pricefieldEnabled = !pricefieldEnabled" >
                                                                   Price
                                                                 </button>
-                                                                <form [class.show]="pricefieldEnabled" class="dropdown-menu p-3" style="width:200px;margin-top: 7px;">
+                                                                <form [class.show]="pricefieldEnabled" class="dropdown-menu p-3" style="width:242px;margin-top: 7px;">
+                                                                    <button type="button" class="close btn btn_cls" aria-label="Close"style="position: relative;top:-10px;">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                      </button>           
                                                               <div class="col-sm-12 col-md-12 col-lg-12">
                                                                 <div class="row">
                                                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
@@ -261,10 +274,16 @@
                                                                 </form>
                                                               </div>
                                                      </div>
-                                                     <div class="col justify-content-end d-flex mt-3">
-                                                        <button (click)="onChangeofOptions()" class="btn btn-info mr-2">Apply Filters</button>
+                                                     <div class="col-md-3 col-lg-3 px-2">
+                                                        <div class="d-flex">
+                                                            <button (click)="onChangeofOptions()" class="btn btn-info">Apply Filters</button>
+            
+                                                    </div>
+                                                    </div>
+                                                      <!-- <div class="col justify-content-end d-flex mt-3">
+                                                       
                                                         <button class="btn btn-secondary">Cancel</button>
-                                                     </div>
+                                                     </div> -->
                                                  </div>
                                                 </div>
                                             </div>
