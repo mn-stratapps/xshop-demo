@@ -6584,9 +6584,10 @@
             text-transform: uppercase;
             color: $dark-font;
             font-weight: 700;
+            font-size: 22px;
         }
         .theme-card {
-            padding: 30px;
+            padding: 24px;
             border: none;
             line-height: 1;
             background-color: #ffffff;
@@ -14833,6 +14834,10 @@
     .dashboard-section .faq-content .card {
         border: none;
         background-color: #f8f8f8;
+        .btn{
+            text-transform: capitalize;
+            font-size: 16px;
+        }
     }
     .custom-badge {
         padding: 6px 10px;
@@ -15273,13 +15278,14 @@
     height: 10px!important;
 }
 .front img { 
-    height: 268px !important;
-    object-fit: cover;
+    // height: 268px !important;
+    // object-fit: cover;
     width: 100%;
    }
 .front{
     background-color: #fff;
     border-radius: 6px;
+    padding: 7px;
 }
 @media (max-width: 577px) {
     .main-menu{
@@ -15324,4 +15330,30 @@
     color: #ffffff !important;
     letter-spacing: 0.05em;
     border-radius:5px;
+    a{
+        color:#ffffff;
+    }
+  }
+  .vendor_active{
+    padding: 7px 9px;
+    width: 100%;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    display: flex;
+  }
+ mr-1{
+    margin-right: 5px;
+  }
+  .bg_unset{
+   background-color: unset!important;
+  }
+  .card_border{
+    border:1px solid rgba(235, 235, 235, 0.8666666667)!important;
+  }
+  .form-group .fwd {
+    float: right;
+    line-height: 1.5;
+    font-size: 15px;
+    color: #222222;
+    font-weight: 500;
   }

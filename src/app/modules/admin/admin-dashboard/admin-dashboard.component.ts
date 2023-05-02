@@ -10,6 +10,7 @@ import { User, Userlist } from 'src/app/core/models/user';
 import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../image-cropper/interfaces';
 import { base64ToFile } from '../../image-cropper/utils/blob.utils';
 import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 @Component({
   selector: 'app-admin-dashboard',
@@ -49,6 +50,7 @@ price_to:string;
     showCropper = false;
     containWithinAspectRatio = false;
     transform: ImageTransform = {};
+    maxDate:any;
     page: number = 1;
   count: number = 0;
   tableSize: number = 7;
@@ -60,16 +62,30 @@ price_to:string;
     //pricefield
     pricefieldEnabled = false;
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
-  category: any;
-  product_type: any;
+   category: any;
+  // category: string
+  //  options = [
+  //   { label: 'Mobiles', value: 'Mobiles' },
+  //   { label: 'Laptops', value: 'Laptops' },
+  //   { label: 'Headphones', value: 'Headphones' },
+  // ];
+   product_type: any;
+  // product_type: string 
+  //  option2 = [
+  //   { label: 'Electronics', value: 'Electronics' },
+  //   { label: 'Gadgets', value: 'Gadgets' },
+  //   { label: 'Accessories', value: 'Accessories' },
+  // ];
+  
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
-  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal,){
+  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal, datepipe:DatePipe){
 // const currentUrl = this.router.url;
 // if(currentUrl.includes('admin/addproduct')){
 //   this.isAddProductUrl = true;
 // }else{
 //   this.isAddProductUrl = false;
 // }
+this.maxDate=datepipe.transform(new Date(),"yyyy-MM-dd");
   }
 ngOnInit(){
   this.getUserDetails();
@@ -182,6 +198,7 @@ getSales(){
   }
   }) 
 }
+
 initializeAddProductForm(){
   this.addProductForm=this.formBuilder.group({
     category:['',Validators.required],//mobiles,laptaps,watches
@@ -571,5 +588,4 @@ deleteProductByAdmin(id:any){
    }
   })
 }
-
 }

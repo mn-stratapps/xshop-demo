@@ -23,6 +23,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import {SocialLoginModule,SocialAuthServiceConfig,} from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login'
 import { CoreModuleModule } from './core/core-module/core-module.module';
+import { DatePipe } from '@angular/common';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -78,7 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ],
       } as SocialAuthServiceConfig,
     },
-  ],
+    DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

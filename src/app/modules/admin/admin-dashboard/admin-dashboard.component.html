@@ -195,45 +195,49 @@
                                               <div class="collapse" [class.show]="filerEnabled">
                                                 <div class="card card_bg mt-2">
                                                  <div class="row">
-                                                    <div class="col-md-6 col-lg-3">
+                                                    <div class="col-md-6 col-lg-3 px-1"> 
                                                     <div class="Categories">
-                                                        <select class="form-select me-2" id="category" [(ngModel)]="category">  
-                                                            <option value="null" selected>-- Select Category --</option>                     
+                                                        <select class="form-select me-2" id="category" [(ngModel)]="category">
+                                                            <!-- <option [ngValue]="null">-- Select Category --</option>
+                                                             <option *ngFor="let option of options" [ngValue]="option.value">{{ option.label }}</option> -->
+                                                            <option [value]="">-- Select Category --</option>                     
                                                             <option value="Mobiles">Mobiles</option>
                                                             <option value="laptops">Laptops</option>
                                                             <option value="headphones">Headphones</option>
                                                           </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-3">
+                                                    <div class="col-md-6 col-lg-3 px-1">
                                                         <select  class="form-select me-2"  id="product_type" [(ngModel)]="product_type">
-                                                          <option selected>-- Select Type --</option>
+                                                            <!-- <option [ngValue]="">-- Select Type --</option> -->
+                                                            <!-- <option *ngFor="let option of option2" [ngValue]="option.value">{{ option.label }}</option> -->
+                                                          <option [value]="null" >-- Select Type --</option>
                                                           <option value="electronics">Electronics</option>
                                                           <option value="gadgets">Gadgets</option>
                                                           <option value="accessories">Accessories</option>
                                                         </select>
                                                      </div>
-                                                    <div class="col-md-3 col-lg-2 mr-2">
+                                                    <div class="col-md-3 col-lg-2 px-1 w-auto">
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                 <i class="fa fa-calendar me-1 select-icon mr-2"></i>
                                                                 Select Date
                                                             </button>
-                                                            <form class="dropdown-menu p-3" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                            <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
                                                                 <div class="d-flex">
                                                                 <div class="date" id="datepicker">
                                                                     <label>From</label>
-                                                                    <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"/>
+                                                                    <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"[max]="maxDate"/>
                                                                   </div>
                                                                   <div class="date date-field" id="datepicker">
                                                                     <label>To</label>
-                                                                    <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To"/>
+                                                                    <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
                                                                   </div>
                                                                 </div>
                                                             </form>
                                                           </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-2">
+                                                        <div class="col-md-3 col-lg-2 px-1">
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-primary dropdown-toggle"(click)="pricefieldEnabled = !pricefieldEnabled" >
                                                                   Price
@@ -257,9 +261,9 @@
                                                                 </form>
                                                               </div>
                                                      </div>
-                                                     <div class="col justify-content-end d-flex mt-4">
-                                                        <button (click)="onChangeofOptions()" class="btn btn-solid mr-2">Apply Filters</button>
-                                                        <button class="btn btn-solid">Cancel</button>
+                                                     <div class="col justify-content-end d-flex mt-3">
+                                                        <button (click)="onChangeofOptions()" class="btn btn-info mr-2">Apply Filters</button>
+                                                        <button class="btn btn-secondary">Cancel</button>
                                                      </div>
                                                  </div>
                                                 </div>
@@ -325,7 +329,7 @@
                                                 <div  class="col-lg-4 col-md-4 col-sm-6 pr-0 justify-content-center">
                                                          <label class="form-label">Categories</label>
                                                             <select class="form-select me-2" id="category" formControlName="category">                       
-                                                                <option>Mobiles</option>
+                                                                <option value="">Mobiles</option>
                                                                 <option>Laptops</option>
                                                             </select>   
                                                 </div>
@@ -362,7 +366,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-bs-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-danger" (click)="modal.dismiss()" data-bs-dismiss="modal">Close</button>
                                       <button type="button" class="btn btn-primary" (click)="editProduct()">Save</button>
                                     </div>
                                   </div>
@@ -377,9 +381,9 @@
                     <div class="container-fluid" *ngIf="isAddProductUrl" >
                         <div class="row product-adding">
                             <div class="col-xl-12">
-                                <div class="card m-0" style="border: 1px solid #ebebebdd;">
+                                <div class="card m-0 card_border">
                                     <div class="card-header"style="padding:10px!important;">
-                                            <h3>Add Product</h3>
+                                            <h3 style="font-size: 20px;">Add Product</h3>
                                             <button (click)="addNewProduct()" class="btn btn-solid btns">view products</button>
                                     </div>
                                     <div class="card-bg-white"style="padding:12px!important;">
@@ -388,7 +392,7 @@
                                                 <!-- <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2> -->
                                                 <div class="py-2">
                                                   <select  class="form-select me-2" id="category" name="category" formControlName="category" [ngClass]="{ 'is-invalid': submitted && f.category.errors }" required="">
-                                                    <option selected>-- Select category --</option>
+                                                    <option value="">-- Select category --</option>
                                                     <option>Mobiles</option>
                                                     <option>Laptops</option>
                                                     <option>Watches</option>
@@ -443,7 +447,7 @@
                                                    <div class="col-sm-6 mb-2">
                                                          <label class="form-label" for="type">Type</label>
                                                          <select  class="form-select me-2" id="type" name="type" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
-                                                           <option selected>-- Select Type --</option>
+                                                           <option value="">-- Select Type --</option>
                                                            <option>Electronics</option>
                                                            <option>Gadgets</option>
                                                            <option>Accessories</option>
@@ -464,7 +468,7 @@
                                                        <div class="col-sm-4 mb-2">
                                                            <label class="form-label" for="collection">collection</label>
                                                            <select  class="form-select me-2" id="collection" name="type" formControlName="collection" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" required="">
-                                                             <option selected>-- Select collection --</option>
+                                                             <option value="">-- Select collection --</option>
                                                              <option>new products</option>
                                                              <option>best sellers</option>
                                                              <option>featured products</option>
@@ -527,13 +531,14 @@
                                                     <input type='file' id="image3" name="image3" #fileInput2  (change)="onFileUpdate($event, '3')" />
                                                     <img [src]='image3' (click) = 'fileInput.click()' width="100" height="100"/>
                                                   </div> -->
-                                                <button (click)="saveImage()" class="file-drop-input"> upload image</button>
-                                                <div class="col-xl-12">
-                                                <button class="btn btn-solid mr-2 mb-2" (click)="rotateLeft()">Rotate left</button>
-                                                <button class="btn btn-solid mr-2 mb-2" (click)="rotateRight()">Rotate right</button>
-                                                <button class="btn btn-solid mr-2 mb-2" (click)="flipHorizontal()">Flip horizontal</button>
-                                                <button class="btn btn-solid mr-2 mb-2" (click)="flipVertical()">Flip vertical</button>
-                                                <button class="btn btn-solid mr-2 mb-2" (click)="toggleContainWithinAspectRatio()">
+                                               
+                                                <div class="col-xl-12 mt-3">
+                                                <button (click)="saveImage()" class="file-drop-input btn btn-solid mr-1 mb-2"> upload image</button>   
+                                                <button class="btn btn-solid mr-1 mb-2" (click)="rotateLeft()">Rotate left</button>
+                                                <button class="btn btn-solid mr-1 mb-2" (click)="rotateRight()">Rotate right</button>
+                                                <button class="btn btn-solid mr-1 mb-2" (click)="flipHorizontal()">Flip horizontal</button>
+                                                <button class="btn btn-solid mr-1 mb-2" (click)="flipVertical()">Flip vertical</button>
+                                                <button class="btn btn-solid mr-1 mb-2" (click)="toggleContainWithinAspectRatio()">
                                                   {{
                                                     containWithinAspectRatio
                                                       ? 'Fill Aspect Ratio'
@@ -621,50 +626,50 @@
                                              <div class="collapse" [class.show]="filerEnabled">
                                                <div class="card card_bg mt-2">
                                                 <div class="row">
-                                                   <div class="col-md-6 col-lg-3">
+                                                   <div class="col-md-6 col-lg-3 px-1">
                                                    <div class="Categories">
                                                        <select class="form-select me-2" id="category">  
-                                                           <option>-- Select Category --</option>                     
+                                                           <option value="">-- Select Category --</option>                     
                                                            <option>Mobiles</option>
                                                            <option>Laptops</option>
                                                            <option>headphones</option>
                                                          </select>
                                                        </div>
                                                    </div>
-                                                   <div class="col-md-6 col-lg-3">
+                                                   <div class="col-md-6 col-lg-3 px-1">
                                                        <select  class="form-select me-2" name="type">
-                                                         <option selected>-- Select Product Type --</option>
+                                                         <option value="">-- Select Product --</option>
                                                          <option>Electronics</option>
                                                          <option>Gadgets</option>
                                                          <option>Accessories</option>
                                                        </select>
                                                     </div>
-                                                   <div class="col-md-3 col-lg-2 mr-2">
+                                                   <div class="col-md-3 col-lg-2 w-auto px-1">
                                                        <div class="dropdown">
                                                            <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                <i class="fa fa-calendar me-1 select-icon mr-2"></i>
                                                                Select Date
                                                            </button>
-                                                           <form class="dropdown-menu p-3" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                           <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
                                                                <div class="d-flex">
                                                                <div class="date" id="datepicker">
                                                                    <label>From</label>
-                                                                   <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"/>
+                                                                   <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From" [max]="maxDate"/>
                                                                  </div>
                                                                  <div class="date date-field" id="datepicker">
                                                                    <label>To</label>
-                                                                   <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To"/>
+                                                                   <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
                                                                  </div>
                                                                </div>
                                                            </form>
                                                          </div>
                                                        </div>
-                                                       <div class="col-md-3 col-lg-2">
+                                                       <div class="col-md-3 col-lg-2 px-1">
                                                            <div class="dropdown">
                                                                <button type="button" class="btn btn-primary dropdown-toggle"(click)="pricefieldEnabled = !pricefieldEnabled" >
                                                                  Price
                                                                </button>
-                                                               <form [class.show]="pricefieldEnabled" class="dropdown-menu p-3" style="width:200px;margin-top: 7px;">
+                                                               <form [class.show]="pricefieldEnabled" class="dropdown-menu p-3 " style="width:200px;margin-top: 7px;">
                                                              <div class="col-sm-12 col-md-12 col-lg-12">
                                                                <div class="row">
                                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
@@ -758,37 +763,37 @@
                                                          <div class="collapse" [class.show]="filerEnabled">
                                                            <div class="card card_bg mt-2">
                                                             <div class="row">
-                                                               <div class="col-md-6 col-lg-3">
+                                                               <div class="col-md-6 col-lg-3 px-1">
                                                                <div class="Categories">
                                                                    <select class="form-select me-2" id="category">  
-                                                                       <option>-- Payment Status --</option>                     
+                                                                       <option value="">-- Payment Status --</option>                     
                                                                        <option>Paid</option>
                                                                        <option>Unpaid</option>
                                                                      </select>
                                                                    </div>
                                                                </div>
-                                                               <div class="col-md-6 col-lg-3">
+                                                               <div class="col-md-6 col-lg-3 px-1">
                                                                    <select  class="form-select me-2" name="type">
-                                                                     <option selected>-- Order Status --</option>
+                                                                     <option value="">-- Order Status --</option>
                                                                      <option>Order placed</option>
                                                                      <option>Pending</option>
                                                                    </select>
                                                                 </div>
-                                                               <div class="col-md-3 col-lg-2 mr-2">
+                                                               <div class="col-md-3 col-lg-2 px-1">
                                                                    <div class="dropdown">
                                                                        <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                            <i class="fa fa-calendar me-1 select-icon mr-2"></i>
                                                                            Select Date
                                                                        </button>
-                                                                       <form class="dropdown-menu p-3" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                                       <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
                                                                            <div class="d-flex">
                                                                            <div class="date" id="datepicker">
                                                                                <label>From</label>
-                                                                               <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"/>
+                                                                               <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From" [max]="maxDate"/>
                                                                              </div>
                                                                              <div class="date date-field" id="datepicker">
                                                                                <label>To</label>
-                                                                               <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To"/>
+                                                                               <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
                                                                              </div>
                                                                            </div>
                                                                        </form>
@@ -890,30 +895,30 @@
                                          <div class="collapse" [class.show]="filerEnabled">
                                            <div class="card card_bg mt-2">
                                             <div class="row">
-                                               <div class="col-md-6 col-lg-3 mb-2">
+                                               <div class="col-md-6 col-lg-3 mb-2 px-1">
                                                <div class="Categories">
                                                    <select class="form-select me-2" id="category">  
-                                                       <option>-- Delivery Status --</option>                     
+                                                       <option value="">-- Delivery Status --</option>                     
                                                        <option></option>
                                                        <option></option>
                                                      </select>
                                                    </div>
                                                </div>
-                                               <div class="col-md-3 col-lg-2 mr-2">
+                                               <div class="col-md-3 col-lg-2 px-1 ">
                                                    <div class="dropdown">
                                                        <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                            <i class="fa fa-calendar me-1 select-icon mr-2"></i>
                                                            Select Date
                                                        </button>
-                                                       <form class="dropdown-menu p-3" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                       <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
                                                            <div class="d-flex">
                                                            <div class="date" id="datepicker">
                                                                <label>From</label>
-                                                               <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From"/>
+                                                               <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From" [max]="maxDate"/>
                                                              </div>
                                                              <div class="date date-field" id="datepicker">
                                                                <label>To</label>
-                                                               <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To"/>
+                                                               <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
                                                              </div>
                                                            </div>
                                                        </form>
@@ -1079,16 +1084,81 @@
                         <!--user details start-->
                         <div class="col-lg-6">
                             <div class="page-header-left">
-                                <!-- <h3 class="f-w-600">User List </h3> -->
+                                <h3 class="f-w-600">User Details </h3>
                             </div>
                         </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card dashboard-table mt-0">
-                                            <div class="card-header">
-                                            <h4 class="f-w-600">User Details</h4>
-											  <a href="" class="btn btn-sm btn-solid mt-md-0 mt-2">Create User</a>
-                                          </div>
+                                            <div class="card-header"style="display:block!important;">
+                                                <div class="row">
+                                                   <div class="col-md-6 col-lg-3">
+                                                   <form class="form-inline search-form search-box w-100">
+                                                       <div class="form-group">
+                                                           <input class="form-control-plaintext" type="search" placeholder="Email ">
+                                                       </div>
+                                                     </form>
+                                                   </div>
+                                                   <div class="col-md-6 col-lg-9 d-flex justify-content-end mb_filters">
+                                                           <a class="btn mr-2 filter_btn" (click)="filerEnabled = !filerEnabled" >
+                                                               <i aria-hidden="true" class="fa fa-filter"></i>
+                                                           </a>
+                                                       <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Create User</a>
+                                                       </div>
+                                                     <div class="collapse" [class.show]="filerEnabled">
+                                                       <div class="card card_bg mt-2">
+                                                        <div class="row">
+                                                           <div class="cols" style="width:12%;display: contents;">
+                                                           <div class="Categories">
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-primary dropdown-toggle" (click)="pricefieldEnabled = !pricefieldEnabled">
+                                                                   Is Active
+                                                                </button>
+                                                                <form class="dropdown-menu p-3" [class.show]="pricefieldEnabled" style="margin-top: 7px;width: 185px;">
+                                                                 <div class="row">
+                                                                    <div class="col-md-6 col-lg-6 px-1">
+                                                                        <div  class="vendor_active">
+                                                                            <input type ="radio" class="mr-1">
+                                                                            <h3 class="m-0">True</h3>
+                                                                        </div>
+                                                                     </div>   
+                                                                         <div class="col-md-6 col-lg-6 px-1">
+                                                                            <div  class="vendor_active">
+                                                                                <input type ="radio" class="mr-1">
+                                                                                <h3 class="m-0">False</h3>
+                                                                            </div>
+                                                                    </div>                                                     
+                                                                </div>
+                                                                </form>
+                                                              </div>
+                                                     
+                                                               </div>
+                                                           </div>
+                                                           <div class="cols"style="width:20%;">
+                                                               <div class="dropdown">
+                                                                   <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
+                                                                       <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                                                       Select Date
+                                                                   </button>
+                                                                   <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                                       <div class="d-flex">
+                                                                       <div class="date" id="datepicker">
+                                                                           <label>From</label>
+                                                                           <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From" [max]="maxDate"/>
+                                                                         </div>
+                                                                         <div class="date date-field" id="datepicker">
+                                                                           <label>To</label>
+                                                                           <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
+                                                                         </div>
+                                                                       </div>
+                                                                   </form>
+                                                                 </div>
+                                                               </div>
+                                                        </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
                                             <div class="card-bg-white">
                                                 <div class="table-responsive table-desi">
                                                     <table class="table table-striped">
@@ -1135,17 +1205,80 @@
                     <div class="tab-pane fade card_bg" id="vendors">
                               <!-- vendor List start-->
                               <div class="col-lg-6">
-                                <!-- <div class="page-header-left">
-                                    <h3>Vendor List </h3>
-                                </div> -->
+                                <div class="page-header-left">
+                                    <h3>Vendor Details </h3>
+                                </div>
                               </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="card dashboard-table mt-0">
-                                                <div class="card-header">
-                                                <h4 class="f-w-600">Vendor Details</h4>
-                                                <a href="" class="btn btn-sm btn-solid mt-md-0 mt-2">Create Vendor</a>
-                                              </div>
+                                                <div class="card-header"style="display:block!important;">
+                                                    <div class="row">
+                                                       <div class="col-md-6 col-lg-3">
+                                                       <form class="form-inline search-form search-box w-100">
+                                                           <div class="form-group">
+                                                               <input class="form-control-plaintext" type="search" placeholder="Org Name ">
+                                                           </div>
+                                                         </form>
+                                                       </div>
+                                                       <div class="col-md-6 col-lg-9 d-flex justify-content-end mb_filters">
+                                                               <a class="btn mr-2 filter_btn" (click)="filerEnabled = !filerEnabled" >
+                                                                   <i aria-hidden="true" class="fa fa-filter"></i>
+                                                               </a>
+                                                           <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Create Vendor</a>
+                                                           </div>
+                                                         <div class="collapse" [class.show]="filerEnabled">
+                                                           <div class="card card_bg mt-2">
+                                                            <div class="row">
+                                                               <div class="cols w-auto px-1">
+                                                               <div class="Categories">
+                                                                <div class="dropdown">
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" (click)="pricefieldEnabled = !pricefieldEnabled">
+                                                                       Is Active
+                                                                    </button>
+                                                                    <form class="dropdown-menu p-3" [class.show]="pricefieldEnabled" style="margin-top: 7px; width:200px;">
+                                                                     <div class="row">
+                                                                        <div class="col-md-6 col-lg-6 px-1">
+                                                                            <div  class="vendor_active">
+                                                                                <h3 class="m-0">Verified</h3>
+                                                                            </div>
+                                                                         </div>   
+                                                                             <div class="col-md-6 col-lg-6 px-1">
+                                                                                <div  class="vendor_active">
+                                                                                    <h3 class="m-0">Pending</h3>
+                                                                                </div>
+                                                                        </div>                                                     
+                                                                    </div>
+                                                                    </form>
+                                                                  </div>
+                                                         
+                                                                   </div>
+                                                               </div>
+                                                               <div class="cols" style="width:20%;">
+                                                                   <div class="dropdown">
+                                                                       <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
+                                                                           <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                                                           Select Date
+                                                                       </button>
+                                                                       <form class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                                           <div class="d-flex">
+                                                                           <div class="date" id="datepicker">
+                                                                               <label>From</label>
+                                                                               <input type="date" name="from_date" [(ngModel)]="from_date" class="form-control date_input" id="date" placeholder="From" [max]="maxDate"/>
+                                                                             </div>
+                                                                             <div class="date date-field" id="datepicker">
+                                                                               <label>To</label>
+                                                                               <input type="date" name="to_date" [(ngModel)]="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
+                                                                             </div>
+                                                                           </div>
+                                                                       </form>
+                                                                     </div>
+                                                                   </div>
+                                                            </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
                                                 <div class="card-bg-white">
                                                     <div class="table-responsive table-desi">
                                                         <table class="table table-striped">
