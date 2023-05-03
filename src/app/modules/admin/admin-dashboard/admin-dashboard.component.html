@@ -49,8 +49,8 @@
                                     class="nav-link">orders</a></li>
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#sales"
                                 (click)="getSales()"class="nav-link">Sales</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#payment"
-                                    class="nav-link">Coupons</a></li>
+                            <!-- <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#coupons"
+                                    class="nav-link">Coupons</a></li> -->
                             <!-- <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#profile"
                                     class="nav-link">Users</a></li> -->
                             <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#users"
@@ -207,7 +207,7 @@
                                                         <select class="form-select me-2" id="category" [(ngModel)]="category">
                                                             <!-- <option [ngValue]="null">-- Select Category --</option>
                                                              <option *ngFor="let option of options" [ngValue]="option.value">{{ option.label }}</option> -->
-                                                            <option [value]="null">-- Select Category --</option>                     
+                                                            <option value="">-- Select Category --</option>                     
                                                             <option value="Mobiles">Mobiles</option>
                                                             <option value="laptops">Laptops</option>
                                                             <option value="headphones">Headphones</option>
@@ -218,7 +218,7 @@
                                                         <select  class="form-select me-2"  id="product_type" [(ngModel)]="product_type">
                                                             <!-- <option [ngValue]="">-- Select Type --</option> -->
                                                             <!-- <option *ngFor="let option of option2" [ngValue]="option.value">{{ option.label }}</option> -->
-                                                          <option [value]="null" >-- Select Type --</option>
+                                                          <option value="" >-- Select Type --</option>
                                                           <option value="electronics">Electronics</option>
                                                           <option value="gadgets">Gadgets</option>
                                                           <option value="accessories">Accessories</option>
@@ -980,8 +980,8 @@
                     </div> 
                 <!-- transaction end-->
                     </div>
-                    <div class="tab-pane fade card_bg" id="payment">
-                          <!--List Page start-->
+                  <!--List Page start-->
+                    <!-- <div class="tab-pane fade card_bg" id="coupons">
                           <div class="row">
                             <div class="col-lg-6">
                                 <div class="page-header-left">
@@ -1040,64 +1040,16 @@
                                                         <td>Percent2</td>
                                                         <td>2%</td>
                                                         <td><i class="<i class=&quot;fa f-12 f-12&quot;></i> fa fa-circle font-warning"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <input  type="checkbox" class="check_box" name="title_select">  50% Off </th>
-                                                        <td>Percent50</td>
-                                                        <td>50%</td>
-                                                        <td><i class="<i class=&quot;fa f-12 f-12&quot;></i> fa fa-circle font-danger"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <input  type="checkbox"  class="check_box" name="title_select">  70% Off </th>
-                                                        <td>Percent70</td>
-                                                        <td>5%</td>
-                                                        <td><i class="<i class=&quot;fa f-12 f-12&quot;></i> fa fa-circle font-success"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <input  type="checkbox" class="check_box" name="title_select">  75% Off </th>
-                                                        <td>Percent75</td>
-                                                        <td>75%</td>
-                                                        <td><i class="<i class=&quot;fa f-12 f-12&quot;></i> fa fa-circle font-danger"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <input  type="checkbox"  class="check_box" name="title_select">  80% Off </th>
-                                                        <td>Percent80</td>
-                                                        <td>80%</td>
-                                                        <td><i class="<i class=&quot;fa f-12 f-12&quot;></i> fa fa-circle font-success"></i></td>
-                                                    </tr>
-                                                   
+                                                    </tr>                                                   
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div  class="d-flex justify-content-between p-2">
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination">
-                                                  <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Previous">
-                                                      <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                  </li>
-                                                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                  <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
-                                                      <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                  </li>
-                                                </ul>
-                                              </nav>
-                                        </div>
+                                        </div>                                 
                                     </div>
                                 </div> 
                             </div>
-                        </div> 
-                          <!-- list page end-->
-                    </div>
+                        </div>                        
+                    </div> -->
+                      <!-- list page end-->
                     <div class="tab-pane fade card_bg" id="users">
                         <!--user details start-->
                         <div class="col-lg-6">

@@ -55,6 +55,8 @@ price_to:string;
   count: number = 0;
   tableSize: number = 7;
   tableSizes: any = [3, 6, 9, 12];
+  category: any ="";
+   product_type: any="";  
     //filter
     filerEnabled = false;
     //datefield
@@ -62,21 +64,7 @@ price_to:string;
     //pricefield
     pricefieldEnabled = false;
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
-   category: any ="null";
-  // category: string
-  //  options = [
-  //   { label: 'Mobiles', value: 'Mobiles' },
-  //   { label: 'Laptops', value: 'Laptops' },
-  //   { label: 'Headphones', value: 'Headphones' },
-  // ];
-   product_type: any="null";
-  // product_type: string 
-  //  option2 = [
-  //   { label: 'Electronics', value: 'Electronics' },
-  //   { label: 'Gadgets', value: 'Gadgets' },
-  //   { label: 'Accessories', value: 'Accessories' },
-  // ];
-  
+   
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
   private router: Router,private httpService:AuthenticationService,private modalService: NgbModal, datepipe:DatePipe){
 // const currentUrl = this.router.url;
@@ -105,6 +93,7 @@ ngOnInit(){
 //   this.page = 1;
 //   this.getUsersList();
 // }
+
 getUserDetails() {
   const currentUser = localStorage.getItem( 'currentUser' );
   this.accessToken = JSON.parse( currentUser )['Token'];
@@ -455,8 +444,8 @@ onChangeofOptions(){
 }
 resetFilters(){
   this.filerEnabled = !this.filerEnabled;
-  this.category='null',
-  this.product_type ='null',
+  this.category='',
+  this.product_type ='',
   this.from_date='',
   this.to_date='',
   this.price_from = '',
