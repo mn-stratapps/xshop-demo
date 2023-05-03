@@ -182,9 +182,9 @@ export class DashboardComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-
-        console.log({ place }, place.geometry.location?.lat());
-
+       this.address=place.formatted_address
+        console.log(place,{ place }, place.geometry.location?.lat());
+        
         //set latitude, longitude and zoom
         this.latitude = place.geometry.location?.lat();
         this.longitude = place.geometry.location?.lng();

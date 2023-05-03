@@ -492,7 +492,7 @@
                                                     <tr class="table-head">
                                                         <th scope="col">image</th>
                                                         <th scope="col">Order Id</th>
-                                                        <th scope="col">Product Details</th>
+                                                        <th scope="col">Product Name</th>
                                                         <th scope="col">Order Status</th>
                                                         <th scope="col">Shipment Status</th>
                                                         <th scope="col">Price</th>
@@ -511,7 +511,7 @@
                                                             <span class="mt-0">#{{myproducts.order_id}}</span>
                                                         </td>
                                                         <td>
-                                                            <span class="fs-6">{{myproducts.title}}</span>
+                                                            <span class="fs-6">{{myproducts.title | slice:0:30}}</span>
                                                         </td>
                                                         <td>
                                                             <span
@@ -546,7 +546,7 @@
                                         <div class="top-sec">
                                             <h3>My Wishlist</h3>
                                         </div>
-                                        <div class="col-md-12 empty-cart-cls text-center" *ngIf='!wishlistProducts.length'>
+                                        <div class="col-md-12 empty-cart-cls text-center" *ngIf='!wishlistProducts?.length'>
                                             <img src="assets/images/empty-wishlist.png" alt="Empty cart" title="Emprt cart">
                                             <h3 class="mt-4"><b>Wishlist is Empty</b></h3>
                                             <h4>Explore more shortlist some items.</h4>
@@ -557,7 +557,7 @@
                                                     <tr class="table-head">
                                                         <th scope="col">image</th>
                                                         <th scope="col">availability</th>
-                                                        <th scope="col">Product Details</th>
+                                                        <th scope="col">Product Name</th>
                                                         <th scope="col">Price</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -573,7 +573,7 @@
                                                             <p>{{ wishlist.stock > 0 ? 'in stock' : 'out of stock' }}</p>
                                                         </td>
                                                         <td>
-                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-')]">{{ wishlist.title | titlecase }}</a>
+                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-')]">{{ wishlist.title | titlecase |slice:0:30}}</a>
                                                         </td>
                                                         <td>
                                                             <span class="theme-color fs-6">{{ (wishlist.price | discount:wishlist) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span>

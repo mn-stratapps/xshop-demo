@@ -28,8 +28,8 @@ ordersList= [] as any;
 salesList= [] as any;
 from_date:string;
 to_date:string;
-price_from:number;
-price_to:number;
+price_from:string;
+price_to:string;
   addProductForm:FormGroup;
   submitted: boolean;
   accessToken: any;
@@ -454,24 +454,44 @@ onChangeofOptions(){
   this.viewAdminProducts();
 }
 resetFilters(){
-  this.category='',
-  this.product_type ='',
+  this.filerEnabled = !this.filerEnabled;
+  this.category='null',
+  this.product_type ='null',
   this.from_date='',
   this.to_date='',
-  this.price_from = 0,
-  this.price_to=100000
+  this.price_from = '',
+  this.price_to=''
+  this.viewAdminProducts();
 }
 viewAdminProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
-    const object = {
-      "category": this.category === null ? "" :this.category,
-      "type": this.product_type === null ? "" :this.product_type,
-      "from_date":this.from_date === null ? "" :this.from_date,
-      "to_date":this.to_date === null ? "" :this.to_date,
-      "price_from":this.price_from === null ? 0 :this.price_from,
-      "price_to":this.price_to === null ? 1000000 :this.price_to
-    }
+    let object = {
+    "category": this.category,
+    "type": this.product_type,
+    "from_date":this.from_date,
+    "to_date":this.to_date,
+    "price_from":this.price_from,
+    "price_to":this.price_to,}
+     if( object.category == ''){
+      delete object['category'] ;
+     }
+     if( object.type == ''){
+      delete object['type'] ;
+     }
+     if( object.from_date == ''){
+      delete object['from_date'] ;
+     }
+     if( object.to_date == ''){
+      delete object['to_date'] ;
+     }
+     if( object.price_from == ''){
+      delete object['price_from'] ;
+     }
+     if( object.price_to == ''){
+      delete object['price_to'] ;
+     }
+
   this.httpService.viewAdminProducts(object,this.accessToken)
   .subscribe({
     next:(data) =>{
