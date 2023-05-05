@@ -75,6 +75,12 @@
             border: 1px solid #dbe0ef!important;
         }
         @media (max-width: 577px){
+            .mb_filter{
+                display: unset!important;
+            }
+            .dropdown{
+                margin-top: 10px;
+            }
             .filter_btn{
                 padding: 8px 13px;
             } 
@@ -89,10 +95,8 @@
                 margin-top: 5px;
             }
         }
-        @media (max-width:1024px){
-            .dropdown{
-                margin-top: 10px;
-            }
+        @media (max-width:768px){
+          
         }
         .btn-primary{
             border-radius: 4px;
@@ -113,4 +117,6 @@
           .btn {
             line-height: 23px;
           }
-
+.cols{
+    padding-right: 6px;
+}

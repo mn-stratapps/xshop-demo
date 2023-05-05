@@ -202,8 +202,10 @@
                                                     </div>
                                                 </div>
                                                  <div class="row">
-                                                    <form [formGroup]="allproductsFilterForm">
-                                                    <div class="col-md-6 col-lg-3 px-1"> 
+                                                    <ul>
+                                                        <li>
+                                                    <form [formGroup]="allproductsFilterForm" class="mb_filter" style="display: flex;">
+                                                    <div class="cols" > 
                                                     <div class="Categories">
                                                         <select class="form-select me-2" id="category" formControlName="category">
                                                             <option value="null" disabled>-- Select Category --</option>                     
@@ -213,7 +215,7 @@
                                                           </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-3 px-1">
+                                                    <div class="cols">
                                                         <select  class="form-select me-2"  id="product_type" formControlName="type">
                                                           <option value="null" selected >-- Select Type --</option>
                                                           <option value="electronics">Electronics</option>
@@ -221,7 +223,7 @@
                                                           <option value="accessories">Accessories</option>
                                                         </select>
                                                      </div>
-                                                    <div class="col-md-3 col-lg-2 px-1 w-auto">
+                                                    <div class="cols">
                                                         <div class="dropdown">
                                                             <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                 <i class="fa fa-calendar me-1 select-icon mr-2"></i>
@@ -244,7 +246,7 @@
                                                             </div>
                                                           </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-1 px-1">
+                                                        <div class="cols">
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-primary dropdown-toggle"(click)="pricefieldEnabled = !pricefieldEnabled" >
                                                                   Price
@@ -271,11 +273,15 @@
                                                               </div>
                                                      </div>
                                                     </form>
-                                                     <div class="col-md-3 col-lg-3 px-2">
+                                                </li>
+                                                <li>
+                                                     <div class="cols">
                                                         <div class="d-flex">
                                                             <button (click)="viewAdminProducts()" class="btn btn-info">Apply Filters</button>
                                                         </div>
                                                     </div>
+                                                </li>
+                                                </ul>
                                                  </div>
                                                 </div>
                                             </div>
@@ -641,27 +647,29 @@
                                                   </button>
                                                 </div>
                                             </div>
-                                                <div class="row">
-                                                    <form [formGroup]="allproductsFilterForm">
-                                                   <div class="col-md-6 col-lg-3 px-1">
+                                                <div class="row mt-2">
+                                                 <ul>
+                                                    <li>
+                                                    <form [formGroup]="allproductsFilterForm" class="mb_filter" style="display:flex;">
+                                                   <div class="cols" style="width:190px;">
                                                    <div class="Categories">
                                                        <select class="form-select me-2" id="category" formControlName="category">  
                                                            <option value="null" disabled>-- Select Category --</option>                     
                                                            <option>Mobiles</option>
                                                            <option>Laptops</option>
-                                                           <option>headphones</option>
+                                                           <option>Watches</option>
                                                          </select>
                                                        </div>
                                                    </div>
-                                                   <div class="col-md-6 col-lg-3 px-1">
+                                                   <div class="cols"style="width:186px;">
                                                        <select  class="form-select me-2" name="type" formControlName="type">
-                                                         <option value="null" disabled>-- Select Product --</option>
+                                                         <option value="null" disabled>-- Select Type --</option>
                                                          <option>Electronics</option>
                                                          <option>Gadgets</option>
                                                          <option>Accessories</option>
                                                        </select>
                                                     </div>
-                                                   <div class="col-md-3 col-lg-2 w-auto px-1">
+                                                   <div class="cols">
                                                        <div class="dropdown">
                                                            <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                <i class="fa fa-calendar me-1 select-icon mr-2"></i>
@@ -684,12 +692,12 @@
                                                             </div>
                                                          </div>
                                                        </div>
-                                                       <div class="col-md-3 col-lg-2 px-1">
+                                                       <div class="cols">
                                                            <div class="dropdown">
                                                                <button type="button" class="btn btn-primary dropdown-toggle"(click)="pricefieldEnabled = !pricefieldEnabled" >
                                                                  Price
                                                                </button>
-                                                               <div [class.show]="pricefieldEnabled" class="dropdown-menu p-3 " style="width:200px;margin-top: 7px;">
+                                                               <div [class.show]="pricefieldEnabled" class="dropdown-menu p-3 " style="width:240px;margin-top: 7px;">
                                                                 <button (click)="pricefieldEnabled= !pricefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close"style="position: relative;top:-10px;">
                                                                     <span aria-hidden="true">&times;</span>
                                                                   </button> 
@@ -711,11 +719,15 @@
                                                              </div>
                                                     </div>
                                                 </form>
-                                                    <div class="col-md-3 col-lg-3 px-2">
+                                            </li>
+                                            <li>
+                                                    <div class="cols">
                                                         <div class="d-flex">
                                                             <button (click)="viewAllProducts()" class="btn btn-info">Apply Filters</button>
                                                         </div>
                                                     </div>
+                                                </li>
+                                                </ul>
                                                 </div>
                                                </div>
                                            </div>
@@ -795,24 +807,25 @@
                                                             </div>
                                                         </div>
                                                         <form [formGroup]="ordersFilterForm">
-                                                            <div class="row">
-                                                               <div class="col-md-6 col-lg-3 px-1">
+                                                            <ul class="mb_filter" style="display: flex;">
+                                                                <li class="mb_filter" style="display: flex;">
+                                                               <div class="cols">
                                                                <div class="Categories">
                                                                    <select class="form-select me-2" id="payment_status" formControlName="payment_status">
-                                                                       <option value="null" disabled>--Payment Status--</option>                     
+                                                                       <option value="null" disabled>-- Payment Status--</option>                     
                                                                        <option value="paid">Paid</option>
                                                                        <option value="unpaid">Unpaid</option>
                                                                      </select>
                                                                    </div>
                                                                </div>
-                                                               <div class="col-md-6 col-lg-3 px-1">
+                                                               <div class="cols">
                                                                    <select  class="form-select me-2" name="order_status" formControlName="order_status">
-                                                                     <option value="null" disabled>--Order Status--</option>
+                                                                     <option value="null" disabled>-- Order Status --</option>
                                                                      <option value="order placed">Order placed</option>
                                                                      <option value="pending">Pending</option>
                                                                    </select>
                                                                 </div>
-                                                               <div class="col-md-3 col-lg-2 px-1">
+                                                               <div class="cols">
                                                                    <div class="dropdown">
                                                                        <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                            <i class="fa fa-calendar me-1 select-icon mr-2"></i>
@@ -835,12 +848,15 @@
                                                                         </div>
                                                                      </div>
                                                                    </div>
-                                                            </div>
-                                                            <div class="col-md-3 col-lg-3 px-2">
+                                                            </li>
+                                                            <li>
+                                                            <div class="cols">
                                                                 <div class="d-flex">
                                                                     <button (click)="getOrdersList()" class="btn btn-info">Apply Filters</button>
                                                                 </div>
                                                             </div>
+                                                         </li>
+                                                     </ul>
                                                         </form>                              
                                                            </div>
                                                        </div>
@@ -943,9 +959,10 @@
                                               </button>
                                             </div>
                                         </div>
-                                            <form [formGroup]="salesFilterForm">
-                                            <div class="row">
-                                               <div class="col-md-6 col-lg-3 mb-2 px-1">
+                                        <form [formGroup]="salesFilterForm">
+                                         <ul class="mb_filter" style="display: flex;">
+                                           <li class="mb_filter" style="display: flex;">
+                                               <div class="cols">
                                                <div class="Categories">
                                                    <select class="form-select me-2" id="delivery_status" formControlName="delivery_status">  
                                                        <option value="null" disabled>-- Delivery Status --</option>                     
@@ -954,7 +971,7 @@
                                                      </select>
                                                    </div>
                                                </div>
-                                               <div class="col-md-3 col-lg-2 px-1 ">
+                                               <div class="cols">
                                                    <div class="dropdown">
                                                        <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                            <i class="fa fa-calendar me-1 select-icon mr-2"></i>
@@ -977,12 +994,15 @@
                                                         </div>
                                                      </div>
                                                    </div>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 px-2">
+                                          </li>
+                                          <li>
+                                            <div class="cols">
                                                 <div class="d-flex">
                                                     <button (click)="getSales()" class="btn btn-info">Apply Filters</button>
                                                 </div>
                                             </div>
+                                          </li>
+                                         </ul>
                                             </form>
                                            </div>
                                        </div>
@@ -1007,7 +1027,7 @@
                                                     <th>{{sales.order_id}}</th>
                                                     <td> #{{sales.transaction_id}}</td>
                                                     <td> #{{sales.invoice_id}}</td>
-                                                    <td>{{sales.date | date}}</td>
+                                                    <td>{{sales.created_at | date}}</td>
                                                     <td>Paypal</td>
                                                     <td>{{sales.delivery_status}}</td>
                                                     <td>₹{{sales.amount}}</td>
@@ -1126,17 +1146,18 @@
                                                             </div>
                                                         </div>
                                                         <form [formGroup]="usersFilterForm">
-                                                        <div class="row">                                                           <div class="Categories">
-                                                            <div class="col-md-6 col-lg-3 mb-2 px-1">
+                                                        <ul class ="mb_filter" style="display: flex;">
+                                                            <li  class ="mb_filter" style="display: flex;">                                                      
+                                                             <div class="cols">
                                                                 <div class="Categories">
                                                                     <select class="form-select me-2" id="is_active" formControlName="is_active">  
-                                                                        <option value="null" disabled>--Active Status--</option>                     
+                                                                        <option value="null" disabled>-- Active Status --</option>                     
                                                                         <option value="true">Active</option>
                                                                         <option value="false">In-active</option>
                                                                       </select>
                                                                     </div>
-                                                                </div>
-                                                               </div>                                                           <div class="cols"style="width:20%;">
+                                                                </div>                                                 
+                                                                 <div class="cols"style="width:20%;">
                                                                <div class="dropdown">
                                                                    <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                        <i class="fa fa-calendar me-1 select-icon mr-2"></i>
@@ -1159,12 +1180,15 @@
                                                                 </div>
                                                                  </div>
                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3 col-lg-3 px-2">
+                                                            </li>
+                                                            <li>
+                                                            <div class="cols">
                                                                 <div class="d-flex">
                                                                     <button (click)="getUsersList()" class="btn btn-info">Apply Filters</button>
                                                                 </div>
                                                             </div>
+                                                            </li>
+                                                        </ul>
                                                         </form>
                                                        </div>
                                                    </div>
@@ -1248,27 +1272,24 @@
                                                                 </div>
                                                             </div>
                                                             <form [formGroup]="vendorFilterForm">
-                                                            <div class="row">
-                                                               <div class="cols w-auto px-1">
-                                                               <div class="Categories">
-                                                                <div class="col-md-6 col-lg-3 px-1">
+                                                            <ul class ="mb_filter" style="display: flex;">
+                                                             <li class ="mb_filter" style="display: flex;">
+                                                                <div class="cols">
                                                                     <div class="Categories">
                                                                         <select class="form-select me-2" id="is_active" formControlName="is_active">  
-                                                                            <option value="null" disabled>--Active Status--</option>                     
+                                                                            <option value="null" disabled>-- Active Status --</option>                     
                                                                             <option value="true">Active</option>
                                                                             <option value="false">In-active</option>
                                                                           </select>
                                                                     </div>
-                                                                    <div class="col-md-6 col-lg-3 px-1">
+                                                                </div>
+                                                                    <div class="cols">
                                                                         <select class="form-select me-2" id="is_active" formControlName="tax_status">  
-                                                                            <option value="null" disabled>--Tax Status--</option>                     
+                                                                            <option value="null" disabled>-- Tax Status --</option>                     
                                                                             <option value="verified">Verified</option>
                                                                             <option value="pending">Pending</option>
                                                                           </select>                                                                    </div>
-                                                                    </div>
-                                                                   </div>
-                                                               </div>
-                                                               <div class="cols" style="width:20%;">
+                                                                  <div class="cols">
                                                                    <div class="dropdown">
                                                                        <button type="button" class="btn btn-primary dropdown-toggle" (click)="datefieldEnabled = !datefieldEnabled">
                                                                            <i class="fa fa-calendar me-1 select-icon mr-2"></i>
@@ -1291,14 +1312,17 @@
                                                                         </div>
                                                                      </div>
                                                                    </div>
-                                                            </div>
-                                                            <div class="col-md-3 col-lg-3 px-2">
+                                                                </li>
+                                                            <li>  
+                                                            <div class="cols">
                                                                 <div class="d-flex">
                                                                     <button (click)="getVendorList()" class="btn btn-info">Apply Filters</button>
                                                                 </div>
-                                                            </div>
-                                                            </form>
-                                                           </div>
+                                                               </div>
+                                                              </li>
+                                                            </ul>
+                                                          </form>
+                                                        </div>
                                                        </div>
                                                    </div>
                                                </div>
