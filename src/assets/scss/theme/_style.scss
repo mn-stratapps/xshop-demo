@@ -1044,8 +1044,8 @@
     
     .onhover-div {
         position: relative;
-        padding-top: 40px;
-        padding-bottom: 40px;
+        padding-top: 26px;
+        padding-bottom: 26px;
         font-family: $font_0, $font_1;
         img,
         i {
@@ -1343,15 +1343,15 @@
         }
         .brand-logo {
             display: inline-block;
-            padding-top: 35px;
-            padding-bottom: 35px;
+            padding-top: 26px;
+            padding-bottom: 26px;
         }
         .menu-left {
             display: flex;
             align-items: center;
             .navbar {
                 display: inline-block;
-                padding: 40px 45px 40px 0;
+                padding: 26px 45px 26px 0;
                 i {
                     font-size: 24px;
                     color: $dark-font;
@@ -15381,3 +15381,38 @@
   .btn_clss:hover{
   background-color:#f0f3fa;
   }
+  .fa-trash-o{
+    font-size: 18px;
+    color: red;
+    }
+    .fa-trash-o:hover{
+        color:#0072bb;
+    }
+    .fa-pencil-square-o{
+        font-size: 18px;
+        color:#0072bb;
+    }
+    .fa-pencil-square-o:hover{
+        color: red;
+    }
+    .card_br{
+        border: 1px solid rgba(235, 235, 235, 0.8666666667)!important;
+    }
+    .social_icons{
+        color: white;
+        background-color: #666aff;
+        border-radius: 50%;
+        width: 37px;
+        height: 37px;
+        font-size: 16px;
+    }
+    .social_icons:hover{
+        background-color: #3B4157;
+        color:#f7f7f7;
+    }
+    .register{
+        color:red;
+    }
+    .br-none{
+        border: none!important;
+    }

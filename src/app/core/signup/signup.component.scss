@@ -31,3 +31,46 @@
         margin-bottom: 0px!important;
       }
     }
+    .fa-user-o{
+      position: relative;
+      top: -33px;
+      right: 28px;
+      float: right;
+      font-size: 15px;
+    }
+    .fa-envelope-o{
+      position: relative;
+      top: -33px;
+      right: 28px;
+      float: right;
+      font-size: 15px;
+    }
+    .fa-phone{
+      position: relative;
+      top: -33px;
+      right: 28px;
+      float: right;
+      font-size: 15px;
+    }
+    .btn-solid{
+      background-size: 1700px;
+    }
+    .f_s{
+      font-size: 16px;
+    }
+    .w-65{
+      width: 70%!important;
+    }
+    .card{
+      border:none;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+    }
+    .carousel-item img{
+     height: 628px;
+     object-fit: cover;
+    }
+    @media(max-width:1024px){
+      .w-65{
+        width:100%!important;
+      }
+    }
