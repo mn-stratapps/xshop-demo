@@ -715,8 +715,7 @@ this.httpService.passwordUpdate(object)
        error:(error) => {
         console.log(error)
       }
-    })
-    
+    })    
   }
   getmyOrders(){
     this.httpService.getmyOrders(this.accessToken)
@@ -767,6 +766,8 @@ onSubmit(){
     //     city:this.geoData.city,
     //   });
     // }
+    this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+
   this.httpService.addAddress(this.accessToken,this.addAddressForm.value).
   subscribe({
     next:(data)=>{

@@ -35,18 +35,6 @@ import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonr
 import { BecomeVendorComponent } from '../modules/vendor/become-vendor/become-vendor.component';
 import { VendorProfileComponent } from '../modules/vendor/vendor-profile/vendor-profile.component';
 import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/vendor-dashboard.component';
-// import { AdminDashboardComponent } from '../modules/admin/admin-dashboard/admin-dashboard.component';
-import { ProductsComponent } from './admin/products/products.component';
-import { OrdersComponent } from './admin/orders/orders.component';
-import { SalesComponent } from './admin/sales/sales.component';
-import { CouponsComponent } from './admin/coupons/coupons.component';
-import { UsersComponent } from './admin/users/users.component';
-import { VendorsComponent } from './admin/vendors/vendors.component';
-import { LocalizationComponent } from './admin/localization/localization.component';
-import { SupportComponent } from './admin/support/support.component';
-import { ReportsComponent } from './admin/reports/reports.component';
-import { SettingsComponent } from './admin/settings/settings.component';
-import { InvoicesComponent } from './admin/invoices/invoices.component';
 
 const routes: Routes = [
   { 
@@ -66,56 +54,6 @@ const routes: Routes = [
     path: 'vendor/dashboard', 
     component: VendorDashboardComponent 
   },
-  //admin
-  // {
-  //   path: 'admin/dashboard', 
-  //   component: AdminDashboardComponent 
-  // },
-  {
-    path: 'admin/products', 
-    component: ProductsComponent 
-  },
-  {
-    path: 'admin/orders', 
-    component: OrdersComponent 
-  },
-  {
-    path: 'admin/sales', 
-    component: SalesComponent 
-  },
-  {
-    path: 'admin/coupons', 
-    component: CouponsComponent 
-  },
-  {
-    path: 'admin/users', 
-    component: UsersComponent 
-  },
-  {
-    path: 'admin/vendors', 
-    component: VendorsComponent 
-  },
-  {
-    path: 'admin/localization', 
-    component: LocalizationComponent 
-  },
-  {
-    path: 'admin/support', 
-    component: SupportComponent 
-  },
-  {
-    path: 'admin/reports', 
-    component: ReportsComponent 
-  },
-  {
-    path: 'admin/settings', 
-    component: SettingsComponent 
-  },
-  {
-    path: 'admin/invoices', 
-    component: InvoicesComponent 
-  },
-  //
   { 
     path: 'cart', 
     component: CartComponent 

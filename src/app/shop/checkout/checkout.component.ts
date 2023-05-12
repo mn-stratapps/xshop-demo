@@ -6,7 +6,8 @@ import { environment } from '../../../environments/environment';
 import { Product } from "../../shared/classes/product";
 import { ProductService } from "../../shared/services/product.service";
 import { OrderService } from "../../shared/services/order.service";
-
+import { Useraddress } from 'src/app/core/models/useraddress';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -19,10 +20,14 @@ export class CheckoutComponent implements OnInit {
   // public payPalConfig ? : IPayPalConfig;
   public payment: string = 'Stripe';
   public amount:  any;
-
+  public Address: Useraddress[] = [];
+  accessToken: any;
+  address_id:any;
+  stripeData:any;
   constructor(private fb: UntypedFormBuilder,
     public productService: ProductService,
-    private orderService: OrderService) { 
+    private orderService: OrderService,
+    private httpService:AuthenticationService) { 
     this.checkoutForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -40,11 +45,39 @@ export class CheckoutComponent implements OnInit {
     this.productService.cartItems.subscribe(response =>{ this.products = response});
     console.log('checkout:',this.products)
     //this.getTotal.subscribe(amount => this.amount = amount);
-    this.initConfig();
+    // this.initConfig();
+    this.getUserAddress();
   }
   //add address
   addNewAddress(){
     this.isAdd = true;
+  }
+  getUserAddress(){
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.httpService.getUserAddress(this.accessToken)
+    .subscribe({ 
+      next:(data)=>{
+        this.Address = data;
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    })    
+  }
+  selectAddress(){
+    const Object ={
+      address_id:this.address_id
+    }
+    this.productService.selectedAddress(this.accessToken,Object)
+    .subscribe({ 
+      next:(data)=>{
+        console.log(data)
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    }) 
   }
   reviewAddress(){
    this.isAdd= false;
@@ -58,7 +91,24 @@ export class CheckoutComponent implements OnInit {
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
   }
+  checkout(){
+    const Object = {
+      currency : "inr"
+    }
+    this.productService.checkoutPayment(this.accessToken,Object)
+    .subscribe({ 
+      next:(data)=>{
+        this.stripeData = data
+        console.log(data)
+        window.open(this.stripeData.url,"_self")
+        sessionStorage.setItem("stripeSession_Id", JSON.stringify(this.stripeData.id));
 
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    }) 
+  }
   // Stripe Payment Gateway
   stripeCheckout() {
     var handler = (<any>window).StripeCheckout.configure({

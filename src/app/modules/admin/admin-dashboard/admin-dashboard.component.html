@@ -212,15 +212,18 @@
                                                             <option value="Mobiles">Mobiles</option>
                                                             <option value="laptops">Laptops</option>
                                                             <option value="watches">Watches</option>
+                                                            <option value="">All</option>
                                                           </select>
                                                         </div>
                                                     </div>
                                                     <div class="cols">
                                                         <select  class="form-select ft_size me-2"  id="product_type" formControlName="type">
-                                                          <option value="null" selected >-- Select Type --</option>
+                                                          <option value="null" disabled>-- Select Type --</option>
                                                           <option value="electronics">Electronics</option>
                                                           <option value="gadgets">Gadgets</option>
                                                           <option value="accessories">Accessories</option>
+                                                          <option value="">All</option>
+
                                                         </select>
                                                      </div>
                                                     <div class="cols">
@@ -552,10 +555,10 @@
                                                
                                                 <div class="col-xl-12 mt-3">
                                                 <button (click)="saveImage()" class="file-drop-input btn btn-solid mr-1 mb-2"> upload image</button>   
-                                                <button class="btn btn-solid mr-1 mb-2" (click)="rotateLeft()">Rotate left</button>
+                                                <!-- <button class="btn btn-solid mr-1 mb-2" (click)="rotateLeft()">Rotate left</button>
                                                 <button class="btn btn-solid mr-1 mb-2" (click)="rotateRight()">Rotate right</button>
                                                 <button class="btn btn-solid mr-1 mb-2" (click)="flipHorizontal()">Flip horizontal</button>
-                                                <button class="btn btn-solid mr-1 mb-2" (click)="flipVertical()">Flip vertical</button>
+                                                <button class="btn btn-solid mr-1 mb-2" (click)="flipVertical()">Flip vertical</button> -->
                                                 <button class="btn btn-solid mr-1 mb-2" (click)="toggleContainWithinAspectRatio()">
                                                   {{
                                                     containWithinAspectRatio
@@ -657,6 +660,7 @@
                                                            <option>Mobiles</option>
                                                            <option>Laptops</option>
                                                            <option>Watches</option>
+                                                           <option value="">All</option>
                                                          </select>
                                                        </div>
                                                    </div>
@@ -666,6 +670,7 @@
                                                          <option>Electronics</option>
                                                          <option>Gadgets</option>
                                                          <option>Accessories</option>
+                                                         <option value="">All</option>
                                                        </select>
                                                     </div>
                                                    <div class="cols">
@@ -815,6 +820,7 @@
                                                                        <option value="null" disabled>-- Payment Status--</option>                     
                                                                        <option value="paid">Paid</option>
                                                                        <option value="unpaid">Unpaid</option>
+                                                                       <option value="">All</option>
                                                                      </select>
                                                                    </div>
                                                                </div>
@@ -823,6 +829,7 @@
                                                                      <option value="null" disabled>-- Order Status --</option>
                                                                      <option value="order placed">Order placed</option>
                                                                      <option value="pending">Pending</option>
+                                                                     <option value="">All</option>
                                                                    </select>
                                                                 </div>
                                                                <div class="cols">
@@ -970,6 +977,7 @@
                                                        <option value="null" disabled>-- Delivery Status --</option>                     
                                                        <option value="new">Pending</option>
                                                        <option value="invoiced">Not Yet Dispatched</option>
+                                                       <option value="">All</option>
                                                      </select>
                                                    </div>
                                                </div>
@@ -1157,6 +1165,7 @@
                                                                         <option value="null" disabled>-- Active Status --</option>                     
                                                                         <option value="true">Active</option>
                                                                         <option value="false">In-active</option>
+                                                                        <option value="">All</option>
                                                                       </select>
                                                                     </div>
                                                                 </div>                                                 
@@ -1284,6 +1293,7 @@
                                                                             <option value="null" disabled>-- Active Status --</option>                     
                                                                             <option value="true">Active</option>
                                                                             <option value="false">In-active</option>
+                                                                            <option value="">All</option>
                                                                           </select>
                                                                     </div>
                                                                 </div>
@@ -1292,6 +1302,7 @@
                                                                             <option value="null" disabled>-- Tax Status --</option>                     
                                                                             <option value="verified">Verified</option>
                                                                             <option value="pending">Pending</option>
+                                                                            <option value="">All</option>
                                                                           </select>                                                                    </div>
                                                                   <div class="cols">
                                                                    <div class="dropdown">

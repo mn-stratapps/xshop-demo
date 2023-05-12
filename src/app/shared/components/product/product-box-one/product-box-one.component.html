@@ -34,11 +34,17 @@
         *ngIf="!cartModal">
         <i class="ti-shopping-cart"></i>
       </a>
-      <a title="Add to Wishlist" (click)="addToWishlist(product)">
-        <i  class="fa fa-heart"  aria-hidden="true"></i>
-        <!-- <i *ngIf="!wishlistproducts.length" class="fa fa-heart" aria-hidden="true"></i> -->
- 
+
+      <a *ngIf="iswishlistproduct" title="Add  Wishlist" (click)="addToWishlist(product)">
+        <i style="color: red;" class="fa fa-heart"  aria-hidden="true"></i>
       </a>
+      <a *ngIf="!iswishlistproduct" title="Add to Wishlist" (click)="addToWishlist(product)">
+        <i  class="ti-heart"  aria-hidden="true"></i>
+      </a>
+
+      <!-- <a title="Add to Wishlist" (click)="addToWishlist(product)">
+        <i  class="fa fa-heart"  aria-hidden="true"></i>
+      </a> -->
       <a title="Quick View" (click)="QuickView.openModal()">
         <i class="ti-search" aria-hidden="true"></i>
       </a>

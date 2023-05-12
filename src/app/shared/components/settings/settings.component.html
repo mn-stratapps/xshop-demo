@@ -66,9 +66,9 @@
         </a>
       </div>
       <span *ngIf='products?.length' class="cart_qty_cls">{{ products?.length }}</span>
-      <ul class="show-div shopping-cart" *ngIf='!products?.length'>
-        <!-- <h5>Your cart is currently empty.</h5> -->
-      </ul>
+      <!-- <ul class="show-div shopping-cart" *ngIf='!products?.length'>
+        <h5>Your cart is currently empty.</h5>
+      </ul> -->
       <ul class="show-div shopping-cart" *ngIf='products?.length'>
         <li *ngFor="let product of products">
           <div class="media">
@@ -87,9 +87,9 @@
               </h4>
             </div>
           </div>
-          <div class="close-circle" (click)="removeItem(product)">
+          <!-- <div class="close-circle" (click)="removeItem(product)">
             <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
-          </div>
+          </div> -->
         </li>
         <li>
           <div class="total">
@@ -102,7 +102,7 @@
             <a [routerLink]="['/shop/checkout']" class="checkout">checkout</a>
           </div>
         </li>
-      </ul>
+      </ul>     
     </li>
   </ul>
 </div>

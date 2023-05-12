@@ -11,6 +11,7 @@ import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../image-cropp
 import { base64ToFile } from '../../image-cropper/utils/blob.utils';
 import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
   selector: 'app-admin-dashboard',
@@ -76,7 +77,8 @@ price_to:string;
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
    
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
-  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal, datepipe:DatePipe){
+  private router: Router,private httpService:AuthenticationService,private modalService: NgbModal, datepipe:DatePipe,
+  private toasterService:ToastrService){
 // const currentUrl = this.router.url;
 // if(currentUrl.includes('admin/addproduct')){
 //   this.isAddProductUrl = true;
@@ -114,7 +116,7 @@ getUserDetails() {
   })
 }
 resetUsersFilters(){
-  this.userfilerEnabled = !this.userfilerEnabled;
+  // this.userfilerEnabled = !this.userfilerEnabled;
   this.usersFilterForm.reset();
   this.getUsersList();
 }
@@ -137,13 +139,15 @@ getUsersList(){
     },
     error:(error)=>{
       this.error = error;
-      
-      console.log(error)       
+       console.log(error)  
+       if(error.error.message === 'From date should be less than To date'){
+        this.toasterService.warning('Date range mismatched!, Please select correct date');    
+       } 
   }
   }) 
 }
 resetVendorFilters(){
-  this.vendorfilerEnabled = !this.vendorfilerEnabled;
+  // this.vendorfilerEnabled = !this.vendorfilerEnabled;
   this.vendorFilterForm.reset();
   this.getVendorList();
 }
@@ -168,14 +172,16 @@ if(formVendorObj.to_date =='' || formVendorObj.to_date == null){
        console.log(this.vendorsList);
     },
     error:(error)=>{
-      this.error = error;
-      
-      console.log(error)       
+      this.error = error;  
+      console.log(error)   
+      if(error.error.message === 'From date should be less than To date'){
+        this.toasterService.warning('Date range mismatched!, Please select correct date');    
+       }     
   }
   }) 
 }
 resetOrdersFilters(){
-  this.ordersfilerEnabled = !this.ordersfilerEnabled;
+  // this.ordersfilerEnabled = !this.ordersfilerEnabled;
   this.ordersFilterForm.reset();
   this.getOrdersList();
 }
@@ -201,12 +207,15 @@ getOrdersList(){
     },
     error:(error)=>{
       this.error = error;
-      console.log(error)       
+      console.log(error)     
+      if(error.error.message === 'From date should be less than To date'){
+        this.toasterService.warning('Date range mismatched!, Please select correct date');    
+       }   
   }
   }) 
 }
 resetSalesFilters(){
-  this.salesfilerEnabled = !this.salesfilerEnabled;
+  // this.salesfilerEnabled = !this.salesfilerEnabled;
   this.salesFilterForm.reset();
   this.getSales();
 }
@@ -228,9 +237,11 @@ getSales(){
        console.log(this.salesList);
     },
     error:(error)=>{
-      this.error = error;
-      
-      console.log(error)       
+      this.error = error;  
+      console.log(error);
+      if(error.error.message === 'From date should be less than To date'){
+        this.toasterService.warning('Date range mismatched!, Please select correct date');    
+       }       
   }
   }) 
 }
@@ -522,7 +533,7 @@ updateRotation() {
 //image-cropper-end//
 
 resetAdminFilters(){
- this.adminProductfilerEnabled = !this.adminProductfilerEnabled;
+//  this.adminProductfilerEnabled = !this.adminProductfilerEnabled;
  this.allproductsFilterForm.reset()
   this.viewAdminProducts();
 }
@@ -557,15 +568,18 @@ viewAdminProducts(){
     error:(error)=>{
       this.error = error;      
       console.log(error)  
-      if(error.error.message === 'Details Not Found') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'No Data!',
-          text: 'No Products found Please Add products',
-          width: '400px',
-        })
-        this.isAddProductUrl = true;
-      }    
+      // if(error.error.message === 'Details Not Found') {
+      //   Swal.fire({
+      //     icon: 'warning',
+      //     title: 'No Data!',
+      //     text: 'No Products found Please Add products',
+      //     width: '400px',
+      //   })
+      //   this.isAddProductUrl = true;
+      // } 
+      if(error.error.message === 'From date should be less than To date'){
+        this.toasterService.warning('Date range mismatched!, Please select correct date');    
+       }    
   }
   })
 }
@@ -598,15 +612,17 @@ editProduct(){
         this.viewAdminProducts();
       },
       error:(error)=>{
-        this.error = error;
-        
-        console.log(error) 
+        this.error = error;  
+        console.log(error);
+        if(error.error.message === 'From date should be less than To date'){
+          this.toasterService.warning('Date range mismatched!, Please select correct date');    
+         }
     }
   });
   this.modalService.dismissAll();
 }
 resetAllProductsFilters(){
-this.allProductfilerEnabled = !this.allProductfilerEnabled
+// this.allProductfilerEnabled = !this.allProductfilerEnabled
 this.allproductsFilterForm.reset();
 this.viewAllProducts();
 }
@@ -616,7 +632,7 @@ viewAllProducts(){
     // if(this.allproductsFilterForm.get('category').value == ''){
     //   this.allproductsFilterForm.get('category').disable();
     let formObj = this.allproductsFilterForm.getRawValue();
-    if(formObj.category == '' || formObj.category === null  ){
+    if(formObj.category == '' || formObj.category === null ){
       delete formObj.category;
     }
     if(formObj.type == '' || formObj.type === null ){
@@ -642,16 +658,10 @@ viewAllProducts(){
     },
     error:(error)=>{
       this.error = error;
-      
       console.log(error)  
-      if(error.error.message === 'Details Not Found') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'No Data!',
-          text: 'No Products found Please Add products',
-          width: '400px',
-        })
-      }    
+      if(error.error.message === 'From date should be less than To date'){
+        this.toasterService.warning('Date range mismatched!, Please select correct date');    
+       }    
   }
   })
 }

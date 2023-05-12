@@ -44,18 +44,7 @@ import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonr
 import { BecomeVendorComponent } from '../modules/vendor/become-vendor/become-vendor.component';
 import { VendorProfileComponent } from '../modules/vendor/vendor-profile/vendor-profile.component';
 import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/vendor-dashboard.component';
-// import { AdminDashboardComponent } from '../modules/admin/admin-dashboard/admin-dashboard.component';
-import { ProductsComponent } from './admin/products/products.component';
-import { OrdersComponent } from './admin/orders/orders.component';
-import { SalesComponent } from './admin/sales/sales.component';
-import { CouponsComponent } from './admin/coupons/coupons.component';
-import { UsersComponent } from './admin/users/users.component';
-import { VendorsComponent } from './admin/vendors/vendors.component';
-import { LocalizationComponent } from './admin/localization/localization.component';
-import { SupportComponent } from './admin/support/support.component';
-import { ReportsComponent } from './admin/reports/reports.component';
-import { SettingsComponent } from './admin/settings/settings.component';
-import { InvoicesComponent } from './admin/invoices/invoices.component';
+
 import { ImageCropperModule } from "../modules/image-cropper/image-cropper.module";
 
 @NgModule({
@@ -94,18 +83,7 @@ import { ImageCropperModule } from "../modules/image-cropper/image-cropper.modul
         BecomeVendorComponent,
         VendorProfileComponent,
         VendorDashboardComponent,
-        // AdminDashboardComponent,
-        ProductsComponent,
-        OrdersComponent,
-        SalesComponent,
-        CouponsComponent,
-        UsersComponent,
-        VendorsComponent,
-        LocalizationComponent,
-        SupportComponent,
-        ReportsComponent,
-        SettingsComponent,
-        InvoicesComponent
+        
     ],
     imports: [
         CommonModule,

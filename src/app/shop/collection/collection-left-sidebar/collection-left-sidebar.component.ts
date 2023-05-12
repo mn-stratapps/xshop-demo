@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { ProductService } from "../../../shared/services/product.service";
 import { Product } from '../../../shared/classes/product';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-collection-left-sidebar',
@@ -26,6 +27,9 @@ export class CollectionLeftSidebarComponent implements OnInit {
   public sortBy: string; // Sorting Order
   public mobileSidebar: boolean = false;
   public loader: boolean = true;
+  //public wishlistProduct: Product[] =[];
+  wishlistproducts: Product[];
+  wishlistSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private viewScroller: ViewportScroller, public productService: ProductService) {   
@@ -69,6 +73,8 @@ export class CollectionLeftSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.wishlistSubscription = this.productService.wishlitsprods.subscribe(response => this.wishlistproducts=response)
+    this.getWishlistProducts();
   }
 
 
@@ -152,7 +158,9 @@ export class CollectionLeftSidebarComponent implements OnInit {
   updateGridLayout(value: string) {
     this.grid = value;
   }
-
+  updateWishlist(data){
+   this.wishlistproducts=data;
+  }
   // Change Layout View
   updateLayoutView(value: string) {
     this.layoutView = value;
@@ -166,5 +174,15 @@ export class CollectionLeftSidebarComponent implements OnInit {
   toggleMobileSidebar() {
     this.mobileSidebar = !this.mobileSidebar;
   }
-
+  getWishlistProducts(){
+    this.productService.wishlistItems
+    // .subscribe(response => this.products = response);
+    .subscribe({
+      next:(data)=>{
+        this.wishlistproducts= JSON.parse(JSON.stringify(data));
+        console.log(this.products)
+      }
+    })
+    }
+  
 }

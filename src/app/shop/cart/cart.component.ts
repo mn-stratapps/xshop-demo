@@ -19,6 +19,8 @@ export class CartComponent implements OnInit {
     // this.productService.cartItems.subscribe(response => this.products = response);
   }
   ngOnInit(): void {
+    const currentUser = localStorage.getItem( 'currentUser' );
+  this.accessToken = JSON.parse( currentUser )['Token'];
     this.getUserProducts();
   }
   getUserProducts(){
@@ -37,7 +39,17 @@ export class CartComponent implements OnInit {
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
   }
-
+  checkoutCart(){
+    this.productService.checkoutCart(this.accessToken)
+    .subscribe({ 
+      next:(data)=>{
+        
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    }) 
+  }
   // Increament
   increment(product, qty = 1) {
     

@@ -88,7 +88,11 @@ export class ProductService {
     this.accessToken = JSON.parse( currentUser )['Token'];
     return this.http.get<Product[]>(`${environment.apiUrl}/wishlist/`+this.accessToken)
   }
-
+  private wishlistItemss = new BehaviorSubject<any>({});
+  wishlitsprods = this.wishlistItemss.asObservable();
+  setwishlistItems(obj: any) {
+    this.wishlistItemss.next(obj);
+  }
   
   // Add to Wishlist
   // public addToWishlist(product): any {
@@ -110,7 +114,7 @@ public addToWishlist(product): any {
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
       return this.http.post<any>(`${environment.apiUrl}/wishlist/`+this.accessToken,{id})
-      
+       
     }
     // localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
     return true
@@ -119,7 +123,9 @@ public addToWishlist(product): any {
   // Remove Wishlist items
   public removeWishlistItem(product: Product,accessToken): any {   
     let id = product.id
+    this.wishlistItems.subscribe(response=>this.setwishlistItems(response))
    return this.http.delete<any>(`${environment.apiUrl}/deletewishlist/`+accessToken+'/'+id)   
+
     // const index = state.wishlist.indexOf(product);
     // state.wishlist.splice(index, 1);
     // localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
@@ -257,14 +263,21 @@ public addToWishlist(product): any {
   addToCartCount(accessToken,id,quantity){
     return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})
   }
+  checkoutCart(accessToken:any){
+    return this.http.get<any>(`${environment.apiUrl}/ordercart/`+accessToken)
+  }
+  selectedAddress(accessToken:any,object:any){
+    return this.http.put<any>(`${environment.apiUrl}/address/`+accessToken,object)
+  }
+  checkoutPayment(accessToken:any,object:any){
+    return this.http.post<any>(`${environment.apiUrl}/checkout/`+accessToken,object)
+  }
   // Update Cart Quantity
   public updateCartQuantity(product: Product, quantity: number,accessToken:any){
     let id=product.id;
     // const currentUser = localStorage.getItem( 'currentUser' );
     // this.accessToken = JSON.parse( currentUser )['Token'];
    return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})
-   this.cartItems.subscribe(response=>this.setcartItems(response))
-
     // .subscribe(
     //   {
     //     next:(data)=>{
