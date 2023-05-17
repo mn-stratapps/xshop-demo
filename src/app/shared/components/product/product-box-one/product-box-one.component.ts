@@ -59,14 +59,7 @@ export class ProductBoxOneComponent implements OnInit {
     }
   } 
 
-  // getWishlistProducts(){
-  //   this.productService.wishlistItems
-  //   .subscribe({
-  //     next:(data)=>{
-  //       this.wishlistproducts= data;
-  //     }
-  //   })
-  //   }
+  
   // Get Product Color
   Color(variants) {
     const uniqColor = [];

@@ -19,6 +19,8 @@ export class ProductLeftSidebarComponent implements OnInit {
   public selectedSize: any;
   public mobileSidebar: boolean = false;
   public active = 1;
+  wishlist: any[];
+
 
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
@@ -117,7 +119,24 @@ getProductDetails(){
 
   // Add to Wishlist
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+    this.productService.addToWishlist(product)
+    .subscribe({
+      next:(data)=>{
+        console.log(data)
+        this.wishlist=data;
+        this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
+        if(data.message === 'Added to wishlist'){
+          this.toastrService.success('Product has been added in wishlist.');
+        }
+        //this.wishlistIconData();
+      },
+      error:(error)=>{
+        console.log(error)
+        if (error.error.message === 'product already exists in wishlist'){
+          this.toastrService.warning('Product already exists in wishlist');
+        }
+      }
+    })
   }
 
   // Toggle Mobile Sidebar

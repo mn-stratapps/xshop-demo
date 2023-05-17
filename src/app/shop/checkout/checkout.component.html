@@ -49,7 +49,7 @@
                                 </div>
                            </div> -->
                            <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
+                            <!-- <div class="accordion-item">
                               <h2 class="accordion-header" id="flush-headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                     Login or Signup
@@ -58,7 +58,7 @@
                               <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
                               </div>
-                            </div>
+                            </div> -->
                             <div class="accordion-item">
                               <h2 class="accordion-header" id="flush-headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -68,8 +68,8 @@
                               <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body"> 
                                     <div  *ngIf="!isAdd" class="check_address">
-                                    <div *ngFor="let address of Address" class="form-check">
-                                        <input class="form-check-input" type="radio" [value]="address.id" [(ngModel)]="address_id" name="selectedAddress" id="selectedAddress">
+                                    <div *ngFor="let address of Address"let i="index" class="form-check">
+                                        <input class="form-check-input" type="radio" [value]="address.id" [checked]="address.is_default" [(ngModel)]="address_id" name="selectedAddress" id="selectedAddress">
                                         <div  class="address_info mb-3">
                                           <h6>{{address.name}} <span>{{address.type_id}}</span></h6>
                                           <p>{{address.address}}, {{address.area}}, {{address.landmark}},
@@ -183,16 +183,16 @@
                                     </div>
                               </div>
                             </div>
-                            <div class="accordion-item">
+                            <!-- <div class="accordion-item">
                               <h2 class="accordion-header" id="flush-headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                  Summary
+                                  Saved Cards
                                 </button>
                               </h2>
                               <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
                               </div>
-                            </div>
+                            </div> -->
                           </div>
                             <!-- <div class="row check-out">
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
@@ -279,7 +279,7 @@
                                     </div>
                                 </div>
                             </div> -->
-                          <div class="row ">
+                          <!-- <div class="row ">
                             <div class="col-12">
                               <div class="stripe-section">
                                 <h5>stripe js</h5>
@@ -326,7 +326,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> -->
                         </div>
 
                         <div class="col-lg-6 col-sm-12 col-xs-12">
@@ -335,22 +335,22 @@
                                     <div class="title-box">
                                         <div>Product <span> Total</span></div>
                                     </div>
-                                    <ul class="qty" *ngIf='products.length'>
-                                        <li *ngFor="let product of products">
-                                        	 {{ product.title }} × {{ product.quantity }}
+                                    <ul class="qty" *ngIf='checkoutProductData?.length'>
+                                        <li *ngFor="let product of checkoutProductData">
+                                        	 {{ product.product_name | slice:0:26 }} × {{ product.quantity }}
                                         	<span>
-                                                {{ (product.price | discount:product) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
+                                                {{ (product.total_product_value) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
                                             </span>
                                         </li>
                                     </ul>
-                                    <ul class="qty" *ngIf='!products.length'>
+                                    <ul class="qty" *ngIf='!checkoutProductData?.length'>
                                         <li class="empty-checkout"> There are no products in cart </li>
                                     </ul>
                                     <ul class="sub-total">
                                         <li>
                                         	<!-- Subtotal <span class="count">{{ getTotal | async | currency:productService?.Currency.currency:'symbol'}}</span> -->
                                         </li>
-                                        <li *ngIf='products.length'>
+                                        <li *ngIf='checkoutProductData?.length'>
                                         	Shipping
                                          <div class="shipping">
                                             <div class="shopping-option">
@@ -366,10 +366,13 @@
                                     </ul>
                                     <ul class="total">
                                         <!-- <li>Total <span class="count">{{ getTotal | async | currency:productService?.Currency.currency:'symbol'}}</span></li> -->
-                                    </ul>
+                                      <li>Total<span>{{total_order_amount |currency:productService?.Currency.currency:'symbol'}}</span></li>
+                                      </ul>
                                 </div>
-
-                                <div class="payment-box" *ngIf='products.length'>
+                                <button type="submit" class="btn-solid btn" [disabled]="!EnableselectAddress" (click)="checkout()" >
+                                  Place Order
+                               </button>
+                                <!-- <div class="payment-box" *ngIf='products.length'>
                                     <div class="upper-box">
                                         <div class="payment-options">
                                             <ul>
@@ -390,15 +393,15 @@
                                         </div>
                                     </div>
                                     <div class="text-end">
-                                        <!-- <button type="submit" class="btn-solid btn" [disabled]="!checkoutForm.valid" (click)="stripeCheckout()" *ngIf="payment == 'Stripe'">
+                                        <button type="submit" class="btn-solid btn" [disabled]="!checkoutForm.valid" (click)="stripeCheckout()" *ngIf="payment == 'Stripe'">
                                            Place Order
-                                        </button> -->
-                                        <button type="submit" class="btn-solid btn" (click)="checkout()" >
+                                        </button>
+                                        <button type="submit" class="btn-solid btn" [disabled]="!EnableselectAddress" (click)="checkout()" >
                                           Place Order
                                        </button>
-                                        <!-- <ngx-paypal [config]="payPalConfig" *ngIf="payment == 'Paypal'"></ngx-paypal> -->
+                                        <ngx-paypal [config]="payPalConfig" *ngIf="payment == 'Paypal'"></ngx-paypal>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

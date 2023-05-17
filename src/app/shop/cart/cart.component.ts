@@ -39,17 +39,6 @@ export class CartComponent implements OnInit {
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
   }
-  checkoutCart(){
-    this.productService.checkoutCart(this.accessToken)
-    .subscribe({ 
-      next:(data)=>{
-        
-       },
-       error:(error) => {
-        console.log(error)
-      }
-    }) 
-  }
   // Increament
   increment(product, qty = 1) {
     

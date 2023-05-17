@@ -108,16 +108,16 @@ export class ProductService {
   // }
 
 public addToWishlist(product): any {
-    const wishlistItem = state.wishlist.find(item => item.id === product.id)
-    if (!wishlistItem) {
+    // const wishlistItem = state.wishlist.find(item => item.id === product.id)
+    // if (!wishlistItem) {
     const id = product.id
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
       return this.http.post<any>(`${environment.apiUrl}/wishlist/`+this.accessToken,{id})
        
-    }
+    // }
     // localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
-    return true
+    // return true
   }
 
   // Remove Wishlist items
@@ -271,6 +271,9 @@ public addToWishlist(product): any {
   }
   checkoutPayment(accessToken:any,object:any){
     return this.http.post<any>(`${environment.apiUrl}/checkout/`+accessToken,object)
+  }
+  paymentStatus(accessToken:any,stripeId:any){
+    return this.http.get<any>(`${environment.apiUrl}/payment/`+accessToken+'/'+stripeId)
   }
   // Update Cart Quantity
   public updateCartQuantity(product: Product, quantity: number,accessToken:any){

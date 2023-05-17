@@ -27,7 +27,7 @@
                     <i class="fa fa-check-circle" aria-hidden="true"></i>
                     <h2>thank you</h2>
                     <p>Payment is has been received Order Placed Successfully</p>
-                    <p>Transaction ID:{{ orderDetails.orderId }}</p>
+                    <p>Transaction ID:{{ orderDetails.Transaction_id }}</p>
                 </div>
             </div>
         </div>
@@ -42,38 +42,42 @@
             <div class="col-lg-6">
                 <div class="product-order">
                     <h3>your order details</h3>
-                    <div class="row product-order-detail" *ngFor="let product of orderDetails.product">
+                    <div class="row product-order-detail" *ngFor="let product of orderDetails?.Order_data">
                         <div class="col-3">
-                            <img [src]="product.images[0].src" alt="" class="img-fluid">
+                            <!-- <img [src]="product.images[0].src" alt="" class="img-fluid"> -->
+                           <img 
+                                [lazyLoad]="ImageSrc ? ImageSrc : product?.image" 
+                                class="img-fluid lazy-loading" 
+                                alt="{{ product?.image.alt }}" />
                         </div>
                         <div class="col-3 order_detail">
                             <div>
-                                <h4>product name</h4>
-                                <h5>{{ product.title }}</h5>
+                                <h5>{{ product?.product_name | slice:0:15}}</h5>
                             </div>
                         </div>
                         <div class="col-3 order_detail">
                             <div>
-                                <h4>quantity</h4>
-                                <h5>{{ product.quantity }}</h5>
+                                <h5>{{ product?.order_quantity }}</h5>
+                            </div>
+                            <div>
+                                <h5>{{ product?.order_id }}</h5>
                             </div>
                         </div>
                         <div class="col-3 order_detail">
                             <div>
-                                <h4>price</h4>
-                                <h5>{{ product?.price * productService?.Currency?.price | discount:product | currency:productService?.Currency.currency:'symbol' }}</h5>
+                                <h5>{{ product?.order_price * productService?.Currency?.price| currency:productService?.Currency.currency:'symbol' }}</h5>
                             </div>
                         </div>
                     </div>
                     <div class="total-sec">
                         <ul>
-                            <li>Subtotal <span>{{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</span></li>
-                            <li>Shipping <span>$00.00</span></li>
-                            <li>Tax <span>$00.00</span></li>
+                            <li>Subtotal <span>{{ orderDetails?.Total_order_amount | currency:productService?.Currency.currency:'symbol' }}</span></li>
+                            <li>Shipping <span>00.00</span></li>
+                            <li>Tax <span>00.00</span></li>
                         </ul>
                     </div>
                     <div class="final-total">
-                        <h3>total <span>{{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</span></h3>
+                        <h3>total <span>{{ orderDetails?.Total_order_amount | currency:productService?.Currency.currency:'symbol' }}</span></h3>
                     </div>
                 </div>
             </div>
@@ -82,29 +86,29 @@
                     <div class="col-sm-6">
                         <h4>summery</h4>
                         <ul class="order-detail">
-                            <li>order ID: {{ orderDetails.orderId }}</li>
-                            <li>Order Date: October 22, 2021</li>
-                            <li>Order Total: {{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</li>
+                            <li>order ID: {{ orderDetails?.orderId }}</li>
+                            <li>Order Date: {{orderDetails?.order_date | date}}</li>
+                            <li>Order Total: {{ orderDetails.Total_order_amount | currency:productService?.Currency.currency:'symbol' }}</li>
                         </ul>
                     </div>
                     <div class="col-sm-6">
                         <h4>shipping address</h4>
-                        <ul class="order-detail">
-                            <li>{{ orderDetails.shippingDetails.address }}</li>
-                            <li>{{ orderDetails.shippingDetails.state }}</li>
-                            <li>{{ orderDetails.shippingDetails.country }}, {{ orderDetails.shippingDetails.postalcode }}</li>
-                            <li>Contact No. {{ orderDetails.shippingDetails.phone }}</li>
+                        <ul class="order-detail" *ngFor="let shippingAddress of orderDetails?.address">
+                            <li>{{ shippingAddress?.address }}</li>
+                            <li>{{ shippingAddress?.state }}</li>
+                            <li>{{ shippingAddress?.country }}, {{ shippingAddress?.pincode }}</li>
+                            <li>Contact No. {{ shippingAddress?.mobile }}</li>
                         </ul>
                     </div>
 
                     <div class="col-sm-12 payment-mode">
                         <h4>payment method</h4>
-                        <p>Pay on Delivery (Cash/Card). Cash on delivery (COD) available. Card/Net banking acceptance subject to device availability.</p>
+                        <p>{{orderDetails.payment_method}}</p>
                     </div>
                     <div class="col-md-12">
                         <div class="delivery-sec">
                             <h3>expected date of delivery</h3>
-                            <h2>March 21, 2021</h2>
+                            <h2>April 21, 2023</h2>
                         </div>
                     </div>
                 </div>

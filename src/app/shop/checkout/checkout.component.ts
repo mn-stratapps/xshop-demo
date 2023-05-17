@@ -21,9 +21,13 @@ export class CheckoutComponent implements OnInit {
   public payment: string = 'Stripe';
   public amount:  any;
   public Address: Useraddress[] = [];
+  checkoutProductData: any[];
+
   accessToken: any;
   address_id:any;
   stripeData:any;
+  total_order_amount: any;
+  EnableselectAddress=false;
   constructor(private fb: UntypedFormBuilder,
     public productService: ProductService,
     private orderService: OrderService,
@@ -44,9 +48,20 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.productService.cartItems.subscribe(response =>{ this.products = response});
     console.log('checkout:',this.products)
-    //this.getTotal.subscribe(amount => this.amount = amount);
-    // this.initConfig();
     this.getUserAddress();
+    this.checkoutFromCart();
+  }
+  checkoutFromCart(){
+    this.productService.checkoutCart(this.accessToken)
+    .subscribe({ 
+      next:(data)=>{  
+        this.checkoutProductData = data.order_details;
+        this.total_order_amount =data.total_order_amount;     
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    }) 
   }
   //add address
   addNewAddress(){
@@ -66,13 +81,14 @@ export class CheckoutComponent implements OnInit {
     })    
   }
   selectAddress(){
-    const Object ={
+    const Object = {
       address_id:this.address_id
     }
     this.productService.selectedAddress(this.accessToken,Object)
     .subscribe({ 
       next:(data)=>{
         console.log(data)
+        this.EnableselectAddress=true;
        },
        error:(error) => {
         console.log(error)
