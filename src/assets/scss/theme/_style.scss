@@ -7956,9 +7956,12 @@
         .checkout-form {
             .checkout-details {
                 position: relative;
-                background-color: $grey-lighter;
-                border: 1px solid $round-border;
+                // background-color: $grey-lighter;
+                // border: 1px solid $round-border;
+                background-color: #ffffff;
+                border: 1px solid rgba(235, 235, 235, 0.8666666667);
                 padding: 40px;
+                border-radius: 8px;
             }
             .check-out {
                 .form-group {
@@ -8053,10 +8056,10 @@
         margin-bottom: 50px;
         .title-box {
             position: relative;
-            padding-bottom: 25px;
+            padding-bottom: 10px;
             color: $grey4;
             font-weight: 600;
-            font-size: 22px;
+            font-size: 21px;
             border-bottom: 1px solid #ededed;
             margin-bottom: 20px;
             span {
@@ -13939,13 +13942,15 @@
         border-bottom-right-radius: 0;
         background-color: #f7f7f7;
         box-shadow: 0px 0px 5px 0px rgba(154, 154, 154, 0.54);
-        top: calc(50% + 34px);
+        // top: calc(50% + 34px);
+        top:41%;
         cursor: pointer;
     }
     
     .setting-sidebar {
         position: fixed;
-        top: 50%;
+        // top: 50%;
+        top:36%;
         transform: translateY(-50%);
         background-color: #f7f7f7;
         width: 40px;
@@ -15400,7 +15405,7 @@
     }
     .social_icons{
         color: white;
-        background-color: #666aff;
+        background-color:#5581c2;
         border-radius: 50%;
         width: 37px;
         height: 37px;
@@ -15416,3 +15421,6 @@
     .br-none{
         border: none!important;
     }
+.accordion-item{
+    border: 1px solid rgba(235, 235, 235, 0.8666666667)!important;
+}  

@@ -1,7 +1,75 @@
 <!-- <app-header-one [themeLogo]="themeLogo"></app-header-one> -->
 
 <!-- home banner start -->
-<div class="container banner-slider mt-5">
+<div class="banner-slider">
+    <div class="row">
+        <div  class="carousel slide vertical" data-bs-ride="false">
+            <div class="carousel-indicators">
+             <button type="button" class="active" [class.active]="selectedField === 1" (click)="selectedField = 1"></button>
+             <button type="button" [class.active]="selectedField === 2" (click)="selectedField = 2"></button>
+             <button type="button" [class.active]="selectedField === 3" (click)="selectedField = 3"></button>
+            </div>
+            <div class="carousel-inner" style="background-color:#f1f1f1;">
+              <div class="carousel-item active">
+                <div class="ps-banner" style="background:#F0F2F5;">
+                  <div class="container-initial">
+                      <div class="ps-banner__block"  *ngIf="selectedField === 1">
+                          <div class="ps-banner__content">
+                              <h3 class="ps-banner__title">Get 50% discount on iphone<br>12 without exchange!Deal...</h3>
+                              <div class="ps-banner__desc">Get 50% discount on iphone 12 without exchange!<br>Deal for limited time only. You can get the iphone<br>12 at the half priceright now on AT&T</div>
+                              <a class="btn btn-solid mt-4" [routerLink]="['/shop/collection/left/sidebar']"> shop now </a> 
+                          </div>
+                          <div class="ps-banner__thumnail">
+                            <h2 class="ps-text">01</h2>
+                            <img class="ps-banner__img3" src="assets/images/home-circle.png" alt="alt">
+                            <img class="ps-banner__img1" src="assets/images/elec-img.png" alt="alt">
+                            <img class="ps-banner__image" src="assets/images/home-img2.png" alt="alt">
+                          </div>
+                      </div>
+                      <div class="ps-banner__block"  *ngIf="selectedField === 2">
+                        <div class="ps-banner__content">
+                            <h3 class="ps-banner__title">Get 30% discount on electronic devices</h3>
+                            <div class="ps-banner__desc1">Get Best Discounts With Our Exclusive Coupons & Offers On Electronics.<br>Today's Deal: Up to 30% Off on Washing Machines, Refrigerators, TV's, Laptops</div>
+                            <a class="btn btn-solid mt-4" [routerLink]="['/shop/collection/left/sidebar']"> shop now </a> 
+                        </div>
+                        <div class="ps-banner__thumnail">
+                          <h2 class="ps-text2">02</h2>
+                          <img class="ps-banner__img3" src="assets/images/home-circle.png" alt="alt">
+                          <img class="ps-banner__img2" src="assets/images/elec-img1.png" alt="alt">
+                          <img class="ps-banner__image" src="assets/images/home-img2.png" alt="alt">
+                        </div>
+                    </div>
+                    <div class="ps-banner__block"  *ngIf="selectedField === 3">
+                      <div class="ps-banner__content">
+                          <h3 class="ps-banner__title">Get 50% discount on iphone<br>12 without exchange!Deal...</h3>
+                          <div class="ps-banner__desc">Get 50% discount on iphone 12 without exchange!<br>Deal for limited time only. You can get the iphone<br>12 at the half priceright now on AT&T</div>
+                          <a class="btn btn-solid mt-4" [routerLink]="['/shop/collection/left/sidebar']"> shop now </a> 
+                      </div>
+                      <div class="ps-banner__thumnail">
+                        <h2 class="ps-text">01</h2>
+                        <img class="ps-banner__img3" src="assets/images/home-circle.png" alt="alt">
+                        <img class="ps-banner__img1" src="assets/images/elec-img.png" alt="alt">
+                        <img class="ps-banner__image" src="assets/images/home-img2.png" alt="alt">
+                      </div>
+                    </div>
+                   </div>
+                </div>
+              </div>
+             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev"  [disabled]="selectedField===1" (click)="Previous()">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next"  [disabled]="selectedField===3" (click)="next()">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </div>
+</div>
+
+
+<!-- <div class="container banner-slider">
     <div class="row">
         <div class="col-md-7">
             <img src="assets/images/banner/1.jpg" class="img-fluid height-banner" alt="electronics">
@@ -23,7 +91,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- home banner end  -->
 
 <!-- collection banner -->

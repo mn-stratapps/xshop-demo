@@ -1,0 +1,377 @@
+ .vertical.carousel .carousel-item {
+    overflow: hidden;
+}
+
+.vertical.carousel .carousel-item-next:not(.carousel-item-start),
+.vertical.carousel .active.carousel-item-end {
+    transform: translateY(100%);
+}
+
+.vertical.carousel .carousel-item-prev:not(.carousel-item-end),
+.vertical.carousel .active.carousel-item-start {
+    transform: translateY(-100%);
+}
+
+.vertical.carousel .carousel-indicators {
+    top: 0;
+    left: unset;
+    margin-left: unset !important;
+    margin-right:25px;
+    flex-direction: column;
+}
+
+.vertical.carousel .carousel-indicators button {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+}
+.carousel-indicators button{
+    box-sizing: content-box;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 30px;
+    height: 3px;
+    padding: 0;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    opacity: .5;
+    transition: opacity .6s ease;
+}
+.carousel-indicators .active {
+    opacity: 1;
+}
+
+.vertical.carousel .carousel-control-prev,
+.vertical.carousel .carousel-control-next {
+    width: 100%;
+    height: 60px;
+}
+
+.vertical.carousel .carousel-control-prev-icon,
+.vertical.carousel .carousel-control-next-icon {
+    transform: rotateZ(90deg);
+}
+
+.vertical.carousel .carousel-control-next {
+    top: unset;
+    bottom: 0;
+}
+.slider-contain{
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        .display-contain h3{
+         font-size: 38px!important;
+         color:#000000;
+        }
+        h6{
+            font-size:19px;
+            margin-bottom: 6px;
+        }
+        .discount-txt{
+            margin:26px 0px;
+        }
+}
+.carousel-control-prev{
+    justify-content: end;
+    top: 198px;
+    position: absolute;
+    left: -20px;
+
+}
+.carousel-control-next{
+    justify-content: end;
+    position: absolute;
+    left: -20px;
+    bottom: 215px !important;
+}
+.image-fluid{
+    width: 100%;
+  height: auto;
+}
+@media (min-width: 768px) {
+    .ps-banner {
+      height: 320px;
+      min-height: 320px !important;
+    }
+    .ps-banner .ps-banner__block {
+      display: flex;
+      height: 100%;
+    //   position: relative;
+    }
+    .ps-banner .ps-banner__content {
+      padding: 9% 0 0 8%;
+      width: 48%;
+      height: 100%;
+      flex: 0 0 48%;
+      text-align: left;
+    }
+    .ps-banner .ps-banner__thumnail {
+      flex: 0 0 62%;
+    }
+    .ps-banner .ps-banner__thumnail .ps-banner__image {
+      position: absolute;
+      bottom: 0;
+      right: 0px;
+      height: 100%;
+     object-fit: cover;
+    }
+    .ps-banner .ps-banner__thumnail .ps-banner__img1 {
+      z-index: 7;
+      position: absolute;
+      top: 117px;
+      right: 148px;
+    }
+    .ps-banner .ps-banner__thumnail .ps-banner__img2{
+     z-index: 7;
+     position: absolute;
+     top: 76px;
+     right: 74px;
+    }
+  }
+  .ps-text{
+    position: absolute;
+    top: 300px;
+    right: 631px;
+    transform: rotate(270deg);
+    font-size: 65px;
+  }
+  .ps-text2{
+    position: absolute;
+    top: 262px;
+    right: 635px;
+    transform: rotate(270deg);
+    font-size: 65px;
+  }
+  
+  @media (min-width: 1024px) {
+    .ps-banner {
+      height: 400px;
+    }
+  }
+  
+  @media (min-width: 1480px)  {
+    .ps-banner {
+      height: 600px;
+    }
+    .ps-banner .ps-banner__content {
+        padding: 9% 0 0 8%;
+      }
+    .ps-banner .ps-banner__title {
+      font-size: 44px;
+      color: #103178;
+      font-weight: 600;
+    }
+    .ps-banner .ps-banner__desc {
+      font-size: 20px;
+    }
+    .ps-banner .ps-banner__desc1 {
+        font-size: 17px;
+      }
+
+  }
+  @media(min-width:1280px) and (max-width:1480px){
+    .ps-banner .ps-banner__content {
+        padding: 12% 0 0 6%;
+      }
+    .ps-banner {
+        height: 600px;
+      }
+      .ps-banner .ps-banner__title {
+        font-size: 34px;
+        color: #103178;
+        font-weight: 600;
+      }
+      .ps-banner .ps-banner__desc {
+        font-size: 17px;
+      }
+  }
+ .ps-banner__title {
+    font-weight: 600;
+    font-size: 24px;
+    color: #103178;
+    margin-bottom: 10px;
+}
+ps-banner .ps-banner__thumnail {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+@media(min-width:768px) and (max-width:1024px){
+    .ps-banner .ps-banner__title {
+        font-size: 24px;
+          }
+      .ps-banner .ps-banner__desc {
+        font-size: 13px;
+      }
+      .ps-banner .ps-banner__desc1 {
+        font-size: 13px;
+        width: 278px;
+      }
+      .ps-banner .ps-banner__content {
+        padding: 9% 0 0 2%;
+      }
+      .ps-text{
+      position: relative;
+      top: -61px;
+      right: 273px;
+      transform: rotate(270deg);
+      font-size: 54px;
+      }
+      .ps-banner .ps-banner__thumnail .ps-banner__img1{
+       z-index: 7;
+        position: absolute;
+        top: 29px;
+        right: 69px;
+        object-fit: cover;
+        height: 100%;
+      }
+      .ps-banner .ps-banner__thumnail .ps-banner__img2{
+        z-index: 7;
+       position: absolute;
+       top: 29px;
+        right: 69px;
+        object-fit: cover;
+        height: 100%;
+       }
+       .ps-text2{
+        position: relative;
+        top: -70px;
+        right: 287px;
+        transform: rotate(270deg);
+        font-size: 51px;
+      }
+}
+@media(min-width:820px) and (max-width:1180px){
+    .ps-banner .ps-banner__content {
+        padding: 9% 0 0 2%;
+      }
+      .ps-text{
+      position: relative;
+      top: -87px;
+      right: 262px!important;
+      transform: rotate(270deg);
+      font-size: 46px;
+      }
+      .ps-text2{
+        top: -95px;
+        right: 272px!important;
+        font-size: 43px;
+      }
+      .ps-banner .ps-banner__thumnail .ps-banner__img1{
+       z-index: 7;
+        position: absolute;
+        top: 29px;
+        right: 69px;
+        object-fit: cover;
+        height: 100%;
+      }
+      .ps-banner .ps-banner__desc1 {
+        font-size: 13px;
+        width: 287px;
+      }
+}
+@media(min-width:912px) and (max-width:1368px){
+    .ps-text{
+        right: 245px!important;
+        font-size: 56px;
+      }
+      .ps-text2{
+        top: -118px;
+        right: 254px!important;
+        font-size: 44px;
+      } 
+      .ps-banner .ps-banner__desc1 {
+        font-size: 13px;
+        width: 400px;
+      }
+}
+@media(min-width:1280px){
+    .vertical.carousel .carousel-indicators {
+        margin-right: 60px;
+    }
+    .carousel-control-prev{
+        left:-56px;
+    }
+    .carousel-control-next{
+        left:-56px;
+    }
+}
+@media(min-width:768px)and (max-width:1180px){
+    .carousel-control-prev{
+        top:62px;
+    }
+    .carousel-control-next{
+        bottom: 80px !important;
+    }
+}
+@media(min-width:768px){
+    .ps-banner .ps-banner__thumnail .ps-banner__img3{
+        display: none;
+}
+}
+@media(max-width:600px){
+    .vertical.carousel .carousel-indicators {
+        left: 30px;
+        flex-direction: row;
+        top: 572px;
+    }
+    .carousel-control-next{
+      display: none;
+    }
+    .carousel-control-prev{
+      display:none;
+    }
+    .ps-banner .ps-banner__thumnail .ps-banner__image{
+        display: none;
+    }
+    .ps-banner__content {
+        padding: 10px 18px;
+    }
+    .ps-banner__block {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 23px 0px;
+    }
+    .ps-banner__thumnail {
+        display: inline-flex;
+    }
+    img.ps-banner__img3 {
+        width: 356px;
+    }
+    img.ps-banner__img1 {
+        z-index: 7;
+        position: absolute;
+        top: 78px;
+        right: 40px;
+        width: 351px;
+    }
+    img.ps-banner__img2 {
+        z-index: 7;
+        position: absolute;
+        top: 78px;
+        right: 27px;
+        width: 386px;
+    }
+}
+@media(max-width:375px){
+    img.ps-banner__img3 {
+        width: 331px;
+    }
+    img.ps-banner__img1 {
+        z-index: 7;
+        position: absolute;
+        top: 78px;
+        right: 37px;
+        width: 325px;
+    }
+}

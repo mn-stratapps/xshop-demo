@@ -15,6 +15,15 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
   public products: Product[] = [];
   public productCollections: any[] = [];
   public active;
+  
+  selectedField = 1;
+  Previous() {
+ this.selectedField = this.selectedField-1;
+ }
+ next() {
+    this.selectedField = this.selectedField+1;
+ }
+
   wishlistproducts: Product[];
   wishlistSubscription: Subscription;
 

@@ -54,16 +54,15 @@ export class ProductBoxThreeComponent implements OnInit {
     .subscribe({
       next:(data)=>{
         console.log(data)
+        this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
           this.toastrService.success('Product has been added in wishlist.');
-
         }
       },
       error:(error)=>{
         console.log(error)
         if (error.error.message === 'product already exists in wishlist'){
           this.toastrService.warning('Product already exists in wishlist');
-
         }
       }
     })

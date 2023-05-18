@@ -62,6 +62,8 @@ export class CheckoutComponent implements OnInit {
     this.getUserAddress();
   }
   checkoutFromCart(){
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
     this.productService.checkoutCart(this.accessToken)
     .subscribe({ 
       next:(data)=>{  

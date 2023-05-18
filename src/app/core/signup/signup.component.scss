@@ -68,9 +68,24 @@
     .carousel-item img{
      height: 628px;
      object-fit: cover;
+      border-radius: 0.375rem 0px 0px 0.375rem;
     }
     @media(max-width:1024px){
       .w-65{
         width:100%!important;
+      }
+      .carousel-item img{
+        border-radius:0.375rem 0.375rem 0px 0px;
+      }
+      .register-page .theme-card {
+        padding:25px!important;
+      }
+    }
+    .register-page .theme-card {
+      padding: 35px 66px 30px 30px;
+    }
+    @media(min-width:1200px) and (max-width:1450px){
+      .register-page .theme-card {
+        padding: 30px 30px 30px 9px!important;
       }
     }

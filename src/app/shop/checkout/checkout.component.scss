@@ -22,3 +22,26 @@
     background: #f8f8f9;
     border-radius: 4px;
 }
+.qtys{
+ color:#000000;
+ font-size:21px;
+ padding-left: 94px;
+ font-weight: 600;
+}
+.pqt{
+    padding-left:100px;
+}
+.prd{
+ width:177px;
+}
+@media(min-width:1280px) and (max-width:1480px){
+    .pqt{
+        padding-left:63px;
+    }  
+}
+.accordion-button{
+    border-radius: 8px!important;
+}
+.accordion-item{
+    border-radius: 8px!important; 
+}
