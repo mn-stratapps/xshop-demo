@@ -60,10 +60,10 @@
                     <div class="row product-order-detail text-center" *ngFor="let product of orderDetails?.Order_data">
                         <div class="col-2">
                             <!-- <img [src]="product.images[0].src" alt="" class="img-fluid"> -->
-                             <img 
+                             <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-')]"><img 
                                 [lazyLoad]="ImageSrc ? ImageSrc : product?.image" 
                                 class="img-fluid lazy-loading" 
-                                alt="{{ product?.image.alt }}" />
+                                alt="{{ product?.image.alt }}" /></a>
                         </div>
                         <div class="col-3 order_detail">
                             <div  class="pt-3">

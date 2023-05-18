@@ -50,7 +50,7 @@
 
 .vertical.carousel .carousel-control-prev,
 .vertical.carousel .carousel-control-next {
-    width: 100%;
+    width: 20%;
     height: 60px;
 }
 
@@ -85,14 +85,18 @@
     justify-content: end;
     top: 198px;
     position: absolute;
-    left: -20px;
-
+    // left: -20px;
+    right: 55px;
 }
 .carousel-control-next{
     justify-content: end;
     position: absolute;
-    left: -20px;
-    bottom: 215px !important;
+    // left: -20px;
+    right: 54px;
+    bottom: 212px !important;
+}
+.carousel-control-prev{
+  left: unset !important;
 }
 .image-fluid{
     width: 100%;
@@ -299,12 +303,12 @@ ps-banner .ps-banner__thumnail {
     .vertical.carousel .carousel-indicators {
         margin-right: 60px;
     }
-    .carousel-control-prev{
-        left:-56px;
-    }
-    .carousel-control-next{
-        left:-56px;
-    }
+    // .carousel-control-prev{
+    //     // left:-56px;
+    // }
+    // .carousel-control-next{
+    //     left:-56px;
+    // }
 }
 @media(min-width:768px)and (max-width:1180px){
     .carousel-control-prev{
