@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from '../../shared/classes/product';
 import { ProductService } from '../../shared/services/product.service';
 
@@ -14,6 +15,9 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
   public products: Product[] = [];
   public productCollections: any[] = [];
   public active;
+  wishlistproducts: Product[];
+  wishlistSubscription: Subscription;
+
 
   constructor(public productService: ProductService) {
     this.productService.getProducts.subscribe(response => {
@@ -45,6 +49,8 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
   }]
 
   ngOnInit(): void {
+    this.wishlistSubscription = this.productService.wishlitsprods.subscribe(response => this.wishlistproducts=response)
+    this.getWishlistProducts();
     // Change color for this layout
     document.documentElement.style.setProperty('--theme-deafult', '#6d7e87');
   }
@@ -53,7 +59,16 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
     // Remove Color
     document.documentElement.style.removeProperty('--theme-deafult');
   }
-
+  getWishlistProducts(){
+    this.productService.wishlistItems
+    // .subscribe(response => this.products = response);
+    .subscribe({
+      next:(data)=>{
+        this.wishlistproducts= JSON.parse(JSON.stringify(data));
+        console.log(this.products)
+      }
+    })
+    }
   // Product Tab collection
   getCollectionProducts(collection) {
     return this.products.filter((item) => {

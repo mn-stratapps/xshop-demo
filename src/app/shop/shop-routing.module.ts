@@ -105,6 +105,10 @@ const routes: Routes = [
     component: CheckoutComponent
   },
   {
+    path: 'buynow/checkout',
+    component: CheckoutComponent
+  },
+  {
     path: 'checkout/success',
     component: SuccessComponent
   }

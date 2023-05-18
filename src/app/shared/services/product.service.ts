@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, observable, Observable } from 'rxjs';
+import { BehaviorSubject, observable, Observable, Subject } from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../classes/product';
@@ -28,6 +28,7 @@ export class ProductService {
   product_id:any;
   headers: HttpHeaders;
   mediaUpdate: any;
+  buynow_data = new Subject<any>();
 
   constructor(private http: HttpClient,
     private toastrService: ToastrService,private authService:AuthenticationService) { }
@@ -67,7 +68,6 @@ export class ProductService {
     }));
   }
 
- 
   /*
     ---------------------------------------------
     ---------------  Wish List  -----------------
@@ -274,6 +274,11 @@ public addToWishlist(product): any {
   }
   paymentStatus(accessToken:any,stripeId:any){
     return this.http.get<any>(`${environment.apiUrl}/payment/`+accessToken+'/'+stripeId)
+  }
+  buyNow(product,quantity:number,accessToken:any){
+    let product_id=product.id;
+    return this.http.post<any>(`${environment.apiUrl}/buynow/`+accessToken,{product_id,quantity})
+
   }
   // Update Cart Quantity
   public updateCartQuantity(product: Product, quantity: number,accessToken:any){

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDetailsMainSlider, ProductDetailsThumbSlider } from '../../../../shared/data/slider';
 import { Product } from '../../../../shared/classes/product';
@@ -20,6 +20,8 @@ export class ProductLeftSidebarComponent implements OnInit {
   public mobileSidebar: boolean = false;
   public active = 1;
   wishlist: any[];
+  buynowData: any[];
+  iswishlistproduct: boolean = false;
 
 
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
@@ -27,21 +29,39 @@ export class ProductLeftSidebarComponent implements OnInit {
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
   accessToken: any;
+  wishlisticon: any[];
 
   constructor(private route: ActivatedRoute, private router: Router,
     public productService: ProductService,private toastrService: ToastrService) {
     // this.route.data.subscribe(response => this.product = response.data);
-  }
-
+  } 
   ngOnInit(): void {
     console.log("dddd", this.product)
     this.getProductDetails();
+    this.getWishlistProducts();
     
   }
-getProductDetails(){
-  this.route.data.subscribe(response => this.product = response.data);
-}
-
+  getProductDetails(){
+    this.route.data.subscribe(response => this.product = response.data);
+  }
+  getWishlistProducts(){
+    this.productService.wishlistItems
+    .subscribe({
+      next:(data)=>{
+        this.wishlist= data;
+        console.log(this.wishlist);
+        this.wishlistIconData();
+      }
+    })
+    }
+    wishlistIconData(){
+      if(this.wishlist?.length>0){
+      this.wishlisticon = this.wishlist.filter((item:any)=>item.id==this.product.id);
+      }
+      if(this.wishlisticon?.length > 0){
+        this.iswishlistproduct = true;
+      }
+    } 
   // Get Product Color
   Color(variants) {
     const uniqColor = []
@@ -111,10 +131,24 @@ getProductDetails(){
 
   // Buy Now
   async buyNow(product: any) {
-    product.quantity = this.counter || 1;
-    const status = await this.productService.addToCart(product);
+    const quantity = this.counter || 1;
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    const status = await this.productService.buyNow(product,quantity,this.accessToken)
+    .subscribe(
+      {
+        next:(data)=>{
+          console.log(data);
+          this.buynowData = data;
+          this.productService.buynow_data.next(this.buynowData)
+        },
+        error:(error)=>{
+          console.log(error);      
+        }
+      }
+    )
     if (status)
-      this.router.navigate(['/shop/checkout']);
+      this.router.navigate(['/shop/buynow/checkout']);
   }
 
   // Add to Wishlist
@@ -123,9 +157,10 @@ getProductDetails(){
     .subscribe({
       next:(data)=>{
         console.log(data)
-        this.wishlist=data;
+       // this.wishlist=data;
         this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
+          this.getWishlistProducts();
           this.toastrService.success('Product has been added in wishlist.');
         }
         //this.wishlistIconData();

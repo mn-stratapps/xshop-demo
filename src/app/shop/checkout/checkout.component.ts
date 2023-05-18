@@ -8,6 +8,9 @@ import { ProductService } from "../../shared/services/product.service";
 import { OrderService } from "../../shared/services/order.service";
 import { Useraddress } from 'src/app/core/models/useraddress';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -28,10 +31,18 @@ export class CheckoutComponent implements OnInit {
   stripeData:any;
   total_order_amount: any;
   EnableselectAddress=false;
+  sub:Subscription
   constructor(private fb: UntypedFormBuilder,
     public productService: ProductService,
     private orderService: OrderService,
-    private httpService:AuthenticationService) { 
+    private httpService:AuthenticationService,
+    private router:Router) { 
+      const currentUrl = this.router.url;
+      if(currentUrl.includes('shop/checkout')){
+        this.checkoutFromCart();
+      }else if(currentUrl.includes('shop/buynow/checkout')){
+        this.checkoutFromBuynow();
+      }
     this.checkoutForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -49,7 +60,6 @@ export class CheckoutComponent implements OnInit {
     this.productService.cartItems.subscribe(response =>{ this.products = response});
     console.log('checkout:',this.products)
     this.getUserAddress();
-    this.checkoutFromCart();
   }
   checkoutFromCart(){
     this.productService.checkoutCart(this.accessToken)
@@ -62,6 +72,15 @@ export class CheckoutComponent implements OnInit {
         console.log(error)
       }
     }) 
+  }
+  checkoutFromBuynow() {
+    this.sub = this.productService.buynow_data.subscribe(
+      data => {
+        console.log(data)
+        this.checkoutProductData = data.order_details;
+        this.total_order_amount =data.total_order_amount;
+      }
+    )
   }
   //add address
   addNewAddress(){
@@ -191,6 +210,11 @@ export class CheckoutComponent implements OnInit {
     //         console.log('onClick', data, actions);
     //     }
     // };
+  }
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe()
+    }
   }
 
 }

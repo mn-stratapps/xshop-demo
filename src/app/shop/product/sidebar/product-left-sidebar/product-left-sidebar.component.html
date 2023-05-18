@@ -132,9 +132,13 @@
                     <div class="product-icon">
                       <app-social></app-social>
                       <form class="d-inline-block">
-                        <button class="wishlist-btn" (click)="addToWishlist(product)">
+                        <button *ngIf="!iswishlistproduct" class="wishlist-btn" (click)="addToWishlist(product)">
                           <i class="fa fa-heart"></i>
                           <span class="title-font">Add To WishList</span>
+                        </button>
+                        <button *ngIf="iswishlistproduct" class="wishlist-btn" >
+                          <i style="color: red;" class="fa fa-heart"></i>
+                          <span class="title-font">Product is in wishlist</span>
                         </button>
                       </form>
                     </div>

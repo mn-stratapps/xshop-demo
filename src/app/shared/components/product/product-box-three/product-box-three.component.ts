@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 import { Product } from "../../../classes/product";
@@ -15,15 +15,36 @@ export class ProductBoxThreeComponent implements OnInit {
   @Input() product: Product;
   @Input() currency: any = this.productService.Currency; // Default Currency
   @Input() cartModal: boolean = false; // Default False
-  
+  @Input() wishlisProduct= [];
+
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
-
+  wishlistproducts =[] as any;
+  wishlist: any[];
+  iswishlistproduct: boolean;
   constructor(private productService: ProductService,private toastrService: ToastrService) { }
 
-  ngOnInit(): void {
-  }
+  
+  ngOnChanges(changes:SimpleChanges){
 
+    if(changes.wishlisProduct && this.wishlisProduct){
+     this.wishlisProduct = changes.wishlisProduct.currentValue;
+     this.wishlistIconData();
+    }
+   }
+
+  ngOnInit(): void {
+    this.wishlistIconData();
+
+  }
+  wishlistIconData(){
+    if(this.wishlisProduct?.length>0){
+    this.wishlist = this.wishlisProduct.filter((item:any)=>item.id==this.product.id);
+    }
+    if(this.wishlist?.length > 0){
+      this.iswishlistproduct = true;
+    }
+  } 
   addToCart(product: any) {
     this.productService.addToCart(product);
   }

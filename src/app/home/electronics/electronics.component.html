@@ -10,13 +10,13 @@
             <div class="row home-banner">
                 <div class="col-12">
                     <a [routerLink]="['/shop/collection/left/sidebar']" 
-                       [queryParams]="{ category: 'electronics'}">
+                       [queryParams]="{ category: 'Electronics'}">
                         <img src="assets/images/banner/2.jpg" class="img-fluid" alt="electronics">
                     </a>
                 </div>
                 <div class="col-12">
                     <a [routerLink]="['/shop/collection/left/sidebar']"
-                       [queryParams]="{ category: 'electronics'}">
+                       [queryParams]="{ category: 'Electronics'}">
                         <img src="assets/images/banner/3.jpg" class="img-fluid" alt="electronics">
                     </a>
                 </div>
@@ -32,7 +32,7 @@
         <div class="row partition3">
             <div class="col-md-4" *ngFor="let collection of collections">
                 <a [routerLink]="['/shop/collection/left/sidebar']"
-                   [queryParams]="{ category: 'electronics'}">
+                   [queryParams]="{ category: 'Electronics'}">
                     <div class="collection-banner p-right text-end">
                         <img [src]="collection.image" class="img-fluid" alt="">
                         <div class="contain-banner banner-3">
@@ -64,7 +64,7 @@
                             <div class="no-slider row">
                                 <ng-container *ngFor="let product of getCollectionProducts(collection) | slice:0:8">
                                     <div class="product-box">
-                                        <app-product-box-three [product]="product" [currency]="productService?.Currency">
+                                        <app-product-box-three [wishlisProduct]="wishlistproducts" [product]="product" [currency]="productService?.Currency">
                                         </app-product-box-three>
                                     </div>
                                 </ng-container>
