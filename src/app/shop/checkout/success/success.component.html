@@ -58,9 +58,9 @@
                         </div>
                     </div>
                     <div class="row product-order-detail text-center" *ngFor="let product of orderDetails?.Order_data">
-                        <div *ngIf="product.length > 0"  class="col-2">
+                        <div class="col-2">
                             <!-- <img [src]="product.images[0].src" alt="" class="img-fluid"> -->
-                             <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-')]"><img 
+                             <a><img 
                                 [lazyLoad]="ImageSrc ? ImageSrc : product?.image" 
                                 class="img-fluid lazy-loading" 
                                 alt="{{ product?.image.alt }}" /></a>
