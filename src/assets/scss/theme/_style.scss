@@ -6258,6 +6258,8 @@
             }
             .product-box {
                 margin-top: 50px;
+                border: 1px solid rgba(235, 235, 235, 0.8666666667);
+                border-radius: 8px;
                 .product-detail {
                     p {
                         display: none;
@@ -15424,3 +15426,17 @@
 .accordion-item{
     border: 1px solid rgba(235, 235, 235, 0.8666666667)!important;
 }  
+.prdouct_ord{
+    border: 1px solid rgba(235, 235, 235, 0.8666666667);
+    padding: 25px;
+    background: white;
+    border-radius: 8px;
+}
+.ngx-pagination {
+    margin-top:1rem!important;
+ }
+ .ngx-pagination li {
+     display: inline-block;
+     border: 1px solid #f7f7f7!important;
+     margin-right: 0px!important;
+ }

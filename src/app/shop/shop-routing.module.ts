@@ -21,6 +21,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './checkout/success/success.component';
 
 import { Resolver } from '../shared/services/resolver.service';
+import { FailpageComponent } from './checkout/failpage/failpage.component';
 
 const routes: Routes = [
   {
@@ -111,6 +112,10 @@ const routes: Routes = [
   {
     path: 'checkout/success',
     component: SuccessComponent
+  },
+  {
+    path: 'checkout/paymentfailed',
+    component: FailpageComponent
   }
 ];
 

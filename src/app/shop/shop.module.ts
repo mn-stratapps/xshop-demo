@@ -43,6 +43,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './checkout/success/success.component';
 
 import {RouterModule} from '@angular/router';
+import { FailpageComponent } from './checkout/failpage/failpage.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import {RouterModule} from '@angular/router';
     WishlistComponent,
     CompareComponent,
     CheckoutComponent,
-    SuccessComponent
+    SuccessComponent,
+    FailpageComponent
   ],
   imports: [
     CommonModule,
