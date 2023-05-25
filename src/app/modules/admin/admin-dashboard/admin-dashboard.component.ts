@@ -19,6 +19,12 @@ declare var $: any;
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
+//page = 1;
+totalItems:any;
+itemsPerPage:number;
+pageNo = 1;
+
+searchText="";
 isAddProductUrl = false;
 path:any;
 filename:any;
@@ -58,9 +64,9 @@ price_to:string;
     transform: ImageTransform = {};
     maxDate:any;
     page: number = 1;
-  count: number = 0;
-  tableSize: number = 7;
-  tableSizes: any = [3, 6, 9, 12];
+  // count: number = 0;
+  // tableSize: number = 7;
+  // tableSizes: any = [3, 6, 9, 12];
   category: any ="";
    product_type: any="";  
     //filter
@@ -115,12 +121,23 @@ getUserDetails() {
   }
   })
 }
+usersPageChange(page:any){
+ this.pageNo = page;
+ this.getUsersList();
+}
 resetUsersFilters(){
   // this.userfilerEnabled = !this.userfilerEnabled;
+  this.pageNo = 1;
+  this.searchText="";
   this.usersFilterForm.reset();
   this.getUsersList();
 }
+usersSearchEvent(event:any){
+  this.pageNo = 1;
+  this.getUsersList();
+}
 getUsersList(){
+  this.usersFilterForm.patchValue({email:this.searchText,pageno:this.pageNo})
  let formusersObj = this.usersFilterForm.getRawValue();
  if(formusersObj.is_active == '' || formusersObj.is_active == null){
   delete formusersObj.is_active;
@@ -131,10 +148,15 @@ getUsersList(){
  if(formusersObj.to_date == '' || formusersObj.to_date == null){
   delete formusersObj.to_date;
  }
+ if(formusersObj.email == '' || formusersObj.email == null){
+  delete formusersObj.email;
+ }
   this.httpService.getUserslist(formusersObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.userList = data;
+      this.userList = data.users_data;
+      this.totalItems = data.total_products;
+      this.itemsPerPage = data.products_per_page;
        console.log(this.userList);
     },
     error:(error)=>{
@@ -146,12 +168,23 @@ getUsersList(){
   }
   }) 
 }
+vendorPageChange(page:any){
+  this.pageNo = page;
+  this.getVendorList();
+}
 resetVendorFilters(){
   // this.vendorfilerEnabled = !this.vendorfilerEnabled;
+  this.pageNo = 1;
+  this.searchText="";
   this.vendorFilterForm.reset();
   this.getVendorList();
 }
+vendorsSearchEvent(event:any){
+  this.pageNo = 1;
+  this.getVendorList();
+}
 getVendorList(){
+  this.vendorFilterForm.patchValue({org_name:this.searchText,pageno:this.pageNo})
 let formVendorObj = this.vendorFilterForm.getRawValue();
 if(formVendorObj.is_active =='' || formVendorObj.is_active == null){
   delete formVendorObj.is_active;
@@ -165,10 +198,15 @@ if(formVendorObj.from_date =='' || formVendorObj.from_date == null){
 if(formVendorObj.to_date =='' || formVendorObj.to_date == null){
   delete formVendorObj.to_date;
 }
+if(formVendorObj.org_name =='' || formVendorObj.org_name == null){
+  delete formVendorObj.org_name;
+}
   this.httpService.getVendorslist(formVendorObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.vendorsList = data;
+      this.vendorsList = data.vendors_data;
+      this.totalItems = data.total_products;
+      this.itemsPerPage = data.products_per_page;
        console.log(this.vendorsList);
     },
     error:(error)=>{
@@ -180,12 +218,23 @@ if(formVendorObj.to_date =='' || formVendorObj.to_date == null){
   }
   }) 
 }
+ordersPageChange(page:any){
+ this.pageNo = page;
+ this.getOrdersList();
+}
 resetOrdersFilters(){
   // this.ordersfilerEnabled = !this.ordersfilerEnabled;
+  this.pageNo = 1;
+  this.searchText="";
   this.ordersFilterForm.reset();
   this.getOrdersList();
 }
+ordersSearchEvent(event:any){
+  this.pageNo = 1;
+  this.getOrdersList();
+}
 getOrdersList(){
+  this.ordersFilterForm.patchValue({order_id:this.searchText,pageno:this.pageNo})
   let formOrdersObj = this.ordersFilterForm.getRawValue();
   if(formOrdersObj.payment_status == '' || formOrdersObj.payment_status == null){
     delete formOrdersObj.payment_status
@@ -199,10 +248,15 @@ getOrdersList(){
   if(formOrdersObj.to_date == '' || formOrdersObj.to_date == null){
     delete formOrdersObj.to_date
   }
+  if(formOrdersObj.order_id == '' || formOrdersObj.order_id === null){
+    delete formOrdersObj.order_id;
+  }
   this.httpService.getOrdersList(formOrdersObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.ordersList = data;
+      this.ordersList = data.orders_data;
+      this.totalItems = data.total_products;
+      this.itemsPerPage = data.products_per_page;
        console.log(this.ordersList);
     },
     error:(error)=>{
@@ -214,12 +268,22 @@ getOrdersList(){
   }
   }) 
 }
+salesPageChange(page:any){
+  this.pageNo = page;
+  this.getSales();
+}
 resetSalesFilters(){
   // this.salesfilerEnabled = !this.salesfilerEnabled;
+  this.pageNo=1;
   this.salesFilterForm.reset();
   this.getSales();
 }
+salesSearchEvent(event:any){
+  this.pageNo = 1;
+  this.getSales();
+}
 getSales(){
+  this.salesFilterForm.patchValue({transaction_id:this.searchText,pageno:this.pageNo})
  let formSalesObj = this.salesFilterForm.getRawValue()
  if(formSalesObj.delivery_status == '' || formSalesObj.delivery_status == null){
   delete formSalesObj.delivery_status
@@ -230,11 +294,17 @@ getSales(){
  if(formSalesObj.to_date == '' || formSalesObj.to_date == null){
   delete formSalesObj.to_date
   }
+  if(formSalesObj.transaction_id == '' || formSalesObj.transaction_id == null){
+    delete formSalesObj.transaction_id
+    }
+
   this.httpService.getSalesList(formSalesObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.salesList = data;
-       console.log(this.salesList);
+      this.salesList = data.sales_data;
+      this.totalItems = data.total_products;
+      this.itemsPerPage = data.products_per_page;
+      console.log(this.salesList);
     },
     error:(error)=>{
       this.error = error;  
@@ -253,6 +323,8 @@ price_from:[''],
 price_to:[''],
 from_date:[''],
 to_date :[''],
+name:[''],
+pageno:['']
 })
 }
 ordersListFilter(){
@@ -260,21 +332,27 @@ ordersListFilter(){
   payment_status:[null],
   order_status:[null],
   from_date:[''],
-  to_date:['']
+  to_date:[''],
+  order_id:[''],
+  pageno:['']
   })
 }
 salesFilter(){
   this.salesFilterForm = this.formBuilder.group({
     delivery_status:[null],
     from_date:[''],
-    to_date:['']
+    to_date:[''],
+    transaction_id:[''],
+    pageno:['']
   })
 }
 usersFilter(){
 this.usersFilterForm = this.formBuilder.group({
    is_active:[null],
    from_date:[''],
-   to_date:['']
+   to_date:[''],
+   email:[''],
+   pageno:['']
 })
 }
 vendorFilter(){
@@ -282,7 +360,10 @@ this.vendorFilterForm = this.formBuilder.group({
   is_active:[null],
   tax_status:[null],
   from_date:[''],
-  to_date:['']
+  to_date:[''],
+  org_name:[''],
+  pageno:['']
+
 })
 }
 initializeAddProductForm(){
@@ -531,15 +612,25 @@ updateRotation() {
   };
 }
 //image-cropper-end//
-
+adminProdsPageChange(page:any){
+this.pageNo = page;
+this.viewAdminProducts();
+}
 resetAdminFilters(){
 //  this.adminProductfilerEnabled = !this.adminProductfilerEnabled;
- this.allproductsFilterForm.reset()
+  this.searchText="";
+  this.allproductsFilterForm.reset();
+  this.pageNo = 1;
   this.viewAdminProducts();
 }
+adminproductsSearchEvent(event: any){
+  this.pageNo = 1;
+  this.viewAdminProducts();
+  }
 viewAdminProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );
-    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.accessToken = JSON.parse( currentUser )['Token'];    
+    this.allproductsFilterForm.patchValue({name:this.searchText,pageno:this.pageNo})
     let formadminproductsObj = this.allproductsFilterForm.getRawValue();
     if(formadminproductsObj.category == '' || formadminproductsObj.category === null  ){
       delete formadminproductsObj.category;
@@ -559,10 +650,15 @@ viewAdminProducts(){
     if(formadminproductsObj.to_date == '' || formadminproductsObj.to_date === null ){
       delete formadminproductsObj.to_date;
     }
+    if(formadminproductsObj.name == '' || formadminproductsObj.name === null){
+      delete formadminproductsObj.name;
+    }
   this.httpService.viewAdminProducts(formadminproductsObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.adminProducts = data;
+      this.adminProducts = data.adminproducts_data;
+      this.totalItems = data.total_products;
+      this.itemsPerPage = data.products_per_page;
        console.log(this.adminProducts);
     },
     error:(error)=>{
@@ -623,14 +719,25 @@ editProduct(){
 }
 resetAllProductsFilters(){
 // this.allProductfilerEnabled = !this.allProductfilerEnabled
+this.searchText="";
 this.allproductsFilterForm.reset();
+this.pageNo=1;
 this.viewAllProducts();
+}
+allproductsSearchEvent(event: any){
+  this.pageNo = 1;
+  this.viewAllProducts();
+}
+allProdsPageChange(page:any){
+  this.pageNo = page;
+  this.viewAllProducts();
 }
 viewAllProducts(){
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     // if(this.allproductsFilterForm.get('category').value == ''){
     //   this.allproductsFilterForm.get('category').disable();
+    this.allproductsFilterForm.patchValue({name:this.searchText,pageno:this.pageNo})
     let formObj = this.allproductsFilterForm.getRawValue();
     if(formObj.category == '' || formObj.category === null ){
       delete formObj.category;
@@ -650,10 +757,16 @@ viewAllProducts(){
     if(formObj.to_date == '' || formObj.to_date === null){
       delete formObj.to_date;
     }
+    if(formObj.name == '' || formObj.name === null){
+      delete formObj.name;
+    }
+    
   this.httpService.viewAllProducts(formObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.allProducts = data;
+      this.allProducts = data.products_data;
+      this.totalItems = data.total_products;
+      this.itemsPerPage = data.products_per_page;
        console.log(this.allProducts);
     },
     error:(error)=>{
