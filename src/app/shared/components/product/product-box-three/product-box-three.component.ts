@@ -22,6 +22,7 @@ export class ProductBoxThreeComponent implements OnInit {
   wishlistproducts =[] as any;
   wishlist: any[];
   iswishlistproduct: boolean;
+  accessToken: any;
   constructor(private productService: ProductService,private toastrService: ToastrService) { }
 
   
@@ -43,6 +44,8 @@ export class ProductBoxThreeComponent implements OnInit {
     }
     if(this.wishlist?.length > 0){
       this.iswishlistproduct = true;
+    }else{
+      this.iswishlistproduct = false;
     }
   } 
   addToCart(product: any) {
@@ -66,6 +69,26 @@ export class ProductBoxThreeComponent implements OnInit {
         }
       }
     })
+  }
+  removeFromWishlist(product:any){
+      const currentUser = localStorage.getItem( 'currentUser' );
+      this.accessToken = JSON.parse( currentUser )['Token'];
+      this.productService.removeWishlistItem(product,this.accessToken)
+      .subscribe({
+        next:(data)=>{
+          console.log(data)
+          this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
+          if(data.message === 'Removed successfully'){
+            this.toastrService.warning('Product removed from wishlist.');
+          }
+        },
+        error:(error)=>{
+          console.log(error)
+        }
+  
+      })
+    
+
   }
 
   addToCompare(product: any) {

@@ -50,7 +50,7 @@ export class WishlistComponent implements OnInit {
       next:(data)=>{
         console.log(data)
         if(data.message === 'Removed successfully'){
-          this.toastrService.success('Product removed from wishlist.');
+          this.toastrService.warning('Product removed from wishlist.');
           this.getWishlistProducts();
         }
       },

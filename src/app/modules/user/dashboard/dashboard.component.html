@@ -502,7 +502,7 @@
                                                 <tbody style="overflow-y: scroll;">
                                                     <tr *ngFor="let myproducts of myProducts">
                                                         <td>
-                                                            <a>
+                                                            <a [routerLink]="['/shop/product/left/sidebar/',myproducts.title.replace(' ', '-')]">
                                                                 <img src="{{myproducts.image}}"
                                                                     class="blur-up lazyloaded" alt="">
                                                             </a>

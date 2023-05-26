@@ -56,6 +56,8 @@ export class ProductBoxOneComponent implements OnInit {
     }
     if(this.wishlist?.length > 0){
       this.iswishlistproduct = true;
+    }else{
+      this.iswishlistproduct = false;
     }
   } 
 
@@ -113,7 +115,7 @@ export class ProductBoxOneComponent implements OnInit {
         this.wishlist=data;
         this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
-          this.toastrService.success('Product has been added in wishlist.');
+          this.toastrService.success('Product added to wishlist.');
         }
         this.wishlistIconData();
       },
@@ -125,7 +127,25 @@ export class ProductBoxOneComponent implements OnInit {
       }
     })
   }
-
+  removeFromWishlist(product:any){
+      const currentUser = localStorage.getItem( 'currentUser' );
+      this.accessToken = JSON.parse( currentUser )['Token'];
+      this.productService.removeWishlistItem(product,this.accessToken)
+      .subscribe({
+        next:(data)=>{
+          console.log(data)
+          this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
+          if(data.message === 'Removed successfully'){
+            this.toastrService.warning('Product removed from wishlist.');
+          }
+        },
+        error:(error)=>{
+          console.log(error)
+        }
+  
+      })
+    
+  }
   addToCompare(product: any) {
     this.productService.addToCompare(product);
   }

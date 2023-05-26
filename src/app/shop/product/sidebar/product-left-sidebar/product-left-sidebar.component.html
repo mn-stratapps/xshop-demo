@@ -136,15 +136,15 @@
                           <i class="fa fa-heart"></i>
                           <span class="title-font">Add To WishList</span>
                         </button>
-                        <button *ngIf="iswishlistproduct" class="wishlist-btn" >
+                        <button *ngIf="iswishlistproduct" class="wishlist-btn" (click)="removeFromWishlist(product)">
                           <i style="color: red;" class="fa fa-heart"></i>
-                          <span class="title-font">Product is in wishlist</span>
+                          <span class="title-font">Added to wishlist</span>
                         </button>
                       </form>
                     </div>
                   </div>
                   <div class="border-product">
-                    <app-countdown [date]="'Apr 21 2021'"></app-countdown>
+                    <!-- <app-countdown [date]="'Apr 21 2021'"></app-countdown> -->
                   </div>
                 </div>
               </div>

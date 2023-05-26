@@ -60,6 +60,8 @@ export class ProductLeftSidebarComponent implements OnInit {
       }
       if(this.wishlisticon?.length > 0){
         this.iswishlistproduct = true;
+      }else{
+        this.iswishlistproduct = false;
       }
     } 
   // Get Product Color
@@ -161,7 +163,7 @@ export class ProductLeftSidebarComponent implements OnInit {
         this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
           this.getWishlistProducts();
-          this.toastrService.success('Product has been added in wishlist.');
+          this.toastrService.success('Product added to wishlist.');
         }
         //this.wishlistIconData();
       },
@@ -173,7 +175,25 @@ export class ProductLeftSidebarComponent implements OnInit {
       }
     })
   }
-
+  removeFromWishlist(product:any){
+      const currentUser = localStorage.getItem( 'currentUser' );
+      this.accessToken = JSON.parse( currentUser )['Token'];
+      this.productService.removeWishlistItem(product,this.accessToken)
+      .subscribe({
+        next:(data)=>{
+          console.log(data)
+          this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
+          if(data.message === 'Removed successfully'){
+            this.toastrService.warning('Product removed from wishlist.');
+            this.getWishlistProducts();
+          }
+        },
+        error:(error)=>{
+          console.log(error)
+        }
+  
+      })
+  }
   // Toggle Mobile Sidebar
   toggleMobileSidebar() {
     this.mobileSidebar = !this.mobileSidebar;
