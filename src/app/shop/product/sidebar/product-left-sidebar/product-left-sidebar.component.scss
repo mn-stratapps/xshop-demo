@@ -60,6 +60,17 @@
     display: inline-block;
     vertical-align: middle;
 }
+.pincode-unserviceability-list li h4 {
+    font-weight: 600;
+    color: #ff371d;
+    font-size: 14px;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -7px
+;
+}
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none;

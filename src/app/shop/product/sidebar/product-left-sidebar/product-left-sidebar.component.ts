@@ -24,9 +24,10 @@ export class ProductLeftSidebarComponent implements OnInit {
   iswishlistproduct: boolean = false;
   maxLength=999999;
   minLength=6;
-  pincode:number;
+  pincode="";
+  errorMessage
   estimatedDate:any
-
+  isValidpincode = false;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -42,8 +43,15 @@ export class ProductLeftSidebarComponent implements OnInit {
     console.log("dddd", this.product)
     this.getProductDetails();
     this.getWishlistProducts();
-    
   }
+  validatePincode(event:any){
+    if(this.pincode.length > 5){
+      return false
+    }
+    this.isValidpincode = false;
+    return true;
+  }
+
   checkDeliveryDate(product){
     const obj={
       'pincode':this.pincode,
@@ -52,11 +60,19 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.productService.checkDeliveryDate(obj)
     .subscribe({
       next:(data) =>{
+        this.errorMessage = false;
+        this.isValidpincode = true;
         console.log(data);
         this.estimatedDate = data;
      },
      error:(error)=>{
+      this.estimatedDate = false;
       console.log(error)
+      if(error.error.message === 'Delivery postcode not serviceable'){
+        this.errorMessage = "Delivery not available for this pincode"
+      }else if(error.error.message === 'Length mismatch'){
+        this.errorMessage = "Please Enter Valid Pincode"
+      }
     }
     })
   }
