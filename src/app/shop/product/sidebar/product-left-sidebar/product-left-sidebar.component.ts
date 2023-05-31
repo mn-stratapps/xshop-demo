@@ -22,7 +22,10 @@ export class ProductLeftSidebarComponent implements OnInit {
   wishlist: any[];
   buynowData: any[];
   iswishlistproduct: boolean = false;
-
+  maxLength=999999;
+  minLength=6;
+  pincode:number;
+  estimatedDate:any
 
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
@@ -40,6 +43,22 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.getProductDetails();
     this.getWishlistProducts();
     
+  }
+  checkDeliveryDate(product){
+    const obj={
+      'pincode':this.pincode,
+      'product_id' : product.id,
+    };
+    this.productService.checkDeliveryDate(obj)
+    .subscribe({
+      next:(data) =>{
+        console.log(data);
+        this.estimatedDate = data;
+     },
+     error:(error)=>{
+      console.log(error)
+    }
+    })
   }
   getProductDetails(){
     this.route.data.subscribe(response => this.product = response.data);

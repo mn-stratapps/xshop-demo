@@ -80,6 +80,9 @@ price_to:string;
     datefieldEnabled = false;
     //pricefield
     pricefieldEnabled = false;
+    length="";
+    width="";
+    height="";
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
    
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
@@ -380,8 +383,10 @@ initializeAddProductForm(){
     sale:[''],//radiobutton
     new:[''],//radiobutton
     collection:['',Validators.required],//radio
-    size:[''],
-    color:[''],    
+    // size:[''],
+    color:[''], 
+    weight:[''],
+    dimensions:['']
   });
 }
 initializeeditProductForm(){
@@ -407,7 +412,8 @@ addProduct(){
     this.addProductForm.markAllAsTouched();
       return false;
   }else{
-    this.submitted=true;  
+    this.submitted=true; 
+    this.addProductForm.patchValue({dimensions:this.length+"x"+this.width+"x"+this.height}) 
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     console.log('patchvalue',this.addProductForm.get('path'));
@@ -422,10 +428,11 @@ addProduct(){
     formData.append("sale",this.addProductForm.get('sale').value);
     formData.append("new",this.addProductForm.get('new').value);
     formData.append("collection",this.addProductForm.get('collection').value);
-    formData.append("size",this.addProductForm.get('size').value);
     formData.append("color",this.addProductForm.get('color').value);
     formData.append("path", this.addProductForm.get('path').value, this.imagename);
     formData.append("quantity",this.addProductForm.get('quantity').value); 
+    formData.append("weight",this.addProductForm.get('weight').value);
+    formData.append("dimensions",this.addProductForm.get('dimensions').value);
   this.httpService.addProduct(this.accessToken,formData)
   .subscribe(
     {
@@ -684,10 +691,10 @@ openModal(exampleModalLabel, products){
 this.editProductForm.patchValue({
   id:products.id,
   category:products.category,
-  title:products.product_name,
+  title:products.title,
   description:products.description,
-  price:products.unit_price,
-  discount:products.dis_price
+  price:products.price,
+  discount:products.discount
 })
 }
 editProduct(){

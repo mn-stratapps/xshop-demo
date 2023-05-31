@@ -356,13 +356,14 @@
                                                 <div  class="col-lg-4 col-md-4 col-sm-6 pr-0 justify-content-center">
                                                          <label class="form-label">Categories</label>
                                                             <select class="form-select me-2" id="category" formControlName="category">                       
-                                                                <option value="">Mobiles</option>
+                                                                <option>Mobiles</option>
                                                                 <option>Laptops</option>
+                                                                <option>Gadgets</option>
                                                             </select>   
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xl-8">
                                                     <label class="form-label">Product Name</label>
-                                                    <input class="form-control" id="title" formControlName="titleprice" > 
+                                                    <input class="form-control" id="title" formControlName="title" > 
                                                </div>
                                             </div>
                                             
@@ -505,13 +506,41 @@
                                                              <div *ngIf="f.collection.errors">Please select collection.</div>
                                                          </div>
                                                          </div>
-                                                         <div class="col-sm-4 mb-2 form-group">
+                                                         <!-- <div class="col-sm-4 mb-2 form-group">
                                                            <label class="form-label" for="size">Product Size</label>
                                                            <input class="form-control" type="text"id="size" name="size" formControlName="size" >                                 
-                                                         </div>
+                                                         </div> -->
                                                          <div class="col-sm-4 mb-2 form-group">
                                                            <label class="form-label" for="color">Product Color</label>
                                                            <input class="form-control" type="text"id="color" name="color" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required="">                                 
+                                                         </div>
+                                                       </div>
+                                                       <div class="row">
+                                                        <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                                                           <label class="form-label" for="weight">Product Weight</label>
+                                                           <div class="input-group">
+                                                            <input class="form-control" type="number"id="weight" name="weight" formControlName="weight" [ngClass]="{ 'is-invalid': submitted && f.weight.errors }" required="">                                 
+                                                            <span class="input-group-text">kg</span>
+                                                        </div>
+                                                          <div class="form-text">Max:30kg</div>  
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                                                            <label class="form-label" for="dimension">Product Dimensions</label>
+                                                            <div class="d-flex">
+                                                                <div class="input-group mr">
+                                                                <input class="form-control " type="number"id="length" [(ngModel)] = "length" [ngModelOptions]="{standalone: true}" name="length" placeholder="Length" required="">
+                                                                <span class="input-group-text">cm</span>
+                                                            </div>
+                                                            <div class="input-group mr">
+                                                                <input class="form-control" type="number"id="width" [(ngModel)] = "width" [ngModelOptions]="{standalone: true}" name="width" placeholder="Width" required="">
+                                                                <span class="input-group-text">cm</span> 
+                                                            </div>
+                                                            <div class="input-group mr">
+                                                                <input class="form-control" type="number"id="height" [(ngModel)] = "height" [ngModelOptions]="{standalone: true}" name="height" heightplaceholder="height" required="">
+                                                                <span class="input-group-text">cm</span> 
+                                                            </div>
+                                                        </div>
+                                                           <div class="form-text">For Shipment Use</div>  
                                                          </div>
                                                        </div>
                                                  <div class="py-2">
@@ -550,6 +579,7 @@
                                                     <input type='file' id="path" class="w-30" name="path"  #fileInput  (change)="onFileUpdate($event, '1')" />
                                                     <img [src]='croppedImage' (click) = 'fileInput.click()' width="100" height="100" />
                                                   </div>
+                                                  <div class="form-text">Only png/jpeg formats are allowrd</div>  
                                                   <!-- <div >
                                                     <input type='file' id="image2" name="image2" #fileInput1  (change)="onFileUpdate($event, '2')" />
                                                     <img [src]='image2' (click) = 'fileInput.click()' width="100" height="100"/>

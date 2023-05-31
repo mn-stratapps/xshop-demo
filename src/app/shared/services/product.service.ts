@@ -67,7 +67,11 @@ export class ProductService {
       }); 
     }));
   }
+///////////Product End////////////////////
 
+checkDeliveryDate(obj){
+  return this.http.put(`${environment.apiUrl}/get/est_delivery_date/`,obj)
+}
   /*
     ---------------------------------------------
     ---------------  Wish List  -----------------
