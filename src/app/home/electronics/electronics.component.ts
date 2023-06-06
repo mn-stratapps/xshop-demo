@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../../shared/classes/product';
 import { ProductService } from '../../shared/services/product.service';
@@ -15,7 +15,6 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
   public products: Product[] = [];
   public productCollections: any[] = [];
   public active;
-  
   selectedField = 1;
   Previous() {
  this.selectedField = this.selectedField-1;
@@ -23,12 +22,11 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
  next() {
     this.selectedField = this.selectedField+1;
  }
-
   wishlistproducts: Product[];
   wishlistSubscription: Subscription;
 
 
-  constructor(public productService: ProductService) {
+  constructor(public productService: ProductService, public cdref: ChangeDetectorRef) {
     this.productService.getProducts.subscribe(response => {
       this.products = response.filter(item => item.type == 'Electronics');
       // Get Product Collection
@@ -62,7 +60,17 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
     this.getWishlistProducts();
     // Change color for this layout
     document.documentElement.style.setProperty('--theme-deafult', '#6d7e87');
+    let self = this;
+    let timerID = setInterval(function() {
+      // your code goes here...
+      if(isNaN(self.selectedField)) { self.selectedField =0;}
+      if(self.selectedField ===3) { self.selectedField =0 ;}
+      ++self.selectedField;
+      self.cdref.detectChanges();
+    }, 3 * 1000);
+    
   }
+
 
   ngOnDestroy(): void {
     // Remove Color

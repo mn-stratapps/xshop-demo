@@ -87,6 +87,9 @@ header {
                     box-shadow: 0 0 1px 0 #ebebeb;
                     padding: 15px 0px 15px 0px;
                     background: white;
+                    border-bottom: 1px solid rgba(235, 235, 235, 0.8666666667);
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 9px;
+                    border-radius: 6px;
                     li {
                         border: 0;
                         float: none;
@@ -142,7 +145,8 @@ header {
                             background: #fff;
                             border: none;
                             padding: 15px 0px 15px 0px;
-                            box-shadow: 0 0 1px 0 #ebebeb;
+                            // box-shadow: 0 0 1px 0 #ebebeb;
+                            border: 1px solid rgba(235, 235, 235, 0.8666666667);
                         }
                     }
                 }

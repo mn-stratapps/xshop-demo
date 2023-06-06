@@ -188,7 +188,7 @@
                                                         <div class="top">
                                                             <h6>{{address.name}} <span>{{address.type_id}}</span></h6>
                                                         </div>
-                                                        <div class="middle">
+                                                        <div class="middle" style="height:120px;">
                                                             <div class="address">
                                                                 <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
                                                                 <p>{{address.city}}, {{address.state}}, {{address.country}}</p>
@@ -199,8 +199,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="bottom">
-                                                            <a (click)="editaddress(address)" class="bottom_btn">edit</a>
-                                                            <a (click)="deleteaddress(address.id)" class="bottom_btn">remove</a>
+                                                            <a (click)="editaddress(address)" class="bottom_btn btn-primary">edit</a>
+                                                            <a (click)="deleteaddress(address.id)" class="bottom_btn btn-danger">remove</a>
                                                         </div>
                                                     </div>
                                                 </div>

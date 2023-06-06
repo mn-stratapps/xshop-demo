@@ -34,4 +34,42 @@
     text-transform: capitalize;
     font-weight: 500;
 }
-
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+// .c-ribbon {
+//     position: absolute;
+//     display: block;
+//     font: bold 0.75rem "Poppins", Arial, sans-serif;
+//     background: #fff;
+//     color: #1e1935;
+//     text-decoration: none;
+//     padding: 5px;
+//     text-align: center;
+//     width: 100px;
+//     z-index: 100;
+// }
+// .c-ribbon.c-ribbon--top {
+//     top: 91px;
+//     left: 1px;
+// }
+// .c-ribbon.c-ribbon--top.c-ribbon--left, .c-ribbon.c-ribbon--bottom.c-ribbon--right {
+//     transform: rotate(-45deg);
+// }

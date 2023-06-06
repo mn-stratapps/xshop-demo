@@ -30,7 +30,7 @@ float:right;
 .success-text .star {
     position: absolute;
     -webkit-animation: grow 3s infinite;
-    animation: grow 3s infinite;
+    animation: grow 2s infinite;
     fill:red;
     opacity: 0
 }
@@ -125,9 +125,8 @@ float:right;
     z-index: 10;
     -webkit-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
-    fill: white
+    fill: white;
 }
-
 .success-text .checkmark__background {
     fill: red;
     -webkit-animation: rotate 35s linear both infinite!important;

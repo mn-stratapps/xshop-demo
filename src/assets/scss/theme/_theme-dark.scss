@@ -68,6 +68,9 @@ body {
     }
     select {
         color: $white-5;
+        background-color: #2b2b2b;
+        transition: all 0.3s ease;
+        border: 1px solid #404040;
     }
     option {
         background-color: $dark-body;
@@ -305,6 +308,7 @@ body {
                 .nav-submenu {
                     background-color: $dark-body;
                     box-shadow: none;
+                    border: 1px solid #404040;
                     li {
                         a {
                             color: $white-1;
@@ -312,6 +316,7 @@ body {
                         .nav-sub-childmenu {
                             background-color: $dark-body;
                             box-shadow: none;
+                            border: 1px solid #404040;
                             li {
                                 a {
                                     color: $white-1;
@@ -408,6 +413,9 @@ body {
             background-color: $dark-top;
             transition: all 0.3s ease;
             box-shadow: none;
+        }
+        .show-div.setting{
+            border: 1px solid #404040!important;
         }
     }
     .search-overlay {
@@ -639,6 +647,7 @@ body {
             background-color: $dark-top;
             transition: all 0.3s ease;
             box-shadow: none;
+            border-color: #404040;
         }
     }
     .testimonial {
@@ -1169,6 +1178,7 @@ body {
         .box {
             .box-title {
                 border-color: $dark-border;
+                background-color: #232323;
                 h3 {
                     color: $white-2;
                 }
@@ -2376,6 +2386,9 @@ body {
     }
     .dashboard-section .counter-section .counter-box {
         background-color: #232323;
+        border-top: 1px solid #404040;
+        border-bottom: 1px solid #404040;
+        border-right: 1px solid #404040;
     }
     .dashboard-section .welcome-msg h4{
         color:#cfd4da;
@@ -2428,6 +2441,14 @@ body {
         border: 1px solid #404040!important;
     }
     .order-box .total li span {
+        color: #cdd4da;
+    }
+    .collection-product-wrapper .product-wrapper-grid .product-box{
+    border-color: #404040;
+    background-color: #2b2b2b;
+    transition: all 0.3s ease;
+    }
+    .pincode-deliveryContainer>h4 {
         color: #cdd4da;
     }
 }
