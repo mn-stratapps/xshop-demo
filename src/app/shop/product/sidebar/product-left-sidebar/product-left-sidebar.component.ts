@@ -69,7 +69,7 @@ export class ProductLeftSidebarComponent implements OnInit {
       this.estimatedDate = false;
       console.log(error)
       if(error.error.message === 'Delivery postcode not serviceable'){
-        this.errorMessage = "Delivery not available for this pincode"
+        this.errorMessage = "Delivery postcode not serviceable"
       }else if(error.error.message === 'Length mismatch'){
         this.errorMessage = "Please Enter Valid Pincode"
       }

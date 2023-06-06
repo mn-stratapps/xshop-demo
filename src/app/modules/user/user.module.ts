@@ -5,6 +5,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from "../../shared/shared.module";
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SharedModule } from "../../shared/shared.module";
         UserRoutingModule,
         GoogleMapsModule,
         FormsModule, ReactiveFormsModule,
-        SharedModule
+        SharedModule,
+        NgxPaginationModule
     ]
 })
 export class UserModule { }

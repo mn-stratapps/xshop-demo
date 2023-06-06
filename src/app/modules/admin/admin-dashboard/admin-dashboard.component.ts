@@ -72,7 +72,8 @@ price_to:string;
     //filter
     adminProductfilerEnabled = false;
     allProductfilerEnabled = false;
-    ordersfilerEnabled = false;
+    allordersfilerEnabled = false;
+    myordersfilterEnabled =false;
     salesfilerEnabled = false;
     userfilerEnabled = false;
     vendorfilerEnabled = false;
@@ -221,22 +222,23 @@ if(formVendorObj.org_name =='' || formVendorObj.org_name == null){
   }
   }) 
 }
-ordersPageChange(page:any){
+//all orders///
+allOrdersPageChange(page:any){
  this.pageNo = page;
- this.getOrdersList();
+ this.getAllOrdersList();
 }
-resetOrdersFilters(){
+resetAllOrdersFilters(){
   // this.ordersfilerEnabled = !this.ordersfilerEnabled;
   this.pageNo = 1;
   this.searchText="";
   this.ordersFilterForm.reset();
-  this.getOrdersList();
+  this.getAllOrdersList();
 }
-ordersSearchEvent(event:any){
+allOrdersSearchEvent(event:any){
   this.pageNo = 1;
-  this.getOrdersList();
+  this.getAllOrdersList();
 }
-getOrdersList(){
+getAllOrdersList(){
   this.ordersFilterForm.patchValue({order_id:this.searchText,pageno:this.pageNo})
   let formOrdersObj = this.ordersFilterForm.getRawValue();
   if(formOrdersObj.payment_status == '' || formOrdersObj.payment_status == null){
@@ -254,10 +256,10 @@ getOrdersList(){
   if(formOrdersObj.order_id == '' || formOrdersObj.order_id === null){
     delete formOrdersObj.order_id;
   }
-  this.httpService.getOrdersList(formOrdersObj,this.accessToken)
+  this.httpService.getAllOrdersList(formOrdersObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.ordersList = data.orders_data;
+      this.ordersList = data.all_orders_data;
       this.totalItems = data.total_products;
       this.itemsPerPage = data.products_per_page;
        console.log(this.ordersList);
@@ -271,6 +273,58 @@ getOrdersList(){
   }
   }) 
 }
+//my orders//
+myOrdersPageChange(page:any){
+  this.pageNo = page;
+  this.getMyOrdersList();
+ }
+ resetMyOrdersFilters(){
+   // this.ordersfilerEnabled = !this.ordersfilerEnabled;
+   this.pageNo = 1;
+   this.searchText="";
+   this.ordersFilterForm.reset();
+   this.getMyOrdersList();
+ }
+ myOrdersSearchEvent(event:any){
+   this.pageNo = 1;
+   this.getMyOrdersList();
+ }
+ getMyOrdersList(){
+   this.ordersFilterForm.patchValue({order_id:this.searchText,pageno:this.pageNo})
+   let formOrdersObj = this.ordersFilterForm.getRawValue();
+   if(formOrdersObj.payment_status == '' || formOrdersObj.payment_status == null){
+     delete formOrdersObj.payment_status
+   }
+   if(formOrdersObj.order_status == '' || formOrdersObj.order_status == null){
+     delete formOrdersObj.order_status
+   }
+   if(formOrdersObj.from_date == '' || formOrdersObj.from_date == null){
+     delete formOrdersObj.from_date
+   }
+   if(formOrdersObj.to_date == '' || formOrdersObj.to_date == null){
+     delete formOrdersObj.to_date
+   }
+   if(formOrdersObj.order_id == '' || formOrdersObj.order_id === null){
+     delete formOrdersObj.order_id;
+   }
+   this.httpService.getMyOrdersList(formOrdersObj,this.accessToken)
+   .subscribe({
+     next:(data) =>{
+       this.ordersList = data.my_orders_data;
+       this.totalItems = data.total_products;
+       this.itemsPerPage = data.products_per_page;
+        console.log(this.ordersList);
+     },
+     error:(error)=>{
+       this.error = error;
+       console.log(error)     
+       if(error.error.message === 'From date should be less than To date'){
+         this.toasterService.warning('Date range mismatched!, Please select correct date');    
+        }   
+   }
+   }) 
+ }
+
 salesPageChange(page:any){
   this.pageNo = page;
   this.getSales();
@@ -413,7 +467,7 @@ addProduct(){
       return false;
   }else{
     this.submitted=true; 
-    this.addProductForm.patchValue({dimensions:this.length+"x"+this.width+"x"+this.height}) 
+    this.addProductForm.patchValue({dimensions:this.length+"X"+this.width+"X"+this.height}) 
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     console.log('patchvalue',this.addProductForm.get('path'));

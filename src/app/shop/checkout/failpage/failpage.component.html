@@ -13,7 +13,7 @@
              <a type="button" class="btn btn-solid"  [routerLink]="['/shop/collection/left/sidebar']">continue shopping</a>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 mt-5 mb-2 chk-btn justify-content-end d-flex">
-                <a type="button" class="btn btn-solid"  [routerLink]="['/shop/checkout']">Go to Checkout page</a>
+                <a type="button" class="btn btn-solid" (click)="retryPayment()">Retry Payment</a>
             </div>
         </div>
     </div>

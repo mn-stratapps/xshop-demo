@@ -279,6 +279,9 @@ public addToWishlist(product): any {
   paymentStatus(accessToken:any,stripeId:any){
     return this.http.get<any>(`${environment.apiUrl}/payment/`+accessToken+'/'+stripeId)
   }
+  retryPayment(accessToken:any){
+    return this.http.get<any>(`${environment.apiUrl}/retrypayment/`+accessToken)
+  }
   buyNow(product,quantity:number,accessToken:any){
     let product_id=product.id;
     return this.http.post<any>(`${environment.apiUrl}/buynow/`+accessToken,{product_id,quantity})

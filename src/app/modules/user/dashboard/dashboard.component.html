@@ -500,7 +500,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody style="overflow-y: scroll;">
-                                                    <tr *ngFor="let myproducts of myProducts">
+                                                    <tr *ngFor="let myproducts of myProducts | paginate
+                                                    : {
+                                                        itemsPerPage: itemsPerPage,
+                                                        currentPage: page,
+                                                        totalItems: totalItems
+                                                      }">
                                                         <td>
                                                             <a [routerLink]="['/shop/product/left/sidebar/',myproducts.title.replace(' ', '-')]">
                                                                 <img src="{{myproducts.image}}"
@@ -508,7 +513,7 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <span class="mt-0">#{{myproducts.order_id}}</span>
+                                                            <span class="mt-0">{{myproducts.order_id}}</span>
                                                         </td>
                                                         <td>
                                                             <span class="fs-6">{{myproducts.title | slice:0:30}}</span>
@@ -530,9 +535,10 @@
                                                             </a>
                                                         </td>
                                                     </tr>                                                   
-                                                </tbody>
+                                                </tbody>                       
                                             </table>
                                         </div>
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="myordersPageChange((page = $event))"></pagination-controls>
                                     </div>
                                 </div>
                             </div>

@@ -26,6 +26,10 @@ declare var $: any;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  totalItems:any;
+  itemsPerPage:number;
+  pageNo = 1;
+  page: number = 1;
   public products: Product[] = [];
   wishlistProducts: Product[] = [];
   myProducts: Product[] =[];
@@ -344,9 +348,17 @@ export class DashboardComponent implements OnInit {
   //     })  
   //   } 
   // }
-
   getWishlistProducts(){
-    this.productService.wishlistItems.subscribe(response => this.wishlistProducts = response);
+     this.productService.wishlistItems.subscribe(response => this.wishlistProducts = response);
+   // this.httpService.getmywishlist(this.accessToken)
+    // .subscribe({ 
+    //   next:(data:any)=>{
+    //     this.wishlistProducts = data.wishlist_data;
+       
+    //     console.log(this.myProducts)
+
+    //    }
+    // })
   }
   password() {
     this.show = !this.show;
@@ -435,7 +447,7 @@ this.httpService.namesUpdate(object)
       {
         Swal.fire({
           icon: 'success',
-          title: 'Congratulations!',
+          title: 'Success!',
           text: 'Updated Succcessfully',
           width: '400px',
         })
@@ -487,7 +499,7 @@ this.httpService.usernameUpdate(object)
       {
         Swal.fire({
           icon: 'success',
-          title: 'Congratulations!',
+          title: 'Success!',
           text: 'Updated Succcessfully',
           width: '400px',
         })
@@ -529,7 +541,7 @@ this.httpService.mobilenumberUpdate(object)
       {
         Swal.fire({
           icon: 'success',
-          title: 'Congratulations!',
+          title: 'Success!',
           text: 'Updated Succcessfully',
           width: '400px',
         })
@@ -654,7 +666,7 @@ this.httpService.passwordUpdate(object)
      if(data.message ==='Successfully Changed Your Password'){
       Swal.fire({
         icon: 'success',
-        title: 'Congratulations!',
+        title: 'Success!',
         text: 'Updated Succcessfully',
         width: '400px',
       })
@@ -717,11 +729,20 @@ this.httpService.passwordUpdate(object)
       }
     })    
   }
+  myordersPageChange(page:any){
+    this.pageNo = page;
+    this.getmyOrders();
+    }
   getmyOrders(){
-    this.httpService.getmyOrders(this.accessToken)
+    const Obj ={
+      pageno:this.pageNo
+    }
+    this.httpService.getmyOrders(Obj,this.accessToken)
     .subscribe({ 
-      next:(data)=>{
-        this.myProducts = data;
+      next:(data:any)=>{
+        this.myProducts = data.orders_data; 
+        this.totalItems = data.total_products;
+        this.itemsPerPage = data.products_per_page;     
         console.log(this.myProducts)
 
        }
@@ -775,7 +796,7 @@ onSubmit(){
       if(data.message==='Address added Successfully'){
         Swal.fire({
           icon: 'success',
-          title: 'Congratulations!',
+          title: 'Success!',
           text: 'Address added Successfully',
           width: '400px',
         })
