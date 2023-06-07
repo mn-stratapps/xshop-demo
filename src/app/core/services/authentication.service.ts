@@ -142,7 +142,6 @@ passwordUpdate(user:any){
   const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     return this.http.put<any>(`${environment.apiUrl}/update/password/`+this.accessToken,user);
-
 }
 getUserDetails(accessToken:any){
   //this.accessToken;

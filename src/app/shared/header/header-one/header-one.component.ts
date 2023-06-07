@@ -14,7 +14,7 @@ export class HeaderOneComponent implements OnInit {
   
   public stick: boolean = false;
   isUserLogin:boolean;
-
+  displayName:any;
   constructor(public authservice:AuthenticationService) { }
 
   ngOnInit(): void {
@@ -37,11 +37,14 @@ export class HeaderOneComponent implements OnInit {
   isUserLoggedin(){
     let currentUser  = localStorage.getItem('currentUser');
     //this.isUserLogin = JSON.parse(currentUser).isLoggedin;
+
     if(!currentUser){
       this.isUserLogin=false;
     }
     if(currentUser){
       this.isUserLogin=true;
+       this.displayName = localStorage.getItem( 'user_name' ).replace(/\"/g, "");
+
     }
   }
   logout(){

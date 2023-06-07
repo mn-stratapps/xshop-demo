@@ -129,7 +129,8 @@ initializeReactivateEmailForm(){
         else{
           console.log("role not defined")
         }
-        
+        localStorage.setItem("user_name", JSON.stringify(data.username));
+  
       },
       error:(error)=>{
       this.error = error;

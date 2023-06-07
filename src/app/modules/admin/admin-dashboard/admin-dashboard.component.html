@@ -937,8 +937,11 @@
                                                                     <td>{{orderslist.org_name | slice:0:15}}</td>
                                                                     <td> <span><img class="img-30 me-2" src="{{orderslist.image}}"></span>
                                                                     </td>
-                                                                    <td><span class="badge">{{orderslist.payment_status}}</span></td>
-                                                                    <td><span class="badge badge-success">{{orderslist.delivery_status}}</span></td>
+                                                                    <td><span class="badge" [ngClass]="{
+                                                                        'badge-success': orderslist?.payment_status === 'PAID',
+                                                                        'badge-danger': orderslist?.payment_status === 'FAILED',
+                                                                        'badge-secondary': orderslist?.payment_status === 'ON HOLD'}">{{orderslist.payment_status}}</span></td>
+                                                                    <td><span class="badge badge-success">{{orderslist.shipment_status}}</span></td>
                                                                     <td>{{orderslist.date | date}}</td>
                                                                     <td>₹{{orderslist.total}}</td>
                                                                 </tr>                                                                 
@@ -1101,6 +1104,7 @@
                                                      <td><span class="badge" [ngClass]="{
                                                         'badge-success': myorderslist?.delivery_status === 'ORDER PLACED',
                                                         'badge-warning': myorderslist?.delivery_status === 'INPROGRESS',
+                                                        'badge-secondary': myorderslist?.delivery_status === 'NA',
                                                         'badge-danger': myorderslist?.delivery_status === 'CANCELLED'}">{{myorderslist?.delivery_status}}</span></td>
                                                      <td>{{myorderslist?.date | date}}</td>
                                                      <td>₹{{myorderslist?.total}}</td>
