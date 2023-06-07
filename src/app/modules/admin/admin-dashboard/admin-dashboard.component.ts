@@ -54,6 +54,7 @@ price_to:string;
   vendorFilterForm:FormGroup;
   imagename:string;
   imageChangedEvent: any = '';
+  imageuploaded = false;
   // category:string;
     croppedImage: any = '';
     canvasRotation = 0;
@@ -578,6 +579,7 @@ saveImage(){
     this.addProductForm.patchValue(obj)
     console.log(obj.path.name);
     this.imagename = obj.path.name
+    this.imageuploaded = true;
 }
 }
 // fileChangeEvent(event: any): void {

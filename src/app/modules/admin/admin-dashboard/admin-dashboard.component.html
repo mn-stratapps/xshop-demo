@@ -640,7 +640,7 @@
                                             </div>                                           
                                                 </div>
                                                 
-                                                <button style="margin-top:20px" class="btn btn-solid d-block w-20" (click)="addProduct()"><i class="ci-cloud-upload fs-lg me-2"></i>Upload
+                                                <button *ngIf="imageuploaded" style="margin-top:20px" class="btn btn-solid d-block w-20" (click)="addProduct()"><i class="ci-cloud-upload fs-lg me-2"></i>Upload
                                                   Product</button>
                                             </form>
                                     </div>
@@ -1109,32 +1109,6 @@
                                          </table>
                                      </div>
                                      <pagination-controls  previousLabel="Prev" nextLabel="Next"  (pageChange)="myOrdersPageChange(page = $event)"></pagination-controls>
-                                     <!-- <div  class="d-flex justify-content-between p-2">
-                                         <nav aria-label="Page navigation example">
-                                             <ul class="pagination">
-                                               <li class="page-item">
-                                                 <a class="page-link" href="#" aria-label="Previous">
-                                                   <span aria-hidden="true">&laquo;</span>
-                                                 </a>
-                                               </li>
-                                               <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                               <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                               <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                               <li class="page-item">
-                                                 <a class="page-link" href="#" aria-label="Next">
-                                                   <span aria-hidden="true">&raquo;</span>
-                                                 </a>
-                                               </li>
-                                             </ul>
-                                           </nav>
-                                           <select class="form-select me-2 w-auto">
-                                             <option>-- Select category --</option>
-                                             <option>Clothing</option>
-                                             <option>Electronics</option>
-                                             <option>Furniture</option>
-                                             <option>Gym</option>
-                                           </select>
-                                     </div> -->
                                  </div>
                              </div>
                          </div>
@@ -1239,7 +1213,6 @@
                                                     <th scope="col">Transaction Id</th>
                                                     <th scope="col">Invoice</th>
                                                     <th scope="col">Date</th>
-                                                    <th scope="col">Payment Method</th>
                                                     <th scope="col">Delivery Status</th>
                                                     <th scope="col">Amount</th>
                                                 </tr>
@@ -1255,7 +1228,6 @@
                                                     <td> {{sales?.transaction_id}}</td>
                                                     <td> {{sales?.invoice_id}}</td>
                                                     <td>{{sales?.created_at | date}}</td>
-                                                    <td>Paypal</td>
                                                     <td>{{sales?.delivery_status}}</td>
                                                     <td>₹{{sales?.amount}}</td>
                                                 </tr>    
