@@ -25,7 +25,7 @@ import { FailpageComponent } from './checkout/failpage/failpage.component';
 
 const routes: Routes = [
   {
-    path: 'product/left/sidebar/:slug',
+    path: 'product/left/sidebar/:slug/:id',
     component: ProductLeftSidebarComponent,
     resolve: {
       data: Resolver
@@ -46,14 +46,14 @@ const routes: Routes = [
     }
   },
   {
-    path: 'product/three/column/:slug',
+    path: 'product/three/column/:slug/:id',
     component: ThreeColumnComponent,
     resolve: {
       data: Resolver
     }
   },
   {
-    path: 'product/four/image/:slug',
+    path: 'product/four/image/:slug/:id',
     component: FourImageComponent,
     resolve: {
       data: Resolver

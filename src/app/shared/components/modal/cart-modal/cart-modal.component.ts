@@ -43,7 +43,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
           size: 'lg',
           ariaLabelledBy: 'Cart-Modal',
           centered: true,
-          windowClass: 'theme-modal cart-modal CartModal'
+          windowClass: 'theme-modal cart-modal CartModal' 
         }).result.then((result) => {
           `Result ${result}`
           //this.productService.setcartItems(this.products)

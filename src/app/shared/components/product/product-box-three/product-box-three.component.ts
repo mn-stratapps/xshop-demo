@@ -4,6 +4,7 @@ import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component"
 import { Product } from "../../../classes/product";
 import { ProductService } from "../../../services/product.service";
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-box-three',
@@ -23,7 +24,7 @@ export class ProductBoxThreeComponent implements OnInit {
   wishlist: any[];
   iswishlistproduct: boolean;
   accessToken: any;
-  constructor(private productService: ProductService,private toastrService: ToastrService) { }
+  constructor(private productService: ProductService,private toastrService: ToastrService,private router:Router) { }
 
   
   ngOnChanges(changes:SimpleChanges){
@@ -49,10 +50,18 @@ export class ProductBoxThreeComponent implements OnInit {
     }
   } 
   addToCart(product: any) {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
     this.productService.addToCart(product);
+    }else{
+      this.router.navigate(['/core/login'])
+    }
   }
 
   addToWishlist(product: any) {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+    this.accessToken = JSON.parse( currentUser )['Token'];
     this.productService.addToWishlist(product)
     .subscribe({
       next:(data)=>{
@@ -69,6 +78,9 @@ export class ProductBoxThreeComponent implements OnInit {
         }
       }
     })
+  }else{
+    this.router.navigate(['/core/login'])
+  }
   }
   removeFromWishlist(product:any){
       const currentUser = localStorage.getItem( 'currentUser' );

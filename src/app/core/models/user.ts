@@ -9,6 +9,8 @@ export class User {
     mobile_number:number;
     token:string;
     confirmPassword:string;
+   
+
     // new_password:string;
 }
 export class Userlist{
@@ -24,4 +26,8 @@ export class Userlist{
     is_active:boolean;
     last_Login:number; 
 }
-
+export class Metrics{
+    total_orders:string;
+    pending_orders:string;
+    wishlist_count:string;
+}

@@ -144,6 +144,7 @@ export class ProductLeftSidebarComponent implements OnInit {
   async addToCartCount(product: any) {
     const quantity = this.counter || 1;
     const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
     this.accessToken = JSON.parse( currentUser )['Token'];
     const status = await this.productService.updateCartQuantity(product,quantity,this.accessToken)
     .subscribe(
@@ -164,12 +165,16 @@ export class ProductLeftSidebarComponent implements OnInit {
       this.toastrService.success('Product has been added in cart.');
 
     }
+  } else{
+    this.router.navigate(['/core/login'])
+  }
   }
 
   // Buy Now
   async buyNow(product: any) {
     const quantity = this.counter || 1;
     const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
     this.accessToken = JSON.parse( currentUser )['Token'];
     const status = await this.productService.buyNow(product,quantity,this.accessToken)
     .subscribe(
@@ -184,12 +189,19 @@ export class ProductLeftSidebarComponent implements OnInit {
         }
       }
     )
-    if (status)
+    if (status){
       this.router.navigate(['/shop/buynow/checkout']);
+    }
+  }else{
+      this.router.navigate(['/core/login']) 
+      }
   }
 
   // Add to Wishlist
   addToWishlist(product: any) {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+    this.accessToken = JSON.parse( currentUser )['Token'];
     this.productService.addToWishlist(product)
     .subscribe({
       next:(data)=>{
@@ -209,6 +221,9 @@ export class ProductLeftSidebarComponent implements OnInit {
         }
       }
     })
+  }else{
+    this.router.navigate(['/core/login'])
+  }
   }
   removeFromWishlist(product:any){
       const currentUser = localStorage.getItem( 'currentUser' );

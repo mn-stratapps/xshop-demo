@@ -8,6 +8,9 @@ export interface Order {
     Total_order_amount?: any;
     Order_data?:any;
     order_date?:any;
-    Transaction_id?:any;
+    transaction_id?:any;
     payment_method?:any;
+    processing_fee?:any;
+    subtotal?:any;
+    shipping_charge?:any;
 }

@@ -5,6 +5,7 @@ import { Product } from "../../../classes/product";
 import { ProductService } from "../../../services/product.service";
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-box-one',
@@ -32,7 +33,7 @@ export class ProductBoxOneComponent implements OnInit {
   wishlistproducts =[] as any;
   wishlist: any[];
   iswishlistproduct: boolean;
-  constructor(private productService: ProductService,private toastrService: ToastrService) { }
+  constructor(private productService: ProductService,private toastrService: ToastrService,private router: Router) { }
   
     ngOnChanges(changes:SimpleChanges){
 
@@ -91,7 +92,9 @@ export class ProductBoxOneComponent implements OnInit {
     this.ImageSrc = src;
   }
   addToCart(product_id: any) {
-    
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+    this.accessToken = JSON.parse( currentUser )['Token'];
     this.productService.addToCart(product_id )
     .subscribe(
       {
@@ -106,8 +109,14 @@ export class ProductBoxOneComponent implements OnInit {
         }
       }
     )
+    }else{
+      this.router.navigate(['/core/login'])
+    }
   }
   addToWishlist(product: any) {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+    this.accessToken = JSON.parse( currentUser )['Token'];
     this.productService.addToWishlist(product)
     .subscribe({
       next:(data)=>{
@@ -126,6 +135,9 @@ export class ProductBoxOneComponent implements OnInit {
         }
       }
     })
+  }else{
+    this.router.navigate(['/core/login'])
+  }
   }
   removeFromWishlist(product:any){
       const currentUser = localStorage.getItem( 'currentUser' );
@@ -141,10 +153,8 @@ export class ProductBoxOneComponent implements OnInit {
         },
         error:(error)=>{
           console.log(error)
-        }
-  
-      })
-    
+        }  
+      })   
   }
   addToCompare(product: any) {
     this.productService.addToCompare(product);

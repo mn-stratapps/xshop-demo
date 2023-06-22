@@ -6,6 +6,7 @@ export interface Menu {
 	path?: string;
 	title?: string;
 	type?: string;
+	role?: string;
 	megaMenu?: boolean;
 	image?: string;
 	active?: boolean;
@@ -31,10 +32,10 @@ export class NavService {
 	onResize(event?) {
 		this.screenWidth = window.innerWidth;
 	}
-
 	MENUITEMS: Menu[] = [
+		
 		{
-			title: 'home', type: 'sub', active: false, children: [
+			title: 'home', type: 'sub',role:'admin', active: false, children: [
 				{
 					title: 'clothing', type: 'sub', active: false, children: [
 						{ path: '/home/fashion', title: 'fashion-01', type: 'link' },
@@ -86,19 +87,19 @@ export class NavService {
 			title: 'Products', type: 'sub', active: false, children: [
 				{ path:'/shop/collection/left/sidebar', title: 'Products List', type: 'link' },
 				{ path:'/shop/product/right/sidebar/trim-dress', title: 'Product Detail', type: 'link' },
-				{ path: '/pages/cart', title: 'cart', type: 'link' },
-				{ path: '/pages/wishlist', title: 'wishlist', type: 'link' },
-				{ path: '/pages/checkout', title: 'checkout', type: 'link' },
-				{ 
-					title: 'compare', type: 'sub', active: false, children: [
-						{ path: '/pages/compare/one', title: 'compare-1', type: 'link' },
-						{ path: '/pages/compare/two', title: 'compare-2', type: 'link', badge: true, badgeText: 'new' }
-					]
-				},
-				{ path: '/pages/collection', title: 'collection', type: 'link' },
-				{ path: '/pages/search', title: 'search', type: 'link' },
-				{ path: '/pages/review', title: 'review', type: 'link', badge: true, badgeText: 'new' },
-				{ path: '/pages/order/success', title: 'order-success', type: 'link' },
+				// { path: '/pages/cart', title: 'cart', type: 'link' },
+				// { path: '/pages/wishlist', title: 'wishlist', type: 'link' },
+				// { path: '/pages/checkout', title: 'checkout', type: 'link' },
+				// { 
+				// 	title: 'compare', type: 'sub', active: false, children: [
+				// 		{ path: '/pages/compare/one', title: 'compare-1', type: 'link' },
+				// 		{ path: '/pages/compare/two', title: 'compare-2', type: 'link', badge: true, badgeText: 'new' }
+				// 	]
+				// },
+				// { path: '/pages/collection', title: 'collection', type: 'link' },
+				// { path: '/pages/search', title: 'search', type: 'link' },
+				// { path: '/pages/review', title: 'review', type: 'link', badge: true, badgeText: 'new' },
+				// { path: '/pages/order/success', title: 'order-success', type: 'link' },
 
 				// {
 				// 	title: 'account', type: 'sub', active: false, children: [
@@ -181,7 +182,7 @@ export class NavService {
 		// 	]
 		// },
 		{ 			
-			path:'/user/dashboard',title:'User',type:'link'
+			path:'/user/dashboard',title:'User',role:'user',type:'link'
 
 			// title: 'User', type: 'sub', active: false, children: [
 			// 	{
@@ -254,7 +255,7 @@ export class NavService {
 			]
 		},
 		//{
-			{path:'/admin/dashboard',title:'Admin',type:'link'},
+			{path:'/admin/dashboard',title:'Admin',role:'admin',type:'link'},
 			// [
 				// {
 				// 	title: 'account', type: 'sub', active: false, children: [
@@ -298,17 +299,7 @@ export class NavService {
 				//  { path: '/pages/admin/support', title: 'Support', type: 'link' },
 				//  { path: '/pages/admin/reports', title: 'Reports', type: 'link' },
 				//  { path: '/pages/admin/settings', title: 'Settings', type: 'link' },
-				//  { path: '/pages/admin/invoices', title: 'Invoices', type: 'link' },
-
-
-
-
-
-
-
-
-
-	
+				//  { path: '/pages/admin/invoices', title: 'Invoices', type: 'link' },	
 			// ]
 		//},
 		{
@@ -326,7 +317,122 @@ export class NavService {
 			]
 		}
 	];
+	USERITEMS: Menu[] = [
+		
+		{
+			title: 'home', type: 'sub',role:'admin', active: false, children: [
+				{
+					title: 'clothing', type: 'sub', active: false, children: [
+						{ path: '/home/fashion', title: 'fashion-01', type: 'link' },
+						{ path: '/home/fashion-2', title: 'fashion-02', type: 'link' },
+					]
+				},
+				
+				{ path: '/home/electronics', title: 'electronics', type: 'link' },
+				
+			]
+		},
 
+		{
+			title: 'Products', type: 'sub', active: false, children: [
+				{ path:'/shop/collection/left/sidebar', title: 'Products List', type: 'link' },
+				{ path:'/shop/product/right/sidebar/trim-dress', title: 'Product Detail', type: 'link' },
+	
+			]
+		},
+	
+		{ 			
+			path:'/user/dashboard',title:'Dashboard',role:'user',type:'link'
+
+		},
+		{
+			path:'/vendor/become/vendor',title:'Become A Vendor',type:'link'
+
+		},			
+		{
+			title: 'Pages', type: 'sub', active: false, children: [
+				// { path: '/pages/blog/left/sidebar', title: 'left-sidebar', type: 'link' },
+				// { path: '/pages/blog/right/sidebar', title: 'right-sidebar', type: 'link' },
+				{ path: '/pages/blog/no/sidebar', title: 'Blogs', type: 'link' },
+				{ path: '/pages/blog/details', title: 'Blog-details', type: 'link' },
+				{ path: '/pages/aboutus', title: 'about-us', type: 'link' },
+				{ path: '/pages/404', title: '404', type: 'link' },
+				{ path: '/pages/comingsoon', title: 'coming-soon', type: 'link', badge: true, badgeText: 'new' },
+				{ path: '/pages/faq', title: 'faq', type: 'link' },
+				{ path: '/pages/contact', title: 'contact', type: 'link' },
+
+			]
+		}
+	];
+	VENDORITEMS: Menu[] = [
+		
+		{
+			title: 'home', type: 'sub',role:'admin', active: false, children: [
+				{
+					title: 'clothing', type: 'sub', active: false, children: [
+						{ path: '/home/fashion', title: 'fashion-01', type: 'link' },
+						{ path: '/home/fashion-2', title: 'fashion-02', type: 'link' },
+					]
+				},
+				
+				{ path: '/home/electronics', title: 'electronics', type: 'link' },
+				
+			]
+		},
+
+		{
+			title: 'Products', type: 'sub', active: false, children: [
+				{ path:'/shop/collection/left/sidebar', title: 'Products List', type: 'link' },
+				{ path:'/shop/product/right/sidebar/trim-dress', title: 'Product Detail', type: 'link' },
+	
+			]
+		},
+	
+		{ 			
+			path:'/user/dashboard',title:'User',role:'user',type:'link'
+
+		},
+		{
+			title: 'Vendor', type: 'sub', active: false, children: [
+				{path:'/vendor/become/vendor',title:'Become A Vendor',type:'link'},
+				{path:'/vendor/profile',title:'Vendor Profile',type:'link'},
+				{path:'/vendor/dashboard',title:'Vendor Dashboard',type:'link'}
+
+			]
+		},			
+		{
+			title: 'Pages', type: 'sub', active: false, children: [
+				// { path: '/pages/blog/left/sidebar', title: 'left-sidebar', type: 'link' },
+				// { path: '/pages/blog/right/sidebar', title: 'right-sidebar', type: 'link' },
+				{ path: '/pages/blog/no/sidebar', title: 'Blogs', type: 'link' },
+				{ path: '/pages/blog/details', title: 'Blog-details', type: 'link' },
+				{ path: '/pages/aboutus', title: 'about-us', type: 'link' },
+				{ path: '/pages/404', title: '404', type: 'link' },
+				{ path: '/pages/comingsoon', title: 'coming-soon', type: 'link', badge: true, badgeText: 'new' },
+				{ path: '/pages/faq', title: 'faq', type: 'link' },
+				{ path: '/pages/contact', title: 'contact', type: 'link' },
+
+			]
+		}
+	];
+	ADMINITEMS: Menu[] = [	
+			{path:'/admin/dashboard',title:'Admin Dashboard',role:'admin',type:'link'},
+			
+		{
+			title: 'Pages', type: 'sub', active: false, children: [
+				// { path: '/pages/blog/left/sidebar', title: 'left-sidebar', type: 'link' },
+				// { path: '/pages/blog/right/sidebar', title: 'right-sidebar', type: 'link' },
+				{ path: '/pages/blog/no/sidebar', title: 'Blogs', type: 'link' },
+				{ path: '/pages/blog/details', title: 'Blog-details', type: 'link' },
+				{ path: '/pages/aboutus', title: 'about-us', type: 'link' },
+				{ path: '/pages/404', title: '404', type: 'link' },
+				{ path: '/pages/comingsoon', title: 'coming-soon', type: 'link', badge: true, badgeText: 'new' },
+				{ path: '/pages/faq', title: 'faq', type: 'link' },
+				{ path: '/pages/contact', title: 'contact', type: 'link' },
+
+			]
+		}
+	];
 	LEFTMENUITEMS: Menu[] = [
 		{
 			title: 'clothing', type: 'sub', megaMenu: true, active: false, children: [
@@ -441,6 +547,9 @@ export class NavService {
 
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+	userItems = new BehaviorSubject<Menu[]>(this.USERITEMS);
+	adminItems = new BehaviorSubject<Menu[]>(this.ADMINITEMS);
+	vendorItems = new BehaviorSubject<Menu[]>(this.VENDORITEMS);
 	leftMenuItems = new BehaviorSubject<Menu[]>(this.LEFTMENUITEMS);
 
 }

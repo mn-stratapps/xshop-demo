@@ -18,11 +18,9 @@ export class HeaderOneComponent implements OnInit {
   constructor(public authservice:AuthenticationService) { }
 
   ngOnInit(): void {
-    this.isUserLoggedin();
-
+  this.isUserLoggedin();
   }
 
-  
 
   // @HostListener Decorator
   @HostListener("window:scroll", [])

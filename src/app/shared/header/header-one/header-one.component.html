@@ -24,10 +24,11 @@
               <ul class="onhover-show-div">
                
                 <li *ngIf="!isUserLogin" >
-                  <a  href="/core/login" data-lng="en" >
+                  <a  [routerLink]="['core/login']" data-lng="en" >
                     Login
                   </a></li>
-                 <li *ngIf="!isUserLogin"> <a href="/core/signup" data-lng="en">
+                 <li *ngIf="!isUserLogin"> 
+                  <a [routerLink]="['/core/signup']" data-lng="en">
                     Register
                   </a></li>
                 

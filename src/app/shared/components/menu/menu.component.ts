@@ -11,10 +11,19 @@ import { DOCUMENT } from '@angular/common';
 export class MenuComponent implements OnInit {
 
   public menuItems: Menu[];
+  public userItems: Menu[];
+  public adminItems: Menu[];
+  public vendorItems: Menu[];
 
+  role_id: any;
+  role_status:boolean;
   constructor(private router: Router, public navServices: NavService,
     private renderer2: Renderer2,@Inject(DOCUMENT) private _document:any) {
     this.navServices.items.subscribe(menuItems => this.menuItems = menuItems );
+    this.navServices.userItems.subscribe(userItems => this.userItems = userItems );
+    this.navServices.adminItems.subscribe(adminItems => this.adminItems = adminItems );
+    this.navServices.vendorItems.subscribe(vendorItems => this.vendorItems = vendorItems );
+
     this.router.events.subscribe((event) => {
       this.navServices.mainMenuToggle = false;
     });
@@ -22,11 +31,19 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     // this.loadTranslator()
+    if(localStorage.getItem('role_id')){
+    this.role_id=localStorage.getItem('role_id')
+    this.role_status=true;
+    }
+    else{
+      this.role_status = false;
+    }
   }
 
   mainMenuToggle(): void {
     this.navServices.mainMenuToggle = !this.navServices.mainMenuToggle;
   }
+  // // language translator//out of theme //
   // loadTranslator(){
   //   var element = document.getElementById('gtranslate_wrapper');
 

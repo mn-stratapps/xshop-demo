@@ -5,7 +5,7 @@
       <span class="lable4" *ngIf="product.sale">on sale</span>
     </div>
     <div class="front">
-      <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-')]">
+      <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-'), product?.id]">
         <img 
           [defaultImage]="ImageSrc ? ImageSrc : 'assets/images/product/placeholder.jpg'" 
           [lazyLoad]="ImageSrc ? ImageSrc : product.images[0].src" 
@@ -14,7 +14,7 @@
       </a>
     </div>
     <div class="back" *ngIf="onHowerChangeImage">
-      <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-')]">
+      <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-'), product?.id]">
         <img [src]="ImageSrc ? ImageSrc : product.images[0].src" class="img-fluid lazy-loading" alt="{{ product.images[0].alt }}">
       </a>
     </div>
@@ -26,7 +26,7 @@
       </li>
     </ul>
     <div class="cart-info cart-wrap">
-      <a title="Add to carts" (click)="CartModal.openModal(product)"
+      <a title="Add to cart" (click)="CartModal.openModal(product)"
         *ngIf="cartModal">
         <i class="ti-shopping-cart"></i>
       </a>
@@ -41,7 +41,6 @@
       <a *ngIf="!iswishlistproduct" title="Add to Wishlist" (click)="addToWishlist(product)">
         <i  class="ti-heart"  aria-hidden="true"></i>
       </a>
-
       <!-- <a title="Add to Wishlist" (click)="addToWishlist(product)">
         <i  class="fa fa-heart"  aria-hidden="true"></i>
       </a> -->
@@ -56,7 +55,7 @@
   <div class="product-detail" style="padding: 0px 0px 10px 10px;">
     <div>
       <bar-rating [rate]="5" [readOnly]="true"></bar-rating>
-      <a [routerLink]="['/shop/product/left/sidebar/', product?.title.replace(' ', '-')]">
+      <a [routerLink]="['/shop/product/left/sidebar/', product?.title.replace(' ', '-'), product?.id]">
         <h6>{{ product?.title | titlecase | slice:0:30}}</h6>
       </a>
       <p>{{ product?.description }}</p>

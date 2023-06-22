@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, observable, Observable, Subject } from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { Product } from '../classes/product';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -30,7 +31,7 @@ export class ProductService {
   mediaUpdate: any;
   buynow_data = new Subject<any>();
 
-  constructor(private http: HttpClient,
+  constructor(private http: HttpClient,public router:Router,
     private toastrService: ToastrService,private authService:AuthenticationService) { }
 
   /*
@@ -59,13 +60,16 @@ export class ProductService {
     return this.products;
   }
 
-  // Get Products By Slug
+  // //Get Products By Slug
+  // public getProductBySlug(slug: string): Observable<Product> {
+  //   return this.products.pipe(map(items => { 
+  //     return items.find((item: any) => { 
+  //       return item.title.replace(' ', '-') === slug; 
+  //     }); 
+  //   }));
+  // }
   public getProductBySlug(slug: string): Observable<Product> {
-    return this.products.pipe(map(items => { 
-      return items.find((item: any) => { 
-        return item.title.replace(' ', '-') === slug; 
-      }); 
-    }));
+   return this.http.get(`${environment.apiUrl}/product/detail/page`+'/'+slug)
   }
 ///////////Product End////////////////////
 
@@ -241,28 +245,34 @@ public addToWishlist(product): any {
     if(stock){
    //cartItem.quantity += qty 
    const currentUser = localStorage.getItem( 'currentUser' );
+   if(currentUser !== null){
     this.accessToken = JSON.parse( currentUser )['Token'];
     return this.http.post<any>(`${environment.apiUrl}/cart/`+this.accessToken,{id})
     .subscribe({
       next:(data)=>{
         console.log(data)
         this.cartItems.subscribe(response=>this.setcartItems(response))
+        this.toastrService.success('Added to cart');
          //this.setcartItems(product)
         // console.log('settings',this.products)
+
       },
       error:(error)=>{
         console.log(error)
       }
     }) 
-    }
+  }    else{
+    this.router.navigate(['/core/login'])
+  }
+  }
     // else {
     //       state.cart.push({
     //         ...product,
     //         quantity: qty
     //       })
     //     }
-            this.OpenCart = true; // If we use cart variation modal
-            return true;
+      this.OpenCart = true; // If we use cart variation modal
+      return true;
   }
   addToCartCount(accessToken,id,quantity){
     return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})

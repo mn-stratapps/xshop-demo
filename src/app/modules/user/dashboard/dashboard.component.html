@@ -75,7 +75,7 @@
                                     <div class="counter-box">
                                         <img src="../assets/images/icon/sale-icon.png" class="img-fluid">
                                         <div>
-                                            <h3>25</h3>
+                                            <h3>{{metrics?.total_orders}}</h3>
                                             <h5>Total Order</h5>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     <div class="counter-box">
                                         <img src="../assets/images/icon/homework-icon.png" class="img-fluid">
                                         <div>
-                                            <h3>5</h3>
+                                            <h3>{{metrics?.pending_orders}}</h3>
                                             <h5>Pending Orders</h5>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                                     <div class="counter-box">
                                         <img src="../assets/images/icon/order-icon.png" class="img-fluid">
                                         <div>
-                                            <h3>{{wishlistProducts?.length}}</h3>
+                                            <h3>{{metrics?.wishlist_count}}</h3>
                                             <h5>Wishlist</h5>
                                         </div>
                                     </div>
@@ -756,7 +756,7 @@
                                                 <div>
                                             </div>
                                             <div class="dashboard-title mb-0">
-                                                <h4>login details</h4>
+                                                <h4>Email</h4>
                                                 <a class="edit-link" (click)="emailEdit()" >edit</a>
                                                 
                                             </div>

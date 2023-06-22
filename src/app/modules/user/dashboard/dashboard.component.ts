@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/core/models/user';
+import { Metrics, User } from 'src/app/core/models/user';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import Swal from 'sweetalert2';
 import { threadId } from 'worker_threads';
@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
   myProducts: Product[] =[];
   public openDashboard: boolean = false;
   userData: User = new User();
+  metrics: Metrics = new Metrics()
   public Address: Useraddress[] = [];
   accessToken: any;
   error: any;
@@ -145,6 +146,7 @@ export class DashboardComponent implements OnInit {
     //   });
     // }
   ngOnInit() {
+    this.getdashboardCount();
     this.getUserDetails();
     this.getUserAddress();
     this.initializeAddAddressForm();
@@ -708,6 +710,21 @@ this.httpService.passwordUpdate(object)
       next:(data) =>{
         this.userData = data;
          console.log(this.userData);
+      },
+      error:(error)=>{
+        this.error = error;
+        this.loading = false;
+        console.log(error)       
+    }
+    })
+  }
+  getdashboardCount() {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.httpService.getdashboardCount(this.accessToken)
+    .subscribe({
+      next:(data) =>{
+        this.metrics = data;
       },
       error:(error)=>{
         this.error = error;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { threadId } from 'worker_threads';
@@ -9,12 +9,15 @@ import Swal from 'sweetalert2';
 import { error } from 'protractor';
 import {SocialAuthService,GoogleLoginProvider,SocialUser,} from "@abacritt/angularx-social-login";
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { UrlService } from 'src/app/shared/services/previous-url.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  previousUrl: Observable<string> = this.urlService.previousUrl$;
 
   isActivateUrl = false;
   loginForm: FormGroup;
@@ -24,13 +27,15 @@ export class LoginComponent implements OnInit {
   socialUser!: SocialUser;
   loading = false;
   returnUrl: string;
+  returnBackUrl:string;
   accessToken: any;
   emailActivationToken: any;
   activatedRoute: any;
   show: boolean = false;
-
+  previousUrll:string;
   constructor(private formBuilder:FormBuilder,private route: ActivatedRoute,
-    private router: Router,private httpService:AuthenticationService, private socialAuthService: SocialAuthService,private httpClient: HttpClient) {
+    private router: Router,private httpService:AuthenticationService,
+     private socialAuthService: SocialAuthService,private httpClient: HttpClient,private urlService: UrlService) {
       const currentUrl = this.router.url;
       if(currentUrl.includes('reactivate/account')){
         this.isActivateUrl = true;
@@ -40,8 +45,12 @@ export class LoginComponent implements OnInit {
      }
 
   ngOnInit(){
-
-    if(this.isActivateUrl){
+    // let value = this.route.snapshot.queryParams['name'];
+    this.urlService.previousUrl$.subscribe((previousUrl: string) => {
+      this.previousUrll = previousUrl
+      console.log('previous url: ', this.previousUrll);
+    });
+        if(this.isActivateUrl){
       this.initializeReactivateEmailForm();
   
       }else{
@@ -101,6 +110,8 @@ initializeReactivateEmailForm(){
     .subscribe({
       next:(data) => {
         //console.log(data);
+        localStorage.setItem("role_id", JSON.stringify(data.role));
+
         //superadmin
         if(data.role === 1){
           this.router.navigate(['/home/super_admin'])
@@ -138,6 +149,23 @@ initializeReactivateEmailForm(){
       this.loading = false;
   }
   });
+  }
+  prevUrl(){
+    this.httpService.getUserDetails(this.accessToken)
+    .subscribe({
+      next:(data) => {
+        //console.log(data);
+        localStorage.setItem("role_id", JSON.stringify(data.role));
+        localStorage.setItem("user_name", JSON.stringify(data.username));
+        localStorage.setItem("newsletter", 'true');
+
+        this.router.navigate([this.previousUrll])
+        
+        .then(() => {
+          window.location.reload();
+        });
+      }
+      })
   }
   reactivateEmail(){
     this.submitted=true;
@@ -199,16 +227,19 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
     .subscribe({
       next:(data) => {
         console.log(data);
-        
     const userToken = { Token: data.accessToken,};
     this.accessToken = data.accessToken;
     this.httpService.accessToken=data.accessToken
     localStorage.clear();
 
     localStorage.setItem('currentUser', JSON.stringify(userToken));
-
+    if(this.previousUrll === null){
     this.getUserDetails();
- 
+    }
+    else if(this.previousUrll){
+      this.prevUrl()
+      
+    }
       },
       error:(error)=>{
        this.error = error;
@@ -220,7 +251,6 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
           icon: 'error',
           title: 'Oops...!',
           text: 'Please Activate your account to Login',
-          //footer: '<a href="">Why do I have this issue?</a>'
         })
         this.router.navigate(['/core/reactivate/account']);
        }else if(error.error.message === 'Username Not Found' || 'Incorrect Password')
@@ -229,7 +259,6 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
           icon: 'error',
           title: 'Oops...',
           text: 'Incorrect Username/Password',
-          //footer: '<a href="">Why do I have this issue?</a>'
         })
        }
        else{
@@ -237,7 +266,6 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
           icon: 'error',
           title: 'Oops...',
           text: 'Something went wrong, Try again',
-          //footer: '<a href="">Why do I have this issue?</a>'
         })
        }
    }

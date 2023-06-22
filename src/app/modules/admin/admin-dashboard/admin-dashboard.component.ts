@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { User, Userlist } from 'src/app/core/models/user';
+import { User, Userlist, Metrics } from 'src/app/core/models/user';
 // import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../image-cropper/interfaces';
 import { base64ToFile } from '../../image-cropper/utils/blob.utils';
@@ -29,6 +29,7 @@ isAddProductUrl = false;
 path:any;
 filename:any;
 userData: User = new User();
+metrics: Metrics = new Metrics();
 userList=[] as any;
 vendorsList=[] as any;
 ordersList= [] as any;
@@ -49,6 +50,7 @@ price_to:string;
   editProductForm:FormGroup;
   allproductsFilterForm:FormGroup;
   ordersFilterForm:FormGroup;
+  allOrdersFilterForm:FormGroup;
   salesFilterForm:FormGroup;
   usersFilterForm:FormGroup;
   vendorFilterForm:FormGroup;
@@ -99,12 +101,14 @@ constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
 this.maxDate=datepipe.transform(new Date(),"yyyy-MM-dd");
   }
 ngOnInit(){
+  this.getdsahboardCount();
   this.getUserDetails();
   this.initializeAddProductForm();
   this.initializeeditProductForm();
   // this.getOrdersList();
   this.allproductsFilter();
   this.ordersListFilter();
+  this.allOrdersListFilter();
   this.salesFilter();
   this.usersFilter();
   this.vendorFilter();
@@ -126,6 +130,22 @@ getUserDetails() {
   }
   })
 }
+getdsahboardCount(){
+  const currentUser = localStorage.getItem( 'currentUser' );
+  this.accessToken = JSON.parse( currentUser )['Token'];
+  this.httpService.getadmindashboardCount(this.accessToken)
+  .subscribe({
+    next:(data) =>{
+      this.metrics = data;
+    },
+    error:(error)=>{
+      this.error = error;
+      
+      console.log(error)       
+  }
+  })
+}
+
 usersPageChange(page:any){
  this.pageNo = page;
  this.getUsersList();
@@ -232,7 +252,7 @@ resetAllOrdersFilters(){
   // this.ordersfilerEnabled = !this.ordersfilerEnabled;
   this.pageNo = 1;
   this.searchText="";
-  this.ordersFilterForm.reset();
+  this.allOrdersFilterForm.reset();
   this.getAllOrdersList();
 }
 allOrdersSearchEvent(event:any){
@@ -240,13 +260,16 @@ allOrdersSearchEvent(event:any){
   this.getAllOrdersList();
 }
 getAllOrdersList(){
-  this.ordersFilterForm.patchValue({order_id:this.searchText,pageno:this.pageNo})
-  let formOrdersObj = this.ordersFilterForm.getRawValue();
+  this.allOrdersFilterForm.patchValue({order_id:this.searchText,pageno:this.pageNo})
+  let formOrdersObj = this.allOrdersFilterForm.getRawValue();
   if(formOrdersObj.payment_status == '' || formOrdersObj.payment_status == null){
     delete formOrdersObj.payment_status
   }
   if(formOrdersObj.order_status == '' || formOrdersObj.order_status == null){
     delete formOrdersObj.order_status
+  }
+  if(formOrdersObj.shipment_status == '' || formOrdersObj.shipment_status == null){
+    delete formOrdersObj.shipment_status
   }
   if(formOrdersObj.from_date == '' || formOrdersObj.from_date == null){
     delete formOrdersObj.from_date
@@ -299,6 +322,9 @@ myOrdersPageChange(page:any){
    if(formOrdersObj.order_status == '' || formOrdersObj.order_status == null){
      delete formOrdersObj.order_status
    }
+   if(formOrdersObj.shipment_status == '' || formOrdersObj.shipment_status == null){
+    delete formOrdersObj.shipment_status
+  }
    if(formOrdersObj.from_date == '' || formOrdersObj.from_date == null){
      delete formOrdersObj.from_date
    }
@@ -385,10 +411,22 @@ name:[''],
 pageno:['']
 })
 }
+allOrdersListFilter(){
+  this.allOrdersFilterForm = this.formBuilder.group({
+  payment_status:[null],
+  order_status:[null],
+  shipment_status:[null],
+  from_date:[''],
+  to_date:[''],
+  order_id:[''],
+  pageno:['']
+  })
+}
 ordersListFilter(){
   this.ordersFilterForm = this.formBuilder.group({
   payment_status:[null],
   order_status:[null],
+  shipment_status:[null],
   from_date:[''],
   to_date:[''],
   order_id:[''],
@@ -877,4 +915,38 @@ deleteProductByAdmin(id:any){
    }
   })
 }
+shipmentAction(oid:any,status:any,shipment_id:any){
+if(status === "ORDER PLACED"){
+  this.httpService.shipNow(oid,this.accessToken)
+  .subscribe(
+    {
+      next:(data) => {
+        console.log(data);
+        this.viewAdminProducts();
+      },
+      error:(error)=>{
+        this.error = error;        
+        console.log(error) 
+    }
+  });
+ }
+if(status === "NEW"){
+  this.httpService.pickUp(this.accessToken,shipment_id)
+  .subscribe(
+    {
+      next:(data) => {
+        console.log(data);
+        this.viewAdminProducts();
+      },
+      error:(error)=>{
+        this.error = error;        
+        console.log(error) 
+    }
+  });
+}
+if(status === "PICKUP SCHEDULED"){}
+if(status === "IN TRANSIT"){}
+if(status === "DELIVERED"){}
+}
+
 }

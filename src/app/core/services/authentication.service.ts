@@ -3,8 +3,8 @@ import { HttpClient,HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
- import { environment } from 'src/environments/environment';
+// import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Useraddress } from '../models/useraddress';
 import { SettingsComponent } from 'src/app/shared/components/settings/settings.component';
 import { Product } from 'src/app/shared/classes/product';
@@ -83,6 +83,7 @@ export class AuthenticationService {
   logout() {
       // remove user from local storage to log user out
       localStorage.removeItem('currentUser');
+      localStorage.removeItem('role_id');
       //this.userSubject.next(null);
       this.router.navigate(['/core/login'])
       .then(() => {
@@ -147,6 +148,14 @@ getUserDetails(accessToken:any){
   //this.accessToken;
   return this.http.get<any>(`${environment.apiUrl}/role/details/`+accessToken);
 }
+getdashboardCount(accessToken:any){
+  //this.accessToken;
+  return this.http.get<any>(`${environment.apiUrl}/orderscount/`+accessToken);
+}
+getadmindashboardCount(accessToken:any){
+  //this.accessToken;
+  return this.http.get<any>(`${environment.apiUrl}/admin/kpi/`+accessToken);
+}
 getUserslist(object:any,accessToken:any){
   return this.http.post<any>(`${environment.apiUrl}/f/list-users/`+accessToken,object);
 }
@@ -204,5 +213,12 @@ editProductByAdmin(accessToken:any,id:any,data:any){
 }
 deleteProductsByAdmin(accessToken:any,id:any){
   return this.http.delete<any>(`${environment.apiUrl}/adminproductsupdate/`+accessToken+'/'+id)
+}
+//shipment APIS//
+shipNow(accessToken:any,oid:any){
+  return this.http.get<any>(`${environment.apiUrl}/create-orders/`+accessToken+'/'+oid)
+}
+pickUp(accessToken:any,sid:any){
+  return this.http.get<any>(`${environment.apiUrl}/generate_pickup/`+accessToken+'/'+sid)
 }
 }

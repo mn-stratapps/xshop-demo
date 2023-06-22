@@ -24,6 +24,7 @@ import {SocialLoginModule,SocialAuthServiceConfig,} from '@abacritt/angularx-soc
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login'
 import { CoreModuleModule } from './core/core-module/core-module.module';
 import { DatePipe } from '@angular/common';
+import { UrlService } from './shared/services/previous-url.service';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -79,7 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ],
       } as SocialAuthServiceConfig,
     },
-    DatePipe],
+    DatePipe,UrlService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
