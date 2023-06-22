@@ -14,6 +14,7 @@ export class MenuComponent implements OnInit {
   public userItems: Menu[];
   public adminItems: Menu[];
   public vendorItems: Menu[];
+  public nonuserItems: Menu[];
 
   role_id: any;
   role_status:boolean;
@@ -23,7 +24,7 @@ export class MenuComponent implements OnInit {
     this.navServices.userItems.subscribe(userItems => this.userItems = userItems );
     this.navServices.adminItems.subscribe(adminItems => this.adminItems = adminItems );
     this.navServices.vendorItems.subscribe(vendorItems => this.vendorItems = vendorItems );
-
+    this.navServices.nonuserItems.subscribe(nonuserItems => this.nonuserItems = nonuserItems );
     this.router.events.subscribe((event) => {
       this.navServices.mainMenuToggle = false;
     });

@@ -9,8 +9,6 @@ export class User {
     mobile_number:number;
     token:string;
     confirmPassword:string;
-   
-
     // new_password:string;
 }
 export class Userlist{

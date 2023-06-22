@@ -433,6 +433,45 @@ export class NavService {
 			]
 		}
 	];
+	NONUSERITEMS:Menu[] = [
+		{
+			path:'/core/login',title:'Login',type:'link'
+
+		},
+		{
+			title: 'home', type: 'sub', active: false, children: [
+				{
+					title: 'clothing', type: 'sub', active: false, children: [
+						{ path: '/home/fashion', title: 'fashion-01', type: 'link' },
+						{ path: '/home/fashion-2', title: 'fashion-02', type: 'link' },
+					]
+				},
+				
+				{ path: '/home/electronics', title: 'electronics', type: 'link' },
+				
+			]
+		},
+
+		{
+			title: 'Products', type: 'sub', active: false, children: [
+				{ path:'/shop/collection/left/sidebar', title: 'Products List', type: 'link' },	
+			]
+		},
+		{
+			title: 'Pages', type: 'sub', active: false, children: [
+				// { path: '/pages/blog/left/sidebar', title: 'left-sidebar', type: 'link' },
+				// { path: '/pages/blog/right/sidebar', title: 'right-sidebar', type: 'link' },
+				{ path: '/pages/blog/no/sidebar', title: 'Blogs', type: 'link' },
+				{ path: '/pages/blog/details', title: 'Blog-details', type: 'link' },
+				{ path: '/pages/aboutus', title: 'about-us', type: 'link' },
+				{ path: '/pages/404', title: '404', type: 'link' },
+				{ path: '/pages/comingsoon', title: 'coming-soon', type: 'link', badge: true, badgeText: 'new' },
+				{ path: '/pages/faq', title: 'faq', type: 'link' },
+				{ path: '/pages/contact', title: 'contact', type: 'link' },
+
+			]
+		}
+	];
 	LEFTMENUITEMS: Menu[] = [
 		{
 			title: 'clothing', type: 'sub', megaMenu: true, active: false, children: [
@@ -550,6 +589,7 @@ export class NavService {
 	userItems = new BehaviorSubject<Menu[]>(this.USERITEMS);
 	adminItems = new BehaviorSubject<Menu[]>(this.ADMINITEMS);
 	vendorItems = new BehaviorSubject<Menu[]>(this.VENDORITEMS);
+	nonuserItems = new BehaviorSubject<Menu[]>(this.NONUSERITEMS);
 	leftMenuItems = new BehaviorSubject<Menu[]>(this.LEFTMENUITEMS);
 
 }

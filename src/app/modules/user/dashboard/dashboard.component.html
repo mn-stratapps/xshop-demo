@@ -518,10 +518,11 @@
                                                         <td>
                                                             <span class="fs-6">{{myproducts.title | slice:0:30}}</span>
                                                         </td>
-                                                        <td>
-                                                            <span
-                                                                class="badge rounded-pill custom-badge" [ngClass]="{ 'bg-danger': myproducts.order_status === 'Pending' , 'bg-secondary': myproducts.order_status === 'Cancelled','bg-success': myproducts.order_status === 'Order placed'}">{{myproducts.order_status}}</span>
-                                                        </td>
+                                                        <td><span class="badge" [ngClass]="{
+                                                            'badge-success': myproducts?.order_status === 'ORDER PLACED',
+                                                            'badge-warning': myproducts?.order_status === 'INPROGRESS',
+                                                            'badge-secondary': myproducts?.order_status === 'NA',
+                                                            'badge-danger': myproducts?.order_status === 'CANCELLED' || myproducts?.order_status === 'FAILED'}">{{myproducts?.order_status}}</span></td>
                                                         <td>
                                                             <span
                                                                 class="badge rounded-pill custom-badge" [ngClass]="{'bg-danger':myproducts.shipment_status === 'Pending','bg-success':myproducts.shipment_status === 'Shipped','bg-secondary':myproducts.shipment_status === 'Cancelled'}">{{myproducts.shipment_status}}</span>

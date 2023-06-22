@@ -236,9 +236,12 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
     if(this.previousUrll === null){
     this.getUserDetails();
     }
-    else if(this.previousUrll){
+    else if(this.previousUrll && data.role === 4 ){
+      this.prevUrl()     
+    } else if(this.previousUrll && data.role === 3){
       this.prevUrl()
-      
+    } else{
+      this.getUserDetails();
     }
       },
       error:(error)=>{

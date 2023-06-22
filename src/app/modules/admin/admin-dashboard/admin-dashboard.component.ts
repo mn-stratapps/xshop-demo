@@ -906,8 +906,7 @@ deleteProductByAdmin(id:any){
           this.viewAdminProducts();
         },
         error:(error)=>{
-          this.error = error;
-          
+          this.error = error;          
           console.log(error) 
       }
     });

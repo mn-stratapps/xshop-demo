@@ -3,7 +3,9 @@
     <div class="toggle-nav" (click)="mainMenuToggle()">
       <i class="fa fa-bars sidebar-bar"></i>
     </div>
-    <ul *ngIf="!role_status" class="nav-menu" [class.opennav]="navServices?.mainMenuToggle">
+
+    <!-- theme code -->
+    <ul *ngIf="role_id==='dummy'" class="nav-menu" [class.opennav]="navServices?.mainMenuToggle">
       <li class="back-btn">
         <div class="mobile-back text-end" (click)="mainMenuToggle()">
           <span>Back</span>
@@ -146,6 +148,47 @@
         <!-- <div class="gtranslate_wrapper"></div> -->
       </li>
     </ul>
+    <!-- theme code end-->
+    <!-- Non-user -->
+    <ul *ngIf="!role_status" class="nav-menu" [class.opennav]="navServices?.mainMenuToggle">
+      <li *ngFor="let nonuserItem of nonuserItems" [class.mega-menu]="nonuserItem.megaMenu">
+        <!-- Sub -->
+        <a href="javascript:void(0)" class="nav-link" *ngIf="nonuserItem.type === 'sub'" 
+        (click)="toggletNavActive(nonuserItem)">
+        {{ nonuserItem.title | translate }}
+        <div class="lable-nav" *ngIf="nonuserItem.badge">{{ nonuserItem.badgeText | translate }}</div>
+        <span class="sub-arrow" *ngIf="nonuserItem.children"></span>
+        </a>
+        <!-- Link -->
+        <a [routerLink]="nonuserItem.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link"
+        *ngIf="nonuserItem.type === 'link'">
+        {{ nonuserItem.title }}
+        <div class="lable-nav" *ngIf="nonuserItem.badge">{{ nonuserItem.badgeText | translate }}</div>
+        <span class="sub-arrow" *ngIf="nonuserItem.children"></span>
+        </a>
+<!-- 2nd Level Menu -->
+<ul class="nav-submenu" [class.opensubmenu]="nonuserItem.active" *ngIf="nonuserItem.children">
+  <li *ngFor="let childrenItem of nonuserItem.children">
+    <!-- Sub -->
+    <a href="javascript:void(0)" *ngIf="childrenItem.type === 'sub'" 
+        (click)="toggletNavActive(childrenItem)">
+      {{ childrenItem.title | translate }}
+      <span class="new-tag" *ngIf="childrenItem.badge">{{ childrenItem.badgeText | translate }}</span>
+      <span class="sub-arrow" *ngIf="childrenItem.children"></span>
+    </a>
+    <!-- Link -->
+    <a [routerLink]="childrenItem.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" 
+      *ngIf="childrenItem.type === 'link' ">
+      {{ childrenItem.title | translate }}
+      <span class="new-tag" *ngIf="childrenItem.badge">{{ childrenItem.badgeText | translate }}</span>
+      <span class="sub-arrow" *ngIf="childrenItem.children"></span>
+    </a>
+  </li>
+  </ul>
+        </li> 
+    </ul>
+    <!-- Non-user -->
+    
     <!-- admin && super admin -->
     <ul *ngIf="role_id ==='2'" class="nav-menu" [class.opennav]="navServices?.mainMenuToggle">
       <li *ngFor="let adminItem of adminItems" [class.mega-menu]="adminItem.megaMenu">
@@ -183,11 +226,6 @@
   </li>
   </ul>
         </li> 
-       
-        <li *ngIf="role_id ==='3'">
-
-        </li> 
-        <li *ngIf="role_id ==='4'"></li> 
     </ul>
     <!-- user -->
     <ul *ngIf="role_status && role_id === '4'" class="nav-menu" [class.opennav]="navServices?.mainMenuToggle">
