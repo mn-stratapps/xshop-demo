@@ -93,7 +93,7 @@
                                         <img src="../assets/images/sale-icon.png" class="img-fluid">
                                         <div>
                                             <h3>{{metrics?.total_orders}}</h3>
-                                            <h5>Total Order</h5>
+                                            <h5>Total Orders</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                                         <img src="../assets/images/homework-icon.png" class="img-fluid">
                                         <div>
                                             <h3>{{metrics?.pending_orders}}</h3>
-                                            <h5>Pending Order</h5>
+                                            <h5>Pending Orders</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -282,8 +282,8 @@
                                                 <li>
                                                      <div class="cols">
                                                         <div class="d-flex">
-                                                            <button (click)="viewAdminProducts()" class="btn btn-info me-2 ft_size">Apply Filters</button>
-                                                            <button (click)="resetAdminFilters()" class="btn btn-info ft_size">Reset Filters</button>
+                                                            <button (click)="viewAdminProducts()" class="btn btn-info me-2 ft_size">Apply</button>
+                                                            <button (click)="resetAdminFilters()" class="btn btn-info ft_size">Reset</button>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -333,6 +333,11 @@
 
                                                     </tbody>
                                                 </table>
+                                                <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!adminProducts?.length">
+                                                    <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                    <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                                    <p>Please check if you have misspelt something or try searching with other words.</p>
+                                                </div>
                                             </div>
                                             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="adminProdsPageChange(page = $event)"></pagination-controls>
                                         </div>
@@ -765,8 +770,8 @@
                                             <li>
                                                     <div class="cols">
                                                         <div class="d-flex">
-                                                            <button (click)="viewAllProducts()" class="btn btn-info me-2 ft_size">Apply Filters</button>
-                                                            <button (click)="resetAllProductsFilters()" class="btn btn-info ft_size">Reset Filters</button>
+                                                            <button (click)="viewAllProducts()" class="btn btn-info me-2 ft_size">Apply</button>
+                                                            <button (click)="resetAllProductsFilters()" class="btn btn-info ft_size">Reset</button>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -813,6 +818,11 @@
 
                                                   </tbody>
                                               </table>
+                                              <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!allProducts?.length">
+                                                <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                                <p>Please check if you have misspelt something or try searching with other words.</p>
+                                            </div>
                                           </div>
                                           <pagination-controls  previousLabel="Prev" nextLabel="Next" (pageChange)="allProdsPageChange(page = $event)"></pagination-controls>
                                       </div>
@@ -846,7 +856,7 @@
                                                                <a class="btn mr-2 filter_btn" (click)="allordersfilerEnabled = !allordersfilerEnabled" >
                                                                    <i aria-hidden="true" class="fa fa-filter"></i>
                                                                </a>
-                                                           <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Transaction</a>
+                                                           <!-- <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Transaction</a> -->
                                                            </div>
                                                          <div class="collapse" [class.show]="allordersfilerEnabled">
                                                            <div class="card card_bg  card_br mt-2">
@@ -875,6 +885,7 @@
                                                                      <option value="null" disabled>-- Order Status --</option>
                                                                      <option value="order placed">Order placed</option>
                                                                      <option value="pending">Pending</option>
+                                                                     <option value="RETURN PLACED">Return Placed</option>
                                                                      <option value="">All</option>
                                                                    </select>
                                                                 </div>
@@ -917,8 +928,8 @@
                                                             <li>
                                                             <div class="cols">
                                                                 <div class="d-flex">
-                                                                    <button (click)="getAllOrdersList()" class="btn btn-info ft_size me-2">Apply Filters</button>
-                                                                    <button (click)="resetAllOrdersFilters()" class="btn btn-info ft_size">Reset Filters</button>
+                                                                    <button (click)="getAllOrdersList()" class="btn btn-info ft_size me-2">Apply</button>
+                                                                    <button (click)="resetAllOrdersFilters()" class="btn btn-info ft_size">Reset</button>
                                                                     
                                                                 </div>
                                                             </div>
@@ -955,7 +966,7 @@
                                                                         'badge-danger': orderslist?.payment_status === 'FAILED' || orderslist?.payment_status === 'UNPAID' ,
                                                                         'badge-secondary': orderslist?.payment_status === 'ON HOLD'}">{{orderslist.payment_status}}</span></td>
                                                                         <td><span class="badge" [ngClass]="{
-                                                                            'badge-success': orderslist?.order_status === 'ORDER PLACED',
+                                                                            'badge-success': orderslist?.order_status === 'ORDER PLACED'||orderslist?.order_status === 'RETURN PLACED',
                                                                             'badge-warning': orderslist?.order_status === 'INPROGRESS',
                                                                             'badge-secondary': orderslist?.order_status === 'NA',
                                                                             'badge-danger': orderslist?.order_status === 'CANCELLED'|| orderslist?.order_status === 'FAILED' }">{{orderslist?.order_status}}</span></td>                                                                   
@@ -965,6 +976,11 @@
                                                                 </tr>                                                                 
                                                             </tbody>
                                                         </table>
+                                                        <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!ordersList?.length">
+                                                            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                            <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                                                        </div>
                                                     </div>
                                                     <pagination-controls  previousLabel="Prev" nextLabel="Next"  (pageChange)="allOrdersPageChange(page = $event)"></pagination-controls>
                                                     <!-- <div  class="d-flex justify-content-between p-2">
@@ -1045,7 +1061,7 @@
                                                     <select class="form-select ft_size me-2" id="payment_status" formControlName="payment_status">
                                                         <option value="null" disabled>-- Payment Status--</option>                     
                                                         <option value="paid">Paid</option>
-                                                        <option value="Failed">Failed</option>
+                                                        <option value="Failed">Unpaid</option>
                                                         <option value="On Hold">On Hold</option>
                                                         <option value="">All</option>
                                                       </select>
@@ -1058,6 +1074,7 @@
                                                       <option value="In Progress">In Progress</option>
                                                       <option value="Cancelled">Cancelled</option>
                                                       <option value="Cancelled">Failed</option>
+                                                      <option value="RETURN PLACED">RETURN PLACED</option>
                                                       <option value="">All</option>
                                                     </select>
                                                  </div>
@@ -1100,8 +1117,8 @@
                                              <li>
                                              <div class="cols">
                                                  <div class="d-flex">
-                                                     <button (click)="getMyOrdersList()" class="btn btn-info ft_size me-2">Apply Filters</button>
-                                                     <button (click)="resetMyOrdersFilters()" class="btn btn-info ft_size">Reset Filters</button>
+                                                     <button (click)="getMyOrdersList()" class="btn btn-info ft_size me-2">Apply</button>
+                                                     <button (click)="resetMyOrdersFilters()" class="btn btn-info ft_size">Reset</button>
                                                      
                                                  </div>
                                              </div>
@@ -1137,24 +1154,69 @@
                                                          'badge-danger': myorderslist?.payment_status === 'FAILED' || myorderslist?.payment_status === 'UNPAID',
                                                          'badge-secondary': myorderslist?.payment_status === 'ON HOLD'}">{{myorderslist?.payment_status}}</span></td>
                                                      <td><span class="badge" [ngClass]="{
-                                                        'badge-success': myorderslist?.order_status === 'ORDER PLACED',
+                                                        'badge-success': myorderslist?.order_status === 'ORDER PLACED'|| myorderslist?.order_status === 'RETURN PLACED',
                                                         'badge-warning': myorderslist?.order_status === 'INPROGRESS',
                                                         'badge-secondary': myorderslist?.order_status === 'NA',
                                                         'badge-danger': myorderslist?.order_status === 'CANCELLED' || myorderslist?.order_status === 'FAILED'}">{{myorderslist?.order_status}}</span></td>
                                                      <td>{{myorderslist?.shipment_status}}</td>
-                                                     <td title="click here" (click)="shipmentAction(myorderslist?.order_id,myorderslist?.shipment_status,myorderslist?.shipment_id)">{{myorderslist?.shipment_actions}}</td>
+                                                     <td *ngIf="!(myorderslist?.shipment_status === 'PICKUP GENERATED'||
+                                                                myorderslist?.shipment_status === 'PICKUP BOOKED'||
+                                                                myorderslist?.shipment_status === 'OUT FOR PICKUP'||
+                                                                myorderslist?.shipment_status === 'PICKUP SCHEDULED')"
+                                                      title="click here"><button  (click)="shipmentAction(myorderslist?.order_item_id,myorderslist?.shipment_status,myorderslist?.shipment_id,myorderslist?.shipment_actions)"> {{myorderslist?.shipment_actions}}</button></td>
+                                                     <td *ngIf="myorderslist?.shipment_status === 'PICKUP GENERATED'||
+                                                                myorderslist?.shipment_status === 'PICKUP BOOKED'||
+                                                                myorderslist?.shipment_status === 'OUT FOR PICKUP'||
+                                                                myorderslist?.shipment_status === 'PICKUP SCHEDULED'">
+                                                        <select class="form-select ft_size me-2" (change)="downloadInvoices(myorderslist?.shipment_id,$event)">
+                                                            <option value="null" disabled >--Download--</option>                     
+                                                            <option value="DOWNLOAD MANIFEST">DOWNLOAD MANIFEST</option>
+                                                            <option value="DOWNLOAD LABEL">DOWNLOAD LABEL</option>
+                                                            <option value="DOWNLOAD INVOICE">DOWNLOAD INVOICE</option>
+                                                          </select>
+                                                     </td>
                                                      <td>{{myorderslist?.date | date}}</td>
                                                      <td>₹{{myorderslist?.total}}</td>
                                                  </tr>                                                                 
                                              </tbody>
                                          </table>
+                                         <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!ordersList?.length">
+                                            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                            <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                                        </div>
                                      </div>
                                      <pagination-controls  previousLabel="Prev" nextLabel="Next"  (pageChange)="myOrdersPageChange(page = $event)"></pagination-controls>
                                  </div>
                              </div>
                          </div>
                      </div> 
-                 
+                     <ng-template class="modal fade" #pickupModalLabel let-modal tabindex="-1" aria-labelledby="pickupModalLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-top modal-lg m-0">
+                          
+                          <div class="modal-content border-none">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="pickupModalLabel">Select Date</h5>
+                              <button aria-label="Close" (click)="modal.dismiss()" class="close e-close close-btn border-none bg-none"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></button>
+                            </div>
+                            
+                            <div class="modal-body">
+                                <div  class="col-md-12 col-lg-12 pl-0 pt-0 pr-0 pb-1">
+                                    <div class="date">
+                                        <label>Date</label>
+                                        <!-- <input type="date" name="pickup_date" [value]="pickup_date" [(ngModel)]="pickup_date" class="form-control date_input" id="pickup_date" placeholder="From" [min]="todayDate"/> -->
+                                        <input type="date" class="form-control date_input" name="pickup_date"[(ngModel)]="pickup_date" [value]="pickup_date" [min]="todayDate"/>                                                      
+                                    </div>                             
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" (click)="modal.dismiss()" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary" (click)="schedulepickup()">Save</button>
+                            </div>
+                          </div>
+                        </div>
+                    </ng-template>
+
                    <!--My order page end-->
      </div>
 
@@ -1183,7 +1245,7 @@
                                                <a class="btn mr-2 filter_btn" (click)="salesfilerEnabled = !salesfilerEnabled" >
                                                    <i aria-hidden="true" class="fa fa-filter"></i>
                                                </a>
-                                           <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Transactions</a>
+                                           <!-- <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Transactions</a> -->
                                            </div>
                                          <div class="collapse" [class.show]="salesfilerEnabled">
                                            <div class="card card_bg card_br mt-2">
@@ -1234,8 +1296,8 @@
                                           <li>
                                             <div class="cols">
                                                 <div class="d-flex">
-                                                    <button (click)="getSales()" class="btn btn-info me-2 ft_size">Apply Filters</button>
-                                                    <button (click)="resetSalesFilters()"  class="btn btn-info ft_size">Reset Filters</button>
+                                                    <button (click)="getSales()" class="btn btn-info me-2 ft_size">Apply</button>
+                                                    <button (click)="resetSalesFilters()"  class="btn btn-info ft_size">Reset</button>
                                                 </div>
                                             </div>
                                           </li>
@@ -1274,6 +1336,11 @@
                                                 </tr>    
                                             </tbody>
                                         </table>
+                                        <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!salesList?.length">
+                                            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                            <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                                        </div>
                                     </div>
                                     <pagination-controls  previousLabel="Prev" nextLabel="Next" (pageChange)="salesPageChange(page = $event)"></pagination-controls>
                                 </div>
@@ -1426,8 +1493,8 @@
                                                             <li>
                                                             <div class="cols">
                                                                 <div class="d-flex">
-                                                                    <button (click)="getUsersList()" class="btn btn-info me-2 ft_size">Apply Filters</button>
-                                                                    <button (click)="resetUsersFilters()" class="btn btn-info ft_size">Reset Filters</button>
+                                                                    <button (click)="getUsersList()" class="btn btn-info me-2 ft_size">Apply</button>
+                                                                    <button (click)="resetUsersFilters()" class="btn btn-info ft_size">Reset</button>
                                                                 </div>
                                                             </div>
                                                             </li>
@@ -1473,6 +1540,11 @@
                                                             </tr>                                                            
                                                             </tbody>
                                                     </table>
+                                                    <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!userList?.length">
+                                                        <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                        <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                                        <p>Please check if you have misspelt something or try searching with other words.</p>
+                                                    </div>
                                                 </div>
                                                 <pagination-controls  previousLabel="Prev" nextLabel="Next"  (pageChange)="usersPageChange(page = $event)"></pagination-controls>
                                                 <!-- <pagination-controls
@@ -1567,8 +1639,8 @@
                                                             <li>  
                                                             <div class="cols">
                                                                 <div class="d-flex">
-                                                                    <button (click)="getVendorList()" class="btn btn-info me-2 ft_size">Apply Filters</button>
-                                                                    <button (click)="resetVendorFilters()" class="btn btn-info ft_size">Reset Filters</button>
+                                                                    <button (click)="getVendorList()" class="btn btn-info me-2 ft_size">Apply</button>
+                                                                    <button (click)="resetVendorFilters()" class="btn btn-info ft_size">Reset</button>
                                                                 </div>
                                                                </div>
                                                               </li>
@@ -1612,6 +1684,11 @@
                                                                 </tr>
                                                                   </tbody>
                                                         </table>
+                                                        <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!vendorsList?.length">
+                                                            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                            <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                                                        </div>
                                                     </div>          
                                                     <pagination-controls  previousLabel="Prev" nextLabel="Next" (pageChange)="vendorPageChange(page = $event)"></pagination-controls>                         
                                                 </div>

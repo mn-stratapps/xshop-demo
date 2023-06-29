@@ -779,7 +779,7 @@ this.addAddressForm = this.formBuilder.group({
     city:['',Validators.required],
     state:['',Validators.required],
     country:['',Validators.required],
-    pincode:['',Validators.required],
+    pincode:['',[Validators.required,Validators.pattern("^[1-9]{6}$")]],
     is_default:['']
 })
 }

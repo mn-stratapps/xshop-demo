@@ -218,7 +218,16 @@ deleteProductsByAdmin(accessToken:any,id:any){
 shipNow(accessToken:any,oid:any){
   return this.http.get<any>(`${environment.apiUrl}/create-orders/`+accessToken+'/'+oid)
 }
-pickUp(accessToken:any,sid:any){
-  return this.http.get<any>(`${environment.apiUrl}/generate_pickup/`+accessToken+'/'+sid)
+pickUp(accessToken:any,sid:any,object:any){
+  return this.http.post<any>(`${environment.apiUrl}/generate_pickup/`+accessToken+'/'+sid,object)
+}
+downloadManifest(accessToken:any,sid:any){
+  return this.http.get<any>(`${environment.apiUrl}/generate/manifest/`+accessToken+'/'+sid)
+}
+downloadInvoice(accessToken:any,sid:any){
+  return this.http.get<any>(`${environment.apiUrl}/generate/invoice/`+accessToken+'/'+sid)
+}
+downloadLabel(accessToken:any,sid:any){
+  return this.http.get<any>(`${environment.apiUrl}/generate/label/`+accessToken+'/'+sid)
 }
 }

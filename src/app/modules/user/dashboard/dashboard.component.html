@@ -442,7 +442,9 @@
                                                                 <div class="field-label">Pin Code </div>
                                                                 <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
                                                                 <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
-                                                                    <div *ngIf="f.pincode.errors.required">pincode is required</div>
+                                                                    <div *ngIf="f.pincode.errors?.required">pincode is required</div>
+                                                                    <div *ngIf="f.pincode.errors?.pattern">Enter valid pincode</div>
+
                                                                 </div>
                                                             </div>
                                                        

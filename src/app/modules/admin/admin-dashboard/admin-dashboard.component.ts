@@ -1,5 +1,5 @@
 import { identifierName } from '@angular/compiler';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -66,6 +66,9 @@ price_to:string;
     containWithinAspectRatio = false;
     transform: ImageTransform = {};
     maxDate:any;
+    next10Days:any;
+    todayDate:any;
+    pickup_date:any;
     page: number = 1;
   // count: number = 0;
   // tableSize: number = 7;
@@ -88,7 +91,9 @@ price_to:string;
     width="";
     height="";
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
-   
+@ViewChild('pickupModalLabel') pickupModalLabel : any;
+  shipment_id: any;
+
 constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
   private router: Router,private httpService:AuthenticationService,private modalService: NgbModal, datepipe:DatePipe,
   private toasterService:ToastrService){
@@ -99,6 +104,9 @@ constructor(private route: ActivatedRoute,private formBuilder:FormBuilder,
 //   this.isAddProductUrl = false;
 // }
 this.maxDate=datepipe.transform(new Date(),"yyyy-MM-dd");
+this.next10Days=datepipe.transform(new Date(),"yyyy-MM-dd")
+// let date = n
+this.todayDate=datepipe.transform(new Date(),"yyyy-MM-dd")
   }
 ngOnInit(){
   this.getdsahboardCount();
@@ -757,9 +765,9 @@ viewAdminProducts(){
   this.httpService.viewAdminProducts(formadminproductsObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.adminProducts = data.adminproducts_data;
-      this.totalItems = data.total_products;
-      this.itemsPerPage = data.products_per_page;
+      this.adminProducts = data?.adminproducts_data;
+      this.totalItems = data?.total_products;
+      this.itemsPerPage = data?.products_per_page;
        console.log(this.adminProducts);
     },
     error:(error)=>{
@@ -865,9 +873,9 @@ viewAllProducts(){
   this.httpService.viewAllProducts(formObj,this.accessToken)
   .subscribe({
     next:(data) =>{
-      this.allProducts = data.products_data;
-      this.totalItems = data.total_products;
-      this.itemsPerPage = data.products_per_page;
+      this.allProducts = data?.products_data;
+      this.totalItems = data?.total_products;
+      this.itemsPerPage = data?.products_per_page;
        console.log(this.allProducts);
     },
     error:(error)=>{
@@ -914,38 +922,127 @@ deleteProductByAdmin(id:any){
    }
   })
 }
-shipmentAction(oid:any,status:any,shipment_id:any){
-if(status === "ORDER PLACED"){
-  this.httpService.shipNow(oid,this.accessToken)
-  .subscribe(
+shipmentAction(oid:any,status:any,shipment_id:any,shipment_action:any){
+if(shipment_action === "SHIP NOW"){
+  this.httpService.shipNow(this.accessToken,oid)
+    .subscribe(
     {
-      next:(data) => {
+      next:(data:any) => {
         console.log(data);
-        this.viewAdminProducts();
+        // this.Pickup(data.shipment_id);
+        this.shipment_id=data.shipment_id
+        this.modalService.open(this.pickupModalLabel)
+
       },
       error:(error)=>{
         this.error = error;        
         console.log(error) 
     }
   });
- }
-if(status === "NEW"){
-  this.httpService.pickUp(this.accessToken,shipment_id)
-  .subscribe(
-    {
-      next:(data) => {
-        console.log(data);
-        this.viewAdminProducts();
-      },
-      error:(error)=>{
-        this.error = error;        
-        console.log(error) 
-    }
-  });
+
 }
-if(status === "PICKUP SCHEDULED"){}
+if(shipment_action ==="PICKUP"){
+  this.modalService.open(this.pickupModalLabel)
+  this.shipment_id=shipment_id;
+}
+if(status === "PICKUP SCHEDULED"){
+
+}
 if(status === "IN TRANSIT"){}
 if(status === "DELIVERED"){}
 }
+schedulepickup(){
+  const obj ={
+    'pickup_date': this.pickup_date,
+  }
+this.httpService.pickUp(this.accessToken,this.shipment_id,obj)
+.subscribe(
+  {
+    next:(data) => {
+      console.log(data);
+      this.viewAdminProducts();
+    },
+    error:(error)=>{
+      this.error = error;        
+      console.log(error) 
+  }
+});
+}
+downloadInvoices(shipment_id,value:any){
+  if(value.target.value ==='DOWNLOAD INVOICE'){ 
+      this.httpService.downloadInvoice(this.accessToken,shipment_id)
+      .subscribe(
+        {
+          next:(data) => {
+            Swal.fire({
+              title: 'Download Invoice',
+              text: "Do you want to download Invoice",
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes'
+            }).then((result) => {
+              if(result.isConfirmed){
+                window.location.href = data.invoice_url;
+              }
+            })
+          },
+          error:(error)=>{
+            this.error = error;        
+            console.log(error) 
+        }
+      });
+     
+    
+  }
+  if(value.target.value === 'DOWNLOAD LABEL'){
+    this.httpService.downloadLabel(this.accessToken,shipment_id)
+    .subscribe(
+      {
+        next:(data) => {
+          Swal.fire({
+            title: 'Download Label',
+            text: "Do you want to download Label",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+          }).then((result) => {
+            if(result.isConfirmed){
+              window.location.href = data.label_url;
+            }
+          })
+          
+        },
+        error:(error)=>{
+          this.error = error;        
+          console.log(error) 
+      }
+    });
+  }
+  if(value.target.value === 'DOWNLOAD MANIFEST'){
+    this.httpService.downloadManifest(this.accessToken,shipment_id)
+    .subscribe(
+      {
+        next:(data) => {
+          Swal.fire({
+            title: 'Download Manifest',
+            text: "Do you want to download Manifest",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+          }).then((result) => {
+            if(result.isConfirmed){
+              window.location.href = data.manifest_url;
+            }
+          })        },
+        error:(error)=>{
+          this.error = error;        
+          console.log(error) 
+      }
+    });
+  }
 
+}
 }
