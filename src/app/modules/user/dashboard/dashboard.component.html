@@ -188,7 +188,8 @@
                                                         <div class="top">
                                                             <h6>{{address.name}} <span>{{address.type_id}}</span></h6>
                                                         </div>
-                                                        <div class="middle" style="height:120px;">
+                                                        <div class="middle" style="height:165px;">
+                                                            <div class="btn btn-secondary default_btn">Default</div>
                                                             <div class="address">
                                                                 <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
                                                                 <p>{{address.city}}, {{address.state}}, {{address.country}}</p>
@@ -707,7 +708,7 @@
                                                                 </div>
                                                             </div>
                                                             <div *ngIf="!inputtext" class="product-buttons mb-3 mt-3">
-                                                                <button (click)="namesUpdate()" class="btn btn-danger btns">save</button>
+                                                                <button (click)="namesUpdate()" class="btn btn-danger btns mr-1">save</button>
                                                                 <button (click)="displayTextbox()" class="btn btn-light btns">cancel</button>
                                                             </div>
                                                     </div>
@@ -732,7 +733,7 @@
                                                                 </div>
                                                                         
                                                                 <div *ngIf="!usernametext" class="product-buttons mb-4">
-                                                                    <button (click)="usernameUpdate()"  class="btn btn-danger btns">save</button>
+                                                                    <button (click)="usernameUpdate()"  class="btn btn-danger btns mr-1">save</button>
                                                                     <button (click)="editUsernameEdit()" class="btn btn-light btns">cancel</button>
                                                                 </div>
                                                              </div>
@@ -746,7 +747,7 @@
                                                                     <input autocomplete="off" type="text" class="email-disable form-control" name="mobile_number"[(ngModel)]="userData.mobile_number" [value]="userData.mobile_number" [disabled]='mobiletext' >
                                                             </div>
                                                             <div *ngIf="!mobiletext" class="product-buttons mb-4">
-                                                                <button (click)="mobilenumberUpdate()" class="btn btn-danger btns">save</button>
+                                                                <button (click)="mobilenumberUpdate()" class="btn btn-danger btns mr-1">save</button>
                                                                 <button (click)="mobileEdit()"class="btn btn-light btns">cancel</button>
                                                             </div>
                                                              </div>
@@ -790,7 +791,7 @@
                                                             </li>
                                                             </ul> -->
                                                             <div *ngIf="!emailtext" class="product-buttons mb-4">
-                                                                <button (click)="emailUpdate()"type="button" class="btn btn-danger btns" >save</button>
+                                                                <button (click)="emailUpdate()"type="button" class="btn btn-danger btns mr-1" >save</button>
                                                                 <button (click)="emailEdit()" class="btn btn-light btns">cancel</button>
                                                             </div>
                                                         </div>                                                
@@ -917,7 +918,7 @@
                                             </li>
                                             </ul> -->
                                             <div>
-                                                <button (click)="passwordUpdate()" class="btn btn-danger btns">save</button>
+                                                <button (click)="passwordUpdate()" class="btn btn-danger btns mr-1">save</button>
                                                 <button (click)="passwordEdit()" class="btn btn-light btns">cancel</button>
                                             </div>
                                         </div>                                                

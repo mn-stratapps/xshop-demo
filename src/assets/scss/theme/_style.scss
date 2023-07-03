@@ -15135,7 +15135,7 @@
         display: -ms-flexbox;
         display: flex;
         width: 100%;
-        background-color: #f8f8f8;
+        background-color: #ffffff;
         overflow: auto;
         -ms-flex-wrap: unset;
         flex-wrap: unset;
@@ -15602,4 +15602,96 @@
         transform: scale(1);
         opacity: 1
     }
+}
+// 26-06-2023
+.shipping_btn{
+    background-color: #f41b35;
+    color: #ffffff;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+    position: relative;
+}
+
+.status-strip-green{
+    border: 0.5px solid #008e27;
+    background-color: #e2f5e8;
+    color: #008e27;
+}
+.status-strip{
+    height: 16px;
+    margin: 0 0 0 14px;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 12px!important;
+}
+.headingCol{
+    color: #000;
+    font-size: 14px;
+    font-weight: 550;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 10px;
+    margin-bottom: 1.33rem;
+}
+.detailscol{
+    margin: 16px 0;
+    padding: 10px 16px 16px;
+    border-radius: 8px;
+    box-shadow: 0 0px 2px rgba(0,0,0,.161);
+    background-color: #fff;
+}
+.text-gray{
+        color: #888;
+ }
+ .text-light-black {
+    color: #191919;
+}
+.prepaid{
+    text-transform: capitalize;
+    color: #008e27;
+}
+.payment{
+    height: 1.33rem;
+    width: 3.8rem;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    padding: 2px 6px;
+    justify-content: center;
+    text-align: center;
+    background-color: #f4f4f4;
+    font-size: 10px;
+}
+.activity-box{
+    color: #191919;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: #f4f7f9;
+    margin-bottom: 5px;
+    width: 289px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.default_btn{
+    border-radius: 5px;
+    margin-bottom: 7px;
+    font-size: 13px!important;
+    padding: 3px 13px;
+}
+.fs-18px{
+    font-size: 18px;
+    color: #191919;
+    font-weight: 600;
+}
+.border_bm{
+    border-bottom: 1px solid #edeef4;;
+}
+.nav-link{
+    color:#000000;
+}
+.reactive_acc{
+    padding: 140px 76px 140px 39px!important;
 }

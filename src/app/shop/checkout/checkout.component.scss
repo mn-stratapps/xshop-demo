@@ -23,7 +23,6 @@
     border-radius: 4px;
 }
 .qtys{
- color:#000000;
  font-size:21px;
  padding-left: 94px;
  font-weight: 600;
@@ -44,4 +43,16 @@
 }
 .accordion-item{
     border-radius: 8px!important; 
+}
+@media(max-width:578px){
+    .mb-btn{
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    .pqt{
+        padding-left:0px;
+    } 
+    .qtys{
+        padding-left: 38px;
+    }
 }

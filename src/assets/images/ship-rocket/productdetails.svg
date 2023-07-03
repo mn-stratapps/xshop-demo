@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+    <g data-name="Group 23992" transform="translate(-33 -1036)">
+        <circle data-name="Ellipse 549" cx="23" cy="23" r="23" transform="translate(33 1036)" style="fill:#ede8e8"/>
+        <path data-name="Rectangle 9864" transform="translate(50.67 1059.747)" style="fill:#fff" d="M0 0h13v10H0z"/>
+        <path data-name="Rectangle 9865" transform="translate(51.67 1050.747)" style="fill:#fff" d="M0 0h10v10H0z"/>
+        <path data-name="Path 27449" d="M129.144 51.8h-17.3a.792.792 0 0 0-.788.788V64.506l.034 6.829a3.967 3.967 0 0 0 3.941 3.959h10.952a3.964 3.964 0 0 0 3.955-3.959V52.589a.8.8 0 0 0-.793-.788zm-13.157 17.99a.786.786 0 0 1 .788-.788h7.446a.788.788 0 0 1 0 1.576h-7.446a.786.786 0 0 1-.788-.788zm8.234-2.054h-7.446a.788.788 0 1 1 0-1.576h7.446a.788.788 0 1 1 0 1.576zm-7.707-4.045v-6.386a.792.792 0 0 1 .788-.788h6.387a.789.789 0 0 1 .788.788v6.387a.789.789 0 0 1-.788.788H117.3a.789.789 0 0 1-.786-.788z" transform="translate(-64.054 995.199)" style="fill:#0ec6a8"/>
+        <path data-name="Path 27450" d="M369.6 174.04h-1.62v.667a.788.788 0 1 1-1.576 0v-.667h-1.622v4.811h4.811v-4.811z" transform="translate(-310.75 879.253)" style="fill:#03846f"/>
+    </g>
+</svg>

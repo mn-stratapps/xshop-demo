@@ -1700,6 +1700,7 @@ body {
             &.active {
                 background-color: $dark-body;
                 transition: all 0.3s ease;
+                color:#cdd4da;
             }
         }
     }
@@ -2444,11 +2445,69 @@ body {
         color: #cdd4da;
     }
     .collection-product-wrapper .product-wrapper-grid .product-box{
-    border-color: #404040;
+    border: #404040;
     background-color: #2b2b2b;
     transition: all 0.3s ease;
     }
     .pincode-deliveryContainer>h4 {
+        color: #cdd4da;
+    }
+    .address-box {
+        background-color: #2b2b2b!important; 
+        border:1px solid #404040!important; 
+        .top {
+            h6 {
+                color: #cdd4da!important;  
+            }
+        }
+        .middle .address p {
+            color: #cdd4da!important;
+        } 
+        .number p {
+            color:#cdd4da!important;
+        }
+    }
+    @media (max-width: 991px){
+        .dashboard-section .dashboard-sidebar .faq-tab .nav-tabs {
+            background-color: #232323;
+        }
+    }
+    .accordion-button {
+        background-color: #232323;
+        color:#cdd4da;
+    }
+    .accordion-item {
+        background-color: #232323;
+        border:1px solid #404040!important;   
+        .form-check .address_info {
+            background-color: #232323;  
+            border:1px solid #404040; 
+        }
+    }
+    .card_bg {
+        background-color: #232323;
+        border: 1px solid #404040;
+    }
+    .detailscol {
+        background-color: #232323;
+        border: 1px solid #404040;  
+    }
+    .headingCol{
+        color: #cfd4da; 
+        border-bottom: 1px solid #404040;  
+    }
+    .fs-18px{
+        color: #cfd4da;
+    }
+    .border_bm{
+        border-bottom: 1px solid #404040;
+    }
+    .text-light-black {
+        color: #cfd4da;
+    }
+    .activity-box {
+        background-color: #232323;
+        border: 1px solid #404040;  
         color: #cdd4da;
     }
 }

@@ -46,6 +46,7 @@ import { VendorProfileComponent } from '../modules/vendor/vendor-profile/vendor-
 import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/vendor-dashboard.component';
 
 import { ImageCropperModule } from "../modules/image-cropper/image-cropper.module";
+import { ShipRocketComponent } from './ship-rocket/ship-rocket.component';
 
 @NgModule({
     declarations: [
@@ -83,6 +84,7 @@ import { ImageCropperModule } from "../modules/image-cropper/image-cropper.modul
         BecomeVendorComponent,
         VendorProfileComponent,
         VendorDashboardComponent,
+        ShipRocketComponent,
         
     ],
     imports: [

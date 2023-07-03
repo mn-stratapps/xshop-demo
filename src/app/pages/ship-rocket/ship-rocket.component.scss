@@ -1,0 +1,35 @@
+.custom_display{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.ord_details{
+    align-items: center;
+    display: flex;
+}
+ .click-to-copy {
+        margin-left: 4px;
+        cursor: pointer;
+        height: 10px;
+        margin-bottom: 2px;
+        margin-top: -3px;
+    }
+    .mr-14px{
+        margin-right: 1.16rem;
+    }
+    .nav-link{
+        border: transparent;
+    }
+     .nav-link.active{
+    border-bottom: 2px solid #6d38b5;
+    }
+    .shiped_radio{
+        margin-right: 12px;
+        width: 16px;
+    }
+    .fs-10px{
+        font-size: 12px;
+    }
+    .br_radius{
+     border-radius: 5px;
+    }
