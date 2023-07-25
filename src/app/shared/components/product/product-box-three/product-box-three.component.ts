@@ -65,6 +65,7 @@ export class ProductBoxThreeComponent implements OnInit {
     this.productService.addToWishlist(product)
     .subscribe({
       next:(data)=>{
+        // this.wishlist=data;
         console.log(data)
         this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
@@ -96,11 +97,8 @@ export class ProductBoxThreeComponent implements OnInit {
         },
         error:(error)=>{
           console.log(error)
-        }
-  
+        } 
       })
-    
-
   }
 
   addToCompare(product: any) {

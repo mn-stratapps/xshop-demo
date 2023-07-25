@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
   }
   getUserProducts(){
     this.productService.cartItems.subscribe(response =>{
-      this.products = response
+      this.products = response;
       console.log(this.products)
       this.productService.setcartItems(this.products)
     } )

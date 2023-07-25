@@ -510,7 +510,7 @@
                                                         totalItems: totalItems
                                                       }">
                                                         <td>
-                                                            <a [routerLink]="['/shop/product/left/sidebar/',myproducts.title.replace(' ', '-')]">
+                                                            <a [routerLink]="['/shop/product/left/sidebar/',myproducts.title.replace(' ', '-'),myproducts.product_id]">
                                                                 <img src="{{myproducts.image}}"
                                                                     class="blur-up lazyloaded" alt="">
                                                             </a>
@@ -534,7 +534,7 @@
                                                             <span class="theme-color fs-6">₹{{myproducts.item_price | number: '1.0-2'}}</span>
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)">
+                                                            <a [routerLink]="['/pages/ship-rocket/',myproducts?.order_item_id]" >
                                                                 <i class="fa fa-eye text-theme"></i>
                                                             </a>
                                                         </td>
@@ -575,7 +575,7 @@
                                                 <tbody *ngFor="let wishlist of wishlistProducts">
                                                     <tr>
                                                         <td>
-                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-')]">
+                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-'),wishlist.id]">
                                                               <img class="blur-up lazyloaded" [src]="wishlist.images[0].src" [alt]="wishlist.images[0].alt">
                                                             </a>
                                                         </td>
@@ -583,7 +583,7 @@
                                                             <p>{{ wishlist.stock > 0 ? 'in stock' : 'out of stock' }}</p>
                                                         </td>
                                                         <td>
-                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-')]">{{ wishlist.title | titlecase |slice:0:30}}</a>
+                                                            <a [routerLink]="['/shop/product/left/sidebar/', wishlist.title.replace(' ', '-'),wishlist.id]">{{ wishlist.title | titlecase |slice:0:30}}</a>
                                                         </td>
                                                         <td>
                                                             <span class="theme-color fs-6">{{ (wishlist.price | discount:wishlist) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span>

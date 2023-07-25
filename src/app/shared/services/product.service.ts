@@ -280,11 +280,17 @@ public addToWishlist(product): any {
   checkoutCart(accessToken:any){
     return this.http.get<any>(`${environment.apiUrl}/ordercart/`+accessToken)
   }
+  checkoutBuynow(accessToken:any){
+    return this.http.get<any>(`${environment.apiUrl}/buynowget/`+accessToken)
+  }
   selectedAddress(accessToken:any,object:any){
     return this.http.put<any>(`${environment.apiUrl}/address/`+accessToken,object)
   }
-  checkoutPayment(accessToken:any,object:any){
-    return this.http.post<any>(`${environment.apiUrl}/checkout/`+accessToken,object)
+  checkoutPayment(accessToken:any){
+    return this.http.get<any>(`${environment.apiUrl}/checkout/`+accessToken)
+  }
+  removeFromCheckout(accessToken:any,product_id:any){
+    return this.http.post<any>(`${environment.apiUrl}/productremove/`+accessToken,{product_id})
   }
   paymentStatus(accessToken:any,stripeId:any){
     return this.http.get<any>(`${environment.apiUrl}/payment/`+accessToken+'/'+stripeId)
@@ -297,6 +303,22 @@ public addToWishlist(product): any {
     return this.http.post<any>(`${environment.apiUrl}/buynow/`+accessToken,{product_id,quantity})
 
   }
+  orderDetails(accessToken:any,orderitem:any){
+    return this.http.post<any>(`${environment.apiUrl}/view-order_details/`+accessToken,{orderitem})
+  }
+  adminorderDetails(accessToken:any,orderitem:any){
+    return this.http.post<any>(`${environment.apiUrl}/order/detail/page/`+accessToken,{orderitem}) 
+  }
+  productReviews(accessToken:any,data:any){
+    this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
+    return this.http.post<any>(`${environment.apiUrl}/productreview/`+accessToken,data)
+  }
+  requestCancellation(accessToken:any,data:any){
+    return this.http.post<any>(`${environment.apiUrl}/ordercancel/`+accessToken,{data})
+  }
+  // cancelShipmentorder(accessToken:any,oid:any){
+  //   return this.http.get<any>(`${environment.apiUrl}/cancel-order/`+accessToken+'/'+oid)
+  // }
   // Update Cart Quantity
   public updateCartQuantity(product: Product, quantity: number,accessToken:any){
     let id=product.id;

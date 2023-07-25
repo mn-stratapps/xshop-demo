@@ -54,7 +54,7 @@
   </div>
   <div class="product-detail" style="padding: 0px 0px 10px 10px;">
     <div>
-      <bar-rating [rate]="5" [readOnly]="true"></bar-rating>
+      <bar-rating [(rate)]="product.Rating" [readOnly]="true"></bar-rating>
       <a [routerLink]="['/shop/product/left/sidebar/', product?.title.replace(' ', '-'), product?.id]">
         <h6>{{ product?.title | titlecase | slice:0:30}}</h6>
       </a>

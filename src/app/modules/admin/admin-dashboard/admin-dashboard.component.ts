@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { User, Userlist, Metrics } from 'src/app/core/models/user';
 // import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../image-cropper/interfaces';
-import { base64ToFile } from '../../image-cropper/utils/blob.utils';
+// import { base64ToFile } from '../../image-cropper/utils/blob.utils';
 import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
@@ -960,6 +960,10 @@ this.httpService.pickUp(this.accessToken,this.shipment_id,obj)
   {
     next:(data) => {
       console.log(data);
+      Swal.fire({
+        icon: 'success',
+        text: data.message,
+      })
       this.viewAdminProducts();
     },
     error:(error)=>{
@@ -977,6 +981,13 @@ downloadInvoices(shipment_id,value:any){
             Swal.fire({
               title: 'Download Invoice',
               text: "Do you want to download Invoice",
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              },        
+              icon:'question',    
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
@@ -1001,6 +1012,13 @@ downloadInvoices(shipment_id,value:any){
       {
         next:(data) => {
           Swal.fire({
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }, 
+            icon:'question',
             title: 'Download Label',
             text: "Do you want to download Label",
             showCancelButton: true,
@@ -1026,6 +1044,13 @@ downloadInvoices(shipment_id,value:any){
       {
         next:(data) => {
           Swal.fire({
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }, 
+            icon:'question',
             title: 'Download Manifest',
             text: "Do you want to download Manifest",
             showCancelButton: true,

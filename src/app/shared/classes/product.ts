@@ -16,11 +16,13 @@ export interface Product {
     tags?: any[];
     variants?: Variants[];
     images?: Images[];
+    review?: any[];
     product_name?:string;
     unit_price?:number;
     dis_price?:number;
     image1_url?:string;
     sold_by?:string;
+    Rating?:string;
 }
 
 export interface Variants {
@@ -38,4 +40,13 @@ export interface Images {
     alt?: string;
     src?: string;
     variant_id?: any[];
+}
+export interface review {
+    username?: string,
+    created_at?:string,
+    images?:string,
+    comments?:string,
+    rating?:string,
+    product_id?:string,
+           
 }

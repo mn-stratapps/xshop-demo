@@ -332,18 +332,68 @@
                         <div class="col-lg-6 col-sm-12 col-xs-12">
                             <div class="checkout-details">
                                 <div class="order-box">
-                                    <div class="title-box">
+                                    <!-- <div class="title-box">
                                         <div class="d-flex justify-content-between">Product<h3 class="qtys">Quantity</h3> <span> Total</span></div>
-                                    </div>
-                                    <ul class="qty" *ngIf='checkoutProductData?.length'>
+                                    </div> -->
+                                    <!-- <ul class="qty" *ngIf='checkoutProductData?.length'>
                                         <li *ngFor="let product of checkoutProductData">
                                           <label class="prd">{{ product.product_name | slice:0:26 }}</label>
                                            <label class="pqt">{{ product.quantity }}</label>
                                         	<span>
                                                 {{ (product.total_product_value) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
                                             </span>
+                                            <span>
+                                              <i class="fa fa-times" aria-hidden="true"></i>
+                                            </span>
                                         </li>
-                                    </ul>
+                                    </ul> -->
+                                   
+                                  <div *ngIf='checkoutProductData?.length' class="col-lg-12 col-sm-12 col-xs-12">
+                                    <table class="table mb_20">
+                                      <thead>
+                                        <tr>
+                                          <th class="fs-20">Product</th>
+                                          <th class="fs-20">Quantity</th>
+                                          <th class="fs-20">Total</th>
+                                          <th class="fs-20">Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let product of checkoutProductData">
+                                          <td class="fs-16">
+                                            {{ product.product_name | slice:0:26 }}
+                                            <span *ngIf="product?.estimated_delivery_date" style="display: flex;font-size: 12px;">Get it by: {{product?.estimated_delivery_date}}</span>
+                                             </td>
+                                             <td class="fs-16">
+                                            {{ product.quantity }}
+                                             </td>
+                                             <td class="fs-16">
+                                            {{ (product.total_product_value) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
+                                            </td>
+                                            <td class="fs-16">
+                                              <i (click)="removeFromCheckout(product?.product_id)" class="fa fa-trash" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="undeliveredProductData?.length">
+                                          <h6 style="color: red;display: flex;">These Products are not deliverable to your location</h6>
+                                        </tr>
+                                        <tr *ngFor="let product of undeliveredProductData">
+                                          <td class="fs-16">
+                                            {{ product.product_name | slice:0:26 }}
+                                             </td>
+                                             <td class="fs-16">
+                                            {{ product.quantity }}
+                                             </td>
+                                             <td class="fs-16">
+                                            {{ (product.total_product_value) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
+                                            </td>
+                                            <td class="fs-16">
+                                              <i (click)="removeFromCheckout(product?.product_id)" class="fa fa-trash" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
                                     <ul class="qty" *ngIf='!checkoutProductData?.length'>
                                         <li class="empty-checkout"> There are no products in cart </li>
                                     </ul>
@@ -351,19 +401,22 @@
                                         <li>
                                         	<!-- Subtotal <span class="count">{{ getTotal | async | currency:productService?.Currency.currency:'symbol'}}</span> -->
                                         </li>
-                                        <li *ngIf='checkoutProductData?.length'>
-                                        	Shipping
+                                        <ul class="total" *ngIf='checkoutProductData?.length'>
+                                          <li>Shipping Fee <span>{{shipping_charge |currency:productService?.Currency.currency:'symbol'}}</span></li>
+                                          <li>Other Charges<span>{{Other_charges |currency:productService?.Currency.currency:'symbol'}}</span></li>
                                          <div class="shipping">
                                             <div class="shopping-option">
-                                                <input type="radio" name="shipping" checked="checked" id="free-shipping">
-                                                <label for="free-shipping">Shipping</label>
+                                                <!-- <input type="radio" name="shipping" checked="checked" id="free-shipping">
+                                                <label for="free-shipping">Shipping</label> -->
+                                                <!-- <h5>{{shipping_charge |currency:productService?.Currency.currency:'symbol'}}</h5>
+                                                <h5>{{Other_charges |currency:productService?.Currency.currency:'symbol'}}</h5> -->
                                             </div>
-                                            <div class="shopping-option">
+                                            <!-- <div class="shopping-option">
                                                 <input type="radio"  name="shipping" id="local-pickup">
                                                 <label for="local-pickup">Local Pickup</label>
-                                            </div>
+                                            </div> -->
                                          </div>
-                                        </li>
+                                        </ul>
                                     </ul>
                                     <ul class="total">
                                         <!-- <li>Total <span class="count">{{ getTotal | async | currency:productService?.Currency.currency:'symbol'}}</span></li> -->

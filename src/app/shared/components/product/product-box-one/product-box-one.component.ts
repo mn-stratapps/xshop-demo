@@ -121,7 +121,7 @@ export class ProductBoxOneComponent implements OnInit {
     .subscribe({
       next:(data)=>{
         console.log(data)
-        this.wishlist=data;
+        // this.wishlist=data;
         this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
           this.toastrService.success('Product added to wishlist.');

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import Swal from 'sweetalert2';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
+
 
 
 @Component({
@@ -37,7 +39,8 @@ errorMessage:'';
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      // password: ['', [Validators.required,Validators.pattern('^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$')]],
+      password:['', RxwebValidators.password({validation:{maxLength: 10,minLength: 5,digit: true,specialCharacter: true}} )], 
       confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
       mobile_number:['', [Validators.required,
       Validators.pattern("^[0-9]{10}$"),

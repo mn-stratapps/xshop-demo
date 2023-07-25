@@ -1140,8 +1140,10 @@
                                                      <th scope="col">Order Status</th>
                                                      <th scope="col">Shipment Status</th>
                                                      <th scope="col">Shipment Action</th>
-                                                     <th scope="col">Date</th>
+                                                     <!-- <th scope="col">Date</th> -->
                                                      <th scope="col">Total</th>
+                                                     <th scope="col">View</th>
+
                                                  </tr>
                                              </thead>
                                              <tbody>
@@ -1175,8 +1177,13 @@
                                                             <option value="DOWNLOAD INVOICE">DOWNLOAD INVOICE</option>
                                                           </select>
                                                      </td>
-                                                     <td>{{myorderslist?.date | date}}</td>
+                                                     <!-- <td>{{myorderslist?.date | date}}</td> -->
                                                      <td>₹{{myorderslist?.total}}</td>
+                                                     <td>
+                                                        <a [routerLink]="['/pages/admin/ship-rocket/',myorderslist?.order_item_id]" >
+                                                            <i class="fa fa-eye text-theme"></i>
+                                                        </a>
+                                                    </td>
                                                  </tr>                                                                 
                                              </tbody>
                                          </table>
@@ -2466,6 +2473,202 @@
                                     </div>
                                 </div> -->
                         <!--invoice end-->
+                        <div class="card_bg">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                                    <div class="add_product mb-2">
+                                      <div class="product_detail d-flex align-items-center">
+                                        <i class="fa fa-chevron-left me-2"></i> 
+                                        <h4 class ="mt-1 f-w-600">Add Product</h4>
+                                      </div>
+                                    </div>
+                                    <div class="card_bg p-3 mb-3">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                                            <label class="form-label">Title</label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                         </div>
+                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                                            <label class="form-label">Description</label>
+                                            <textarea rows="3" id="description" name="description" formcontrolname="description" class="form-control" required=""></textarea>
+                                         </div>
+                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                                         <form>
+                                            <label class="form-label">Media</label>
+                                            <div class="file-drop-area mb-3">
+                                                <div class="file-drop-icon fa fa-cloud-upload"></div><span class="file-drop-message">Add Image</span>
+                                                <input class="file-drop-input" type="file">
+                                              </div>
+                                          </form>
+                                        </div>
+                                    </div>
+                                 </div>
+                                  <div class="col-xs-12 col-sm-3 col-sm-3 col-lg-3 mrgt_30">
+                                    <div class="card_bg p-3 mb-3">
+                                       <div class="Categories mb-3">
+                                         <select class="form-select me-2 ft_size" id="category">
+                                          <option value="null">-- Select Category --</option>                     
+                                           <option value="Mobiles">Mobiles</option>
+                                            <option value="laptops">Laptops</option>
+                                            <option value="watches">Watches</option>
+                                            <option value="">All</option>
+                                        </select>
+                                     </div>
+                                      <div class="Brand mb-3">
+                                         <select class="form-select me-2 ft_size" id="Brand">
+                                          <option value="null">-- Select Brand --</option>                     
+                                           <option value=""></option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                        </select>
+                                     </div>
+                                     <div class="collection mb-3">
+                                        <select  class="form-select ft_size me-2"  id="product_type">
+                                         <option value="null" >-- Select Type --</option>
+                                         <option value="electronics">Electronics</option>
+                                         <option value="gadgets">Gadgets</option>
+                                         <option value="accessories">Accessories</option>
+                                         <option value="">All</option>
+                                      </select>
+                                     </div>
+                                      <div class="Status">
+                                        <select  class="form-select ft_size me-2"  id="select_type">
+                                         <option value="null" >-- Select Status --</option>
+                                         <option value="electronics"></option>
+                                         <option value="gadgets"></option>
+                                         <option value="accessories"></option>
+                                         <option value=""></option>
+                                      </select>
+                                     </div>
+                                   </div>
+                                </div>
+                            </div>
+                                 <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="card_bg p-3 mb-3">
+                                        <div class="row">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                          <h4 class="f-w-600">Variants</h4>
+                                         </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label"> Product Color <span class="required_s">*</span> </label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                         </div> 
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">SKU <span class="required_s">*</span> </label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                         </div>
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Product Quantity <span class="required_s">*</span> </label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                              <!-- <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and separated by commas.</div> -->
+                                         </div> 
+                                         <!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Stock <span class="required_s">*</span> </label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                         </div> -->
+                                         <div class="row">
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Product Price <span class="required_s">*</span> </label>
+                                            <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                            </div>
+                                              <div class="form-text">Enter MRP.</div>
+                                         </div> 
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Discount <span class="required_s">*</span> </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                                              <input type="text" id="title" class="form-control" placeholder="%" required="">
+                                              </div>
+                                              <div class="form-text">Enter Discount in Percentage</div>
+                                         </div>
+                                         </div>
+                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                                            <input id="chk-ani" type="checkbox" class="checkbox_animated">
+                                            Additional Charge on this product
+                                           </div>
+                                           <div class="form-text mb-2">On selecting includes(Application Fee, Shipping Fee, Payment Gateway Fee)</div>
+
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Selling Price <span class="required_s">*</span> </label>
+                                              <input type="text" id="title" class="form-control" placeholder="Generates based on selecting additional charges" required="">
+                                         </div>
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <form>
+                                               <label class="form-label">Media</label>
+                                               <div class="file-drop-area mb-3">
+                                                   <div class="file-drop-icon fa fa-cloud-upload"></div><span class="file-drop-message">Add Image</span>
+                                                   <input class="file-drop-input" type="file">
+                                                 </div>
+                                             </form>
+                                           </div>
+                                         <div>
+                                        
+                                        </div>
+                                           <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <input id="chk-ani" type="checkbox" class="checkbox_animated">
+                                            Additional Charge on this product
+                                           </div> -->
+                                        </div>  
+                                    </div>
+                                    <div class="card_bg p-3 mb-3">
+                                       <div class="row">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                          <h4 class="f-w-600">Shipping</h4>
+                                         </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Product Weight(Kg)</label>
+                                            <div class="input-group">
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                              <span class="input-group-text">kg</span>
+                                              </div>
+                                               <div class="form-text">Max:30kg</div>
+                                         </div>
+                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                              <label class="form-label">Product Dimensions</label>
+                                              <div class="d-flex">
+                                                <div class="input-group mr">
+                                                 <input type="number" id="length" name="length" placeholder="Length" required="" class="form-control" name="length">
+                                                 <span class="input-group-text">cm</span>
+                                                </div>
+                                                <div class="input-group mr">
+                                                 <input type="number" id="Width" name="Width" placeholder="Width" required="" class="form-control" name="Width">
+                                                 <span class="input-group-text">cm</span>
+                                                </div>
+                                                <div class="input-group mr">
+                                                 <input type="number" id="height" name="height" placeholder="height" required="" class="form-control" name="height">
+                                                 <span class="input-group-text">cm</span>
+                                                </div>
+                                              </div>
+                                              <div class="form-text">For Shipment Use</div>
+                                         </div>
+                                        </div> 
+                                    </div>
+                                    <div class="card_bg p-3 mb-3">
+                                        <div class="row">
+                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                          <h4 class="f-w-600">Manufacture</h4>
+                                         </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Manufactured By</label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                         </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                                            <label class="form-label">Manufactured Country</label>
+                                              <input type="text" id="title" class="form-control" placeholder="" required="">
+                                         </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex justify-content-end">
+                                     <button class="btn btn-solid">Save Product</button>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                        
+                        
                     </div>
                 </div>
             </div>

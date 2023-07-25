@@ -84,13 +84,14 @@
                   </ul>
                   <app-stock-inventory [stock]="product?.stock"></app-stock-inventory>
                   <div class="product-description border-product">
-                    <h6 class="product-title size-text" *ngIf="Size(product.variants).length">
+                    <!-- <h6 class="product-title size-text" *ngIf="Size(product.variants).length">
                         select size
                         <span>
                           <a href="javascrip:void(0)" (click)="SizeChart.openModal()">size chart</a>
                         </span>
-                    </h6>
-                    <div class="size-box" *ngIf="Size(product.variants).length">
+                    </h6> -->
+                    
+                    <!-- <div class="size-box" *ngIf="Size(product.variants).length">
                       <ul>
                           <li [class.active]="selectedSize == size" 
                               *ngFor="let size of Size(product.variants)">
@@ -99,7 +100,7 @@
                               </a>
                           </li>
                       </ul>
-                    </div>
+                    </div> -->
                     <h5 class="avalibility" *ngIf="counter <= product.stock"><span>In Stock</span></h5>
                     <h5 class="avalibility" *ngIf="counter > product.stock"><span>Out of Stock</span></h5>
                     <h6 class="product-title">quantity</h6>
@@ -200,14 +201,14 @@
                         </ng-template>
                     </li>
                     <li [ngbNavItem]="3">
-                      <a ngbNavLink>Write Review</a>
+                      <a ngbNavLink>Reviews</a>
                         <ng-template ngbNavContent>
                           <form class="theme-form">
                             <div class="row">
                               <div class="col-md-12 ">
                                 <div class="media rating-sec">
-                                  <label>Rating</label>
-                                  <div class="media-body ms-3">
+                                  <label>Overall Rating</label>
+                                  <!-- <div class="media-body ms-3">
                                     <div class="rating three-star">
                                       <i class="fa fa-star"></i>
                                       <i class="fa fa-star"></i>
@@ -215,10 +216,29 @@
                                       <i class="fa fa-star"></i>
                                       <i class="fa fa-star"></i>
                                     </div>
-                                  </div>
+                                  </div> -->
+                                  <div class="media-body ms-3">
+
+                                  <bar-rating [(rate)]="product.Rating"  [readOnly]="true"></bar-rating>
+                                 </div>
                                 </div>
                               </div>
+                              <div *ngIf="!product.review?.length">
+                                <div class="col-md-6">                                  
+                                  <p>No Reviews Yet!, Be the first customer to review</p>
+                                </div>
+                              </div>
+                              <div *ngIf="product.review?.length">
+                              <div *ngFor="let reviews of product.review">
                               <div class="col-md-6">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i><h5 for="name">{{reviews.username}}</h5>
+                                <bar-rating [(rate)]="reviews.rating"  [readOnly]="true"></bar-rating>
+                                <span><img style="width: 50px;" src="{{reviews?.images}}"></span>
+                                <p>{{reviews?.comments}}</p>
+                              </div>
+                            </div>
+                          </div>
+                              <!-- <div class="col-md-6">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter Your name" required>
                               </div>
@@ -236,7 +256,7 @@
                               </div>
                               <div class="col-md-12">
                                 <button class="btn btn-solid" type="submit">Submit YOur Review</button>
-                              </div>
+                              </div> -->
                             </div>
                           </form>
                         </ng-template>

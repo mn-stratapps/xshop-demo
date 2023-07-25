@@ -241,7 +241,10 @@
                                 <input type="password" class="form-control" id="review"formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors,'is-valid':submitted }" placeholder="Enter your password" required="">
                                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                     <div *ngIf="f.password.errors?.required">Password is required</div>
-                                   <div *ngIf="f.password.errors?.minlength">Password should be obscure and must be at least 8 characters long</div>
+                                    <div *ngIf="f.password.errors?.minLength">password must be at least 8 characters,containing,1 Upper case,1 special character</div> 
+                                    <div *ngIf="f.password.errors?.specialCharacter">Password should be obscure and must be at least 8 characters long</div>
+                                   <small class="form-text text-danger" *ngIf="registerForm.controls.password.errors">
+                                    {{registerForm.controls.password.errors.password.message}}<br/></small>
                                 </div>
                             </div>
                              <div class="col-md-12 form-group">

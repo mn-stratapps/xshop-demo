@@ -38,7 +38,11 @@ import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/ven
 import { ShipRocketComponent } from './ship-rocket/ship-rocket.component';
 const routes: Routes = [
   { 
-    path: 'ship-rocket', 
+    path: 'ship-rocket/:id', 
+    component: ShipRocketComponent 
+  },
+  { 
+    path: 'admin/ship-rocket/:id', 
     component: ShipRocketComponent 
   },
   { 

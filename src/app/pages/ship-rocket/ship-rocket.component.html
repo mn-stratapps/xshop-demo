@@ -5,29 +5,79 @@
             <div class="ord_details">
                 <i class="fa fa-chevron-left me-2"></i>
                 <div class="ord_id">
-                    <span class="fs-18px">#3545512759</span>
-                    <img src="assets/images/ship-rocket/copy.svg" alt="Copy To Clipboard" class="click-to-copy">
+                    <span class="fs-18px">{{order_details?.order_alias}}</span>
+                    <img src="assets/images/ship-rocket/copy.svg" title="click-to-copy" (click)="copyText(order_details?.order_alias)"alt="Copy To Clipboard" class="click-to-copy">
                 </div>
-                <div class="status-strip status-strip-green">
-                    <span>NEW</span>
+                <div *ngIf="order_details?.order_status==='FAILED'" class="status-strip status-strip-red">
+                    <span>{{order_details?.order_status}}</span>
+                </div>
+                <div *ngIf="order_details?.order_status!=='FAILED'" class="status-strip status-strip-green">
+                    <span>{{order_details?.shipment_status}}</span>
                 </div>
             </div>
-            <div class="d-flex custom_margin">
+            <!-- <div class="d-flex custom_margin">
                 <button class="btn btn-primary br_radius">Ship Now</button>
+            </div> -->
+            <div *ngIf="delivery_status ==='DLVD' && !isAdminproduct" class="d-flex custom_margin">
+                <button (click)="review()" class="btn btn-primary br_radius">Write Review</button>
+            </div>
+            <div *ngIf="delivery_status ==='CANCELED'" class="d-flex custom_margin">
+                <button  class="btn btn-danger br_radius">CANCELLED</button>
             </div>
            </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                <div *ngIf="productReview" class="detailscol">
+                    <div class="headingCol">
+                        <img src="assets/images/ship-rocket/orderdetails.svg" alt="Order details" class="mr-14px">
+                        Product Review                       
+                    </div>
+                    <div class="row">
+                        <form [formGroup]="productReviewForm">
+                            <div class="col custom_column">
+                                <label class="text-gray">*Rating</label>
+                                <bar-rating class="star" formControlName="rating" [(rate)]="Rate" [max]="5"  required=""></bar-rating>
+                                <div *ngIf="submitted && f.rating.errors" class="invalid-feedback">
+                                    <div *ngIf="f.rating.errors">Rating is required.</div>
+                                </div>
+                            </div>
+                            <div class="col custom_column">
+                                <label class="text-gray">Comments</label>
+                                <textarea rows="3" id="description"  formControlName="comments"  class="form-control"></textarea>
+                            </div>                           
+                            <div class="col custom_column">
+                                <label class="text-gray">Upload image</label>
+                                <div >
+                                    <input type='file' id="path" class="w-30" name="path"  #fileInput  (change)="onFileUpdate($event)" />
+                                    <img [src]='croppedImage' (click) = 'fileInput.click()' width="100" height="100" />
+                                  </div>
+                                  <div class="form-text">Only png/jpeg formats are allowrd</div>
+                                  <div  style="justify-content: right;margin-top: 10px;" class="d-flex">
+                                    <button (click)="submitReview(order_details?.order_id)" class="btn btn-primary br_radius">Submit Review</button>
+                                  </div>
+                                  <div>
+                                  <image-cropper
+                                  [imageChangedEvent]="imageChangedEvent"
+                                  format="png"
+                                  (imageCropped)="imageCropped($event)">
+                                </image-cropper>
+                            </div>
+                            </div>
+                    </form>
+                    <div>
+                    </div>
+                    </div>
+                </div>
                 <div class="detailscol">
                     <div class="headingCol">
                         <img src="assets/images/ship-rocket/orderdetails.svg" alt="Order details" class="mr-14px">
-                        Order Details 
+                        Order Details                        
                     </div>
                     <div class="row">
                         <div class="col custom_column">
                             <label class="text-gray">Order created on channel</label>
-                            <p class="text-light-black"> 27 Jun 2023 12:00 AM </p>
+                            <p class="text-light-black">{{order_details?.created_at | date:'medium'}}</p>
                         </div>
                         <div class="col custom_column">
                             <label class="text-gray">Channel</label>
@@ -41,18 +91,18 @@
                         </div>
                         <div class="col custom_column">
                             <label class="text-gray">Payment</label>
-                            <div class="d-flex text-light-black"> ₹ 1000
+                            <div class="d-flex text-light-black"> ₹ {{order_details?.order_total}}
                                 <span class="payment ms-2 prepaid"> prepaid </span></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <label class="text-gray">Order created on system</label>
-                            <p class="text-light-black"> 27 Jun 2023 11:39 AM </p>
+                            <p class="text-light-black">{{order_details?.updated_at | date:'medium'}} </p>
                         </div>
                     </div>
                 </div>
-                <div class="detailscol">
+                <div *ngIf="package_details" class="detailscol">
                     <div class="headingCol">
                         <img src="assets/images/ship-rocket/packagedetails.svg" alt="package details" class="mr-14px">
                         Package Details 
@@ -87,23 +137,23 @@
                     <div class="row">
                         <div class="col custom_column">
                             <label class="text-gray">Name</label>
-                            <p class="text-light-black">Akshay</p>
+                            <p class="text-light-black">{{customer_details?.name}}</p>
                         </div>
                         <div class="col custom_column">
                             <label class="text-gray">Contact</label>
                             <p class="text-light-black">
-                                9182828282 </p>
+                                {{customer_details?.mobile}} </p>
                         </div>
                         <div class="col custom_column">
                             <label class="text-gray">Email</label>
                             <p class="text-light-black">
-                                noreply@shiprocket.com </p>
+                                {{customer_details?.email}} </p>
                         </div>
                         <div class="col custom_column">
                             <label class="text-gray">Address</label>
                             <p class="text-light-black">
-                                Hyderabad, Telangana
-                                500081, India  </p>
+                                {{customer_details?.address}}, {{customer_details?.state}}
+                                {{customer_details?.pincode}}, {{customer_details?.country}}  </p>
                         </div>
                     </div>
                 </div>
@@ -123,35 +173,36 @@
                                       <th scope="col">SKU</th>
                                       <th scope="col">Qty</th>
                                       <th scope="col">Unit price</th>
-                                      <th scope="col">Discount</th>
-                                      <th scope="col">Tax</th>
+                                      <th scope="col">Processing Fee</th>
+                                      <th scope="col">Shipping Charges</th>
                                       <th scope="col">Total</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
-                                        <th>OnePlus</th>
-                                        <th>Mobile</th>
+                                        <th>{{order_details?.title}}</th>
+                                        <th>{{order_details?.category}}</th>
                                         <th></th>
-                                        <th>168784616</th>
-                                        <th>1</th>
-                                        <th>₹1000</th>
-                                        <th>0</th>
-                                        <th>0</th>
-                                        <th>₹1,000.00</th>
+                                        <th>{{order_details?.sku}}</th>
+                                        <th>{{order_details?.quantity}}</th>
+                                        <th>₹{{order_details?.unit_price}}</th>
+                                        <th>{{order_details?.processing_fee}}</th>
+                                        <th>{{order_details?.shipping_charges}}</th>
+                                        <th>₹{{order_details?.order_total}}</th>
                                     </tr>
                                   <tr>
                                     <th colspan="6"></th>
                                     <th colspan="6">
                                         <div class="text-center row-border-top">
                                             <div class="d-inline-block text-center">
-                                                <div class="text-grey">
+                                                <!-- <div class="text-grey">
                                                     <p class="d-inline-block min-width-12 mb-9px mt-0">
                                                         <span class="">Product</span> Total (1 Item) </p>
-                                                    <span  class="text-greyish-brown float-end">₹ 1,000.00</span></div>
+                                                    <span  class="text-greyish-brown float-end">₹ 1,000.00</span>
+                                                </div> -->
                                                      <div class="text-light-black row-border-top">
                                                          <p class="d-inline-block min-width-12">Order Total</p>
-                                                         <span class="float-end">₹ 1,000.00</span>
+                                                         <span class="float-end">&nbsp;₹{{order_details?.order_total}}</span>
                                                      </div>
                                                 </div>
                                             </div>
@@ -160,29 +211,32 @@
                                   </tbody>
                             </table>
                         </div>
-                        <!-- <div class="col custom_column">
-                            <label class="text-gray">Name</label>
-                            <p class="text-light-black">Akshay</p>
+                        <div *ngIf="!(delivery_status =='CANCELED' || delivery_status =='DLVD')" style="justify-content: right;margin-top:10px;" class="d-flex">
+                            <button (click)="cancelOrder()" class="btn btn-primary br_radius">Cancel Order</button>
                         </div>
-                        <div class="col custom_column">
-                            <label class="text-gray">Contact</label>
-                            <p class="text-light-black">
-                                9182828282 </p>
+                        <div *ngIf="delivery_status ==='DLVD'" style="justify-content: right;margin-top: 10px;" class="d-flex">
+                            <button class="btn btn-primary br_radius">Return/Replace</button>
                         </div>
-                        <div class="col custom_column">
-                            <label class="text-gray">Email</label>
-                            <p class="text-light-black">
-                                noreply@shiprocket.com </p>
-                        </div>
-                        <div class="col custom_column">
-                            <label class="text-gray">Address</label>
-                            <p class="text-light-black">
-                                Hyderabad, Telangana
-                                500081, India  </p>
-                        </div> -->
                     </div>
                 </div>
+
+                <div *ngIf="openCancelorder" class="detailscol">
+                    <div class="headingCol">
+                        <img src="assets/images/ship-rocket/orderdetails.svg" alt="Order details" class="mr-14px">
+                        Cancel Order                       
+                    </div>
+                    <div class="row">       
+                    <div class="col custom_column">
+                        <label class="text-gray">Comments</label>
+                        <textarea rows="3" id="description" [(ngModel)]="reason" class="form-control"></textarea>
+                    </div>                           
+                    <div  style="justify-content: right;margin-top: 10px;" class="d-flex">
+                        <button (click)="requestCancellation(order_details?.order_id)" class="btn btn-primary br_radius">Request Cancellation</button>
+                    </div>
+                   </div>
+                </div>
             </div>
+            
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                 <div class="detailscol">
                     <nav class="border_bm">
@@ -204,7 +258,100 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="tab-pane fade" id="tracking" role="tabpanel" aria-labelledby="tracking-tab" tabindex="0">1</div>
+                        <div class="tab-pane fade" id="tracking" role="tabpanel" aria-labelledby="tracking-tab" tabindex="0">
+                            <div class="container px-1  mx-auto">
+                                <div class="card">
+                                    <div class="row d-flex justify-content-between px-3 top">
+                                        <div class="d-flex">
+                                            <h5>ORDER: <span class="text-primary font-weight-bold">{{order_details?.order_alias}}</span></h5>
+                                        </div>
+                                        <div class="d-flex flex-column text-sm-right">
+                                            <p class="mb-0">Expected Arrival <span></span></p>
+                                            <!-- <p>USPS <span class="font-weight-bold">234094567242423422898</span></p> -->
+                                        </div>
+                                    </div>
+                                    <!-- Add class 'active' to progress -->
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-12">
+                                        <ul id="progressbar" class="text-center">
+                                            <li  [ngClass]="{'active':delivery_status ==='DLVD' || delivery_status ==='PKD'||delivery_status ==='IT'|| delivery_status ==='DRC'}" class="step0"></li>
+                                            <li  [ngClass]="{'active': delivery_status ==='DLVD' || delivery_status ==='PKD'|| delivery_status ==='DRC'}" class="step0"></li>
+                                            <li  [ngClass]="{'active':delivery_status ==='DLVD' || delivery_status ==='IT'}" class="step0"></li>
+                                            <li  [ngClass]="{'active': delivery_status ==='DLVD'}" class="step0"></li>
+                                            <!-- <li  [ngClass]="{'active':delivery_status ==='7' || delivery_status ==='6'||delivery_status ==='18'|| delivery_status ==='NA'}" class="step0"></li>
+                                            <li  [ngClass]="{'active': delivery_status ==='7' || delivery_status ==='6'|| delivery_status ==='NA'}" class="step0"></li>
+                                            <li  [ngClass]="{'active':delivery_status ==='7' || delivery_status ==='18'}" class="step0"></li>
+                                            <li  [ngClass]="{'active': delivery_status ==='7'}" class="step0"></li> -->
+
+
+                                            <!-- <li class="active step0"></li>
+                                            <li class="active step0"></li>
+                                            <li class="active step0"></li>
+                                            <li class="active step0"></li> -->
+
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between top">
+                                        <div class="icon-content">
+                                            <img class="icon" src="https://i.imgur.com/9nnc9Et.png">
+                                            <div class="d-flex flex-column mt-20">
+                                                <p class="font-weight-bold">Processing</p>
+                                            </div>
+                                        </div>
+                                        <div class="icon-content">
+                                            <img class="icon" src="https://i.imgur.com/u1AzR7w.png">
+                                            <div class="d-flex flex-column mt-20">
+                                                <p class="font-weight-bold">Shipped</p>
+                                            </div>
+                                        </div>
+                                        <div class="icon-content">
+                                            <img class="icon" src="https://i.imgur.com/TkPm63y.png">
+                                            <div class="d-flex flex-column mt-20">
+                                                <p class="font-weight-bold">In-Transit</p>
+                                            </div>
+                                        </div>
+                                        <div class="icon-content">
+                                            <img class="icon" src="https://i.imgur.com/HdsziHP.png">
+                                            <div class="d-flex flex-column mt-20">
+                                                <p class="font-weight-bold">Arrived</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="shipping_details" style="overflow-y: scroll;height: 436px;" class="justify-content-between top">
+                                        <div *ngFor="let shipdetails of shipping_details;let i=index" class="flex-column mt-20">
+                                            <h5 *ngIf="shipdetails.status ==='DLVD'" >Delivery Status</h5>
+                                            <p *ngIf="shipdetails.status ==='DLVD'" class="font-weight-bold">{{shipdetails.activity}}</p>
+                                            <p *ngIf="shipdetails.status ==='DLVD'" class="font-weight-bold">{{shipdetails.date}}</p>
+
+                                            <h5 *ngIf="shipdetails.status ==='OFD'" >Out For Delivery</h5>
+                                            <p *ngIf="shipdetails.status ==='OFD'" class="font-weight-bold">{{shipdetails.activity}}</p>
+                                            <p *ngIf="shipdetails.status ==='OFD'" class="font-weight-bold">{{shipdetails.date}}</p>
+
+                                            <h5 *ngIf="shipdetails.status ==='RAD'" >Reached Destination Hub</h5>
+                                            <p *ngIf="shipdetails.status ==='RAD'" class="font-weight-bold">{{shipdetails.activity}}</p>
+                                            <p *ngIf="shipdetails.status ==='RAD'" class="font-weight-bold">{{shipdetails.date}}</p>
+
+                                            <h5 *ngIf="shipdetails.status ==='IT'" >IN TRansit</h5>
+                                            <p *ngIf="shipdetails.status ==='IT'" class="font-weight-bold">{{shipdetails.activity}}</p>
+                                            <p *ngIf="shipdetails.status ==='IT'" class="font-weight-bold">{{shipdetails.date}}</p>
+
+                                            <h5 *ngIf="shipdetails.status ==='PUD'" >Pick Up</h5>
+                                            <p *ngIf="shipdetails.status ==='PUD'" class="font-weight-bold">{{shipdetails.activity}}</p>
+                                            <p *ngIf="shipdetails.status ==='PUD'" class="font-weight-bold">{{shipdetails.date}}</p>
+
+                                            <h5 *ngIf="shipdetails.status ==='OFP'" >Out For Pickup</h5>
+                                            <p *ngIf="shipdetails.status ==='OFP'" class="font-weight-bold">{{shipdetails.activity}}</p>
+                                            <p *ngIf="shipdetails.status ==='OFP'" class="font-weight-bold">{{shipdetails.date}}</p>
+
+                                            <h5 *ngIf="shipdetails.status ==='DRC'" >Pick Up</h5>
+                                            <p *ngIf="shipdetails.status ==='DRC'" class="font-weight-bold">Order Processed</p>
+                                            <p *ngIf="shipdetails.status ==='DRC'" class="font-weight-bold">{{shipdetails.date}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                       </div>
                  </div>
             </div>   

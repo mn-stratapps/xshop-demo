@@ -10,6 +10,8 @@ import { Useraddress } from 'src/app/core/models/useraddress';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -25,17 +27,21 @@ export class CheckoutComponent implements OnInit {
   public amount:  any;
   public Address: Useraddress[] = [];
   checkoutProductData: any[];
-
+  undeliveredProductData:any[];
   accessToken: any;
   address_id:any;
   stripeData:any;
   total_order_amount: any;
   EnableselectAddress=false;
   sub:Subscription
+  Total_products_value: any;
+  Other_charges: any;
+  shipping_charge: any;
   constructor(private fb: UntypedFormBuilder,
     public productService: ProductService,
     private orderService: OrderService,
     private httpService:AuthenticationService,
+    private toastrService: ToastrService,
     private router:Router) { 
       const currentUrl = this.router.url;
       if(currentUrl.includes('shop/checkout')){
@@ -67,8 +73,8 @@ export class CheckoutComponent implements OnInit {
     this.productService.checkoutCart(this.accessToken)
     .subscribe({ 
       next:(data)=>{  
-        this.checkoutProductData = data.order_details;
-        this.total_order_amount =data.total_order_amount;     
+        this.checkoutProductData = JSON.parse(JSON.stringify(data.order_details));
+        this.total_order_amount = data.total_order_amount;     
        },
        error:(error) => {
         console.log(error)
@@ -76,13 +82,26 @@ export class CheckoutComponent implements OnInit {
     }) 
   }
   checkoutFromBuynow() {
-    this.sub = this.productService.buynow_data.subscribe(
-      data => {
+    // this.sub = this.productService.buynow_data.subscribe(
+    //   data => {
+    //     console.log(data)
+    //     this.checkoutProductData = JSON.parse(JSON.stringify(data.order_details));
+    //     this.total_order_amount =data.total_order_amount;
+    //   }
+    // )
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.productService.checkoutBuynow(this.accessToken)
+    .subscribe({ 
+      next:(data)=>{  
         console.log(data)
-        this.checkoutProductData = data.order_details;
-        this.total_order_amount =data.total_order_amount;
+        this.checkoutProductData = JSON.parse(JSON.stringify(data));
+        this.total_order_amount = data.total_order_amount;     
+       },
+       error:(error) => {
+        console.log(error)
       }
-    )
+    }) 
   }
   //add address
   addNewAddress(){
@@ -109,10 +128,28 @@ export class CheckoutComponent implements OnInit {
     .subscribe({ 
       next:(data)=>{
         console.log(data)
-        this.EnableselectAddress=true;
+        // if(data[0].message ==='Address validated successfully'){
+        // this.EnableselectAddress=true;
+        // }
+        this.checkoutProductData =  JSON.parse(JSON.stringify(data.Delivered_products));
+        this.undeliveredProductData = data.Undelivered_products;
+        this.total_order_amount =data.total_order_amount;
+        this.Total_products_value = data.Total_products_value;
+        this.Other_charges =data.Other_charges;
+        this.shipping_charge = data.shipping_charge;
+        if(!this.undeliveredProductData?.length){
+          this.EnableselectAddress=true;
+        }
        },
        error:(error) => {
-        console.log(error)
+        console.log(error);
+        if (error.error.message === 'Delivery not available to that address'){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Delivery not available to this address!',           
+          })
+        }
       }
     }) 
   }
@@ -128,11 +165,21 @@ export class CheckoutComponent implements OnInit {
   public get getTotal(): Observable<number> {
     return this.productService.cartTotalAmount();
   }
-  checkout(){
-    const Object = {
-      currency : "inr"
+  removeFromCheckout(product_id){
+    this.productService.removeFromCheckout(this.accessToken,product_id)
+    .subscribe({
+      next:(data)=>{
+        console.log(data)
+        this.toastrService.success('Product removed successfully.');
+        this.selectAddress();
+      }
+    })
     }
-    this.productService.checkoutPayment(this.accessToken,Object)
+  checkout(){
+    // const Object = {
+    //   currency : "inr"
+    // }
+    this.productService.checkoutPayment(this.accessToken)
     .subscribe({ 
       next:(data)=>{
         this.stripeData = data
@@ -146,6 +193,7 @@ export class CheckoutComponent implements OnInit {
       }
     }) 
   }
+
   // Stripe Payment Gateway
   stripeCheckout() {
     var handler = (<any>window).StripeCheckout.configure({

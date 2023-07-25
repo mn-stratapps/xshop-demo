@@ -5,6 +5,7 @@ import { Product } from '../../../../shared/classes/product';
 import { ProductService } from '../../../../shared/services/product.service';
 import { SizeModalComponent } from "../../../../shared/components/modal/size-modal/size-modal.component";
 import { ToastrService } from 'ngx-toastr';
+import { response } from 'express';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -78,6 +79,8 @@ export class ProductLeftSidebarComponent implements OnInit {
   }
   getProductDetails(){
     this.route.data.subscribe(response => this.product = response.data);
+    console.log(this.product)
+    
   }
   getWishlistProducts(){
     this.productService.wishlistItems
@@ -206,13 +209,13 @@ export class ProductLeftSidebarComponent implements OnInit {
     .subscribe({
       next:(data)=>{
         console.log(data)
-       // this.wishlist=data;
+        // this.wishlist=data;
         this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
         if(data.message === 'Added to wishlist'){
           this.getWishlistProducts();
           this.toastrService.success('Product added to wishlist.');
         }
-        //this.wishlistIconData();
+        this.wishlistIconData();
       },
       error:(error)=>{
         console.log(error)
