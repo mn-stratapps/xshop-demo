@@ -83,7 +83,7 @@
                                             <h3>Contact Information</h3>
                                         </div>
                                       </div> -->
-                                      <button (click)="selectAddress()"class="btn btn-solid px-2 py-2 mx-3">Use this address</button>
+                                      <button *ngIf="this.Address?.length" (click)="selectAddress()"class="btn btn-solid px-2 py-2 mx-3">Use this address</button>
                                       <button (click)="addNewAddress()"class="btn btn-solid px-2 py-2 mb-btn">Add New Address</button>
                                       </div>
                                    <!--edit address-->
@@ -401,7 +401,7 @@
                                         <li>
                                         	<!-- Subtotal <span class="count">{{ getTotal | async | currency:productService?.Currency.currency:'symbol'}}</span> -->
                                         </li>
-                                        <ul class="total" *ngIf='checkoutProductData?.length'>
+                                        <ul class="total" *ngIf='Other_charges'>
                                           <li>Shipping Fee <span>{{shipping_charge |currency:productService?.Currency.currency:'symbol'}}</span></li>
                                           <li>Other Charges<span>{{Other_charges |currency:productService?.Currency.currency:'symbol'}}</span></li>
                                          <div class="shipping">

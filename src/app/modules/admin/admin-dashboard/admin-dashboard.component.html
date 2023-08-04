@@ -876,6 +876,9 @@
                                                                        <option value="null" disabled>-- Payment Status--</option>                     
                                                                        <option value="paid">Paid</option>
                                                                        <option value="unpaid">Unpaid</option>
+                                                                       <option value="On Hold">On Hold</option>
+                                                                       <option value="REFUND INITIATED">Refund Initiated</option>
+                                                                       <option value="Refunded">Refunded</option>
                                                                        <option value="">All</option>
                                                                      </select>
                                                                    </div>
@@ -883,9 +886,12 @@
                                                                <div class="cols">
                                                                    <select  class="form-select ft_size me-2" name="order_status" formControlName="order_status">
                                                                      <option value="null" disabled>-- Order Status --</option>
-                                                                     <option value="order placed">Order placed</option>
-                                                                     <option value="pending">Pending</option>
-                                                                     <option value="RETURN PLACED">Return Placed</option>
+                                                                     <option value="order placed">Order Placed</option>
+                                                                     <option value="In Progress">In Progress</option>
+                                                                     <option value="Cancelled">Cancelled</option>
+                                                                     <option value="failed">Failed</option>
+                                                                     <option value="RETURN PLACED">Return placed</option>
+                                                                     <option value="RETURNED">Retruned</option>
                                                                      <option value="">All</option>
                                                                    </select>
                                                                 </div>
@@ -1061,8 +1067,10 @@
                                                     <select class="form-select ft_size me-2" id="payment_status" formControlName="payment_status">
                                                         <option value="null" disabled>-- Payment Status--</option>                     
                                                         <option value="paid">Paid</option>
-                                                        <option value="Failed">Unpaid</option>
+                                                        <option value="unpaid">Unpaid</option>
                                                         <option value="On Hold">On Hold</option>
+                                                        <option value="REFUND INITIATED">Refund Initiated</option>
+                                                        <option value="Refunded">Refunded</option>
                                                         <option value="">All</option>
                                                       </select>
                                                     </div>
@@ -1073,8 +1081,9 @@
                                                       <option value="order placed">Order Placed</option>
                                                       <option value="In Progress">In Progress</option>
                                                       <option value="Cancelled">Cancelled</option>
-                                                      <option value="Cancelled">Failed</option>
-                                                      <option value="RETURN PLACED">RETURN PLACED</option>
+                                                      <option value="failed">Failed</option>
+                                                      <option value="RETURN PLACED">Return placed</option>
+                                                      <option value="RETURNED">Retruned</option>
                                                       <option value="">All</option>
                                                     </select>
                                                  </div>

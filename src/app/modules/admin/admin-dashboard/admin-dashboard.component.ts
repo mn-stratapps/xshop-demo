@@ -930,7 +930,7 @@ if(shipment_action === "SHIP NOW"){
       next:(data:any) => {
         console.log(data);
         // this.Pickup(data.shipment_id);
-        this.shipment_id=data.shipment_id
+        this.shipment_id=data.data[0].shipment_id
         this.modalService.open(this.pickupModalLabel)
 
       },

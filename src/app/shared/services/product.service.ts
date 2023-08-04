@@ -314,7 +314,7 @@ public addToWishlist(product): any {
     return this.http.post<any>(`${environment.apiUrl}/productreview/`+accessToken,data)
   }
   requestCancellation(accessToken:any,data:any){
-    return this.http.post<any>(`${environment.apiUrl}/ordercancel/`+accessToken,{data})
+    return this.http.post<any>(`${environment.apiUrl}/ordercancel/`+accessToken,data)
   }
   // cancelShipmentorder(accessToken:any,oid:any){
   //   return this.http.get<any>(`${environment.apiUrl}/cancel-order/`+accessToken+'/'+oid)

@@ -66,7 +66,7 @@
                                     </span>
                                     <input type="text" name="quantity" class="form-control input-number" disabled [(ngModel)]="product.quantity">
                                     <span class="input-group-prepend">
-                                        <button type="button" class="btn quantity-right-plus"  data-type="plus" (click)="increment(product)">
+                                        <button [class.disabled]="product.quantity > 9" type="button" class="btn quantity-right-plus"  data-type="plus" (click)="increment(product)">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </span>
@@ -74,7 +74,7 @@
                             </div>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" (click)="removeItem(product)" class="icon">
+                            <a (click)="removeItem(product)" class="icon">
                             <i class="ti-close"></i>
                         </a>
                         </td>

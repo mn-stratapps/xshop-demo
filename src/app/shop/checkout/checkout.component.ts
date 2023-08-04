@@ -95,7 +95,7 @@ export class CheckoutComponent implements OnInit {
     .subscribe({ 
       next:(data)=>{  
         console.log(data)
-        this.checkoutProductData = JSON.parse(JSON.stringify(data));
+        this.checkoutProductData = JSON.parse(JSON.stringify(data.order_details));
         this.total_order_amount = data.total_order_amount;     
        },
        error:(error) => {

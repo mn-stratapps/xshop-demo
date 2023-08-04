@@ -93,6 +93,8 @@ export class DashboardComponent implements OnInit {
   geohno:string;
   geolandmark:string;
   geoarea:string;
+  searchText="";
+  datevalue:any;
   ///mapend////
   @ViewChild('country') country: ElementRef
   @ViewChild('city') city: ElementRef
@@ -752,7 +754,12 @@ this.httpService.passwordUpdate(object)
     }
   getmyOrders(){
     const Obj ={
-      pageno:this.pageNo
+      pageno:this.pageNo,
+      search_field:this.searchText,
+      date:this.datevalue
+    }
+    if(Obj.search_field == '' || Obj.search_field == null){
+      delete Obj.search_field
     }
     this.httpService.getmyOrders(Obj,this.accessToken)
     .subscribe({ 
@@ -761,11 +768,15 @@ this.httpService.passwordUpdate(object)
         this.totalItems = data.total_products;
         this.itemsPerPage = data.products_per_page;     
         console.log(this.myProducts)
-
+        console.log(data)
        }
     })
   }
-  
+  dateFilterorders($event:any){
+    this.datevalue=$event.target.options[$event.target.options.selectedIndex].text;
+    // this.searchText=value;
+    this.getmyOrders();
+  }
 initializeAddAddressForm(){
 this.addAddressForm = this.formBuilder.group({
     type:['',Validators.required],

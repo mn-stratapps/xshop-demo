@@ -174,8 +174,11 @@ getSalesList(object:any,accessToken:any){
 getUserAddress(accessToken:any):Observable<Useraddress[]>{
   return this.http.get<Useraddress[]>(`${environment.apiUrl}/useraddress/`+accessToken)
 }
+// getmyOrders(obj,accessToken:any):Observable<Product[]>{
+//   return this.http.post<Product[]>(`${environment.apiUrl}/myorders/`+accessToken,obj)
+// }
 getmyOrders(obj,accessToken:any):Observable<Product[]>{
-  return this.http.post<Product[]>(`${environment.apiUrl}/myorders/`+accessToken,obj)
+  return this.http.post<Product[]>(`${environment.apiUrl}/myordersfilter/`+accessToken,obj)
 }
 addAddress(accessToken,data):any{
   return this.http.post<any>(`${environment.apiUrl}/useraddress/`+accessToken,data)
