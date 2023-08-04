@@ -521,7 +521,7 @@
                                                         <th scope="col">View</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="overflow-y: scroll;">
+                                                <tbody *ngIf="myProducts?.length" style="overflow-y: scroll;">
                                                     <tr *ngFor="let myproducts of myProducts | paginate
                                                     : {
                                                         itemsPerPage: itemsPerPage,
@@ -560,6 +560,11 @@
                                                     </tr>                                                   
                                                 </tbody>                       
                                             </table>
+                                            <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!myProducts?.length">
+                                                <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                                <p>Please check if you have misspelt something or try searching with other words.</p>
+                                            </div>
                                         </div>
                                         <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="myordersPageChange((page = $event))"></pagination-controls>
                                     </div>
