@@ -761,6 +761,9 @@ this.httpService.passwordUpdate(object)
     if(Obj.search_field == '' || Obj.search_field == null){
       delete Obj.search_field
     }
+    if(Obj.date == '' || Obj.date == null){
+      delete Obj.date
+    }
     this.httpService.getmyOrders(Obj,this.accessToken)
     .subscribe({ 
       next:(data:any)=>{
@@ -773,7 +776,7 @@ this.httpService.passwordUpdate(object)
     })
   }
   dateFilterorders($event:any){
-    this.datevalue=$event.target.options[$event.target.options.selectedIndex].text;
+    this.datevalue=$event.target.options[$event.target.options.selectedIndex].value;
     // this.searchText=value;
     this.getmyOrders();
   }
