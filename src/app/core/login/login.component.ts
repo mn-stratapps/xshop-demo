@@ -233,7 +233,8 @@ this.httpService.reactivateAccount(this.reactivateEmailForm.value)
     localStorage.clear();
 
     localStorage.setItem('currentUser', JSON.stringify(userToken));
-    if(this.previousUrll === null || this.previousUrll === '/core/signup' || this.previousUrll ==='/core/activate_account/'){
+    if(this.previousUrll === null || this.previousUrll === '/core/signup' || this.previousUrll.includes('/core/activate_account/')
+    || this.previousUrll.includes('/core/reset/password/')||this.previousUrll.includes('/core/reactivate/account') || this.previousUrll.includes('/core/forgot/password')){
     this.getUserDetails();
     }
     else if(this.previousUrll && data.role_id === 4 ){
