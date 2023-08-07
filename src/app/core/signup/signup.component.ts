@@ -3,6 +3,7 @@ import { FormGroup, FormControl,FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
+import { PasswordValidators } from "./password-validators";
 import Swal from 'sweetalert2';
 // import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
@@ -40,7 +41,24 @@ errorMessage:'';
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
       //  password: ['', [Validators.required,Validators.pattern('^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$')]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      // password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        PasswordValidators.patternValidator(new RegExp("(?=.*[0-9])"), {
+          requiresDigit: true
+        }),
+        PasswordValidators.patternValidator(new RegExp("(?=.*[A-Z])"), {
+          requiresUppercase: true
+        }),
+        PasswordValidators.patternValidator(new RegExp("(?=.*[a-z])"), {
+          requiresLowercase: true
+        }),
+        PasswordValidators.patternValidator(new RegExp("(?=.*[$@^!%*?&])"), {
+          requiresSpecialChars: true
+        })
+      ])]],
+
       // password:['', RxwebValidators.password({validation:{maxLength: 10,minLength: 5,digit: true,specialCharacter: true}} )], 
       confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
       mobile_number:['', [Validators.required,
@@ -59,6 +77,33 @@ errorMessage:'';
   }
   get fv() {
     return this.validateOtpForm.controls;
+  }
+  get passwordValid() {
+    return this.registerForm.controls["password"].errors === null;
+  }
+
+  get requiredValid() {
+    return !this.registerForm.controls["password"].hasError("required");
+  }
+
+  get minLengthValid() {
+    return !this.registerForm.controls["password"].hasError("minlength");
+  }
+
+  get requiresDigitValid() {
+    return !this.registerForm.controls["password"].hasError("requiresDigit");
+  }
+
+  get requiresUppercaseValid() {
+    return !this.registerForm.controls["password"].hasError("requiresUppercase");
+  }
+
+  get requiresLowercaseValid() {
+    return !this.registerForm.controls["password"].hasError("requiresLowercase");
+  }
+
+  get requiresSpecialCharsValid() {
+    return !this.registerForm.controls["password"].hasError("requiresSpecialChars");
   }
   checkConfirmPassword(){
     if(this.registerForm.value.confirmPassword === this.registerForm.value.password){
