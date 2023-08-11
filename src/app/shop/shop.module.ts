@@ -5,6 +5,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from '../shared/shared.module';
 import { ShopRoutingModule } from './shop-routing.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 // Product Details Components
 import { ProductLeftSidebarComponent } from './product/sidebar/product-left-sidebar/product-left-sidebar.component';
@@ -84,7 +85,9 @@ import { FailpageComponent } from './checkout/failpage/failpage.component';
     InfiniteScrollModule,
     SharedModule,
     ShopRoutingModule,
-    RouterModule
+    RouterModule,
+    NgxPaginationModule,
+
   ]
 })
 export class ShopModule { }

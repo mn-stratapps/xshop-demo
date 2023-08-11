@@ -24,8 +24,11 @@ validateOtpForm:FormGroup;
 emailActivationToken:any;
 confirmPasswordError = false;
 errorMessage:'';
-  message: any;
-  constructor(private formBuilder:FormBuilder,private httpservice:AuthenticationService,private router:Router,private activatedRoute:ActivatedRoute) { 
+message: any;
+show: boolean = false;
+
+  constructor(private formBuilder:FormBuilder,private httpservice:AuthenticationService,
+    private router:Router,private activatedRoute:ActivatedRoute) { 
     const currentUrl = this.router.url;
     if ( currentUrl.includes( 'activate_account/' ) ) {
         this.isOtpFormUrl = true;
@@ -113,7 +116,11 @@ errorMessage:'';
     }
 
   }
+  password() {
+    this.show = !this.show;
+  }
   registerUser(){
+    this.checkConfirmPassword()
     this.submitted=true;
      if(this.registerForm.invalid || this.confirmPasswordError){
       this.registerForm.markAllAsTouched();
@@ -137,7 +144,6 @@ errorMessage:'';
               width: '400px',
             })
             this.router.navigate(['/core/activate_account/'+ this.emailActivationToken]);
-
       }
       },
       error:(error)=>{
@@ -151,9 +157,9 @@ errorMessage:'';
             text: 'Username Already Exist,Please LogIn',
             width: '400px',
           }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['core/login'])
-            }
+            // if (result.isConfirmed) {
+            //   this.router.navigate(['core/login'])
+            // }
           })
         }else if(error.error?.email && error.error?.email[0] === 'Email Id already Exists'){
           Swal.fire({
@@ -162,9 +168,9 @@ errorMessage:'';
             text: 'Email Already Exist!, Please LogIn',
             width: '400px',
           }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['core/login'])
-            }
+            // if (result.isConfirmed) {
+            //   this.router.navigate(['core/login'])
+            // }
           })
         }else if(error.error?.mobile_number && error.error?.mobile_number[0] ==='user profile with this mobile number already exists.'){
           Swal.fire({
@@ -191,8 +197,8 @@ errorMessage:'';
   this.validateOtpForm.value.emailActivationToken=this.httpservice.emailActivationToken;
   this.activatedRoute.queryParams.subscribe(params => {
     this.validateOtpForm.value.emailActivationToken= this.activatedRoute.snapshot.params['token'];
-    //this.emailActivationToken=this.httpservice.emailActivationToken
-      this.validateOtpForm.value.emailActivationToken=this.httpservice.emailActivationToken;
+   // this.emailActivationToken=this.httpservice.emailActivationToken
+     this.httpservice.emailActivationToken = this.validateOtpForm.value.emailActivationToken;
 
 
       

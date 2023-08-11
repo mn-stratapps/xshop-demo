@@ -228,8 +228,13 @@
                                   <p>No Reviews Yet!, Be the first customer to review</p>
                                 </div>
                               </div>
-                              <div *ngIf="product.review?.length">
-                              <div *ngFor="let reviews of product.review">
+                              <div *ngIf="productReviewsData?.length">
+                              <div *ngFor="let reviews of productReviewsData | paginate
+                              : {
+                                  itemsPerPage: itemsPerPage,
+                                  currentPage: page,
+                                  totalItems: totalItems
+                                }">
                               <div class="col-md-6">
                                 <i class="fa fa-user-circle-o" aria-hidden="true"></i><h5 for="name">{{reviews.username}}</h5>
                                 <bar-rating [(rate)]="reviews.rating"  [readOnly]="true"></bar-rating>
@@ -237,6 +242,7 @@
                                 <p>{{reviews?.comments}}</p>
                               </div>
                             </div>
+                            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="reviewsPageChange((page = $event))"></pagination-controls>
                           </div>
                               <!-- <div class="col-md-6">
                                 <label for="name">Name</label>

@@ -22,13 +22,20 @@ export class ProductLeftSidebarComponent implements OnInit {
   public active = 1;
   wishlist: any[];
   buynowData: any[];
+  productReviewsData: any[];
   iswishlistproduct: boolean = false;
   maxLength=999999;
   minLength=6;
   pincode="";
   errorMessage
-  estimatedDate:any
+  estimatedDate:any;
+  productId:any;
   isValidpincode = false;
+  pageno = 1;
+  totalItems:any;
+  itemsPerPage:number;
+  page: number = 1;
+
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -79,8 +86,27 @@ export class ProductLeftSidebarComponent implements OnInit {
   }
   getProductDetails(){
     this.route.data.subscribe(response => this.product = response.data);
-    console.log(this.product)
-    
+    console.log(this.product);
+    this.productId = this.product.id;
+    this.getReviews();   
+  }
+  getReviews(){
+    this.productService.getProductReviews(this.productId,this.pageno)
+    .subscribe({ 
+      next:(data)=>{  
+       console.log(data);
+       this.productReviewsData = data.reviews_data;
+       this.totalItems = data.total_reviews;
+        this.itemsPerPage = data.reviews_per_page;  
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    }) 
+  }
+  reviewsPageChange(page:any){
+    this.pageno = page;
+    this.getReviews();
   }
   getWishlistProducts(){
     this.productService.wishlistItems

@@ -37,6 +37,8 @@ export class CheckoutComponent implements OnInit {
   Total_products_value: any;
   Other_charges: any;
   shipping_charge: any;
+  checkoutFromcart = false;
+  checkoutFromBuyNow =false;
   constructor(private fb: UntypedFormBuilder,
     public productService: ProductService,
     private orderService: OrderService,
@@ -46,8 +48,10 @@ export class CheckoutComponent implements OnInit {
       const currentUrl = this.router.url;
       if(currentUrl.includes('shop/checkout')){
         this.checkoutFromCart();
+        this.checkoutFromcart = true;
       }else if(currentUrl.includes('shop/buynow/checkout')){
         this.checkoutFromBuynow();
+        this.checkoutFromBuyNow = true;
       }
     this.checkoutForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -171,7 +175,13 @@ export class CheckoutComponent implements OnInit {
       next:(data)=>{
         console.log(data)
         this.toastrService.success('Product removed successfully.');
-        this.selectAddress();
+        if(this.checkoutFromcart){
+          this.checkoutFromCart();
+        }else if(this.checkoutFromBuyNow){
+          this.checkoutFromBuynow();
+        }else{
+          this.selectAddress();
+        }
       }
     })
     }

@@ -313,6 +313,9 @@ public addToWishlist(product): any {
     this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
     return this.http.post<any>(`${environment.apiUrl}/productreview/`+accessToken,data)
   }
+  getProductReviews(productid:any,pageno:any){
+    return this.http.post<any>(`${environment.apiUrl}/product/detail/page/reviews`+'/'+productid,{pageno})
+  }
   requestCancellation(accessToken:any,data:any){
     return this.http.post<any>(`${environment.apiUrl}/ordercancel/`+accessToken,data)
   }

@@ -355,7 +355,7 @@
                                           <th class="fs-20">Product</th>
                                           <th class="fs-20">Quantity</th>
                                           <th class="fs-20">Total</th>
-                                          <th class="fs-20">Action</th>
+                                          <th *ngIf="!this.checkoutFromBuyNow"  class="fs-20">Action</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -370,7 +370,7 @@
                                              <td class="fs-16">
                                             {{ (product.total_product_value) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
                                             </td>
-                                            <td class="fs-16">
+                                            <td *ngIf="!this.checkoutFromBuyNow" class="fs-16">
                                               <i (click)="removeFromCheckout(product?.product_id)" class="fa fa-trash" aria-hidden="true"></i>
                                             </td>
                                         </tr>
@@ -387,7 +387,7 @@
                                              <td class="fs-16">
                                             {{ (product.total_product_value) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}
                                             </td>
-                                            <td class="fs-16">
+                                            <td  class="fs-16">
                                               <i (click)="removeFromCheckout(product?.product_id)" class="fa fa-trash" aria-hidden="true"></i>
                                             </td>
                                         </tr>
