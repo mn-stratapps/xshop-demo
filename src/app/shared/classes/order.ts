@@ -13,4 +13,5 @@ export interface Order {
     processing_fee?:any;
     subtotal?:any;
     shipping_charge?:any;
+    parent_order_id?:any;
 }

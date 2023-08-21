@@ -13,6 +13,7 @@ export class SuccessComponent implements OnInit, AfterViewInit{
   public orderDetails : Order = {};
   StripeID: any;
   accessToken: any;
+  parentOrderId:any;
   public ImageSrc : string
 
 
@@ -33,6 +34,10 @@ export class SuccessComponent implements OnInit, AfterViewInit{
       next:(data)=>{
         this.orderDetails = data
         console.log(this.orderDetails)
+        this.parentOrderId = this.orderDetails?.parent_order_id
+        if(this.parentOrderId){
+          this.createShipment();
+        }
        },
        error:(error) => {
         console.log(error)
@@ -40,7 +45,17 @@ export class SuccessComponent implements OnInit, AfterViewInit{
     }) 
 
   }
-
+  createShipment(){
+    this.productService.createShipmentOrder(this.accessToken,this.parentOrderId)
+    .subscribe({ 
+      next:(data)=>{
+        console.log(data)
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    })
+  }
   ngAfterViewInit() {
     
   }
