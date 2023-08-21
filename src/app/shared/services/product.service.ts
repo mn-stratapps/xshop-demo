@@ -316,6 +316,9 @@ public addToWishlist(product): any {
   getProductReviews(productid:any,pageno:any){
     return this.http.post<any>(`${environment.apiUrl}/product/detail/page/reviews`+'/'+productid,{pageno})
   }
+  prodRecomendation(pid){
+    return this.http.get<any>(`${environment.apiUrl}/recomendedproducts/`+pid)
+  }
   requestCancellation(accessToken:any,data:any){
     return this.http.post<any>(`${environment.apiUrl}/ordercancel/`+accessToken,data)
   }
