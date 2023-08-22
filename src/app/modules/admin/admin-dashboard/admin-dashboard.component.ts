@@ -497,7 +497,9 @@ initializeeditProductForm(){
     title:[''],
     description:[''],
     price:[''],
-    discount:['']
+    discount:[''],
+    dimensions:[''],
+    weight:['']
   })
 }
 get f(){
@@ -796,11 +798,12 @@ this.editProductForm.patchValue({
   title:products.title,
   description:products.description,
   price:products.price,
-  discount:products.discount
+  discount:products.discount,
+  weight:products.weight,
 })
 }
 editProduct(){
-  
+  this.editProductForm.patchValue({dimensions:this.length+"X"+this.width+"X"+this.height}) 
    this.httpService.editProductByAdmin(this.accessToken,this.editProductForm.value.id,this.editProductForm.value)
    .subscribe(
     {

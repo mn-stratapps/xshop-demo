@@ -27,6 +27,7 @@ export class CheckoutComponent implements OnInit {
   public amount:  any;
   public Address: Useraddress[] = [];
   checkoutProductData: any[];
+  noCheckoutData : boolean = false;
   undeliveredProductData:any[];
   accessToken: any;
   address_id:any;
@@ -70,6 +71,7 @@ export class CheckoutComponent implements OnInit {
     this.productService.cartItems.subscribe(response =>{ this.products = response});
     console.log('checkout:',this.products)
     this.getUserAddress();
+    
   }
   checkoutFromCart(){
     const currentUser = localStorage.getItem( 'currentUser' );
@@ -78,7 +80,10 @@ export class CheckoutComponent implements OnInit {
     .subscribe({ 
       next:(data)=>{  
         this.checkoutProductData = JSON.parse(JSON.stringify(data.order_details));
-        this.total_order_amount = data.total_order_amount;     
+        this.total_order_amount = data.total_order_amount; 
+        if(!this.checkoutProductData.length){
+          this.noCheckoutData = true;
+        }
        },
        error:(error) => {
         console.log(error)
@@ -100,7 +105,10 @@ export class CheckoutComponent implements OnInit {
       next:(data)=>{  
         console.log(data)
         this.checkoutProductData = JSON.parse(JSON.stringify(data.order_details));
-        this.total_order_amount = data.total_order_amount;     
+        this.total_order_amount = data.total_order_amount; 
+        if(!this.checkoutProductData.length){
+          this.noCheckoutData = true;
+        }    
        },
        error:(error) => {
         console.log(error)
@@ -136,7 +144,7 @@ export class CheckoutComponent implements OnInit {
         // this.EnableselectAddress=true;
         // }
         this.checkoutProductData =  JSON.parse(JSON.stringify(data.Delivered_products));
-        this.undeliveredProductData = data.Undelivered_products;
+        this.undeliveredProductData = JSON.parse(JSON.stringify(data.Undelivered_products));
         this.total_order_amount =data.total_order_amount;
         this.Total_products_value = data.Total_products_value;
         this.Other_charges =data.Other_charges;
@@ -178,7 +186,7 @@ export class CheckoutComponent implements OnInit {
         if(this.checkoutFromcart){
           this.checkoutFromCart();
         }else if(this.checkoutFromBuyNow){
-          this.checkoutFromBuynow();
+          this.router.navigate(['/shop/collection/left/sidebar'])
         }else{
           this.selectAddress();
         }

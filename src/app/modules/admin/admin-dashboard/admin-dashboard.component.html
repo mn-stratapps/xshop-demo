@@ -398,6 +398,32 @@
                                                   <div class="form-text">Enter discount percentage value withot "%" symbol.</div>
                                                 </div>
                                               </div>
+                                              <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                                                <label class="form-label" for="dimension">Product Dimensions</label>
+                                                <div class="d-flex">
+                                                    <div class="input-group mr">
+                                                    <input class="form-control " type="number"id="length" [(ngModel)] = "length" [ngModelOptions]="{standalone: true}" name="length" placeholder="Length" required="">
+                                                    <span class="input-group-text">cm</span>
+                                                </div>
+                                                <div class="input-group mr">
+                                                    <input class="form-control" type="number"id="width" [(ngModel)] = "width" [ngModelOptions]="{standalone: true}" name="width" placeholder="Width" required="">
+                                                    <span class="input-group-text">cm</span> 
+                                                </div>
+                                                <div class="input-group mr">
+                                                    <input class="form-control" type="number"id="height" [(ngModel)] = "height" [ngModelOptions]="{standalone: true}" name="height" placeholder="height" required="">
+                                                    <span class="input-group-text">cm</span> 
+                                                </div>
+                                            </div>
+                                               <div class="form-text">For Shipment Use</div>  
+                                             </div>
+                                             <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                                                <label class="form-label" for="weight">Product Weight</label>
+                                                <div class="input-group">
+                                                 <input class="form-control" type="number"id="weight" name="weight" formControlName="weight" [ngClass]="{ 'is-invalid': submitted && f.weight.errors }" required="">                                 
+                                                 <span class="input-group-text">kg</span>
+                                             </div>
+                                               <div class="form-text">Max:30kg</div>  
+                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -1040,7 +1066,7 @@
                                         <div class="col-md-6 col-lg-3">
                                         <div class="form-inline search-form search-box w-100">
                                             <div class="form-group">
-                                                <input class="form-control-plaintext" type="search" [(ngModel)]="searchText" (keydown.enter)="allOrdersSearchEvent($event)" placeholder="Order ID">
+                                                <input class="form-control-plaintext" type="search" [(ngModel)]="searchText" (keydown.enter)="myOrdersSearchEvent($event)" placeholder="Order ID">
                                             </div>
                                          </div>
                                         </div>

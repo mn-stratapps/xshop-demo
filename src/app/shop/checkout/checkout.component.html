@@ -348,7 +348,7 @@
                                         </li>
                                     </ul> -->
                                    
-                                  <div *ngIf='checkoutProductData?.length' class="col-lg-12 col-sm-12 col-xs-12">
+                                  <div *ngIf='!noCheckoutData' class="col-lg-12 col-sm-12 col-xs-12">
                                     <table class="table mb_20">
                                       <thead>
                                         <tr>
@@ -394,7 +394,7 @@
                                       </tbody>
                                     </table>
                                   </div>
-                                    <ul class="qty" *ngIf='!checkoutProductData?.length'>
+                                    <ul class="qty" *ngIf='noCheckoutData'>
                                         <li class="empty-checkout"> There are no products in cart </li>
                                     </ul>
                                     <ul class="sub-total">
