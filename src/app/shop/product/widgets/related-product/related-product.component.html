@@ -8,9 +8,9 @@
                 <owl-carousel-o [options]="NewProductSliderConfig" class="offer-slider">
                     <ng-container *ngFor="let product of products | slice:0:5">  
                         <ng-template carouselSlide>
-                            <div class="row search-product">
+                            <div class="row search-product mt-2">
                                 <div class="col-xl-2 col-md-4 col-sm-6 col-lg-4" *ngFor="let product of products | slice:0:5">
-                                    <div class="product-box">
+                                    <div class="product-box product-border">
                                        <app-product-box-one 
                                           [product]="product" 
                                           [currency]="productService?.Currency"

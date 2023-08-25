@@ -1,26 +1,24 @@
 <app-breadcrumb [title]="product?.title" [breadcrumb]="'Product'"></app-breadcrumb>
 <!-- section start -->
-<section class="section-b-space">
+<section class="section-b-space bg-white">
   <div class="collection-wrapper">
     <div class="container">
       <div class="row">
         <div class="col-sm-3">
           <div class="collection-filter" [class.openFilterbar]="mobileSidebar">
             <div class="collection-filter-block">
-                <div class="collection-mobile-back" (click)="toggleMobileSidebar()">
-                  <span class="filter-back">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i> back
-                  </span>
-                </div>
-                <app-categories></app-categories>
+              <div class="collection-mobile-back" (click)="toggleMobileSidebar()">
+                <span class="filter-back">
+                  <i class="fa fa-angle-left" aria-hidden="true"></i> back
+                </span>
+              </div>
+              <app-categories></app-categories>
             </div>
             <div class="collection-filter-block">
-                <app-services></app-services>
+              <app-services></app-services>
             </div>
-                <app-product-box-vertical-slider 
-                  [title]="'New product'" 
-                  [type]="product?.type">
-                </app-product-box-vertical-slider>
+            <app-product-box-vertical-slider [title]="'New product'" [type]="product?.type">
+            </app-product-box-vertical-slider>
           </div>
         </div>
         <div class="col-lg-9 col-sm-12 col-xs-12">
@@ -36,50 +34,48 @@
             </div>
             <div class="row">
               <div class="col-lg-6">
-                <owl-carousel-o [options]="ProductDetailsMainSliderConfig" #owlCar  class="product-slick">
-                    <ng-container *ngFor="let image of product?.images; index as i">
-                        <ng-template carouselSlide [id]="i">
-                            <div>
-                              <img [defaultImage]="'assets/images/product/placeholder.jpg'" 
-                                   [lazyLoad]="image.src" 
-                                   [alt]="image.alt" class="img-fluid">
-                            </div>
-                        </ng-template>
-                    </ng-container>
+                <owl-carousel-o [options]="ProductDetailsMainSliderConfig" #owlCar class="product-slick">
+                  <ng-container *ngFor="let image of product?.images; index as i">
+                    <ng-template carouselSlide [id]="i">
+                      <div>
+                        <img [defaultImage]="'assets/images/product/placeholder.jpg'" [lazyLoad]="image.src"
+                          [alt]="image.alt" class="img-fluid">
+                      </div>
+                    </ng-template>
+                  </ng-container>
                 </owl-carousel-o>
                 <div class="col-12 p-0" *ngIf="product?.images.length > 1">
-                    <div class="slider-nav">
-                        <owl-carousel-o [options]="ProductDetailsThumbConfig" class="product-slick">
-                            <ng-container *ngFor="let image of product?.images; index as i">
-                                <ng-template carouselSlide [id]="i">
-                                    <div class="owl-thumb" [class.active]="i == activeSlide">
-                                      <img [defaultImage]="'assets/images/product/placeholder.jpg'" 
-                                           [lazyLoad]="image.src" 
-                                           [alt]="image.alt" class="img-fluid" 
-                                           (click)="owlCar.to(activeSlide = i.toString())">
-                                    </div>
-                                </ng-template>
-                            </ng-container>
-                        </owl-carousel-o>
-                    </div>
+                  <div class="slider-nav">
+                    <owl-carousel-o [options]="ProductDetailsThumbConfig" class="product-slick">
+                      <ng-container *ngFor="let image of product?.images; index as i">
+                        <ng-template carouselSlide [id]="i">
+                          <div class="owl-thumb" [class.active]="i == activeSlide">
+                            <img [defaultImage]="'assets/images/product/placeholder.jpg'" [lazyLoad]="image.src"
+                              [alt]="image.alt" class="img-fluid" (click)="owlCar.to(activeSlide = i.toString())">
+                          </div>
+                        </ng-template>
+                      </ng-container>
+                    </owl-carousel-o>
+                  </div>
                 </div>
               </div>
               <div class="col-lg-6 rtl-text">
                 <div class="product-right">
                   <h2>{{ product?.title }}</h2>
                   <h4>
-                      <del *ngIf="product?.discount">{{ product?.price * productService.Currency?.price | currency: productService.Currency?.currency:'symbol' }}</del>
-                      <span>{{ product?.discount }}% off</span>
+                    <del *ngIf="product?.discount">{{ product?.price * productService.Currency?.price | currency:
+                      productService.Currency?.currency:'symbol' }}</del>
+                    <span>{{ product?.discount }}% off</span>
                   </h4>
                   <h5>Sold By: {{product?.sold_by}}</h5>
                   <h3>
-                      {{ (product?.price | discount:product) * productService.Currency?.price | currency: productService.Currency?.currency:'symbol' }}
+                    {{ (product?.price | discount:product) * productService.Currency?.price | currency:
+                    productService.Currency?.currency:'symbol' }}
                   </h3>
                   <ul class="color-variant" *ngIf="Color(product?.variants).length">
-                    <li [class]="color" [class.active]="activeSlide == i.toString()" 
-                        *ngFor="let color of Color(product?.variants); index as i" 
-                        [ngStyle]="{'background-color': color}"
-                        (click)="owlCar.to(activeSlide = i.toString())">
+                    <li [class]="color" [class.active]="activeSlide == i.toString()"
+                      *ngFor="let color of Color(product?.variants); index as i" [ngStyle]="{'background-color': color}"
+                      (click)="owlCar.to(activeSlide = i.toString())">
                     </li>
                   </ul>
                   <app-stock-inventory [stock]="product?.stock"></app-stock-inventory>
@@ -90,7 +86,7 @@
                           <a href="javascrip:void(0)" (click)="SizeChart.openModal()">size chart</a>
                         </span>
                     </h6> -->
-                    
+
                     <!-- <div class="size-box" *ngIf="Size(product.variants).length">
                       <ul>
                           <li [class.active]="selectedSize == size" 
@@ -111,9 +107,11 @@
                             <i class="fa fa-minus"></i>
                           </button>
                         </span>
-                        <input type="text" name="quantity" class="form-control input-number" [value]="counter" disabled/>
+                        <input type="text" name="quantity" class="form-control input-number" [value]="counter"
+                          disabled />
                         <span class="input-group-prepend">
-                          <button [class.disabled]="counter > product.stock" type="button" class="btn quantity-right-plus" data-type="plus" (click)="increment()">
+                          <button [class.disabled]="counter > product.stock" type="button"
+                            class="btn quantity-right-plus" data-type="plus" (click)="increment()">
                             <i class="fa fa-plus"></i>
                           </button>
                         </span>
@@ -121,40 +119,58 @@
                     </div>
                   </div>
                   <div class="product-buttons">
-                    <a class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="addToCartCount(product)">add to cart</a>
-                    <a class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="buyNow(product)">buy now</a>
+                    <a class="btn btn-solid" [class.disabled]="counter > product.stock"
+                      (click)="addToCartCount(product)">add to cart</a>
+                    <a class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="buyNow(product)">buy
+                      now</a>
                   </div>
                   <div class="pincode-deliveryContainer">
-                    <h4>Delivery Options 
-                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-                        <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                      </svg></h4>
+                    <h4>Delivery Options
+                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor"
+                        class="bi bi-truck" viewBox="0 0 16 16">
+                        <path
+                          d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                      </svg>
+                    </h4>
                     <div class="d-flex mb-3 delivery-field">
-                        <input type="text" numeric  autocomplete="off" (keypress)="validatePincode($event)" placeholder="Enter pincode"  [(ngModel)]="pincode"class="form-control w-50" id="pincode" name="pincode" style="padding:10px;">
-                       <div *ngIf="isValidpincode && estimatedDate"> 
+                      <input type="text" numeric autocomplete="off" (keypress)="validatePincode($event)"
+                        placeholder="Enter pincode" [(ngModel)]="pincode" class="form-control w-50" id="pincode"
+                        name="pincode" style="padding:10px;">
+                      <div *ngIf="isValidpincode && estimatedDate">
                         <div class="pincode-checkmark">
                           <i class="fa fa-check"></i>
                         </div>
                       </div>
-                        <input type="submit" (click)="checkDeliveryDate(product)"class="pincode-check pincode-button" value="Check">
-                      </div>
+                      <input type="submit" (click)="checkDeliveryDate(product)" class="pincode-check pincode-button"
+                        value="Check">
+                    </div>
                     <div *ngIf="estimatedDate">
                       <ul class="pincode-serviceability-list">
                         <li class="pincode-serviceabilityItem">
                           <svg viewBox="0 0 24 25" class="pincode-serviceabilityIcon">
-                            <g fill="none" fill-rule="evenodd"><path d="M0 1h24v24H0z"></path><path d="M21.872 12.843l-.68 3.849a1.949 1.949 0 00-.398-.819c-.377-.447-.925-.693-1.549-.693-1.024 0-1.98.669-2.395 1.601l1.159-6.571h1.703c.7 0 1.31.265 1.713.746.415.494.573 1.164.447 1.887m-3.238 5.812c-.297 0-.55-.108-.715-.306-.172-.204-.236-.486-.183-.795.123-.698.816-1.288 1.51-1.288.296 0 .55.108.716.306.17.204.235.486.18.794-.123.699-.814 1.289-1.508 1.289m-11.308 0c-.295 0-.55-.108-.715-.306-.171-.204-.236-.486-.18-.794.122-.699.814-1.289 1.508-1.289.296 0 .55.108.714.306.172.204.237.486.182.794-.123.699-.815 1.289-1.509 1.289m14.932-8.397c-.616-.731-1.518-1.134-2.546-1.134H18.2l.262-1.487A.546.546 0 0017.927 7H6.417a.543.543 0 100 1.086H17.28l-1.557 8.832h-5.8a1.965 1.965 0 00-.438-1.045c-.376-.447-.926-.693-1.548-.693-1.074 0-2.074.734-2.454 1.738h-.356l.143-.811a.543.543 0 10-1.069-.188l-.256 1.447a.546.546 0 00.535.637h.86c.045.389.194.753.438 1.045.375.446.925.693 1.548.693 1.075 0 2.075-.734 2.454-1.738h6.867c.044.389.194.752.439 1.045.375.446.925.693 1.547.693 1.075 0 2.075-.734 2.454-1.738h.52c.264 0 .49-.189.534-.449l.799-4.523c.184-1.043-.058-2.028-.683-2.773" fill="#535766"></path><path d="M9.812 9.667c0-.3-.243-.543-.543-.543H1.543a.544.544 0 000 1.086h7.726c.3 0 .543-.243.543-.543M9.387 12.074c0-.3-.243-.543-.543-.543h-5.82a.543.543 0 100 1.086h5.82c.3 0 .543-.243.543-.543M8.42 13.938H4.502a.543.543 0 100 1.086H8.42a.543.543 0 100-1.086" fill="#535766"></path></g></svg>
-                          <h4 class="pincode-serviceabilityTitle">Get it by, {{estimatedDate.estimated_delivery_date}}</h4>
+                            <g fill="none" fill-rule="evenodd">
+                              <path d="M0 1h24v24H0z"></path>
+                              <path
+                                d="M21.872 12.843l-.68 3.849a1.949 1.949 0 00-.398-.819c-.377-.447-.925-.693-1.549-.693-1.024 0-1.98.669-2.395 1.601l1.159-6.571h1.703c.7 0 1.31.265 1.713.746.415.494.573 1.164.447 1.887m-3.238 5.812c-.297 0-.55-.108-.715-.306-.172-.204-.236-.486-.183-.795.123-.698.816-1.288 1.51-1.288.296 0 .55.108.716.306.17.204.235.486.18.794-.123.699-.814 1.289-1.508 1.289m-11.308 0c-.295 0-.55-.108-.715-.306-.171-.204-.236-.486-.18-.794.122-.699.814-1.289 1.508-1.289.296 0 .55.108.714.306.172.204.237.486.182.794-.123.699-.815 1.289-1.509 1.289m14.932-8.397c-.616-.731-1.518-1.134-2.546-1.134H18.2l.262-1.487A.546.546 0 0017.927 7H6.417a.543.543 0 100 1.086H17.28l-1.557 8.832h-5.8a1.965 1.965 0 00-.438-1.045c-.376-.447-.926-.693-1.548-.693-1.074 0-2.074.734-2.454 1.738h-.356l.143-.811a.543.543 0 10-1.069-.188l-.256 1.447a.546.546 0 00.535.637h.86c.045.389.194.753.438 1.045.375.446.925.693 1.548.693 1.075 0 2.075-.734 2.454-1.738h6.867c.044.389.194.752.439 1.045.375.446.925.693 1.547.693 1.075 0 2.075-.734 2.454-1.738h.52c.264 0 .49-.189.534-.449l.799-4.523c.184-1.043-.058-2.028-.683-2.773"
+                                fill="#535766"></path>
+                              <path
+                                d="M9.812 9.667c0-.3-.243-.543-.543-.543H1.543a.544.544 0 000 1.086h7.726c.3 0 .543-.243.543-.543M9.387 12.074c0-.3-.243-.543-.543-.543h-5.82a.543.543 0 100 1.086h5.82c.3 0 .543-.243.543-.543M8.42 13.938H4.502a.543.543 0 100 1.086H8.42a.543.543 0 100-1.086"
+                                fill="#535766"></path>
+                            </g>
+                          </svg>
+                          <h4 class="pincode-serviceabilityTitle">Get it by, {{estimatedDate.estimated_delivery_date}}
+                          </h4>
                         </li>
-                      </ul>   
+                      </ul>
                     </div>
                     <div *ngIf="errorMessage">
                       <ul class="pincode-unserviceability-list">
                         <li class="pincode-serviceabilityItem">
                           <h4 class="pincode-serviceabilityTitle">{{errorMessage}}</h4>
                         </li>
-                      </ul>   
+                      </ul>
                     </div>
-                </div>
+                  </div>
                   <div style="white-space: break-spaces;" class="border-product">
                     <h6 class="product-title">product details</h6>
                     <p>{{ product.description.substring(0, 300)+'...' }}</p>
@@ -188,27 +204,28 @@
                 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
                   <li [ngbNavItem]="1">
                     <a ngbNavLink>Description</a>
-                        <ng-template ngbNavContent>
-                          <p>{{ product.description }}</p>
-                        </ng-template>
-                    </li>
-                    <li [ngbNavItem]="2">
-                      <a ngbNavLink>Video</a>
-                        <ng-template ngbNavContent>
-                          <div class="mt-3 text-center">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/BUWzX78Ye_8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                          </div>
-                        </ng-template>
-                    </li>
-                    <li [ngbNavItem]="3">
-                      <a ngbNavLink>Reviews</a>
-                        <ng-template ngbNavContent>
-                          <form class="theme-form">
-                            <div class="row">
-                              <div class="col-md-12 ">
-                                <div class="media rating-sec">
-                                  <label>Overall Rating</label>
-                                  <!-- <div class="media-body ms-3">
+                    <ng-template ngbNavContent>
+                      <p>{{ product.description }}</p>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2">
+                    <a ngbNavLink>Video</a>
+                    <ng-template ngbNavContent>
+                      <div class="mt-3 text-center">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/BUWzX78Ye_8"
+                          allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      </div>
+                    </ng-template>
+                  </li>
+                  <li [ngbNavItem]="3">
+                    <a ngbNavLink>Reviews</a>
+                    <ng-template ngbNavContent>
+                      <form class="theme-form">
+                        <div class="row">
+                          <div class="col-md-12 ">
+                            <div class="media rating-sec">
+                              <label>Overall Rating</label>
+                              <!-- <div class="media-body ms-3">
                                     <div class="rating three-star">
                                       <i class="fa fa-star"></i>
                                       <i class="fa fa-star"></i>
@@ -217,34 +234,36 @@
                                       <i class="fa fa-star"></i>
                                     </div>
                                   </div> -->
-                                  <div class="media-body ms-3">
+                              <div class="media-body ms-3">
 
-                                  <bar-rating [(rate)]="product.Rating"  [readOnly]="true"></bar-rating>
-                                 </div>
-                                </div>
+                                <bar-rating [(rate)]="product.Rating" [readOnly]="true"></bar-rating>
                               </div>
-                              <div *ngIf="!product.review?.length">
-                                <div class="col-md-6">                                  
-                                  <p>No Reviews Yet!, Be the first customer to review</p>
-                                </div>
-                              </div>
-                              <div *ngIf="productReviewsData?.length">
-                              <div *ngFor="let reviews of productReviewsData | paginate
+                            </div>
+                          </div>
+                          <div *ngIf="!product.review?.length">
+                            <div class="col-md-6">
+                              <p>No Reviews Yet!, Be the first customer to review</p>
+                            </div>
+                          </div>
+                          <div *ngIf="productReviewsData?.length">
+                            <div *ngFor="let reviews of productReviewsData | paginate
                               : {
                                   itemsPerPage: itemsPerPage,
                                   currentPage: page,
                                   totalItems: totalItems
                                 }">
                               <div class="col-md-6">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i><h5 for="name">{{reviews.username}}</h5>
-                                <bar-rating [(rate)]="reviews.rating"  [readOnly]="true"></bar-rating>
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                <h5 for="name">{{reviews.username}}</h5>
+                                <bar-rating [(rate)]="reviews.rating" [readOnly]="true"></bar-rating>
                                 <span><img style="width: 50px;" src="{{reviews?.images}}"></span>
                                 <p>{{reviews?.comments}}</p>
                               </div>
                             </div>
-                            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="reviewsPageChange((page = $event))"></pagination-controls>
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                              (pageChange)="reviewsPageChange((page = $event))"></pagination-controls>
                           </div>
-                              <!-- <div class="col-md-6">
+                          <!-- <div class="col-md-6">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" id="name" placeholder="Enter Your name" required>
                               </div>
@@ -263,12 +282,12 @@
                               <div class="col-md-12">
                                 <button class="btn btn-solid" type="submit">Submit YOur Review</button>
                               </div> -->
-                            </div>
-                          </form>
-                        </ng-template>
-                    </li>
-                  </ul>
-                  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                        </div>
+                      </form>
+                    </ng-template>
+                  </li>
+                </ul>
+                <div [ngbNavOutlet]="nav" class="mt-2"></div>
               </div>
             </div>
           </section>
@@ -277,6 +296,78 @@
     </div>
   </div>
   <app-related-product [type]="product?.type"></app-related-product>
+  <!-- Compare similar product-->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="compare-page">
+          <div class="compare-heading">
+            <h3><strong>Similar Products to Compare</strong></h3>
+          </div>
+          <div class="table-wrapper table-responsive mt-3">
+            <table class="table">
+              <tbody id="table-compare">
+                <!-- Product Name -->
+                <tr>
+                  <th class="product-name">Product Name</th>
+                  <td class="grid-link__title"> Samsung</td>
+                </tr>
+                <!-- Product Image -->
+                <tr>
+                  <th class="product-name ">Product Details</th>
+                  <td class="item-row">
+                    <img width="185" class="featured-image">
+                    <div class="product-price product_price">
+                      <strong>On Sale: </strong><span> ..</span>
+                    </div>
+                    <!-- <form class="variants clearfix">
+                              <button title="Add to Cart" (click)="addToCart(product)" class="add-to-cart btn btn-solid me-2">Add to Cart</button>
+                                <button title="Add to Cart"  class="add-to-cart btn btn-primary btn-buynow">Buy Now</button>
+                       </form> -->
+                  </td>
+                </tr>
+                <!-- Product Description -->
+                <tr>
+                  <th class="product-name">Product Description</th>
+                  <td class="item-row">
+                    <p class="description-compare"> good product..</p>
+                  </td>
+                </tr>
+                <!-- product Brands-->
+                <tr>
+                  <th class="product-name">Product Brand</th>
+                  <td class="item-row">
+                    <p class="description-compare">iphone</p>
+                  </td>
+                </tr>
+                <!--  Product Color-->
+                <tr>
+                  <th class="product-name">Product Color</th>
+                  <td class="item-row">
+                    <p class="description-compare">Red</p>
+                </tr>
+                <!-- Product Sold By-->
+                <tr>
+                  <th class="product-name">Product Sold By</th>
+                  <td class="item-row">
+                    <p class="description-compare">Apple</p>
+                </tr>
+                <!-- Product Availability -->
+                <tr>
+                  <th class="product-name"> Availability </th>
+                  <td class="available-stock">
+                    <p> In Stock </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn btn-solid mt-3 pull-right">Add to Compare</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--compare similar product end-->
 </section>
 <app-size-modal #sizeChart [product]="product"></app-size-modal>
 <!-- Section ends -->
