@@ -17,7 +17,7 @@
                             <tr class="th-compare">
                                 <td>Action</td>
                                 <th class="item-row" *ngFor="let product of products">
-                                  <button type="button" (click)="removeItem(product)" class="remove-compare"> Remove </button>
+                                  <button type="button" (click)="removeCompareItemApi(product)" class="remove-compare"> Remove </button>
                                 </th>
                             </tr>
                             </thead>
@@ -36,7 +36,7 @@
                                     <strong>On Sale: </strong><span> {{ (product.price | discount:product) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span></div>
                                     <form class="variants clearfix">
                                       <button title="Add to Cart" (click)="addToCart(product)" class="add-to-cart btn btn-solid me-2">Add to Cart</button>
-                                      <button title="Add to Cart"  class="add-to-cart btn btn-primary btn-buynow">Buy Now</button>
+                                      <button title="Add to Cart" (click)="buyNow(product)"  class="add-to-cart btn btn-primary btn-buynow">Buy Now</button>
                                     </form>
                                 </td>
                             </tr>
@@ -50,21 +50,21 @@
                             <!-- product Brands-->
                             <tr>
                                 <th class="product-name">Product Brand</th>
-                                <td class="item-row">
-                                    <p class="description-compare">iphone</p>
+                                <td class="item-row" *ngFor="let product of products">
+                                    <p class="description-compare">{{ product.brand}}</p>
                                 </td>
                             </tr>
                             <!--  Product Color-->
                             <tr>
                                 <th class="product-name">Product Color</th>
-                                <td class="item-row">
-                                    <p class="description-compare">Red</p>
+                                <td class="item-row" *ngFor="let product of products">
+                                    <p class="description-compare">{{ product.variants[0].color}}</p>
                                 </tr>
                                 <!-- Product Sold By-->
                                 <tr>
                                     <th class="product-name">Product Sold By</th>
-                                    <td class="item-row">
-                                        <p class="description-compare">Apple</p>
+                                    <td class="item-row" *ngFor="let product of products">
+                                        <p class="description-compare">{{ product.Company_name}}</p>
                                     </tr>
                             <!-- Product Availability -->
                             <tr>

@@ -6,6 +6,7 @@ import { ProductService } from '../../../../shared/services/product.service';
 import { SizeModalComponent } from "../../../../shared/components/modal/size-modal/size-modal.component";
 import { ToastrService } from 'ngx-toastr';
 import { response } from 'express';
+import { Resolver } from 'src/app/shared/services/resolver.service';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -22,6 +23,7 @@ export class ProductLeftSidebarComponent implements OnInit {
   public active = 1;
   wishlist: any[];
   buynowData: any[];
+  compareProducts: any[];
   productReviewsData: any[];
   iswishlistproduct: boolean = false;
   maxLength=999999;
@@ -35,7 +37,7 @@ export class ProductLeftSidebarComponent implements OnInit {
   totalItems:any;
   itemsPerPage:number;
   page: number = 1;
-
+  product_id:any;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -44,13 +46,17 @@ export class ProductLeftSidebarComponent implements OnInit {
   wishlisticon: any[];
 
   constructor(private route: ActivatedRoute, private router: Router,
-    public productService: ProductService,private toastrService: ToastrService) {
+    public productService: ProductService,private toastrService: ToastrService,public resolver:Resolver) {
     // this.route.data.subscribe(response => this.product = response.data);
   } 
   ngOnInit(): void {
     console.log("dddd", this.product)
     this.getProductDetails();
-    this.getWishlistProducts();
+    this.getSimilarProducts();
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+      this.getWishlistProducts();
+    }
   }
   validatePincode(event:any){
     if(this.pincode.length > 5){
@@ -90,6 +96,21 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.productId = this.product.id;
     this.getReviews();   
   }
+
+  getSimilarProducts(){
+    this.product_id = this.resolver.prodId
+    this.productService.getSimilarProducts(this.product_id)
+    .subscribe({ 
+      next:(data)=>{  
+       console.log(data);
+       this.compareProducts = data;
+       },
+       error:(error) => {
+        console.log(error)
+      }
+    }) 
+  }
+
   getReviews(){
     this.productService.getProductReviews(this.productId,this.pageno)
     .subscribe({ 
@@ -199,6 +220,29 @@ export class ProductLeftSidebarComponent implements OnInit {
   }
   }
 
+
+  addToCart(product_id: any) {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.productService.addToCart(product_id )
+    .subscribe(
+      {
+        next:(data)=>{
+          console.log(data);
+          //localStorage.setItem("cartItems", JSON.stringify(state.cart));
+          // this.productService.setcartItems(this.product)
+          return true;
+        },
+        error:(error)=>{
+          console.log(error)
+        }
+      }
+    )
+    }else{
+      this.router.navigate(['/core/login'])
+    }
+  }
   // Buy Now
   async buyNow(product: any) {
     const quantity = this.counter || 1;

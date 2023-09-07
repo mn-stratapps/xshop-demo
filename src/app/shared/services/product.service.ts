@@ -147,14 +147,18 @@ public addToWishlist(product): any {
   */
 
   // Get Compare Items
-  public get compareItems(): Observable<Product[]> {
-    const itemsStream = new Observable(observer => {
-      observer.next(state.compare);
-      observer.complete();
-    });
-    return <Observable<Product[]>>itemsStream;
-  }
-
+  // public get compareItems(): Observable<Product[]> {
+  //   const itemsStream = new Observable(observer => {
+  //     observer.next(state.compare);
+  //     observer.complete();
+  //   });
+  //   return <Observable<Product[]>>itemsStream;
+  // }
+  public get  compareItems(): Observable<Product[]> {
+    const currentUser = localStorage.getItem( 'currentUser' );
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    return this.http.get<Product[]>(`${environment.apiUrl}/comparedproductsget/`+this.accessToken)
+   }
   // Add to Compare
   public addToCompare(product): any {
     const compareItem = state.compare.find(item => item.id === product.id)
@@ -167,15 +171,25 @@ public addToWishlist(product): any {
     localStorage.setItem("compareItems", JSON.stringify(state.compare));
     return true
   }
-
-  // Remove Compare items
-  public removeCompareItem(product: Product): any {
-    const index = state.compare.indexOf(product);
-    state.compare.splice(index, 1);
-    localStorage.setItem("compareItems", JSON.stringify(state.compare));
-    return true
+    // Add to Compare API
+  addToCompareApi(product:any,accessToken:any){
+    let id = product.id
+    return this.http.get<any>(`${environment.apiUrl}/compare/`+accessToken+'/'+id)
   }
-
+  // Remove Compare items
+  // public removeCompareItem(product: Product): any {
+  //   const index = state.compare.indexOf(product);
+  //   state.compare.splice(index, 1);
+  //   localStorage.setItem("compareItems", JSON.stringify(state.compare));
+  //   return true
+  // }
+  removeCompareItemApi(product:any,accessToken:any){
+    let id = product.id
+    return this.http.delete<any>(`${environment.apiUrl}/compare/`+accessToken+'/'+id)
+  }
+  getSimilarProducts(prodId:any){
+    return this.http.get<any>(`${environment.apiUrl}/productdetailcomaprision/`+prodId)
+  }
   /*
     ---------------------------------------------
     -----------------  Cart  --------------------

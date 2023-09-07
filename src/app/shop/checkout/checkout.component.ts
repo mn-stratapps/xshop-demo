@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 // import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { Country, State, City }  from 'country-state-city';
 import { environment } from '../../../environments/environment';
 import { Product } from "../../shared/classes/product";
 import { ProductService } from "../../shared/services/product.service";
@@ -40,12 +41,26 @@ export class CheckoutComponent implements OnInit {
   shipping_charge: any;
   checkoutFromcart = false;
   checkoutFromBuyNow =false;
+  addAddressForm:FormGroup;
+  selectedState: any;
+  selectedCountry: any;
+  submitted=false;
+  countries = Country.getAllCountries();
+  states = null;
+  cities = null;
+  defaultAddress = false;
+  autofill = false;
+  @ViewChild('country') country: ElementRef
+  @ViewChild('city') city: ElementRef
+  @ViewChild('state') state: ElementRef
+
   constructor(private fb: UntypedFormBuilder,
     public productService: ProductService,
     private orderService: OrderService,
     private httpService:AuthenticationService,
     private toastrService: ToastrService,
-    private router:Router) { 
+    private router:Router,
+    private formBuilder:FormBuilder,) { 
       const currentUrl = this.router.url;
       if(currentUrl.includes('shop/checkout')){
         this.checkoutFromCart();
@@ -54,25 +69,108 @@ export class CheckoutComponent implements OnInit {
         this.checkoutFromBuynow();
         this.checkoutFromBuyNow = true;
       }
-    this.checkoutForm = this.fb.group({
-      firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      email: ['', [Validators.required, Validators.email]],
-      address: ['', [Validators.required, Validators.maxLength(50)]],
-      country: ['', Validators.required],
-      town: ['', Validators.required],
-      state: ['', Validators.required],
-      postalcode: ['', Validators.required]
-    })
+    // this.checkoutForm = this.fb.group({
+    //   firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+    //   lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+    //   phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+    //   email: ['', [Validators.required, Validators.email]],
+    //   address: ['', [Validators.required, Validators.maxLength(50)]],
+    //   country: ['', Validators.required],
+    //   town: ['', Validators.required],
+    //   state: ['', Validators.required],
+    //   postalcode: ['', Validators.required]
+    // })
   }
 
   ngOnInit(): void {
     this.productService.cartItems.subscribe(response =>{ this.products = response});
     console.log('checkout:',this.products)
     this.getUserAddress();
-    
+    this.initializeAddAddressForm();
+
   }
+  initializeAddAddressForm(){
+    this.addAddressForm = this.formBuilder.group({
+        type:['',Validators.required],
+        name:['',Validators.required],
+        mobile:['', [Validators.required,
+        Validators.pattern("^[0-9]{10}$"),
+        Validators.minLength(10), Validators.maxLength(10)]],
+        address:['',Validators.required],
+        landmark:['',Validators.required],
+        area:['',Validators.required],
+        city:['',Validators.required],
+        state:['',Validators.required],
+        country:['',Validators.required],
+        pincode:['',[Validators.required,Validators.pattern("^[0-9]{6}$$")]],
+        is_default:['']
+    })
+    }
+    get f(){
+      return this.addAddressForm.controls;
+    }
+    
+    onSubmit(){
+      this.submitted=true;
+      if(this.addAddressForm.invalid){
+        this.addAddressForm.markAllAsTouched();
+        return false;
+      }else{
+    
+        // if(this.autofill=false){
+        // this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+        // }else{
+        //   this.addAddressForm.patchValue({
+        //     country:this.geoData.country,
+        //     state:this.geoData.regionName,
+        //     pincode:this.geoData.zip,
+        //     city:this.geoData.city,
+        //   });
+        // }
+        this.addAddressForm.patchValue({country:this.selectedCountry.name,state:this.selectedState.name})
+    
+      this.httpService.addAddress(this.accessToken,this.addAddressForm.value).
+      subscribe({
+        next:(data)=>{
+          console.log(data)
+          if(data.message==='Address added Successfully'){
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'Address added Successfully',
+              width: '400px',
+            })
+            this.isAdd=false;
+            // this.autofill=false;
+            // this.googlemaps= false;
+            this.addAddressForm.reset();
+            this.f.addAddressForm.markAsUntouched();
+            this.getUserAddress();
+          }
+        },
+        error:(error) => {
+          console.log(error)
+        }
+      })
+    }}
+
+    onCountryChange($event): void {
+      this.states = State.getStatesOfCountry(JSON.parse(this.country.nativeElement.value).isoCode);
+      this.selectedCountry = JSON.parse(this.country.nativeElement.value);
+      //this.cities = this.selectedState = this.selectedCity = null;
+    }
+  
+    onStateChange($event): void {
+      this.cities = City.getCitiesOfState(JSON.parse(this.country.nativeElement.value).isoCode, JSON.parse(this.state.nativeElement.value).isoCode)      // this.selectedState = JSON.parse(this.state.nativeElement.value);
+      this.selectedState = JSON.parse(this.state.nativeElement.value);
+
+      // this.selectedCity = null;
+    }
+    onCityChange($event): void {
+     // this.selectedCity = JSON.parse(this.city.nativeElement.value)
+    }
+
+
   checkoutFromCart(){
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];

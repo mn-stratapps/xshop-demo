@@ -17,9 +17,9 @@ export class RelatedProductComponent implements OnInit {
   public NewProductSliderConfig: any = NewProductSlider;
   product_id:any;
   constructor(public productService: ProductService, public resolver:Resolver) { 
-    this.productService.getProducts.subscribe(response => 
-      this.products = response.filter(item => item.type == this.type)
-    );
+    // this.productService.getProducts.subscribe(response => 
+    //   this.products = response.filter(item => item.type == this.type)
+    // );
 
   }
 

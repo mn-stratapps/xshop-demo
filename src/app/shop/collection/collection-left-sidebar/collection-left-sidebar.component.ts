@@ -74,7 +74,10 @@ export class CollectionLeftSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.wishlistSubscription = this.productService.wishlitsprods.subscribe(response => this.wishlistproducts=response)
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
     this.getWishlistProducts();
+    }
   }
 
 

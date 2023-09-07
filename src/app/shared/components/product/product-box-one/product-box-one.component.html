@@ -47,7 +47,7 @@
       <a title="Quick View" (click)="QuickView.openModal()">
         <i class="ti-search" aria-hidden="true"></i>
       </a>
-      <a title="Compare" (click)="addToCompare(product)">
+      <a *ngIf="isCompare" title="Compare" (click)="addToCompareApi(product)">
         <i class="ti-reload" aria-hidden="true"></i>
       </a>
     </div>

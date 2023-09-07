@@ -310,53 +310,52 @@
                 <!-- Product Name -->
                 <tr>
                   <th class="product-name">Product Name</th>
-                  <td class="grid-link__title"> Samsung</td>
+                  <td class="grid-link__title" *ngFor="let product of compareProducts"> {{product.title}}</td>
                 </tr>
                 <!-- Product Image -->
                 <tr>
                   <th class="product-name ">Product Details</th>
-                  <td class="item-row">
-                    <img width="185" class="featured-image">
-                    <div class="product-price product_price">
-                      <strong>On Sale: </strong><span> ..</span>
-                    </div>
-                    <!-- <form class="variants clearfix">
-                              <button title="Add to Cart" (click)="addToCart(product)" class="add-to-cart btn btn-solid me-2">Add to Cart</button>
-                                <button title="Add to Cart"  class="add-to-cart btn btn-primary btn-buynow">Buy Now</button>
-                       </form> -->
-                  </td>
+                  <td class="item-row" *ngFor="let product of compareProducts">
+                    <img [src]="product.images[0].src" [alt]="product.images[0].alt" width="185" class="featured-image">
+                    <div class="product-price product_price"> 
+                    <strong>On Sale: </strong><span> {{ (product.price | discount:product) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span></div>
+                    <form class="variants clearfix">
+                      <button title="Add to Cart" (click)="addToCart(product)" class="add-to-cart btn btn-solid me-2">Add to Cart</button>
+                      <button title="Buy Now" (click)="buyNow(product)"  class="add-to-cart btn btn-primary btn-buynow">Buy Now</button>
+                    </form>
+                </td>
                 </tr>
                 <!-- Product Description -->
                 <tr>
                   <th class="product-name">Product Description</th>
-                  <td class="item-row">
-                    <p class="description-compare"> good product..</p>
+                  <td class="item-row" *ngFor="let product of compareProducts">
+                    <p class="description-compare"> {{product.description}}</p>
                   </td>
                 </tr>
                 <!-- product Brands-->
                 <tr>
                   <th class="product-name">Product Brand</th>
-                  <td class="item-row">
-                    <p class="description-compare">iphone</p>
+                  <td class="item-row" *ngFor="let product of compareProducts">
+                    <p class="description-compare">{{product.brand}}</p>
                   </td>
                 </tr>
                 <!--  Product Color-->
                 <tr>
                   <th class="product-name">Product Color</th>
-                  <td class="item-row">
-                    <p class="description-compare">Red</p>
+                  <td class="item-row" *ngFor="let product of compareProducts">
+                    <p class="description-compare">{{ product.variants[0].color}}</p>
                 </tr>
                 <!-- Product Sold By-->
                 <tr>
                   <th class="product-name">Product Sold By</th>
-                  <td class="item-row">
-                    <p class="description-compare">Apple</p>
+                  <td class="item-row" *ngFor="let product of compareProducts">
+                    <p class="description-compare">{{product.Company_name}}</p>
                 </tr>
                 <!-- Product Availability -->
                 <tr>
                   <th class="product-name"> Availability </th>
-                  <td class="available-stock">
-                    <p> In Stock </p>
+                  <td class="available-stock" *ngFor="let product of compareProducts">
+                    <p>{{product.Availability}}</p>
                   </td>
                 </tr>
               </tbody>

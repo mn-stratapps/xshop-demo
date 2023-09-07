@@ -87,7 +87,7 @@
                                       <button (click)="addNewAddress()"class="btn btn-solid px-2 py-2 mb-btn">Add New Address</button>
                                       </div>
                                    <!--edit address-->
-                                   <div class="row check-out" *ngIf="isAdd">
+                                   <!-- <div class="row check-out" *ngIf="isAdd">
                                     <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                         <div class="field-label">First Name</div>
                                         <input type="text" name="firstname" [formControl]="checkoutForm.controls['firstname']" value="" placeholder="" autocomplete="off">
@@ -178,8 +178,238 @@
                                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <button class="btn btn-solid" (click)="reviewAddress()">View Address</button>
                                     </div>
-                                </div> 
+                                </div>  -->
                                    <!---->
+
+
+                                   <div class="row check-out" *ngIf="isAdd">
+                                    <form class="theme-form" [formGroup]="addAddressForm" (ngSubmit)="onSubmit()">
+                                      <div class="row">
+                                          <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2 mt-3">
+                                              <div class="field-label">Full name </div>
+                                              <input class="form-control" type="text"id="title" name="name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required="">
+                                              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.name.errors.required">Name is required</div>
+                                              </div>
+                                          </div>
+                                          <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2 mt-3">
+                                              <div class="field-label">Mobile Number </div>
+                                              <input class="form-control" type="tel"id="mobile" name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" required="">
+                                              <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.mobile.errors?.required">Mobile No is required</div>
+                                                  <div *ngIf="f.mobile.errors?.pattern">Please Enter Valid Mobile No .</div>
+                                              </div>
+                                          </div>
+                                          <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                              <div class="field-label">Flat, House No., Building, Company, Apartment
+                                              </div>
+                                              <input class="form-control" type="text"id="address" name="address" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" required="">
+                                              <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.address.errors.required">address is required</div>
+                                              </div>
+                                          </div>
+                                          <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                              <div class="field-label">Area, Street, Sector, Village</div>
+                                              <input class="form-control" type="area"id="area" name="name" formControlName="area" [ngClass]="{ 'is-invalid': submitted && f.area.errors }" required="">
+                                              <div *ngIf="submitted && f.area.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.area.errors.required">Area, Street, Sector, Village is required</div>
+                                              </div>
+                                          </div>
+                                          <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                              <div class="field-label">Landmark</div>
+                                              <input class="form-control" type="text"id="landmark" name="landmark" formControlName="landmark" [ngClass]="{ 'is-invalid': submitted && f.landmark.errors }" required="">
+                                              <div *ngIf="submitted && f.landmark.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.landmark.errors.required">landmark is required</div>
+                                              </div>
+                                          </div>
+                                              </div>
+                                              <div  class="row">
+                                                  <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                      <fieldset>
+                                                          <div class="field-label" for="country">Country</div>
+                                                          <select
+                                                            #country
+                                                            class="form-select"
+                                                            name="country"
+                                                            id="country"
+                                                            formControlName="country"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.country.errors }" required=""
+                                                            (change)="onCountryChange($event)">
+                                                            <option [value]="null">-- Select Your Country --</option>
+                                                            <option *ngFor="let country of countries" [value]="country | json">
+                                                              {{ country.flag }}&nbsp;&nbsp;{{ country.name }}
+                                                            </option>
+                                                          </select>
+                                                          <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                              <div *ngIf="f.country.errors">Please select country.</div>
+                                                          </div>
+                                                        </fieldset>
+                                                   </div>
+                                                  <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                      <fieldset>
+                                                          <div class="field-label" for="state">State</div>
+                                                          <select
+                                                            #state
+                                                            class="form-control"
+                                                            name="state"
+                                                            id="state"
+                                                            formControlName="state"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.state.errors }" required=""
+                                                            (change)="onStateChange($event)">
+                                                            <option [value]="null">-- Select Your State --</option>
+                                                            <option *ngFor="let state of states" [value]="state | json">
+                                                              {{ state.name }}
+                                                            </option>
+                                                          </select>
+                                                          <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                              <div *ngIf="f.state.errors">Please select state.</div>
+                                                          </div>
+                                                        </fieldset>
+                                                     </div>
+                                                     <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                      <fieldset>
+                                                          <div class="field-label" for="city">City</div>
+                                                          <select
+                                                            #city
+                                                            class="form-control"
+                                                            name="city"
+                                                            id="city"
+                                                            formControlName="city"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.city.errors }" required=""
+                                                            (change)="onCityChange($event)">
+                                                            <option [value]="null">-- Select Your City --</option>
+                                                            <option *ngFor="let city of cities" [value]="city.name">
+                                                              {{ city.name }}
+                                                            </option>
+                                                          </select>
+                                                          <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                              <div *ngIf="f.city.errors">Please select city.</div>
+                                                          </div>
+                                                        </fieldset>
+                                                      </div>
+                                                  </div>
+                                                  <div *ngIf="autofill" class="row">
+                                                      <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                          <!-- <fieldset>
+                                                              <div class="field-label" for="country">Country</div>
+                                                              <select
+                                                                #country
+                                                                class="form-select"
+                                                                name="country"
+                                                                id="country"
+                                                                formControlName="country"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.country.errors }" required=""
+                                                                >
+                                                                <option [value]="null">-- Select Your Country --</option>
+                                                                <option [value]="country.name">
+                                                                  {{ country.flag }}&nbsp;&nbsp;{{ country.name }}
+                                                                </option>
+                                                              </select>
+                                                              <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.country.errors">Please select country.</div>
+                                                              </div>
+                                                            </fieldset> -->
+                                                            <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                              <div class="field-label">Country</div>
+                                                              <input class="form-control" type="text"id="country" name="country" formControlName="country" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" required="">
+                                                              <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.country.errors.required">Please select country</div>
+                                                              </div>
+                                                          </div>
+                                                       </div>
+                                                      <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                          <fieldset>
+                                                              <!-- <div class="field-label" for="state">State</div> -->
+                                                              <!-- <select
+                                                                #state
+                                                                class="form-control"
+                                                                name="state"
+                                                                id="state"
+                                                                formControlName="state"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.state.errors }" required=""
+                                                                >
+                                                                <option [value]="null">-- Select Your State --</option>
+                                                                <option  [value]="state.name">
+                                                                  {{ state.name }}
+                                                                </option>
+                                                              </select> -->
+                                                              <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                                  <div class="field-label">State</div>
+                                                                  <input class="form-control" type="text"id="state" name="state" formControlName="state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" required="">
+                                                                  <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                                      <div *ngIf="f.state.errors.required">Please select state</div>
+                                                                  </div>
+                                                              </div>
+                                                              <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.state.errors">Please select stste.</div>
+                                                              </div>
+                                                            </fieldset>
+                                                         </div>
+                                                         <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                          <!-- <fieldset>
+                                                              <div class="field-label" for="city">City</div>
+                                                              <select
+                                                                #city
+                                                                class="form-control"
+                                                                name="city"
+                                                                id="city"
+                                                                formControlName="city"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.city.errors }" required=""
+                                                                >
+                                                                <option [value]="null">-- Select Your City --</option>
+                                                                <option [value]="city.name">
+                                                                  {{ city.name }}
+                                                                </option>
+                                                              </select>
+                                                              <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.city.errors">Please select city.</div>
+                                                              </div>
+                                                            </fieldset> -->
+                                                            <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                              <div class="field-label">City</div>
+                                                              <input class="form-control" type="text"id="city" name="state" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" required="">
+                                                              <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.city.errors.required">Please select state</div>
+                                                              </div>
+                                                          </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="form-group col-md-6 col-sm-6 col-xs-12 mb-2">
+                                                          <div class="field-label">Pin Code </div>
+                                                          <input class="form-control" type="number"id="pincode" name="pincode" formControlName="pincode" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" required="">
+                                                          <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
+                                                              <div *ngIf="f.pincode.errors?.required">pincode is required</div>
+                                                              <div *ngIf="f.pincode.errors?.pattern">Enter valid pincode</div>
+
+                                                          </div>
+                                                      </div>
+                                                 
+                                          <div class="row">
+                                            <!-- <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                              <div class="field-label">Add delivery instructions</div>
+                                               <h6>Preferences are used to plan your delivery. However, shipments can sometimes arrive early or later than planned.</h6>
+                                              </div> -->
+                                              <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                  <div class="field-label">Address Type</div>
+                                                  <select name="type" class="form-select me-2" formControlName="type"
+                                                  [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
+                                                  <option [value]="null">-- Select Address Type --</option>
+                                                  <option value="HOME"> Home (7 am – 9 pm delivery) </option>
+                                                      <option value="OFFICE" > Office/Commercial (10 AM - 6 PM delivery)</option>    
+                                                  </select>
+                                                  <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.type.errors">Please select type.</div>
+                                                  </div>
+                                               </div>
+                                               <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-2">
+                                                <div class="field-label">Set As Default?</div>
+                                                  <input type="checkbox" id="is_default" class="checkbox" name="is_default" formControlName="is_default" [(ngModel)]="defaultAddress" [checked]="true"> Make Address As Default
+                                               </div>
+                                             </div>
+                                             <button type="submit" class="btn btn-solid mt-2">Save Address</button>
+                                  </form>
+                                  </div>
+
                                     </div>
                               </div>
                             </div>

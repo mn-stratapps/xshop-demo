@@ -32,13 +32,21 @@ export class ProductBoxOneComponent implements OnInit {
   accessToken: any;
   wishlistproducts =[] as any;
   wishlist: any[];
-  iswishlistproduct: boolean;
-  constructor(private productService: ProductService,private toastrService: ToastrService,private router: Router) { }
+  iswishlistproduct: boolean =false;
+  isCompare :boolean = false;
+  constructor(private productService: ProductService,private toastrService: ToastrService,private router: Router) {
+    
+   }
   
     ngOnChanges(changes:SimpleChanges){
 
      if(changes.wishlisProduct && this.wishlisProduct){
       this.wishlisProduct = changes.wishlisProduct.currentValue;
+      this.wishlistIconData();
+     }
+     const currentUser = localStorage.getItem( 'currentUser' );
+     if(currentUser){
+      this.isCompare = true;
       this.wishlistIconData();
      }
     }
@@ -48,7 +56,7 @@ export class ProductBoxOneComponent implements OnInit {
     if(this.loader) {
       setTimeout(() => { this.loader = false; }, 2000); // Skeleton Loader
     }
-    this.wishlistIconData();
+   
   }
  
   wishlistIconData(){
@@ -159,5 +167,23 @@ export class ProductBoxOneComponent implements OnInit {
   addToCompare(product: any) {
     this.productService.addToCompare(product);
   }
- 
+ addToCompareApi(product:any){
+  const currentUser = localStorage.getItem( 'currentUser' );
+  if(currentUser){
+  this.accessToken = JSON.parse( currentUser )['Token'];
+  this.productService.addToCompareApi(product,this.accessToken)
+  .subscribe({
+    next:(data)=>{
+      console.log(data)
+      this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
+      if(data.message === 'product added to compare'){
+        this.toastrService.success('Product has been added in compare.');
+      }
+    },
+    error:(error)=>{
+      console.log(error)
+    }  
+  }) 
+ }
+}
 }

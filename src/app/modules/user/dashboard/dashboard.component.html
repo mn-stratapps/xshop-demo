@@ -189,7 +189,7 @@
                                                             <h6>{{address.name}} <span>{{address.type_id}}</span></h6>
                                                         </div>
                                                         <div class="middle" style="height:165px;">
-                                                            <div class="btn btn-secondary default_btn">Default</div>
+                                                            <div *ngIf="address.is_default" class="btn btn-secondary default_btn">Default</div>
                                                             <div class="address">
                                                                 <p>{{address.address}}, {{address.area}}, {{address.landmark}}</p>
                                                                 <p>{{address.city}}, {{address.state}}, {{address.country}}</p>
