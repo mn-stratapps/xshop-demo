@@ -7,10 +7,16 @@ import { TeamSlider, TestimonialSlider } from 'src/app/shared/data/slider';
   styleUrls: ['./become-vendor.component.scss']
 })
 export class BecomeVendorComponent implements OnInit {
-  constructor() { }
+  Step1 =false;
+  Step2 =false;
+  Step3 = true;
+  constructor() {
+    
+   }
 
   ngOnInit(): void {
-    
+
+
     }
     public TeamSliderConfig: any = TeamSlider;
   public TestimonialSliderConfig: any = TestimonialSlider;
