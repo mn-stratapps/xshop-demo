@@ -253,12 +253,14 @@ export class CheckoutComponent implements OnInit {
        },
        error:(error) => {
         console.log(error);
-        if (error.error.message === 'Delivery not available to that address'){
+        if (error.error.message === 'Delivery not available to that address' || error.error.message === 'Delivery not available for other countries'){
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'Delivery not available to this address!',           
           })
+          this.EnableselectAddress=false;
+
         }
       }
     }) 

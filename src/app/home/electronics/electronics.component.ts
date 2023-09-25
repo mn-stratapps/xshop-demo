@@ -57,7 +57,10 @@ export class ElectronicsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.wishlistSubscription = this.productService.wishlitsprods.subscribe(response => this.wishlistproducts=response)
-    this.getWishlistProducts();
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+      this.getWishlistProducts();
+    }
     // Change color for this layout
     document.documentElement.style.setProperty('--theme-deafult', '#6d7e87');
     let self = this;

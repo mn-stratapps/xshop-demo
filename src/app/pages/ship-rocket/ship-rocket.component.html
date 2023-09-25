@@ -3,9 +3,8 @@
         <div class="row">
            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 custom_display">
             <div class="ord_details">
-                <i class="fa fa-chevron-left me-2"></i>
                 <div class="ord_id">
-                    <span class="fs-18px">{{order_details?.order_alias}}</span>
+                    <span (click)="previousPage()"><i class="fa fa-chevron-left me-2"></i></span> <span style="font-size: 14px;font-weight: 700;">{{order_details?.order_alias}}</span>
                     <img src="assets/images/ship-rocket/copy.svg" title="click-to-copy" (click)="copyText(order_details?.order_alias)"alt="Copy To Clipboard" class="click-to-copy">
                 </div>
                 <div *ngIf="order_details?.order_status==='FAILED'" class="status-strip status-strip-red">

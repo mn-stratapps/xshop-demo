@@ -255,7 +255,7 @@ export class NavService {
 			]
 		},
 		//{
-			{path:'/admin/dashboard',title:'Admin',role:'admin',type:'link'},
+			{path:'/admin',title:'Admin',role:'admin',type:'link'},
 			// [
 				// {
 				// 	title: 'account', type: 'sub', active: false, children: [
@@ -416,7 +416,7 @@ export class NavService {
 		}
 	];
 	ADMINITEMS: Menu[] = [	
-			{path:'/admin/dashboard',title:'Admin Dashboard',role:'admin',type:'link'},
+			{path:'/admin/account-info',title:'Admin Dashboard',role:'admin',type:'link'},
 			
 		{
 			title: 'Pages', type: 'sub', active: false, children: [

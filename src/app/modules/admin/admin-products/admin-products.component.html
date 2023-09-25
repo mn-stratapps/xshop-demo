@@ -1,0 +1,514 @@
+    <!-- view product start-->
+    <div *ngIf="!isAddProductUrl" class="card_bg">
+    <div class="row" >
+      <div class="col-lg-6 px-1">
+          <div class="page-header-left">
+              <h3>Products List </h3>
+          </div>
+      </div> 
+ </div>
+      <div class="row">
+          <div class="col-12 px-1">
+              <div class="card dashboard-table mt-0">
+                  <div class="card-header"style="display:block!important;">
+                   <div class="row">
+                      <div class="col-lg-3 col-md-6">
+                      <div class="form-inline search-form search-box w-100">
+                          <div class="form-group">
+                              <input class="form-control-plaintext" type="search" [(ngModel)]="searchText" (keydown.enter)="adminproductsSearchEvent($event)" placeholder="Product Name">
+                          </div>
+                      </div>
+                      </div>
+                      <div class="col-lg-9 col-md-6 d-flex justify-content-end mb_filters">
+                              <a class="btn mr-2 filter_btn" (click)="adminProductfilerEnabled = !adminProductfilerEnabled" >
+                                  <i aria-hidden="true" class="fa fa-filter"></i>
+                              </a>
+                          <a (click)="addNewProduct()" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
+                              Product</a>
+                          </div>
+                        <div class="collapse" [class.show]="adminProductfilerEnabled">
+                          <div class="card card_bg card_br mt-2">
+                              <!-- <div class="row d-flex justify-content-end">
+                                  <div class="col-lg-3 ">
+                              <button (click)="resetAdminFilters()" type="button" class="close btn btn_clss" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                          </div> -->
+                           <div class="row">
+                              <ul class="px-1">
+                                  <li>
+                              <form [formGroup]="allproductsFilterForm" class="mb_filter" style="display: flex;">
+                              <div class="cols" > 
+                              <div class="Categories">
+                                  <select class="form-select me-2 ft_size" id="category" formControlName="category">
+                                      <option value="null" disabled>-- Select Category --</option>                     
+                                      <option value="Mobiles">Mobiles</option>
+                                      <option value="laptops">Laptops</option>
+                                      <option value="watches">Watches</option>
+                                      <option value="">All</option>
+                                    </select>
+                                  </div>
+                              </div>
+                              <div class="cols">
+                                  <select  class="form-select ft_size me-2"  id="product_type" formControlName="type">
+                                    <option value="null" disabled>-- Select Type --</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="gadgets">Gadgets</option>
+                                    <option value="accessories">Accessories</option>
+                                    <option value="">All</option>
+
+                                  </select>
+                               </div>
+                              <div class="cols">
+                                  <div class="dropdown">
+                                      <button type="button" class="btn btn-primary dropdown-toggle ft_size" (click)="datefieldEnabled = !datefieldEnabled">
+                                          <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                          Select Date
+                                      </button>
+                                      <div class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                          <button (click)="!datefieldEnabled= !datefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close">
+                                              <span  aria-hidden="true">&times;</span>
+                                            </button>
+                                          <div class="d-flex mt-2">
+                                          <div class="date" id="datepicker">
+                                              <label>From</label>
+                                              <input type="date" name="from_date" formControlName="from_date" class="form-control date_input" id="date" placeholder="From"[max]="maxDate"/>
+                                            </div>
+                                            <div class="date date-field" id="datepicker">
+                                              <label>To</label>
+                                              <input type="date" name="to_date" formControlName="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="cols">
+                                      <div class="dropdown">
+                                          <button type="button" class="btn btn-primary dropdown-toggle ft_size"(click)="pricefieldEnabled = !pricefieldEnabled" >
+                                            Price
+                                          </button>
+                                          <div [class.show]="pricefieldEnabled" class="dropdown-menu p-3" style="width:242px;margin-top: 7px;">
+                                              <button (click)="pricefieldEnabled= !pricefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close"style="position: relative;top:-10px;">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>           
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                          <div class="row">
+                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
+                                                  <div class="Prices">
+                                                    <input type="number" name="price_from" id="price_from" formControlName="price_from" class="form-control" placeholder="From">
+                                                      </div> 
+                                              </div>
+                                              <div class="cl-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
+                                                  <div class="Prices">
+                                                    <input type="number" name="price_to" id="price-to" formControlName="price_to" class="form-control" placeholder="To">
+                                                </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                        </div>
+                               </div>
+                              </form>
+                          </li>
+                          <li>
+                               <div class="cols">
+                                  <div class="d-flex">
+                                      <button (click)="viewAdminProducts()" class="btn btn-info me-2 ft_size">Apply</button>
+                                      <button (click)="resetAdminFilters()" class="btn btn-info ft_size">Reset</button>
+                                  </div>
+                              </div>
+                          </li>
+                          </ul>
+                           </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+                  <div class="card-bg-white pt-2">
+                      <div class="table-responsive table-desi"style="height: 600px; overflow-y: scroll;">
+                          <table class="table table-striped ">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Product Name</th>
+                                      <th scope="col">Category</th>
+                                      <!-- <th scope="col">Description</th> -->
+                                      <th scope="col">Product Type</th>
+                                      <th scope="col">Color</th>
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Discount %</th>
+                                      <th scope="col">Available</th>
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Edit/Delete</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let products of adminProducts | paginate
+                                  : {
+                                      itemsPerPage: itemsPerPage,
+                                      currentPage: page,
+                                      totalItems: totalItems
+                                    }">
+                                      <td>{{products?.title | slice:0:26}}</td>
+                                      <td>{{products?.category}}</td>
+                                      <!-- <td>{{products.description}}</td> -->
+                                      <td>{{products.type}}</td>
+                                      <td>{{products?.variants[0].color}}</td>
+                                      <td>{{products?.price}}</td>
+                                      <td>{{products?.discount}}%</td>
+                                      <td>{{products?.stock}}</td>
+                                      <td scope="row"><img src="{{products.images[0].src}}"></td>
+                                      <td>
+                                          <i class="fa fa-pencil-square-o me-1 text-primary" (click)="openModal(exampleModalLabel, products)"></i>
+                                          <i class="fa fa-trash-o ms-1 text-theme"(click)="deleteProductByAdmin(products.id)" aria-hidden="true"></i></td>
+                                  </tr>
+
+                              </tbody>
+                          </table>
+                          <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!adminProducts?.length">
+                              <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                              <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                              <p>Please check if you have misspelt something or try searching with other words.</p>
+                          </div>
+                      </div>
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="adminProdsPageChange(page = $event)"></pagination-controls>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!--  view product end -->
+      <!--edit product modal popup start-->
+      <ng-template class="modal fade" #exampleModalLabel let-modal tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog  modal-dialog-top modal-lg m-0">
+              <form [formGroup]="editProductForm" >
+            
+            <div class="modal-content border-none">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Edit Product</h5>
+                <button aria-label="Close" (click)="modal.dismiss()" class="close e-close close-btn border-none bg-none"><span aria-hidden="true" style="color: #fff; font-size: 20px;">X</span></button>
+              </div>
+              
+              <div class="modal-body">
+                  <div  class="col-md-12 col-lg-12 pl-0 pt-0 pr-0 pb-1">
+
+                      <div  class="row">
+                          <div  class="col-lg-4 col-md-4 col-sm-6 pr-0 justify-content-center">
+                                   <label class="form-label">Categories</label>
+                                      <select class="form-select me-2" id="category" formControlName="category">                       
+                                          <option>Mobiles</option>
+                                          <option>Laptops</option>
+                                          <option>Gadgets</option>
+                                      </select>   
+                          </div>
+                          <div class="col-lg-8 col-md-8 col-sm-8 col-xl-8">
+                              <label class="form-label">Product Name</label>
+                              <input class="form-control" id="title" formControlName="title" > 
+                         </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                              <div class="py-2">
+                                  <label class="form-label">Description</label>
+                                  <textarea rows="3" id="description"  formControlName="description"  class="form-control"></textarea>
+                                </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-6">
+                            <label class="form-label">Unit price</label>
+                            <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                              <input class="form-control"  id="price"  formControlName="price"  type="number">
+                            </div>
+                            <div class="form-text">Enter unit price.</div>
+                          </div>
+                          <div class="col-sm-6">
+                            <label class="form-label">Discount price</label>
+                            <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                              <input class="form-control" id="discount" formControlName="discount"  type="number" min="0" max="99">
+                            </div>
+                            <div class="form-text">Enter discount percentage value withot "%" symbol.</div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                          <label class="form-label" for="dimension">Product Dimensions</label>
+                          <div class="d-flex">
+                              <div class="input-group mr">
+                              <input class="form-control " type="number"id="length" [(ngModel)] = "length" [ngModelOptions]="{standalone: true}" name="length" placeholder="Length" required="">
+                              <span class="input-group-text">cm</span>
+                          </div>
+                          <div class="input-group mr">
+                              <input class="form-control" type="number"id="width" [(ngModel)] = "width" [ngModelOptions]="{standalone: true}" name="width" placeholder="Width" required="">
+                              <span class="input-group-text">cm</span> 
+                          </div>
+                          <div class="input-group mr">
+                              <input class="form-control" type="number"id="height" [(ngModel)] = "height" [ngModelOptions]="{standalone: true}" name="height" placeholder="height" required="">
+                              <span class="input-group-text">cm</span> 
+                          </div>
+                      </div>
+                         <div class="form-text">For Shipment Use</div>  
+                       </div>
+                       <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                          <label class="form-label" for="weight">Product Weight</label>
+                          <div class="input-group">
+                           <input class="form-control" type="number"id="weight" name="weight" formControlName="weight" [ngClass]="{ 'is-invalid': submitted && f.weight.errors }" required="">                                 
+                           <span class="input-group-text">kg</span>
+                       </div>
+                         <div class="form-text">Max:30kg</div>  
+                       </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="modal.dismiss()" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="editProduct()">Save</button>
+              </div>
+            </div>
+          </form>
+          </div>
+      </ng-template>
+
+      <!-- edit product modal popup end-->
+  <!-- Container-fluid Ends-->
+  </div>
+       <!-- add product start -->
+<div class="container-fluid" *ngIf="isAddProductUrl" >
+  <div class="row product-adding">
+      <div class="col-xl-12">
+          <div class="card m-0 card_border">
+              <div class="card-header"style="padding:10px!important;">
+                      <h3 style="font-size: 20px;">Add Product</h3>
+                      <button (click)="addNewProduct()" class="btn btn-solid btns">view products</button>
+              </div>
+              <div class="card-bg-white"style="padding:12px!important;">
+                  <form class="theme-form" [formGroup]="addProductForm"  enctype="multipart/form-data">
+                      <div class="d-sm-flex flex-wrap justify-content-end align-items-center pb-2">
+                          <!-- <h2 class="h3 py-2 me-2 text-center text-sm-start">Add New Product</h2> -->
+                          <div class="py-2">
+                            <select  class="form-select me-2" id="category" name="category" formControlName="category" [ngClass]="{ 'is-invalid': submitted && f.category.errors }" required="">
+                              <option value="">-- Select category --</option>
+                              <option>Mobiles</option>
+                              <option>Laptops</option>
+                              <option>Watches</option>
+                            </select> 
+                            <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                              <div *ngIf="f.category.errors">Please select category.</div>
+                          </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6 mb-2">
+                            <label class="form-label" for="title">Product name</label>
+                            <input class="form-control" type="text"id="title" name="title" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" required="">
+                           <div class="form-text">Maximum 100 characters.</div>
+                             <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                              <div *ngIf="f.title.errors.required">Product Name is required</div>
+                           </div>
+                         </div>
+                         <div class="col-sm-6 mb-2">
+                             <label class="form-label" for="quantity">Product quantity</label>
+                             <input class="form-control" type="number" id="quantity" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': submitted && f.quantity.errors }" required="">
+                             <div class="form-text">Up to 10 keywords that describe your item. Tags should all be in lowercase and
+                               separated by commas.</div>
+                               <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                                 <div *ngIf="f.quantity.errors">Product Quantity required</div>
+                             </div>
+                           </div>
+                         </div>
+                         <div class="row">
+                         <div class="col-sm-6 mb-2">
+                             <label class="form-label" for="price">Price</label>
+                             <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                               <input class="form-control" type="number" id="price" name="price" formControlName="price" [ngClass]="{'is-invalid': submitted && f.price.errors }" required="">
+                               <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                                 <div *ngIf="f.price.errors">Please enter Price.</div>
+                             </div>
+                             </div>
+                             <div class="form-text">Average marketplace price for this category is $15.</div>
+                           </div>
+                           <div class="col-sm-6 mb-3">
+                             <label class="form-label" for="discount">Discount</label>
+                             <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                               <input class="form-control" type="number" id="discount" name="discount" formControlName="discount" [ngClass]="{'is-invalid': submitted && f.discount.errors }" required="">
+                               <div *ngIf="submitted && f.discount.errors" class="invalid-feedback">
+                                 <div *ngIf="f.discount.errors">Please enter discount price</div>
+                             </div>
+                             </div>
+                             <div class="form-text">Typically 10x of the Standard license price.</div> 
+                           </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-sm-6 mb-2">
+                                   <label class="form-label" for="type">Type</label>
+                                   <select  class="form-select me-2" id="type" name="type" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
+                                     <option value="">-- Select Type --</option>
+                                     <option>Electronics</option>
+                                     <option>Gadgets</option>
+                                     <option>Accessories</option>
+                                   </select> 
+                                   <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                     <div *ngIf="f.type.errors">Please select type.</div>
+                                 </div>
+                                 </div>
+                                 <div class="col-sm-6 mb-2">
+                                   <label class="form-label" for="description">Product Brand</label>
+                                   <input class="form-control" type="text" id="brand" name="brand" formControlName="brand" [ngClass]="{'is-invalid': submitted && f.brand.errors }" required="">
+                                   <div *ngIf="submitted && f.brand.errors" class="invalid-feedback">
+                                     <div *ngIf="f.brand.errors.required">Product Description is required</div>
+                                 </div>
+                                 </div>
+                             </div>
+                             <div class="row">
+                                 <div class="col-sm-4 mb-2">
+                                     <label class="form-label" for="collection">collection</label>
+                                     <select  class="form-select me-2" id="collection" name="type" formControlName="collection" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" required="">
+                                       <option value="">-- Select collection --</option>
+                                       <option>new products</option>
+                                       <option>best sellers</option>
+                                       <option>featured products</option>
+                                       <option>on sale</option>
+                                     </select> 
+                                     <div *ngIf="submitted && f.collection.errors" class="invalid-feedback">
+                                       <div *ngIf="f.collection.errors">Please select collection.</div>
+                                   </div>
+                                   </div>
+                                   <!-- <div class="col-sm-4 mb-2 form-group">
+                                     <label class="form-label" for="size">Product Size</label>
+                                     <input class="form-control" type="text"id="size" name="size" formControlName="size" >                                 
+                                   </div> -->
+                                   <div class="col-sm-4 mb-2 form-group">
+                                     <label class="form-label" for="color">Product Color</label>
+                                     <input class="form-control" type="text"id="color" name="color" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required="">                                 
+                                   </div>
+                                 </div>
+                                 <div class="row">
+                                  <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                                     <label class="form-label" for="weight">Product Weight</label>
+                                     <div class="input-group">
+                                      <input class="form-control" type="number"id="weight" name="weight" formControlName="weight" [ngClass]="{ 'is-invalid': submitted && f.weight.errors }" required="">                                 
+                                      <span class="input-group-text">kg</span>
+                                  </div>
+                                    <div class="form-text">Max:30kg</div>  
+                                  </div>
+                                  <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
+                                      <label class="form-label" for="dimension">Product Dimensions</label>
+                                      <div class="d-flex">
+                                          <div class="input-group mr">
+                                          <input class="form-control " type="number"id="length" [(ngModel)] = "length" [ngModelOptions]="{standalone: true}" name="length" placeholder="Length" required="">
+                                          <span class="input-group-text">cm</span>
+                                      </div>
+                                      <div class="input-group mr">
+                                          <input class="form-control" type="number"id="width" [(ngModel)] = "width" [ngModelOptions]="{standalone: true}" name="width" placeholder="Width" required="">
+                                          <span class="input-group-text">cm</span> 
+                                      </div>
+                                      <div class="input-group mr">
+                                          <input class="form-control" type="number"id="height" [(ngModel)] = "height" [ngModelOptions]="{standalone: true}" name="height" placeholder="height" required="">
+                                          <span class="input-group-text">cm</span> 
+                                      </div>
+                                  </div>
+                                     <div class="form-text">For Shipment Use</div>  
+                                   </div>
+                                 </div>
+                           <div class="py-2">
+                             <label class="form-label" for="description">Is Product In Sale?</label>
+                           <div>
+                             <input id="true" type="radio" value="true" name="sale" class="mr-1" formControlName="sale">
+                             <label for="true">Yes</label>
+                          </div>
+                          <div>
+                             <input id="false" type="radio" value="false" name="sale" class="mr-1" formControlName="sale">
+                             <label for="false">NO</label>
+                          </div>
+                         </div>
+                         <div class="py-2">
+                             <label class="form-label" for="description">Does this product is New</label>
+                           <div>
+                             <input id="true" type="radio" value="true" name="new" class="mr-1" formControlName="new">
+                             <label for="true">Yes</label>
+                          </div>
+                          <div>
+                             <input id="false" type="radio" value="false" name="new" class="mr-1" formControlName="new">
+                             <label for="false">NO</label>
+                          </div>
+                         </div>
+                         <div class="mb-3">
+                             <label class="form-label" for="description">Product description</label>
+                             <textarea class="form-control" rows="3" id="description" name="description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" required=""></textarea>
+                             <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                               <div *ngIf="f.description.errors.required">Product Description is required</div>
+                           </div>
+                       </div>
+                   
+                      
+                          <div class="row">
+                            <div >
+                              <input type='file' id="path" class="w-30" name="path"  #fileInput  (change)="onFileUpdate($event, '1')" />
+                              <img [src]='croppedImage' (click) = 'fileInput.click()' width="100" height="100" />
+                            </div>
+                            <div class="form-text">Only png/jpeg formats are allowrd</div>  
+                            <!-- <div >
+                              <input type='file' id="image2" name="image2" #fileInput1  (change)="onFileUpdate($event, '2')" />
+                              <img [src]='image2' (click) = 'fileInput.click()' width="100" height="100"/>
+                            </div>
+                            <div >
+                              <input type='file' id="image3" name="image3" #fileInput2  (change)="onFileUpdate($event, '3')" />
+                              <img [src]='image3' (click) = 'fileInput.click()' width="100" height="100"/>
+                            </div> -->
+                         
+                          <div class="col-xl-12 mt-3">
+                          <button (click)="saveImage()" class="file-drop-input btn btn-solid mr-1 mb-2"> upload image</button>   
+                          <!-- <button class="btn btn-solid mr-1 mb-2" (click)="rotateLeft()">Rotate left</button>
+                          <button class="btn btn-solid mr-1 mb-2" (click)="rotateRight()">Rotate right</button>
+                          <button class="btn btn-solid mr-1 mb-2" (click)="flipHorizontal()">Flip horizontal</button>
+                          <button class="btn btn-solid mr-1 mb-2" (click)="flipVertical()">Flip vertical</button> -->
+                          <button class="btn btn-solid mr-1 mb-2" (click)="toggleContainWithinAspectRatio()">
+                            {{
+                              containWithinAspectRatio
+                                ? 'Fill Aspect Ratio'
+                                : 'Contain Within Aspect Ratio'
+                            }}
+                          </button>
+                          <button class="btn btn-solid mr-2 mb-2" (click)="resetImage()">Reset image</button>
+                         
+                          <input class="rotation"
+                            [(ngModel)]="rotation"
+                            placeholder="Rotation"
+                            [ngModelOptions]="{standalone: true}"
+                            type="number"
+                            (keyup)="updateRotation()"
+                          />
+                          <button class="btn-danger zoomin" (click)="zoomOut()">Zoom -</button>
+                          <button class="btn-danger zoomin" (click)="zoomIn()">Zoom +</button>
+                     
+                          <div>
+                              <image-cropper
+                              [imageChangedEvent]="imageChangedEvent"
+                              [maintainAspectRatio]="true"
+                              [containWithinAspectRatio]="containWithinAspectRatio"
+                              [aspectRatio]="4 / 4"
+                              [resizeToWidth]="800"
+                              [cropperMinWidth]="500"
+                              [onlyScaleDown]="true"
+                              [roundCropper]="false"
+                              [canvasRotation]="canvasRotation"
+                              [transform]="transform"
+                              [alignImage]="'left'"
+                              [style.display]="showCropper ? null : 'none'"
+                              format="png"
+                              (imageCropped)="imageCropped($event)"
+                              (imageLoaded)="imageLoaded()"
+                              (cropperReady)="cropperReady($event)"
+                              (loadImageFailed)="loadImageFailed()"
+                            ></image-cropper>
+                          </div>
+                      </div>                                           
+                          </div>
+                          
+                          <button *ngIf="imageuploaded" style="margin-top:20px" class="btn btn-solid d-block w-20" (click)="addProduct()"><i class="ci-cloud-upload fs-lg me-2"></i>Upload
+                            Product</button>
+                      </form>
+              </div>
+          </div>
+         </div>
+      </div>
+  </div>
+<!-- add product end -->

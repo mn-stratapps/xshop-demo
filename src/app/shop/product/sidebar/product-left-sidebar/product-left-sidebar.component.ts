@@ -38,6 +38,7 @@ export class ProductLeftSidebarComponent implements OnInit {
   itemsPerPage:number;
   page: number = 1;
   product_id:any;
+  isCompare :boolean = false;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -56,6 +57,7 @@ export class ProductLeftSidebarComponent implements OnInit {
     const currentUser = localStorage.getItem( 'currentUser' );
     if(currentUser){
       this.getWishlistProducts();
+      this.isCompare = true;
     }
   }
   validatePincode(event:any){
@@ -110,7 +112,24 @@ export class ProductLeftSidebarComponent implements OnInit {
       }
     }) 
   }
-
+  addToCompareApi(product:any){
+    const currentUser = localStorage.getItem( 'currentUser' );
+    if(currentUser){
+    this.accessToken = JSON.parse( currentUser )['Token'];
+    this.productService.addToCompareApi(product,this.accessToken)
+    .subscribe({
+      next:(data)=>{
+        console.log(data)
+        if(data.message === 'product added to compare'){
+          this.toastrService.success('Product has been added in compare.');
+        }
+      },
+      error:(error)=>{
+        console.log(error)
+      }  
+    }) 
+   }
+  }
   getReviews(){
     this.productService.getProductReviews(this.productId,this.pageno)
     .subscribe({ 

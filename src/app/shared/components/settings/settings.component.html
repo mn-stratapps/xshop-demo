@@ -11,14 +11,14 @@
 		<span>Search</span>
 	</button>
 </form> -->
-<form class="navbar-form" role="search">
+<div class="navbar-form" role="search">
   <div class="input-group">
-    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+    <input class="form-control" type="search" [(ngModel)]="searchText" (keydown.enter)="searchPage($event)" placeholder="Search" aria-label="Search">
       <div class="input-group-btn">
           <button class="btn search_btn" type="submit"><i class="fa fa-search"></i></button>
       </div>
   </div>
-  </form>
+</div>
       <div id="search-overlay" class="search-overlay" [ngStyle]="{'display': search ? 'block' : 'none' }">
         <div> 
             <span class="closebtn" title="Close Overlay" (click)="searchToggle()">×</span>

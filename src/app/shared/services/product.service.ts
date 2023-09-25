@@ -11,7 +11,7 @@ import { response } from 'express';
 import { timeStamp } from 'console';
 
 const state = {
-  products: JSON.parse(localStorage['products'] || '[]'),
+  // products: JSON.parse(localStorage['products'] || '[]'),
   wishlist: JSON.parse(localStorage['wishlistItems'] || '[]'),
   compare: JSON.parse(localStorage['compareItems'] || '[]'),
   cart: JSON.parse(localStorage['cartItems'] || '[]')
@@ -48,11 +48,11 @@ export class ProductService {
   // }
 
   private get products(): Observable<Product[]> {
-    //return this.http.get<Product[]>(`${environment.apiUrl}/products/`)
-    this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
-    .pipe(map(data => data));
-     this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
-     return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
+     return this.http.get<Product[]>(`${environment.apiUrl}/products/`)
+    // this.Products = this.http.get<Product[]>(`${environment.apiUrl}/products/`)
+    // .pipe(map(data => data));
+    //  this.Products.subscribe(next => {localStorage['products'] = JSON.stringify(next)});
+    //  return this.Products = this.Products.pipe(startWith(JSON.parse(localStorage['products'] || '[]')));
     //return this.Products;
      }
   //Get Products
@@ -102,6 +102,11 @@ checkDeliveryDate(obj){
     this.wishlistItemss.next(obj);
   }
   
+  private searchItems = new BehaviorSubject<any>({});
+  searchItemProds = this.searchItems.asObservable();
+  setSearchItems(obj:any){
+    this.searchItems.next(obj);
+  }
   // Add to Wishlist
   // public addToWishlist(product): any {
   //   const wishlistItem = state.wishlist.find(item => item.id === product.id)
@@ -287,6 +292,10 @@ public addToWishlist(product): any {
     //     }
       this.OpenCart = true; // If we use cart variation modal
       return true;
+  }
+  searchPage(data:any){
+    this.headers = new HttpHeaders().set('content-type', 'multipart/form-data')
+    return this.http.post<any>(`${environment.apiUrl}/search/`,data)
   }
   addToCartCount(accessToken,id,quantity){
     return this.http.put<any>(`${environment.apiUrl}/cartquantityadd/`+accessToken,{id,quantity})

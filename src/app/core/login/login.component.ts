@@ -121,7 +121,7 @@ initializeReactivateEmailForm(){
         }
         //admin
         else if(data.role === 2){
-          this.router.navigate(['admin/dashboard'])
+          this.router.navigate(['admin/account-info'])
           .then(() => {
             window.location.reload();
           });

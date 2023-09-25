@@ -9,6 +9,7 @@ import { ImageCropperComponent } from 'src/app/modules/image-cropper/image-cropp
 import { ImageCroppedEvent } from 'src/app/modules/image-cropper/interfaces';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-ship-rocket',
@@ -38,7 +39,7 @@ export class ShipRocketComponent implements OnInit {
   @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
 
 constructor(private route:ActivatedRoute,public productService:ProductService,private router:Router,
-  private clipboard: Clipboard,private formBuilder:FormBuilder,private httpService:AuthenticationService){
+  private clipboard: Clipboard,private formBuilder:FormBuilder,private httpService:AuthenticationService,private location: Location){
     const currentUrl = this.router.url;
     if(currentUrl.includes('/pages/admin/ship-rocket/')){
       this.isAdminproduct = true;
@@ -68,7 +69,7 @@ this.productService.orderDetails(this.accessToken,this.id)
     this.order_details=data.order_details;
     this.customer_details=data.customer_details;
     this.package_details =data.package_details;
-    this.shipping_details = data.shipping_details[0].track;
+    this.shipping_details = data.shipping_details[0]?.track;
     this.delivery_status = data.current_status;
   }
 })
@@ -87,7 +88,9 @@ adminorderDetails(){
     }
   })
 }
-
+previousPage(){
+  this.location.back();
+}
 copyText(textToCopy: string) {
   this.clipboard.copy(textToCopy);
 }

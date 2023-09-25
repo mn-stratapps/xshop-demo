@@ -50,18 +50,18 @@ const routes: Routes = [
     component: WishlistComponent 
   },
   //vendor
-  { 
-    path: 'become/vendor', 
-    component: BecomeVendorComponent 
-  },
-  { 
-    path: 'vendor/profile', 
-    component: VendorProfileComponent 
-  },
-  { 
-    path: 'vendor/dashboard', 
-    component: VendorDashboardComponent 
-  },
+  // { 
+  //   path: 'become/vendor', 
+  //   component: BecomeVendorComponent 
+  // },
+  // { 
+  //   path: 'vendor/profile', 
+  //   component: VendorProfileComponent 
+  // },
+  // { 
+  //   path: 'vendor/dashboard', 
+  //   component: VendorDashboardComponent 
+  // },
   { 
     path: 'cart', 
     component: CartComponent 

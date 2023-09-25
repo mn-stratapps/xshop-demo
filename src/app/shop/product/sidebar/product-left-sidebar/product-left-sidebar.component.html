@@ -121,8 +121,9 @@
                   <div class="product-buttons">
                     <a class="btn btn-solid" [class.disabled]="counter > product.stock"
                       (click)="addToCartCount(product)">add to cart</a>
-                    <a class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="buyNow(product)">buy
+                    <a class="btn btn-solid" style="margin-left: 10px;" [class.disabled]="counter > product.stock" (click)="buyNow(product)">buy
                       now</a>
+                    <a *ngIf="isCompare" class="btn btn-solid" (click)="addToCompareApi(product)">add to compare</a>
                   </div>
                   <div class="pincode-deliveryContainer">
                     <h4>Delivery Options
@@ -316,7 +317,8 @@
                 <tr>
                   <th class="product-name ">Product Details</th>
                   <td class="item-row" *ngFor="let product of compareProducts">
-                    <img [src]="product.images[0].src" [alt]="product.images[0].alt" width="185" class="featured-image">
+                    <a [routerLink]="['/shop/product/left/sidebar/',product.title.replace(' ', '-'), product?.id]">
+                    <img [src]="product.images[0].src" [alt]="product.images[0].alt" width="185" class="featured-image"></a>
                     <div class="product-price product_price"> 
                     <strong>On Sale: </strong><span> {{ (product.price | discount:product) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span></div>
                     <form class="variants clearfix">
@@ -361,7 +363,6 @@
               </tbody>
             </table>
           </div>
-          <button class="btn btn-solid mt-3 pull-right">Add to Compare</button>
         </div>
       </div>
     </div>

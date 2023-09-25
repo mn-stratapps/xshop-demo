@@ -1,0 +1,137 @@
+    <!--user details start-->
+    <div class="col-lg-6">
+        <div class="page-header-left">
+            <h3 class="f-w-600">User Details </h3>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card dashboard-table mt-0">
+                        <div class="card-header"style="display:block!important;">
+                            <div class="row">
+                               <div class="col-md-6 col-lg-3">
+                               <div class="form-inline search-form search-box w-100">
+                                   <div class="form-group">
+                                       <input class="form-control-plaintext" type="search" [(ngModel)]="searchText" (keydown.enter)="usersSearchEvent($event)" placeholder="Email ">
+                                   </div>
+                                </div>
+                               </div>
+                               <div class="col-md-6 col-lg-9 d-flex justify-content-end mb_filters">
+                                       <a class="btn mr-2 filter_btn" (click)="userfilerEnabled = !userfilerEnabled" >
+                                           <i aria-hidden="true" class="fa fa-filter"></i>
+                                       </a>
+                                   <a  class="btn btn-sm btn-solid mt-md-0 mt-2">Create User</a>
+                                   </div>
+                                 <div class="collapse" [class.show]="userfilerEnabled">
+                                   <div class="card card_bg card_br mt-2">
+                                    <!-- <div class="row d-flex justify-content-end">
+                                        <div class="col-lg-3 ">
+                                        <button (click)="resetUsersFilters()" type="button" class="close btn btn_clss" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                         </button>
+                                        </div>
+                                    </div> -->
+                                    <form [formGroup]="usersFilterForm">
+                                    <ul class ="mb_filter" style="display: flex;">
+                                        <li  class ="mb_filter" style="display: flex;">                                                      
+                                         <div class="cols">
+                                            <div class="Categories">
+                                                <select class="form-select ft_size me-2" id="is_active" formControlName="is_active">  
+                                                    <option value="null" disabled>-- Active Status --</option>                     
+                                                    <option value="true">Active</option>
+                                                    <option value="false">In-active</option>
+                                                    <option value="">All</option>
+                                                  </select>
+                                                </div>
+                                            </div>                                                 
+                                             <div class="cols"style="width:20%;">
+                                           <div class="dropdown">
+                                               <button type="button" class="btn btn-primary dropdown-toggle ft_size" (click)="datefieldEnabled = !datefieldEnabled">
+                                                   <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                                   Select Date
+                                               </button>
+                                               <div class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                                <button (click)="!datefieldEnabled= !datefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close">
+                                                    <span  aria-hidden="true">&times;</span>
+                                                </button>   
+                                                <div class="d-flex">
+                                                   <div class="date" id="datepicker">
+                                                       <label>From</label>
+                                                       <input type="date" name="from_date" formControlName="from_date" class="form-control date_input" id="date" placeholder="From" [max]="maxDate"/>
+                                                     </div>
+                                                     <div class="date date-field" id="datepicker">
+                                                       <label>To</label>
+                                                       <input type="date" name="to_date" formControlName="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
+                                                     </div>
+                                                   </div>  
+                                            </div>
+                                             </div>
+                                           </div>
+                                        </li>
+                                        <li>
+                                        <div class="cols">
+                                            <div class="d-flex">
+                                                <button (click)="getUsersList()" class="btn btn-info me-2 ft_size">Apply</button>
+                                                <button (click)="resetUsersFilters()" class="btn btn-info ft_size">Reset</button>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    </ul>
+                                    </form>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                        <div class="card-bg-white">
+                            <div style="height: 637px;overflow-y: scroll;" class="table-responsive table-desi">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"> Avatar</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Last Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Last Login</th>
+                                            <th scope="col">Mobile Number</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let userslist of userList | paginate
+                                        : {
+                                            itemsPerPage: itemsPerPage,
+                                            currentPage: page,
+                                            totalItems: totalItems
+                                          }">
+                                            <td scope="row"><img  class="imgTable" src="../assets/images/web-dev.jpg"></td>
+                                            <td>{{userslist.first_name}}</td>
+                                            <td>{{userslist.last_name}}</td>
+                                            <td style="text-transform: none;">{{userslist.email}}</td>
+                                            <td *ngIf="userslist.last_Login === 0" > Active Today</td>
+                                            <td *ngIf="userslist.last_Login > 0" >{{userslist.last_Login}} Days ago</td>
+                                            <td>{{userslist.mobile_number}}</td>
+                                            <td *ngIf="userslist.is_active">Active</td>
+                                            <td *ngIf="!userslist.is_active">In-Active</td>
+                                            <!-- <td>
+                                                <a href="#"><i class="fa fa-pencil-square-o me-1" aria-hidden="true"></i>
+                                                </a><a href="#"></a><i class="fa fa-trash-o ms-1 text-theme" aria-hidden="true"></i></td> -->
+                                        </tr>                                                            
+                                        </tbody>
+                                </table>
+                                <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!userList?.length">
+                                    <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                    <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                                    <p>Please check if you have misspelt something or try searching with other words.</p>
+                                </div>
+                            </div>
+                            <pagination-controls  previousLabel="Prev" nextLabel="Next"  (pageChange)="usersPageChange(page = $event)"></pagination-controls>
+                            <!-- <pagination-controls
+                            previousLabel="Prev"
+                            nextLabel="Next"
+                            (pageChange)="onTableDataChange($event)">
+                          </pagination-controls> -->
+                        </div>
+                    </div>
+                </div>
+            </div> 
+      <!--user details end-->

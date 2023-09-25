@@ -78,6 +78,10 @@ const routes: Routes = [
     component: CollectionLeftSidebarComponent
   },
   {
+    path: 'search/collection/left/sidebar',
+    component: CollectionLeftSidebarComponent
+  },
+  {
     path: 'collection/right/sidebar',
     component: CollectionRightSidebarComponent
   },

@@ -164,9 +164,9 @@ export class ProductBoxOneComponent implements OnInit {
         }  
       })   
   }
-  addToCompare(product: any) {
-    this.productService.addToCompare(product);
-  }
+  // addToCompare(product: any) {
+  //   this.productService.addToCompare(product);
+  // }
  addToCompareApi(product:any){
   const currentUser = localStorage.getItem( 'currentUser' );
   if(currentUser){
@@ -175,9 +175,10 @@ export class ProductBoxOneComponent implements OnInit {
   .subscribe({
     next:(data)=>{
       console.log(data)
-      this.productService.wishlistItems.subscribe(response=>this.productService.setwishlistItems(response))
       if(data.message === 'product added to compare'){
         this.toastrService.success('Product has been added in compare.');
+      }if(data.message === 'product alredy exists in compare'){
+        this.toastrService.warning('Product already exists in compare.');
       }
     },
     error:(error)=>{

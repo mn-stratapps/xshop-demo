@@ -27,12 +27,19 @@ export class CollectionLeftSidebarComponent implements OnInit {
   public sortBy: string; // Sorting Order
   public mobileSidebar: boolean = false;
   public loader: boolean = true;
+  isSearch :boolean = false;
   //public wishlistProduct: Product[] =[];
   wishlistproducts: Product[];
   wishlistSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private viewScroller: ViewportScroller, public productService: ProductService) {   
+      const currentUrl = this.router.url;
+      if(currentUrl.includes('search/collection/left/sidebar')){
+        this.isSearch = true;
+      }else{
+        this.isSearch = false;
+      }
       // Get Query params..
       this.route.queryParams.subscribe(params => {
 
@@ -48,6 +55,7 @@ export class CollectionLeftSidebarComponent implements OnInit {
         this.pageNo = params.page ? params.page : this.pageNo;
         //this.brands = params.brand ? params.brand :null;
         // Get Filtered Products..
+        if(!this.isSearch){
         this.productService.getProducts.subscribe(response => {         
           // Sorting Filteret
           this.products = this.productService.sortProducts(response, this.sortBy);
@@ -69,6 +77,30 @@ export class CollectionLeftSidebarComponent implements OnInit {
           this.paginate = this.productService.getPager(this.products.length, +this.pageNo);     // get paginate object from service
           this.products = this.products.slice(this.paginate.startIndex, this.paginate.endIndex + 1); // get current page of items
         })
+      } else if(this.isSearch){
+        
+        this.productService.searchItemProds.subscribe(response => {         
+          // Sorting Filteret
+          this.products = this.productService.sortProducts(response, this.sortBy);
+          
+          console.log(this.products)
+          //Category Filter
+          if(params.category)
+            this.products = this.products.filter(item => item.type == this.category);
+            if(params.color)
+            this.products = this.products.filter(item => item.variants[0]?.color == String(this.colors))
+            // if(this.size)
+            // this.products = this.products.filter(item => item.variants[0]?.size == String(this.size))
+            if(params.brand){ 
+            this.products = this.products.filter(item => item.brand == String(this.brands));
+          }
+            //Price Filter
+          this.products = this.products.filter(item => item.price >= this.minPrice && item.price <= this.maxPrice) 
+          //Paginate Products
+          this.paginate = this.productService.getPager(this.products.length, +this.pageNo);     // get paginate object from service
+          this.products = this.products.slice(this.paginate.startIndex, this.paginate.endIndex + 1); // get current page of items
+        })
+      }
       })
   }
 

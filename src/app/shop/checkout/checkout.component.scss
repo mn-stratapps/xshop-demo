@@ -33,6 +33,57 @@
 .prd{
  width:177px;
 }
+.fa-trash {
+    font-size: 18px;
+    color: red;
+}
+
+.prt_quantity {
+    text-align: center;
+    position: relative;
+    right: 13px;
+}
+.fs-16 {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.ship_icon {
+    width: 25px;
+    height: 25px;
+    top: -6px;
+    right: 3px;
+    position: relative;
+}
+.total{
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+.total li span {
+    font-weight: 600;
+}
+.total li {
+    font-weight: 600;
+    font-size: 16px;
+}
+.customer_name {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 0px;
+    color: #202529;
+}
+
+.home_address {
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: capitalize;
+    margin-left: 13px;
+    color: #363f47;
+}
+
+.address_detail {
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
 @media(min-width:1280px) and (max-width:1480px){
     .pqt{
         padding-left:63px;

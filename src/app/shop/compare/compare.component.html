@@ -35,8 +35,8 @@
                                     <div class="product-price product_price"> 
                                     <strong>On Sale: </strong><span> {{ (product.price | discount:product) * productService?.Currency.price | currency:productService?.Currency.currency:'symbol' }}</span></div>
                                     <form class="variants clearfix">
-                                      <button title="Add to Cart" (click)="addToCart(product)" class="add-to-cart btn btn-solid me-2">Add to Cart</button>
-                                      <button title="Add to Cart" (click)="buyNow(product)"  class="add-to-cart btn btn-primary btn-buynow">Buy Now</button>
+                                      <button title="Add to Cart" (click)="addToCart(product)" class="add-to-cart btn btn-solid me-2 mb-2">Add to Cart</button>
+                                      <button title="Add to Cart" (click)="buyNow(product)"  class="add-to-cart btn btn-solid mb-2">Buy Now</button>
                                     </form>
                                 </td>
                             </tr>
@@ -44,7 +44,9 @@
                             <tr>
                                 <th class="product-name">Product Description</th>
                                 <td class="item-row" *ngFor="let product of products">
-                                    <p class="description-compare">{{ product.description.substring(0, 200)+'...' }}</p>
+                                    <li style="width: 260px;">
+                                        <p class="description-compare">{{ product.description.substring(0, 200)+'...' }}</p>
+                                    </li>
                                 </td>
                             </tr>
                             <!-- product Brands-->
@@ -65,7 +67,7 @@
                                     <th class="product-name">Product Sold By</th>
                                     <td class="item-row" *ngFor="let product of products">
                                         <p class="description-compare">{{ product.Company_name}}</p>
-                                    </tr>
+                                </tr>
                             <!-- Product Availability -->
                             <tr>
                                 <th class="product-name"> Availability </th>

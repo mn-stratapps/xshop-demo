@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { Product } from "../../classes/product";
 import { response } from 'express';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +16,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   public products: Product[] = [];
   public search: boolean = false;
-  
+  public searchProducts: Product[] = [];
   public languages = [{ 
     name: 'English',
     code: 'en'
@@ -43,11 +44,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }]
   accessToken: any;
   producSubscription: Subscription;
-
+  searchText = '';
+  pageNo =1;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
   private renderer2: Renderer2,@Inject(DOCUMENT) private _document:any,
     private translate: TranslateService,
-    public productService: ProductService) {
+    public productService: ProductService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -77,7 +80,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   searchToggle(){
     this.search = !this.search;
   }
-
+  searchPage(event:any){
+    // const Obj ={
+    //   search_item:this.searchText,
+    //   // pageno:this.pageNo,    
+    // }
+    const formData = new FormData();
+    formData.append('search_item',this.searchText);
+    this.productService.searchPage(formData)
+    .subscribe(response => this.productService.setSearchItems(response))
+    this.router.navigate(['/shop/search/collection/left/sidebar'])
+  }
   changeLanguage(code){
     if (isPlatformBrowser(this.platformId)) {
       this.translate.use(code)
