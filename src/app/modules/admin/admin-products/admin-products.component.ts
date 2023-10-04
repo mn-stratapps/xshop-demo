@@ -62,7 +62,8 @@ export class AdminProductsComponent implements OnInit {
   length="";
   width="";
   height="";
-
+  InputValue:any;
+  
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
 @ViewChild('pickupModalLabel') pickupModalLabel : any;
 

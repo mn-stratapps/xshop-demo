@@ -1,0 +1,54 @@
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>user dashboard</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="dashboard-section section-b-space user-dashboard-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="dashboard-sidebar">
+                    <div class="profile-top">
+                        <div class="profile-image">
+                            <img src="../assets/images/avtar.jpg" alt="" class="img-fluid">
+                        </div>
+                        <div class="profile-detail">
+                            <h5>{{userData.first_name}}</h5>
+                            <h6>{{userData.email}}</h6>
+                        </div>
+                    </div>
+                    <div class="faq-tab">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item" [routerLink]="['/user','user-account-info']" class="nav-link active">Account Info</li>  
+                            <li class="nav-item" [routerLink]="['/user','user-address-book']" class="nav-link active">Address Book</li> 
+                            <li class="nav-item" [routerLink]="['/user','user-orders']" class="nav-link active">My Orders</li>          
+                            <li class="nav-item" [routerLink]="['/user','user-wishlist']" class="nav-link active">Wishlist</li>   
+                            <li class="nav-item" [routerLink]="['/user','user-profile']" class="nav-link active">Profile</li>    
+                            <li class="nav-item" [routerLink]="['/user','user-security']" class="nav-link active">Security</li>    
+                            <li class="nav-item" (click)="logoutfromDashboard()" class="nav-link active">Log Out</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+</section>

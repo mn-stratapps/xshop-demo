@@ -182,7 +182,7 @@ export class NavService {
 		// 	]
 		// },
 		{ 			
-			path:'/user/dashboard',title:'User',role:'user',type:'link'
+			path:'/user/user-account-info',title:'User',role:'user',type:'link'
 
 			// title: 'User', type: 'sub', active: false, children: [
 			// 	{
@@ -342,7 +342,7 @@ export class NavService {
 		},
 	
 		{ 			
-			path:'/user/dashboard',title:'Dashboard',role:'user',type:'link'
+			path:'/user/user-account-info',title:'Dashboard',role:'user',type:'link'
 
 		},
 		{
@@ -389,7 +389,7 @@ export class NavService {
 		},
 	
 		{ 			
-			path:'/user/dashboard',title:'User',role:'user',type:'link'
+			path:'/user/user-account-info',title:'User',role:'user',type:'link'
 
 		},
 		{

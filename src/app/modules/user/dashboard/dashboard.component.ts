@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
   selectedState: any;
   selectedCountry: any;
   aid: any;
-  defaultAddress = false;
+  defaultAddress:boolean = false;
   ipAddress:any;
   geoData:any;
   autofill:boolean=false;
@@ -112,41 +112,41 @@ export class DashboardComponent implements OnInit {
      private modalService: NgbModal,private http :HttpClient,
      private ngZone: NgZone, private geoCoder: MapGeocoder) { }
 
-    //  ngAfterViewInit(): void {
-    //   // Binding autocomplete to search input control
-    //   let autocomplete = new google.maps.places.Autocomplete(
-    //     this.searchElementRef.nativeElement
-    //   );
-    //   // Align search box to center
-    //   this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-    //     this.searchElementRef.nativeElement
-    //   );
-    //   autocomplete.addListener('place_changed', () => {
-    //     this.ngZone.run(() => {
-    //       //get the place result
-    //       let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+     ngAfterViewInit(): void {
+      // Binding autocomplete to search input control
+      let autocomplete = new google.maps.places.Autocomplete(
+        this.searchElementRef.nativeElement
+      );
+      // Align search box to center
+      this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+        this.searchElementRef.nativeElement
+      );
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
   
-    //       //verify result
-    //       if (place.geometry === undefined || place.geometry === null) {
-    //         return;
-    //       }
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
   
-    //       console.log({ place }, place.geometry.location?.lat());
+          console.log({ place }, place.geometry.location?.lat());
   
-    //       //set latitude, longitude and zoom
-    //       this.latitude = place.geometry.location?.lat();
-    //       this.longitude = place.geometry.location?.lng();
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location?.lat();
+          this.longitude = place.geometry.location?.lng();
   
-    //       // Set marker position
-    //       this.setMarkerPosition(this.latitude, this.longitude);
+          // Set marker position
+          this.setMarkerPosition(this.latitude, this.longitude);
   
-    //       this.center = {
-    //         lat: this.latitude,
-    //         lng: this.longitude,
-    //       };
-    //     });
-    //   });
-    // }
+          this.center = {
+            lat: this.latitude,
+            lng: this.longitude,
+          };
+        });
+      });
+    }
   ngOnInit() {
     this.getdashboardCount();
     this.getUserDetails();
@@ -855,7 +855,7 @@ else if(this.isEditAddress){
   subscribe({
     next:(data)=>{
       console.log(data)
-      if(data.message === 'Updated Sucessfully'){
+      if(data.message === 'Updated Successfully'){
         Swal.fire({
           icon: 'success',
           title: 'Done!',

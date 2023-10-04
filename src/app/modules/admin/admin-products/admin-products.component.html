@@ -225,7 +225,7 @@
                           <div class="col-sm-6">
                             <label class="form-label">Discount price</label>
                             <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                              <input class="form-control" id="discount" formControlName="discount"  type="number" min="0" max="99">
+                              <input class="form-control" id="discount" formControlName="discount"  type="text" numeric min="0" max="99" maxlength="2">
                             </div>
                             <div class="form-text">Enter discount percentage value withot "%" symbol.</div>
                           </div>
@@ -323,17 +323,17 @@
                                  <div *ngIf="f.price.errors">Please enter Price.</div>
                              </div>
                              </div>
-                             <div class="form-text">Average marketplace price for this category is $15.</div>
+                             <!-- <div class="form-text">Average marketplace price for this category is $15.</div> -->
                            </div>
                            <div class="col-sm-6 mb-3">
                              <label class="form-label" for="discount">Discount</label>
                              <div class="input-group"><span class="input-group-text"><i class="fa fa-dollar"></i></span>
-                               <input class="form-control" type="number" id="discount" name="discount" formControlName="discount" [ngClass]="{'is-invalid': submitted && f.discount.errors }" required="">
+                               <input class="form-control" type="textbox" numeric id="discount" maxlength="2"placeholder="XX"  name="discount" formControlName="discount" [ngClass]="{'is-invalid': submitted && f.discount.errors }" required="">
                                <div *ngIf="submitted && f.discount.errors" class="invalid-feedback">
-                                 <div *ngIf="f.discount.errors">Please enter discount price</div>
+                                 <div *ngIf="f.discount.errors">Please enter discount percentage without "%" symbol</div>
                              </div>
                              </div>
-                             <div class="form-text">Typically 10x of the Standard license price.</div> 
+                             <div class="form-text">Please enter discount percentage without "%" symbol</div> 
                            </div>
                          </div>
                          <div class="row">

@@ -54,7 +54,7 @@ import { TapToTopComponent } from './components/tap-to-top/tap-to-top.component'
 // Pipes
 import { DiscountPipe } from './pipes/discount.pipe';
 import { NumericDirective } from './pipes/number.directive';
-
+import { PercentageDirective} from './pipes/percent.directive'
 @NgModule({
   declarations: [
     HeaderOneComponent,
@@ -88,7 +88,8 @@ import { NumericDirective } from './pipes/number.directive';
     LayoutBoxComponent,
     TapToTopComponent,
     DiscountPipe,
-    NumericDirective
+    NumericDirective,
+    PercentageDirective
   ],
   imports: [
     CommonModule,
@@ -140,7 +141,8 @@ import { NumericDirective } from './pipes/number.directive';
     LayoutBoxComponent,
     TapToTopComponent,
     DiscountPipe,
-    NumericDirective
+    NumericDirective,
+    PercentageDirective
   ]
 })
 export class SharedModule { }

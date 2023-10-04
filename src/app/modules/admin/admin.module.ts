@@ -19,6 +19,7 @@ import { AdminDetailsComponent } from './admin-details/admin-details.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { AdminReportsComponent } from './admin-reports/admin-reports.component';
 import { AdminBlogsComponent } from './admin-blogs/admin-blogs.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [AdminDashboardComponent,searchFilterPipe, AdminProductsComponent, AdminOrdersComponent, AllProductsComponent, AllOrdersComponent, AdminSalesComponent, AdminUsersComponent, AdminVendorsComponent, AdminDetailsComponent, AdminSettingsComponent, AdminReportsComponent, AdminBlogsComponent],
@@ -28,6 +29,7 @@ import { AdminBlogsComponent } from './admin-blogs/admin-blogs.component';
     ImageCropperModule,
     FormsModule, ReactiveFormsModule,
     NgxPaginationModule,
+    SharedModule
   ],providers:[DatePipe]
 })
 export class AdminModule { }

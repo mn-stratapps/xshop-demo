@@ -32,9 +32,9 @@ import { MasonryGridTwoComponent } from './portfolio/masonry-grid-two/masonry-gr
 import { MasonryGridThreeComponent } from './portfolio/masonry-grid-three/masonry-grid-three.component';
 import { MasonryGridFourComponent } from './portfolio/masonry-grid-four/masonry-grid-four.component';
 import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonry-full-width.component';
-import { BecomeVendorComponent } from '../modules/vendor/become-vendor/become-vendor.component';
-import { VendorProfileComponent } from '../modules/vendor/vendor-profile/vendor-profile.component';
-import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/vendor-dashboard.component';
+// import { BecomeVendorComponent } from '../modules/vendor/become-vendor/become-vendor.component';
+// import { VendorProfileComponent } from '../modules/vendor/vendor-profile/vendor-profile.component';
+// import { VendorDashboardComponent } from '../modules/vendor/vendor-dashboard/vendor-dashboard.component';
 import { ShipRocketComponent } from './ship-rocket/ship-rocket.component';
 const routes: Routes = [
   { 

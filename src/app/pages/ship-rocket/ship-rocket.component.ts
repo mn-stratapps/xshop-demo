@@ -210,7 +210,13 @@ requestCancellation(oid:any){
         }
     },
     error:(error)=>{
-      console.log(error)             
+      console.log(error)  
+      Swal.fire({
+        icon: 'error',
+        title: 'Done!',
+        text: error.message,
+        width: '400px',
+        })         
   }
   })
 }

@@ -201,7 +201,7 @@
                                                         </div>
                                                         <div class="bottom">
                                                             <a (click)="editaddress(address)" class="bottom_btn btn-primary">edit</a>
-                                                            <a (click)="deleteaddress(address.id)" class="bottom_btn btn-danger">remove</a>
+                                                            <button [disabled]="address.is_default" (click)="deleteaddress(address.id)" class="bottom_btn btn-danger">remove</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -458,7 +458,7 @@
                                                         <div class="field-label">Address Type</div>
                                                         <select name="type" class="form-select me-2" formControlName="type"
                                                         [ngClass]="{ 'is-invalid': submitted && f.type.errors }" required="">
-                                                        <option [value]="null">-- Select Address Type --</option>
+                                                        <option value="null" disabled>-- Select Address Type --</option>
                                                         <option value="HOME"> Home (7 am – 9 pm delivery) </option>
                                                             <option value="OFFICE" > Office/Commercial (10 AM - 6 PM delivery)</option>    
                                                         </select>
@@ -504,7 +504,7 @@
                                                     <option value="Last 3 Months">Last 3 Months</option>
                                                     <option value="Last 6 Months">Last 6 Months</option>
                                                     <option value="Last 9 Months">Last 9 Months</option>
-                                                    <option value="Last 2023 Months">2023</option>
+                                                    <option value="2023">2023</option>
                                                   </select>                                                  
                                             </div>                                             
                                 </div>
