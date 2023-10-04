@@ -2,7 +2,7 @@ import { AfterContentChecked, ChangeDetectorRef, Component, OnInit, ViewChild } 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
 import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../image-cropper/interfaces';
@@ -66,7 +66,11 @@ export class AdminProductsComponent implements OnInit {
   
 @ViewChild(ImageCropperComponent) imageCropper:ImageCropperComponent;
 @ViewChild('pickupModalLabel') pickupModalLabel : any;
-
+modalOptions: NgbModalOptions = {
+  backdrop:'static',
+  backdropClass:'customBackdrop',
+  size: 'lg'
+}
   constructor(private httpService:AuthenticationService,private toasterService:ToastrService,private modalService: NgbModal,
     private formBuilder:FormBuilder,private changeDetector: ChangeDetectorRef, datepipe:DatePipe,){
       this.maxDate=datepipe.transform(new Date(),"yyyy-MM-dd");
@@ -422,7 +426,7 @@ this.accessToken = JSON.parse( currentUser )['Token'];
       })
     }
     openModal(exampleModalLabel, products){
-      this.modalService.open(exampleModalLabel,);
+      this.modalService.open(exampleModalLabel,this.modalOptions);
     this.editProductForm.patchValue({
       id:products.id,
       category:products.category,

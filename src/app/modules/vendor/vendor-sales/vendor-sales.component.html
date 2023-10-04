@@ -1,0 +1,133 @@
+<!-- transaction page start -->
+<div class="card_bg">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="page-header-left">
+                <h3>Transaction Details </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card dashboard-table mt-0">
+                <div class="card-header" style="display:block!important;">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-inline search-form search-box w-100">
+                                <div class="form-groups">
+                                    <input class="form-control-plaintext" type="search" placeholder="Transaction ID">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-9 d-flex justify-content-end mb_filters">
+                            <a class="btn mr-2 filter_btn" (click)="salesfilerEnabled = !salesfilerEnabled">
+                                <i aria-hidden="true" class="fa fa-filter"></i>
+                            </a>
+                        </div>
+                        <div class="collapse" [class.show]="salesfilerEnabled">
+                            <div class="card card_bg card_br mt-2">
+                                <form>
+                                    <ul class="mb_filter" style="display: flex;">
+                                        <li class="mb_filter" style="display: flex;">
+                                            <div class="cols">
+                                                <div class="Categories">
+                                                    <select class="form-select ft_size me-2" id="delivery_status"
+                                                        formControlName="delivery_status">
+                                                        <option value="null" disabled>-- Shipment Status --</option>
+                                                        <option value="PICKUP SCHEDULED">PICKUP SCHEDULED</option>
+                                                        <option value="PICKUP RESCHEDULED">PICKUP RESCHEDULED</option>
+                                                        <option value="CANCELLATION REQUESTED">CANCELLATION REQUESTED
+                                                        </option>
+                                                        <option value="DELIVERED">DELIVERED</option>
+                                                        <option value="NEW">NEW</option>
+                                                        <option value="PICKUP BOOKED">PICKUP BOOKED</option>
+                                                        <option value="">All</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="cols">
+                                                <div class="dropdown">
+                                                    <button type="button"
+                                                        class="btn btn-primary dropdown-toggle ft_size"
+                                                        (click)="datefieldEnabled = !datefieldEnabled">
+                                                        <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                                        Select Date
+                                                    </button>
+                                                    <div class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled"
+                                                        style="margin-top: 7px;">
+                                                        <button (click)="!datefieldEnabled= !datefieldEnabled"
+                                                            type="button" class="close btn btn_cls" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <div class="d-flex">
+                                                            <div class="date" id="datepicker">
+                                                                <label>From</label>
+                                                                <input type="date" name="from_date"
+                                                                    formControlName="from_date"
+                                                                    class="form-control date_input" id="date"
+                                                                    placeholder="From" [max]="maxDate" />
+                                                            </div>
+                                                            <div class="date date-field" id="datepicker">
+                                                                <label>To</label>
+                                                                <input type="date" name="to_date"
+                                                                    formControlName="to_date"
+                                                                    class="form-control date_input" id="date"
+                                                                    palceholder="To" [max]="maxDate" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="cols">
+                                                <div class="d-flex">
+                                                    <button class="btn btn-info me-2 ft_size">Apply</button>
+                                                    <button class="btn btn-info ft_size">Reset</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-bg-white">
+                    <div style="height: 637px;overflow-y: scroll;" class="table-responsive table-desi">
+                        <table class="table table-striped ">
+                            <thead style="position: sticky;top:0px">
+                                <tr>
+                                    <th scope="col">Order id</th>
+                                    <th scope="col">Transaction Id</th>
+                                    <th scope="col">Invoice</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Delivery Status</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody style="overflow-y: scroll;">
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-sm-12 text-center section-b-space mt-5 no-found">
+                            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                            <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                        </div>
+                    </div>
+                    <!-- <pagination-controls previousLabel="Prev" nextLabel="Next"
+                        (pageChange)="salesPageChange(page = $event)"></pagination-controls> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- transaction end-->

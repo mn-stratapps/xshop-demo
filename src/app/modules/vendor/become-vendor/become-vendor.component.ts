@@ -8,8 +8,29 @@ import { TeamSlider, TestimonialSlider } from 'src/app/shared/data/slider';
 })
 export class BecomeVendorComponent implements OnInit {
   Step1 =false;
-  Step2 =false;
-  Step3 = true;
+  Step2 =true;
+  Step3 = false;
+  imagePreviews: (string | null)[] = ['', '', '', ''];
+
+  // Define an array of label texts
+  labelArray: string[] = ['Image 1', 'Image 2', 'Image 3', 'Image 4' , 'Image 5', 'Image 6', 'Image 7' , 'Image 8'];
+
+  onSelectFile(event: any, index: number) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (e) => {
+        this.imagePreviews[index] = e.target?.result as string;
+      };
+    }
+  }
+
+  clearImage(index: number) {
+    this.imagePreviews[index] = '';
+  }
+  
   constructor() {
     
    }

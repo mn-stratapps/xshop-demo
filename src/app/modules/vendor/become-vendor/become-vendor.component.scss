@@ -20,6 +20,7 @@
     font-family: FontAwesome;
     content: "\f10c";
     color: #fff;
+    // content: "\f2c3";
 }
 
 #progressbar li:before {
@@ -92,7 +93,7 @@
     margin-top: -74px;
 }
 .w60 {
-    width:60%;
+    width:63%;
 }
 .fs-title {
     font-size: 20px;
@@ -251,4 +252,15 @@
     #progressbar li {
         width:90%;
     }
+}
+.mr-5{
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.preview-del{
+    color: #ffffff !important;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--theme-deafult) !important;
+    background-color: var(--theme-deafult);
+    border-radius: 5px;
 }

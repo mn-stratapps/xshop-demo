@@ -14,7 +14,7 @@
                    <div class="row">
                       <div class="col-lg-3 col-md-6">
                       <div class="form-inline search-form search-box w-100">
-                          <div class="form-group">
+                          <div class="form-groups">
                               <input class="form-control-plaintext" type="search" [(ngModel)]="searchText" (keydown.enter)="adminproductsSearchEvent($event)" placeholder="Product Name">
                           </div>
                       </div>
@@ -230,6 +230,7 @@
                             <div class="form-text">Enter discount percentage value withot "%" symbol.</div>
                           </div>
                         </div>
+                        <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6 mb-2">
                           <label class="form-label" for="dimension">Product Dimensions</label>
                           <div class="d-flex">
@@ -256,6 +257,7 @@
                        </div>
                          <div class="form-text">Max:30kg</div>  
                        </div>
+                      </div>
                   </div>
               </div>
               <div class="modal-footer">
@@ -358,7 +360,7 @@
                                  </div>
                              </div>
                              <div class="row">
-                                 <div class="col-sm-4 mb-2">
+                                 <div class="col-sm-6 mb-2">
                                      <label class="form-label" for="collection">collection</label>
                                      <select  class="form-select me-2" id="collection" name="type" formControlName="collection" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" required="">
                                        <option value="">-- Select collection --</option>
@@ -375,7 +377,7 @@
                                      <label class="form-label" for="size">Product Size</label>
                                      <input class="form-control" type="text"id="size" name="size" formControlName="size" >                                 
                                    </div> -->
-                                   <div class="col-sm-4 mb-2 form-group">
+                                   <div class="col-sm-6 mb-2 form-group">
                                      <label class="form-label" for="color">Product Color</label>
                                      <input class="form-control" type="text"id="color" name="color" formControlName="color" [ngClass]="{ 'is-invalid': submitted && f.color.errors }" required="">                                 
                                    </div>
@@ -411,22 +413,22 @@
                            <div class="py-2">
                              <label class="form-label" for="description">Is Product In Sale?</label>
                            <div>
-                             <input id="true" type="radio" value="true" name="sale" class="mr-1" formControlName="sale">
+                             <input id="true" type="radio" value="true" name="sale" class="mr-7" formControlName="sale">
                              <label for="true">Yes</label>
                           </div>
                           <div>
-                             <input id="false" type="radio" value="false" name="sale" class="mr-1" formControlName="sale">
+                             <input id="false" type="radio" value="false" name="sale" class="mr-7" formControlName="sale">
                              <label for="false">NO</label>
                           </div>
                          </div>
                          <div class="py-2">
                              <label class="form-label" for="description">Does this product is New</label>
                            <div>
-                             <input id="true" type="radio" value="true" name="new" class="mr-1" formControlName="new">
+                             <input id="true" type="radio" value="true" name="new" class="mr-7" formControlName="new">
                              <label for="true">Yes</label>
                           </div>
                           <div>
-                             <input id="false" type="radio" value="false" name="new" class="mr-1" formControlName="new">
+                             <input id="false" type="radio" value="false" name="new" class="mr-7" formControlName="new">
                              <label for="false">NO</label>
                           </div>
                          </div>
@@ -455,19 +457,19 @@
                             </div> -->
                          
                           <div class="col-xl-12 mt-3">
-                          <button (click)="saveImage()" class="file-drop-input btn btn-solid mr-1 mb-2"> upload image</button>   
+                          <button (click)="saveImage()" class="file-drop-input btn btn-solid mr-7 mb-2"> upload image</button>   
                           <!-- <button class="btn btn-solid mr-1 mb-2" (click)="rotateLeft()">Rotate left</button>
                           <button class="btn btn-solid mr-1 mb-2" (click)="rotateRight()">Rotate right</button>
                           <button class="btn btn-solid mr-1 mb-2" (click)="flipHorizontal()">Flip horizontal</button>
                           <button class="btn btn-solid mr-1 mb-2" (click)="flipVertical()">Flip vertical</button> -->
-                          <button class="btn btn-solid mr-1 mb-2" (click)="toggleContainWithinAspectRatio()">
+                          <button class="btn btn-solid mr-7 mb-2" (click)="toggleContainWithinAspectRatio()">
                             {{
                               containWithinAspectRatio
                                 ? 'Fill Aspect Ratio'
                                 : 'Contain Within Aspect Ratio'
                             }}
                           </button>
-                          <button class="btn btn-solid mr-2 mb-2" (click)="resetImage()">Reset image</button>
+                          <button class="btn btn-solid mr-7 mb-2" (click)="resetImage()">Reset image</button>
                          
                           <input class="rotation"
                             [(ngModel)]="rotation"
@@ -476,8 +478,8 @@
                             type="number"
                             (keyup)="updateRotation()"
                           />
-                          <button class="btn-danger zoomin" (click)="zoomOut()">Zoom -</button>
-                          <button class="btn-danger zoomin" (click)="zoomIn()">Zoom +</button>
+                          <button class=" btn btn-solid zoomin" (click)="zoomOut()">Zoom -</button>
+                          <button class="btn btn-solid zoomin btn-zoom" (click)="zoomIn()">Zoom +</button>
                      
                           <div>
                               <image-cropper

@@ -1,3 +1,6 @@
+.btn-solid{
+    padding: 7px 12px;
+}
 .custom_display{
     align-items: center;
     display: flex;
@@ -15,7 +18,7 @@
         margin-top: -3px;
     }
     .mr-14px{
-        margin-right: 1.16rem;
+        margin-right: 10px;
     }
     .nav-link{
         border: transparent;
@@ -33,15 +36,6 @@
     .br_radius{
      border-radius: 5px;
     }
-
-    body {
-        color: #000;
-        overflow-x: hidden;
-        height: 100%;
-        background-color: #8C9EFF;
-        background-repeat: no-repeat;
-    }
-    
     .card {
         z-index: 0;
         background-color: #ECEFF1;

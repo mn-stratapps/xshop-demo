@@ -86,7 +86,7 @@ export class NavService {
 		{
 			title: 'Products', type: 'sub', active: false, children: [
 				{ path:'/shop/collection/left/sidebar', title: 'Products List', type: 'link' },
-				{ path:'/shop/product/right/sidebar/trim-dress', title: 'Product Detail', type: 'link' },
+				// { path:'/shop/product/right/sidebar/trim-dress', title: 'Product Detail', type: 'link' },
 				// { path: '/pages/cart', title: 'cart', type: 'link' },
 				// { path: '/pages/wishlist', title: 'wishlist', type: 'link' },
 				// { path: '/pages/checkout', title: 'checkout', type: 'link' },
