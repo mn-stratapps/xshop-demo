@@ -19,15 +19,17 @@ export class CartComponent implements OnInit {
     // this.productService.cartItems.subscribe(response => this.products = response);
   }
   ngOnInit(): void {
-    const currentUser = localStorage.getItem( 'currentUser' );
+  const currentUser = localStorage.getItem( 'currentUser' );
   this.accessToken = JSON.parse( currentUser )['Token'];
-    this.getUserProducts();
+  this.getUserProducts();
   }
-  getUserProducts(){
-    this.productService.cartItems.subscribe(response =>{
-      this.products = response;
-      console.log(this.products)
-      this.productService.setcartItems(this.products)
+  async getUserProducts(){
+    const status = await this.productService.cartItems.subscribe(response =>{
+      if(status){
+        this.products = response;
+        console.log(this.products)
+        this.productService.setcartItems(this.products)
+      }     
     } )
     this.productService.cartTotalAmount().subscribe(response =>{
       this.TotalAmount = (Math.round(response * 100) / 100).toFixed(2)

@@ -11,6 +11,7 @@ import { VendorTabsComponent } from './vendor-tabs/vendor-tabs.component';
 import { VendorblogsComponent } from './vendorblogs/vendorblogs.component';
 import { AccountInfoTabComponent } from './account-info-tab/account-info-tab.component';
 import { AllProductsTabComponent } from './all-products-tab/all-products-tab.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -31,7 +32,8 @@ import { AllProductsTabComponent } from './all-products-tab/all-products-tab.com
   ],
   imports: [
     CommonModule,
-    VendorRoutingModule
+    VendorRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class VendorModule { }

@@ -219,7 +219,7 @@ public addToWishlist(product): any {
   //   });
   //   return <Observable<Product[]>>itemsStream;  
   // }
-  public get  cartItems(): Observable<Product[]> {
+    public get cartItems(): Observable<Product[]> {
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
     return this.http.get<Product[]>(`${environment.apiUrl}/cart/`+this.accessToken)
@@ -278,6 +278,9 @@ public addToWishlist(product): any {
       },
       error:(error)=>{
         console.log(error)
+        if(error.error.message==="Max Limit Reached")
+        this.toastrService.warning('Max Limit Reached');
+
       }
     }) 
   }    else{

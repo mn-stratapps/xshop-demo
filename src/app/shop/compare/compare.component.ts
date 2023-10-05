@@ -79,7 +79,9 @@ export class CompareComponent implements OnInit {
         }
       )
       if (status){
+        setTimeout(() => {
         this.router.navigate(['/shop/buynow/checkout']);
+      }, 1000);
       }
     }else{
         this.router.navigate(['/core/login']) 

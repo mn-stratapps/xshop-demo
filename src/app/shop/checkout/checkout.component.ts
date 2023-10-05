@@ -185,6 +185,9 @@ export class CheckoutComponent implements OnInit {
        },
        error:(error) => {
         console.log(error)
+        if(error.message="Data not found in cart for this user")
+        this.noCheckoutData = true;
+
       }
     }) 
   }
@@ -253,7 +256,8 @@ export class CheckoutComponent implements OnInit {
        },
        error:(error) => {
         console.log(error);
-        if (error.error.message === 'Delivery not available to that address' || error.error.message === 'Delivery not available for other countries'){
+        if (error.error.message === 'Delivery not available to that address' || error.error.message === 'Delivery not available for other countries'
+        || error.error.message === 'Delivery not available for other countries'){
           Swal.fire({
             icon: 'error',
             title: 'Oops...',

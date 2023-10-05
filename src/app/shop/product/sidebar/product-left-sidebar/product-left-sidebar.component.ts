@@ -122,6 +122,8 @@ export class ProductLeftSidebarComponent implements OnInit {
         console.log(data)
         if(data.message === 'product added to compare'){
           this.toastrService.success('Product has been added in compare.');
+        }if(data.message === 'product alredy exists in compare'){
+          this.toastrService.warning('Product already exists in compare.');
         }
       },
       error:(error)=>{
@@ -210,30 +212,36 @@ export class ProductLeftSidebarComponent implements OnInit {
   // }
   
   // Add to cart
-  async addToCartCount(product: any) {
+   addToCartCount(product: any) {
     const quantity = this.counter || 1;
     const currentUser = localStorage.getItem( 'currentUser' );
     if(currentUser){
     this.accessToken = JSON.parse( currentUser )['Token'];
-    const status = await this.productService.updateCartQuantity(product,quantity,this.accessToken)
+     this.productService.updateCartQuantity(product,quantity,this.accessToken)
     .subscribe(
       {
         next:(data)=>{
           console.log(data)
-          
+          if(data.message==="Added successfully"){
+          this.toastrService.success('Product has been added in cart.');
+          }
+          if(data.message==="Added to cart"){
+          this.toastrService.success('Product has been added in cart.');
+          }
         },
         error:(error)=>{
           console.log(error);
-      
+      if(error.error.message==="Max Limit Reached"){
+        this.toastrService.warning('Max Limit Reached');
+      }
         }
-
       }
     )
-    if (status)
-    {
-      this.toastrService.success('Product has been added in cart.');
+    // if (status)
+    // {
+    //   this.toastrService.success('Product has been added in cart.');
 
-    }
+    // }
   } else{
     this.router.navigate(['/core/login'])
   }
@@ -282,7 +290,9 @@ export class ProductLeftSidebarComponent implements OnInit {
       }
     )
     if (status){
+      setTimeout(() => {
       this.router.navigate(['/shop/buynow/checkout']);
+    }, 2000);
     }
   }else{
       this.router.navigate(['/core/login']) 

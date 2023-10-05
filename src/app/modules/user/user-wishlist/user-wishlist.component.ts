@@ -34,7 +34,9 @@ export class UserWishlistComponent implements OnInit{
  async addToCart(product: any) {
   const status = await this.productService.addToCart(product);
   if(status) {
+    setTimeout(() => {
     this.router.navigate(['/shop/cart']);
+  }, 2000);
   }
 }
 }
