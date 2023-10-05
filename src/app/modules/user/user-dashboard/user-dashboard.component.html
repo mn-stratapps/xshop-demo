@@ -34,13 +34,13 @@
                     </div>
                     <div class="faq-tab">
                         <ul class="nav nav-tabs">
-                            <li class="nav-item" [routerLink]="['/user','user-account-info']" class="nav-link active">Account Info</li>  
-                            <li class="nav-item" [routerLink]="['/user','user-address-book']" class="nav-link active">Address Book</li> 
-                            <li class="nav-item" [routerLink]="['/user','user-orders']" class="nav-link active">My Orders</li>          
-                            <li class="nav-item" [routerLink]="['/user','user-wishlist']" class="nav-link active">Wishlist</li>   
-                            <li class="nav-item" [routerLink]="['/user','user-profile']" class="nav-link active">Profile</li>    
-                            <li class="nav-item" [routerLink]="['/user','user-security']" class="nav-link active">Security</li>    
-                            <li class="nav-item" (click)="logoutfromDashboard()" class="nav-link active">Log Out</li>
+                            <li class="nav-item tab_link" [routerLink]="['/user','user-account-info']" routerLinkActive="tabactive">Account Info</li>  
+                            <li class="nav-item tab_link" [routerLink]="['/user','user-address-book']" routerLinkActive="tabactive">Address Book</li> 
+                            <li class="nav-item tab_link" [routerLink]="['/user','user-orders']" routerLinkActive="tabactive">My Orders</li>          
+                            <li class="nav-item tab_link" [routerLink]="['/user','user-wishlist']" routerLinkActive="tabactive">Wishlist</li>   
+                            <li class="nav-item tab_link" [routerLink]="['/user','user-profile']" routerLinkActive="tabactive">Profile</li>    
+                            <li class="nav-item tab_link" [routerLink]="['/user','user-security']" routerLinkActive="tabactive" >Security</li>    
+                            <li class="nav-item tab_link" (click)="logoutfromDashboard()">Log Out</li>
 
                         </ul>
                     </div>

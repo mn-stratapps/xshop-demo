@@ -10479,7 +10479,7 @@ ngx-loading-bar {
         background-color: #ffffff;
         border-radius: 8px;
         border: 1px solid #ebebebdd;
-
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.15);
         .profile-top {
             padding: 0 16px;
             margin-bottom: calc(10px + (20 - 10) * ((100vw - 320px) / (1920 - 320)));
@@ -16742,7 +16742,7 @@ div#loading-bar {
 }
 
 .page-header-left h3 {
-    padding-bottom: 20px;
+    padding-bottom: 8px;
     font-size: 21px;
     color: #222222;
 }
@@ -16752,6 +16752,7 @@ div#loading-bar {
     background-color: #ffffff;
     padding: 30px;
     border: 1px solid #ebebebdd;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.15);
 }
 
 .form-label span {
@@ -17095,6 +17096,7 @@ input:focus {
     padding: 19px;
     border-radius: 8px;
     border: 1px solid #ebebebdd;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.15);
 }
 
 .dashboard-section .faq-content .card {
@@ -18153,8 +18155,8 @@ mr-1 {
     padding: 3px 13px;
 }
 
-.fs-18px {
-    font-size: 18px;
+.fs-18{
+    font-size: 17px;
     color: #191919;
     font-weight: 600;
 }
@@ -18284,3 +18286,29 @@ mr-1 {
     appearance: none;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+//user dashboard
+.faq-content .card-body{
+    padding:20px;
+    border-radius: 8px;
+}
+.btn-edit{
+padding: 13px 29px;
+color: $white !important;
+letter-spacing: 0.05em;
+border: 2px solid #337ab7 !important;
+background-image: -webkit-linear-gradient(30deg, #337ab7 50%, transparent 50%) !important;
+background-image: linear-gradient(30deg, #337ab7 50%, transparent 50%) !important;
+background-size: 850px;
+background-repeat: no-repeat;
+background-position: 0;
+-webkit-transition: background 300ms ease-in-out;
+transition: background 300ms ease-in-out;
+border-radius: 5px;
+
+&:hover {
+    background-position: 100%;
+    color: $black !important;
+    background-color: $white;
+ }
+}
+
