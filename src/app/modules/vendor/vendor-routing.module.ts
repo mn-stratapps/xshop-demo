@@ -3,13 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { BecomeVendorComponent } from './become-vendor/become-vendor.component';
 import { VendorDashboardComponent } from './vendor-dashboard/vendor-dashboard.component';
 import { VendorProfileComponent } from './vendor-profile/vendor-profile.component';
-import { VendorTabsComponent } from './vendor-tabs/vendor-tabs.component';
-import { AllProductsTabComponent } from './all-products-tab/all-products-tab.component';
+// import { AllProductsTabComponent } from './vendor-orders/all-products-tab.component';
 import { AccountInfoTabComponent } from './account-info-tab/account-info-tab.component';
 import { VendorSalesComponent } from './vendor-sales/vendor-sales.component';
 import { VendorReportsComponent } from './vendor-reports/vendor-reports.component';
 import { VendorblogsComponent } from './vendorblogs/vendorblogs.component';
 import { VendorSettingComponent } from './vendor-setting/vendor-setting.component';
+import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
+import { VendorProductsComponent } from './vendor-products/vendor-products.component';
 
 const routes: Routes = [
   { 
@@ -35,11 +36,11 @@ const routes: Routes = [
         },
         { 
           path: 'my-products', 
-          component: VendorTabsComponent 
+          component: VendorProductsComponent 
         },
         { 
           path: 'my-orders', 
-          component: AllProductsTabComponent 
+          component: VendorOrdersComponent 
         },
         { 
           path: 'vendor-reports', 
@@ -56,10 +57,10 @@ const routes: Routes = [
     ]
   },
 
-  { 
-    path: 'dashboard/allproducts', 
-    component: AllProductsTabComponent
-  },
+  // { 
+  //   path: 'dashboard/allproducts', 
+  //   component: AllProductsTabComponent
+  // },
   { 
     path: 'become/vendor', 
     component: BecomeVendorComponent 
@@ -70,11 +71,11 @@ const routes: Routes = [
   },
   { 
     path: 'vendor/dashboard/my-products', 
-    component: VendorTabsComponent 
+    component: VendorProductsComponent 
   },
   { 
     path: 'vendor/dashboard/my-orders', 
-    component: AllProductsTabComponent 
+    component: VendorOrdersComponent 
   },
   { 
     path: 'account-info', 

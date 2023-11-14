@@ -15,7 +15,7 @@
                         <div class="col-md-6 col-lg-3">
                             <div class="form-inline search-form search-box w-100">
                                 <div class="form-groups">
-                                    <input class="form-control-plaintext" type="search" placeholder="Transaction ID">
+                                    <input class="form-control-plaintext" style="width: 128%;" type="search" placeholder="Transaction/Invoice/Order ID">
                                 </div>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                         </div>
                         <div class="collapse" [class.show]="salesfilerEnabled">
                             <div class="card card_bg card_br mt-2">
-                                <form>
+                                <form [formGroup]="salesFilterForm">
                                     <ul class="mb_filter" style="display: flex;">
                                         <li class="mb_filter" style="display: flex;">
                                             <div class="cols">
@@ -36,8 +36,7 @@
                                                         <option value="null" disabled>-- Shipment Status --</option>
                                                         <option value="PICKUP SCHEDULED">PICKUP SCHEDULED</option>
                                                         <option value="PICKUP RESCHEDULED">PICKUP RESCHEDULED</option>
-                                                        <option value="CANCELLATION REQUESTED">CANCELLATION REQUESTED
-                                                        </option>
+                                                        <option value="CANCELLATION REQUESTED">CANCELLATION REQUESTED</option>
                                                         <option value="DELIVERED">DELIVERED</option>
                                                         <option value="NEW">NEW</option>
                                                         <option value="PICKUP BOOKED">PICKUP BOOKED</option>
@@ -107,13 +106,19 @@
                                 </tr>
                             </thead>
                             <tbody style="overflow-y: scroll;">
-                                <tr>
-                                    <th></th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr *ngFor="let sales of salesList | paginate
+                                : {
+                                    itemsPerPage: itemsPerPage,
+                                    currentPage: page,
+                                    totalItems: totalItems
+                                  }">
+                                    <th>{{sales?.order_id}}</th>
+                                    <td>{{sales?.transaction_id}}</td>
+                                    <th>{{sales?.invoice_id}}</th>
+                                    <td>{{sales?.shipment_status}}</td>
+                                    <td>{{sales?.order_status}}</td>
+                                    <td>{{sales?.payment_status}}</td>
+                                    <td>{{sales?.amount}}</td>
                                 </tr>
                             </tbody>
                         </table>

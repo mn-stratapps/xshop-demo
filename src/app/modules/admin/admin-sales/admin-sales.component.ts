@@ -44,7 +44,7 @@ salesFilter(){
     delivery_status:[null],
     from_date:[''],
     to_date:[''],
-    transaction_id:[''],
+    input_id:[''],
     pageno:['']
   })
 }
@@ -63,7 +63,7 @@ salesSearchEvent(event:any){
   this.getSales();
 }
 getSales(){
-  this.salesFilterForm.patchValue({transaction_id:this.searchText,pageno:this.pageNo})
+  this.salesFilterForm.patchValue({input_id:this.searchText,pageno:this.pageNo})
  let formSalesObj = this.salesFilterForm.getRawValue()
  if(formSalesObj.delivery_status == '' || formSalesObj.delivery_status == null){
   delete formSalesObj.delivery_status
@@ -74,8 +74,8 @@ getSales(){
  if(formSalesObj.to_date == '' || formSalesObj.to_date == null){
   delete formSalesObj.to_date
   }
-  if(formSalesObj.transaction_id == '' || formSalesObj.transaction_id == null){
-    delete formSalesObj.transaction_id
+  if(formSalesObj.input_id == '' || formSalesObj.input_id == null){
+    delete formSalesObj.input_id
     }
 
   this.httpService.getSalesList(formSalesObj,this.accessToken)

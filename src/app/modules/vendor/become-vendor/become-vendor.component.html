@@ -36,143 +36,234 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1">
                 <span class="fs-title">Vendor Registartion </span>
             </div>
-            <form class="theme-form" [formGroup]="companyDetailsForm">
              <div class="row justify-content-end">
+            <form class="theme-form" [formGroup]="companyDetails" (ngSubmit)="emailVerify()">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Organization Name *</label>
-                <input type="email" name="email" class="form-control" placeholder="Org Name" />
+                <input type="text" id="org_name" formControlName="org_name"  class="form-control" placeholder="Org Name">
+                <div *ngIf="submitted && f.org_name.errors" class="invalid-feedback">
+                <div *ngIf="f.org_name.errors.required">Organization Name is required</div>
+                </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2 text-end">
                 <label class="form-label">Email *</label>
-                <input type="email" name="email" class="form-control" placeholder="Enter Email" />
-                <div class="mt-2 text-primary" type="text" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    Verify
-                </div>
-                <div class="collapse" id="collapseExample">
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
-                            <input type="otp" name="otp" class="form-control" placeholder="Enter Otp" />
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
-                            <button class="btn btn-solid">Sumbit</button>
-                        </div>
-                    </div>
+                <input type="email" id="email" formControlName="email" (keypress)="emailInput($event)" class="form-control" placeholder="Enter Email">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors?.required">Email is required</div>
+                    <div *ngIf="f.email.errors?.pattern">Please Enter valid Email.</div>
                 </div>
             </div>
+             <a *ngIf="f.org_name.valid && f.email.valid" class="mt-2 text-primary" (click)="emailVerify()">
+                    Verify
+                </a>
+            </form>
+
+                    <div *ngIf="vendorEmail" class="row">
+                        <form [formGroup]="emailOtpform">
+                        <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+                            <input type="otp" name="otp" formControlName="otp" class="form-control" placeholder="Enter Otp" />
+                            <div *ngIf="submitted && fv.otp.errors" class="invalid-feedback">
+                                <div *ngIf="fv.otp.errors">Please Enter Valid Otp</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
+                            <button class="btn btn-solid" (click)="emailOtpVerify()" >Sumbit</button>
+                        </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2 text-end">
+                        <form [formGroup]="vendorMobileForm">
+                        <label class="form-label">Mobile *</label>
+                        <input type="mobile" name="mobile" class="form-control" formControlName="mobile" autocomplete="off" placeholder="Enter Mobile No">
+                        <div *ngIf="submitted && vm.mobile.errors" class="invalid-feedback">
+                        <div *ngIf="vm.mobile.errors?.required">Mobile no is required</div>
+                        <div *ngIf="vm.mobile.errors?.pattern">Please Enter Valid Mobile No .</div>
+                        </div>
+                        <a *ngIf="vm.mobile.valid" class="mt-2 text-primary" (click)="mobileVerify()">
+                            Verify
+                        </a>
+                        <div>
+                            <div *ngIf="mobileShow" class="row">
+                                <form [formGroup]="emailOtpform">
+                                    <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+                                        <input type="number" name="otp" formControlName="otp" class="form-control" placeholder="Enter Otp">
+                                        <div *ngIf="submitted && fv.otp.errors" class="invalid-feedback">
+                                            <div *ngIf="fv.otp.errors">Please Enter Valid Otp</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
+                                        <button class="btn btn-solid" (click)="verifyMobileOtp()" >Sumbit</button>
+                                    </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+
+            <form [formGroup]="vendorAddressForm">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Address</label>
-                <input type="address" name="address" class="form-control" placeholder="ADD Address" />
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2 text-end">
-                <label class="form-label">Mobile *</label>
-                <input type="no" name="no" class="form-control" placeholder="Enter Mobile No" />
-                <div class="mt-2 text-primary" type="text" data-bs-toggle="collapse" data-bs-target="#collapseExamples"
-                    aria-expanded="false" aria-controls="collapseExamples">
-                    Verify
-                </div>
-                <div class="collapse" id="collapseExamples">
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
-                            <input type="otp" name="otp" class="form-control" placeholder="Enter Otp" />
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
-                            <button class="btn btn-solid">Sumbit</button>
-                        </div>
-                    </div>
+                <input type="address" name="address" formControlName="address" class="form-control" placeholder="Enter Address" />
+                <div *ngIf="submitted && va.address.errors" class="invalid-feedback">
+                    <div *ngIf="va.address.errors?.required">Please fill Address.</div>
                 </div>
             </div>
+            
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Country</label>
-                <select class="form-select">
-                    <option value="">India</option>
-                    <option value="">US</option>
-                    <option value="">Canada</option>
+                <select name="country" class="form-select me-2" formControlName="country" required="">
+                <option value="null" selected>-- Select Country --</option>
+                <option value="India">India </option>
+                    <option value="US" >US</option>    
                 </select>
+                <div *ngIf="submitted && va.country.errors" class="invalid-feedback">
+                    <div *ngIf="va.country.errors?.required">Please select country.</div>
+                </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">State</label>
-                <input type="state" name="state" class="form-control" placeholder="Enter State" />
-            </div>
+                <select name="state" class="form-select me-2" formControlName="state" required="">
+                    <option value="null" selected>-- Select State --</option>
+                    <option [value]="states.name" *ngFor="let states of IndiaStates">{{states.name}} </option>
+                </select>   
+                <div *ngIf="submitted && va.state.errors" class="invalid-feedback">
+                    <div *ngIf="va.state.errors?.required">Please select state.</div>
+                </div>         
+                </div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mb-2">
                 <label class="form-label">City</label>
-                <input type="City" name="City" class="form-control" placeholder="Enter City" />
+                <input type="City" name="City" formControlName="city" class="form-control" placeholder="Enter City" />
+                <div *ngIf="submitted && va.city.errors" class="invalid-feedback">
+                    <div *ngIf="va.city.errors?.required">Please enter city.</div>
+                </div>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mb-2">
                 <label class="form-label">Pincode</label>
-                <input type="pin" name="pincode" class="form-control" placeholder="pincode" />
+                <input type="pin" name="pincode" formControlName="pincode" class="form-control" placeholder="pincode" />
+                <div *ngIf="submitted && va.pincode.errors" class="invalid-feedback">
+                    <div *ngIf="va.pincode.errors?.required">Please enter pincode.</div>
+                    <div *ngIf="va.pincode.errors?.pattern">Please enter valid pincode.</div>
+
+                </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
-                <label class="form-label">Description</label>
-                <textarea rows="2" id="description" formControlName="description" class="form-control"></textarea>
-            </div>
+          
             <div class="col-lg-2 d-flex justify-content-end mt-2">
-                <button (click)="step2()" class="btn btn-solid">Next</button>
+                <button (click)="businessDetails()" class="btn btn-solid">Add & Proceed</button>
             </div>
-          </div>
         </form>
+          </div>
         </div>
 
         <div class="row card_bg m-auto w60 justify-content-end" *ngIf="Step2">
+            <form [formGroup]="vendorAccountDetailsForm">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Business_Type</label>
-                <select class="form-select">
-                    <option value="">partnership</option>
-                    <option value=""> public_limited</option>
-                    <option value=""> private_limited</option>
-                    <option value="">educational_institutes</option>
+                <select class="form-select" formControlName="businesstype" required="">
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="public_limited"> Public Limited</option>
+                    <option value="private_limited"> Private Limited</option>
+                    <option value="educational_institutes">Educational Institutes</option>
                 </select>
+                <div *ngIf="submitted && vaf.businesstype.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.businesstype.errors?.required">Please select Business type</div>
+                </div>
             </div>
+            
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
-                <label class="form-label">Account No</label>
-                <input type="account" name="account" class="form-control" placeholder="Account NO" />
+                <label class="form-label">GST No</label>
+                <input type="gst" name="gst" formControlName="gst" class="form-control" placeholder="GST" />
+                <div *ngIf="submitted && vaf.gst.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.gst.errors?.required">Please Enter GST No</div>
+                    <div *ngIf="vaf.gst.errors?.pattern">Please Enter Valid GST</div>
+                </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
-                <label class="form-label">Gst</label>
-                <input type="gst" name="gst" class="form-control" placeholder="Gst" />
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
-                <label class="form-label">Re-enter Account No</label>
-                <input type="Re-enter Account" name="Re-enter Account" class="form-control"
-                    placeholder="Re-enter Account No" />
-            </div>
+        
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Business PAN</label>
-                <input type="PAN" name="PAN" class="form-control" placeholder="PAN NO" />
+                <input type="PAN" name="PAN" class="form-control"formControlName="businesspan" placeholder="PAN No" />
+                <div *ngIf="submitted && vaf.businesspan.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.businesspan.errors?.required">Please Enter Business PAN No</div>
+                    <div *ngIf="vaf.businesspan.errors?.pattern">Please Enter Valid PAN</div>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
-                <label class="form-label"> Ifsc code</label>
-                <input type="Ifsc" name="Ifsc" class="form-control" placeholder="IFSC CODE" />
+                <label class="form-label">Personal PAN</label>
+                <input type="PAN" name="PAN" class="form-control"formControlName="personalpan" placeholder="PAN No" />
+                <div *ngIf="submitted && vaf.personalpan.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.personalpan.errors?.required">Please Enter personal PAN No</div>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">CIN</label>
-                <input type="CIN" name="CIN" class="form-control" placeholder="CIN" />
+                <input type="CIN" name="CIN" class="form-control" formControlName="cin" placeholder="CIN" />
+                <div *ngIf="submitted && vaf.cin.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.cin.errors?.required">Please Enter CIN No</div>
+                    <div *ngIf="vaf.cin.errors?.pattern">Please Enter Valid CIN No</div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
+                <label class="form-label">Bank Account No</label>
+                <input type="account" name="account" formControlName="accountno" required="" class="form-control" placeholder="Account No" />
+                <div *ngIf="submitted && vaf.accountno.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.accountno.errors?.required">Please Enter Bank Account No</div>
+                    <div *ngIf="vaf.accountno.errors?.pattern">Please Enter Valid Bank Account No</div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
+                <label class="form-label">Re-enter Account No</label>
+                <input type="Re-enter Account" formControlName="re_enteraccountno" (input)="checkAccountNumber()" name="Re-enter Account" class="form-control"
+                    placeholder="Re-enter Account No" />
+                    <div class="invalid-feedback" *ngIf="accountNumberError">Account Number didn't match</div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
+                <label class="form-label"> IFSC code</label>
+                <input type="Ifsc" name="Ifsc" class="form-control" formControlName="ifsc_code" placeholder="IFSC CODE" />
+                <div *ngIf="submitted && vaf.businesspan.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.ifsc_code.errors?.required">Please Enter IFSC</div>
+                    <div *ngIf="vaf.ifsc_code.errors?.pattern">Please Enter Valid IFSC</div>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label"> Benificiary Name</label>
-                <input type="NAME" name="NAME" class="form-control" placeholder="Name" />
+                <input type="NAME" name="NAME" class="form-control" formControlName="benificiaryname" placeholder="Name" />
+                <div *ngIf="submitted && vaf.benificiaryname.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.benificiaryname.errors?.required">Please Enter Benificiary Name</div>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Support Email</label>
-                <input type="email" name="email" class="form-control" placeholder="Enter Email" />
+                <input type="email" name="email" class="form-control" formControlName="supportemail" placeholder="Enter Email" />
+                <div *ngIf="submitted && vaf.supportemail.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.supportemail.errors?.required">Please Enter Support Email</div>
+                    <div *ngIf="vaf.supportemail.errors?.pattern">Please Enter Valid Email</div>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-2">
                 <label class="form-label">Support Mobile</label>
-                <input type="mobile" name="mobile" class="form-control" placeholder="Mobile No" />
+                <input type="mobile" name="mobile" class="form-control"formControlName="supportmobile" placeholder="Mobile No" />
+                <div *ngIf="submitted && vaf.supportmobile.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.supportmobile.errors?.required">Mobile no is required</div>
+                    <div *ngIf="vaf.supportmobile.errors?.pattern">Please Enter Valid Mobile No .</div>
+                </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
                 <label class="form-label">Business Url</label>
-                <input type="url" name="url" class="form-control" placeholder="url(Optional)" />
+                <input type="url" name="url" class="form-control" formControlName="businessurl" placeholder="url(Optional)" />
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
                 <label class="form-label"> Description</label>
                 <textarea rows="2" id="description" formControlName="description" class="form-control"></textarea>
+                <div *ngIf="submitted && vaf.description.errors" class="invalid-feedback">
+                    <div *ngIf="vaf.description.errors?.required">Description required</div>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 mb-2">
-                <form>
+                <div>
                     <div class="image-upload-item">
                         <label for="fileInput1" class="form-label">Business Pan</label>
-                        <input type="file" id="fileInput1" (change)="onSelectFile($event, 5)" accept="image/*" />
+                        <input type="file" id="fileInput1" (change)="onSelectFile($event, 5)" accept=".jpeg, .jpg, .png, .pdf, .doc" />
                         <img class="mr-5" [src]="imagePreviews[5]" height="126" width="126" *ngIf="imagePreviews[5]"
                             alt="Preview" />
                         <button class="preview-del" *ngIf="imagePreviews[5]" (click)="clearImage(5)">Clear</button>
@@ -184,48 +275,44 @@
                             Document</span>
                         <input class="file-drop-input" type="file">
                     </div> -->
-                </form>
+                </div>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 mb-2">
-                <form>
                     <div class="image-upload-item">
-                        <label for="fileInput2" class="form-label">Gst</label>
-                        <input type="file" id="fileInput2" (change)="onSelectFile($event, 6)" accept="image/*" />
+                        <label for="fileInput2" class="form-label">GST Proof</label>
+                        <input type="file" id="fileInput2" (change)="onSelectFile($event, 6)" accept=".jpeg, .jpg, .png, .pdf, .doc" />
                         <img class="mr-5" [src]="imagePreviews[6]" height="126" width="126" *ngIf="imagePreviews[6]"
                             alt="Preview" />
                         <button class="preview-del" *ngIf="imagePreviews[6]" (click)="clearImage(6)">Clear</button>
                     </div>
 
-                </form>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 mb-2">
-                <form>
                     <div class="image-upload-item">
                         <label for="fileInput3" class="form-label">Business Proof</label>
-                        <input type="file" id="fileInput3" (change)="onSelectFile($event, 7)" accept="image/*" />
+                        <input type="file" id="fileInput3" (change)="onSelectFile($event, 7)" accept=".jpeg, .jpg, .png, .pdf, .doc" />
                         <img class="mr-5" [src]="imagePreviews[7]" height="126" width="126" *ngIf="imagePreviews[7]"
                             alt="Preview" />
                         <button class="preview-del" *ngIf="imagePreviews[7]" (click)="clearImage(7)">Clear</button>
                     </div>
-                </form>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 mb-2">
-                <form>
                     <div class="image-upload-item">
                         <label class="form-label" for="fileInput4">Bank Details</label>
-                        <input type="file" id="fileInput4" (change)="onSelectFile($event, 8)" accept="image/*" />
+                        <input type="file" id="fileInput4" (change)="onSelectFile($event, 8)" accept=".jpeg, .jpg, .png, .pdf, .doc" />
                         <img class="mr-5" [src]="imagePreviews[8]" height="126" width="126" *ngIf="imagePreviews[8]"
                             alt="Preview" />
                         <button class="preview-del" *ngIf="imagePreviews[8]" (click)="clearImage(8)">Clear</button>
                     </div>
-                </form>
             </div>
-            <div class="col-lg-10 d-flex justify-content-start mt-2">
+            
+            <!-- <div class="col-lg-10 d-flex justify-content-start mt-2">
                 <button class="btn btn-solid">Previous</button>
-            </div>
+            </div> -->
             <div class="col-lg-2 d-flex justify-content-end mt-2">
-                <button (click)="step3()" class="btn btn-solid">Next</button>
+                <button (click)="vendorAccountDetailsApi()" class="btn btn-solid">submit & Proceed</button>
             </div>
+        </form>
         </div>
         <!-- <div class="row card_bg m-auto w60 justify-content-end mt-4">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1">
@@ -395,6 +482,8 @@
                 </div>
                 <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
                 <h2>thank you</h2>
+                <h3>It will take 24 hours to activate your Vendor Account.</h3>
+                <h4>you can login to your vendor account after receiving mail confirmation.</h4>
                 <!-- <p>Payment is has been received Order Placed Successfully</p>
                 <p>Transaction ID:{{ orderDetails.transaction_id | lowercase}}</p> -->
             </div>

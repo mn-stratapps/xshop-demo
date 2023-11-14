@@ -7,11 +7,12 @@ import { VendorProfileComponent } from './vendor-profile/vendor-profile.componen
 import { VendorReportsComponent } from './vendor-reports/vendor-reports.component';
 import { VendorSalesComponent } from './vendor-sales/vendor-sales.component';
 import { VendorSettingComponent } from './vendor-setting/vendor-setting.component';
-import { VendorTabsComponent } from './vendor-tabs/vendor-tabs.component';
 import { VendorblogsComponent } from './vendorblogs/vendorblogs.component';
 import { AccountInfoTabComponent } from './account-info-tab/account-info-tab.component';
-import { AllProductsTabComponent } from './all-products-tab/all-products-tab.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
+import { VendorProductsComponent } from './vendor-products/vendor-products.component';
 
 
 
@@ -24,16 +25,20 @@ import { ReactiveFormsModule } from '@angular/forms';
     VendorReportsComponent,
     VendorSalesComponent,
     VendorSettingComponent,
-    VendorTabsComponent,
     VendorblogsComponent,
     AccountInfoTabComponent,
-    AllProductsTabComponent,
+    VendorOrdersComponent,
+    VendorProductsComponent,
       
   ],
   imports: [
     CommonModule,
     VendorRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    FormsModule,
+    NgxPaginationModule,
+
+
   ]
 })
 export class VendorModule { }

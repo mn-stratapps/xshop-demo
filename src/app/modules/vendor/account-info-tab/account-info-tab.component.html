@@ -15,7 +15,7 @@
                         <div class="counter-box">
                             <img src="../assets/images/sale-icon.png" class="img-fluid">
                             <div>
-                                <h3></h3>
+                                <h3>{{metrics?.total_orders}}</h3>
                                 <h5>Total Orders</h5>
                             </div>
                         </div>
@@ -24,8 +24,17 @@
                         <div class="counter-box">
                             <img src="../assets/images/homework-icon.png" class="img-fluid">
                             <div>
-                                <h3></h3>
+                                <h3>{{metrics?.pending_orders}}</h3>
                                 <h5>Pending Orders</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="counter-box">
+                            <img src="../assets/images/sales-img.png" class="img-fluid">
+                            <div>
+                                <h3>{{metrics?.total_sales}}</h3>
+                                <h5>Total Sales</h5>
                             </div>
                         </div>
                     </div>
@@ -41,7 +50,11 @@
                                     <h3>Contact Information</h3><a href="#">Edit</a>
                                 </div>
                                 <div class="box-content">
-                                    <h6></h6>
+                                    <h6>Organization Name: {{vendorData?.org_name}}</h6>
+                                    <h6>Email: {{vendorData?.email}}</h6>
+                                    <h6>Mobile: {{vendorData?.mobile}}</h6>
+                                    <h6>Date of Joined: {{vendorData?.date_joined | date}}</h6>
+
                                     <h6></h6>
                                     <!-- <h6><a href="#">Change Password</a></h6> -->
                                 </div>
@@ -60,19 +73,27 @@
                     </div>
                     <div class="box mt-3">
                         <div class="box-title">
-                            <h3>Address Book</h3><a href="#">Manage Addresses</a>
+                            <h3>Address Book</h3>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <h6>Default Billing Address</h6>
-                                <address>You have not set a default billing address.<br><a href="#">Edit
-                                        Address</a></address>
+                                
+                                    <div class="top">
+                                        <!-- <h6>{{address.name}} <span>{{address.type_id}}</span></h6> -->
+                                    </div>
+                                    <div class="middle">
+                                        <div class="address">
+                                            <p class="m-0">{{vendorData?.address}},</p>
+                                            <p class="m-0">{{vendorData?.city}}, {{vendorData?.country}}</p>
+                                            <p class="m-0">{{vendorData?.pincode}}</p>
+                                        </div>
+                                        <div class="number">
+                                            <p>mobile: <span>{{vendorData?.mobile}}</span></p>
+                                        </div>
+                                    </div>
+                            
                             </div>
-                            <div class="col-sm-6">
-                                <h6>Default Shipping Address</h6>
-                                <address>You have not set a default shipping address.<br><a href="#">Edit Address</a>
-                                </address>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

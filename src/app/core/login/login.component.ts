@@ -128,7 +128,10 @@ initializeReactivateEmailForm(){
         }
         //vendor&user
         else if(data.role === 3){
-          this.router.navigate(['/home/vendor'])
+          this.router.navigate(['/vendor/account-info'])
+          .then(() => {
+            window.location.reload();
+          });
         }
         //user
         else if(data.role === 4){

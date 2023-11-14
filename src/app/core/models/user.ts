@@ -28,4 +28,18 @@ export class Metrics{
     total_orders:string;
     pending_orders:string;
     wishlist_count:string;
+    total_products:string;
+    total_sales:string;
+}
+export class VendorDetails{
+    org_name:string;
+    email:string;
+    mobile:string;
+    description:string;
+    address:string;
+    city:string;
+    state:string;
+    pincode:string;
+    country:string;
+    date_joined:string;
 }

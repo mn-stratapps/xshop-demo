@@ -197,7 +197,22 @@ editUser(accessToken:any,data:any){
 //vendor Api//
 registerVendor(accessToken:any,data:any){
   return this.http.post<any>(`${environment.apiUrl}/vendororgregister/`+accessToken,data)
+}
 
+getKpiDetails(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/vendorcount/`+accessToken) 
+}
+vendoraddressData(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/vendoraddress/`+accessToken) 
+}
+getvendorSalesApi(accessToken:any,data:any){
+  return this.http.post<any>(`${environment.apiUrl}/vendorsalesfilter/`+accessToken,data)
+}
+getVendorOrdersList(data:any,accessToken:any){
+  return this.http.post<any>(`${environment.apiUrl}/vendorordersfilter/`+accessToken,data)
+}
+viewVendorProducts(accessToken:any,data:any){
+  return this.http.post<any>(`${environment.apiUrl}/vendorproductsfilter/`+accessToken,data)
 }
 //add products by admin
 addProduct(accessToken:any,data:any){
@@ -232,5 +247,37 @@ downloadInvoice(accessToken:any,sid:any){
 }
 downloadLabel(accessToken:any,sid:any){
   return this.http.get<any>(`${environment.apiUrl}/generate/label/`+accessToken+'/'+sid)
+}
+
+
+///////////////////////////////////vendor////////////////////////////
+
+vendorData(accessToken:any){
+  return this.http.get<any>(`${environment.apiUrl}/vendsteps/`+accessToken)
+
+}
+
+vendorEmailVerify(accessToken:any,data:any){
+  return this.http.post<any>(`${environment.apiUrl}/vendorregister/`+accessToken,data)
+}
+vendorEmailOtpVerify(otp){
+  return this.http.put<any>(`${environment.apiUrl}/vendoremailotp/`+this.emailActivationToken,otp)
+
+}
+vendorMobileVerify(accessToken:any,data:any){
+  return this.http.post<any>(`${environment.apiUrl}/vendormobileregister/`+accessToken,data)
+
+}
+vendorMObileOtpVerify(otp){
+  return this.http.post<any>(`${environment.apiUrl}/vendormobileotp/`+this.emailActivationToken,otp)
+
+}
+vendorAddress(accessToken:any,data:any){
+  return this.http.post<any>(`${environment.apiUrl}/vendoraddressregistartion/`+accessToken,data)
+
+}
+vendorAccoundDetailsAdd(accessToken,data){
+  return this.http.post<any>(`${environment.apiUrl}/vendoraccouncreateindia/`+accessToken,data)
+
 }
 }

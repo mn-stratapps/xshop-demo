@@ -264,3 +264,6 @@
     background-color: var(--theme-deafult);
     border-radius: 5px;
 }
+.invalid-feedback {
+    display: contents !important;
+}

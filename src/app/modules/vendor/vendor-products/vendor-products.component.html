@@ -1,0 +1,176 @@
+<div class="row" >
+    <div class="col-lg-6 px-1">
+        <div class="page-header-left">
+            <h3>Products List </h3>
+        </div>
+    </div> 
+</div>
+    <div class="row">
+        <div class="col-12 px-1">
+            <div class="card dashboard-table mt-0">
+                <div class="card-header"style="display:block!important;">
+                 <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                    <div class="form-inline search-form search-box w-100">
+                        <div class="form-groups">
+                            <input class="form-control-plaintext" type="search" [(ngModel)]="searchText" (keydown.enter)="vendorproductsSearchEvent($event)" placeholder="Product Name">
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-9 col-md-6 d-flex justify-content-end mb_filters">
+                            <a class="btn mr-2 filter_btn" (click)="vendorProductfilerEnabled = !vendorProductfilerEnabled" >
+                                <i aria-hidden="true" class="fa fa-filter"></i>
+                            </a>
+                        <!-- <a (click)="addNewProduct()" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
+                            Product</a> -->
+                        </div>
+                      <div class="collapse" [class.show]="vendorProductfilerEnabled">
+                        <div class="card card_bg card_br mt-2">
+                            <!-- <div class="row d-flex justify-content-end">
+                                <div class="col-lg-3 ">
+                            <button (click)="resetAdminFilters()" type="button" class="close btn btn_clss" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                        </div> -->
+                         <div class="row">
+                            <ul class="px-1">
+                                <li>
+                            <form [formGroup]="vendorproductsFilterForm" class="mb_filter" style="display: flex;">
+                            <div class="cols" > 
+                            <div class="Categories">
+                                <select class="form-select me-2 ft_size" id="category" formControlName="category">
+                                    <option value="null" disabled>-- Select Category --</option>                     
+                                    <option value="Mobiles">Mobiles</option>
+                                    <option value="laptops">Laptops</option>
+                                    <option value="watches">Watches</option>
+                                    <option value="">All</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <select  class="form-select ft_size me-2"  id="product_type" formControlName="type">
+                                  <option value="null" disabled>-- Select Type --</option>
+                                  <option value="electronics">Electronics</option>
+                                  <option value="gadgets">Gadgets</option>
+                                  <option value="accessories">Accessories</option>
+                                  <option value="">All</option>
+
+                                </select>
+                             </div>
+                            <div class="cols">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle ft_size" (click)="datefieldEnabled = !datefieldEnabled">
+                                        <i class="fa fa-calendar me-1 select-icon mr-2"></i>
+                                        Select Date
+                                    </button>
+                                    <div class="dropdown-menu p-3 pt-2" [class.show]="datefieldEnabled" style="margin-top: 7px;">
+                                        <button (click)="!datefieldEnabled= !datefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close">
+                                            <span  aria-hidden="true">&times;</span>
+                                          </button>
+                                        <div class="d-flex mt-2">
+                                        <div class="date" id="datepicker">
+                                            <label>From</label>
+                                            <input type="date" name="from_date" formControlName="from_date" class="form-control date_input" id="date" placeholder="From"[max]="maxDate"/>
+                                          </div>
+                                          <div class="date date-field" id="datepicker">
+                                            <label>To</label>
+                                            <input type="date" name="to_date" formControlName="to_date" class="form-control date_input" id="date" palceholder="To" [max]="maxDate"/>
+                                          </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="cols">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-primary dropdown-toggle ft_size"(click)="pricefieldEnabled = !pricefieldEnabled" >
+                                          Price
+                                        </button>
+                                        <div [class.show]="pricefieldEnabled" class="dropdown-menu p-3" style="width:242px;margin-top: 7px;">
+                                            <button (click)="pricefieldEnabled= !pricefieldEnabled" type="button" class="close btn btn_cls" aria-label="Close"style="position: relative;top:-10px;">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>           
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
+                                                <div class="Prices">
+                                                  <input type="number" name="price_from" id="price_from" formControlName="price_from" class="form-control" placeholder="From">
+                                                    </div> 
+                                            </div>
+                                            <div class="cl-xs-12 col-sm-6 col-md-6 col-lg-6 px-1">
+                                                <div class="Prices">
+                                                  <input type="number" name="price_to" id="price-to" formControlName="price_to" class="form-control" placeholder="To">
+                                              </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                      </div>
+                             </div>
+                            </form>
+                        </li>
+                        <li>
+                             <div class="cols">
+                                <div class="d-flex">
+                                    <button (click)="viewVendorProducts()" class="btn btn-info me-2 ft_size">Apply</button>
+                                    <button (click)="resetVendorFilters()" class="btn btn-info ft_size">Reset</button>
+                                </div>
+                            </div>
+                        </li>
+                        </ul>
+                         </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="card-bg-white pt-2">
+                    <div class="table-responsive table-desi"style="height: 600px; overflow-y: scroll;">
+                        <table class="table table-striped ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Category</th>
+                                    <!-- <th scope="col">Description</th> -->
+                                    <th scope="col">Product Type</th>
+                                    <th scope="col">Color</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Discount %</th>
+                                    <th scope="col">Available</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Edit/Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let products of vendorProducts | paginate
+                                : {
+                                    itemsPerPage: itemsPerPage,
+                                    currentPage: page,
+                                    totalItems: totalItems
+                                  }">
+                                    <td>{{products?.title | slice:0:26}}</td>
+                                    <td>{{products?.category}}</td>
+                                    <!-- <td>{{products.description}}</td> -->
+                                    <td>{{products.type}}</td>
+                                    <td>{{products?.variants[0].color}}</td>
+                                    <td>{{products?.price}}</td>
+                                    <td>{{products?.discount}}%</td>
+                                    <td>{{products?.stock}}</td>
+                                    <td scope="row"><img src="{{products.images[0].src}}"></td>
+                                    <td>
+                                        <!-- <i class="fa fa-pencil-square-o me-1 text-primary" (click)="openModal(exampleModalLabel, products)"></i> -->
+                                        <i class="fa fa-trash-o ms-1 text-theme"(click)="deleteProductByAdmin(products.id)" aria-hidden="true"></i></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!vendorProducts?.length">
+                            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                            <h3>Sorry! Couldn't find the result you were looking For!!! </h3>
+                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                        </div>
+                    </div>
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="vendorProdsPageChange(page = $event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
