@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Metrics, User } from 'src/app/core/models/user';
 import { Useraddress } from 'src/app/core/models/useraddress';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -17,7 +18,7 @@ export class UserInfoComponent implements OnInit {
   error:any;
 
 
-  constructor(private httpService:AuthenticationService){
+  constructor(private httpService:AuthenticationService,private router:Router){
     const currentUser = localStorage.getItem( 'currentUser' );
     this.accessToken = JSON.parse( currentUser )['Token'];
   }
@@ -26,6 +27,9 @@ export class UserInfoComponent implements OnInit {
     this.getUserAddress();
     this.getUserDetails();
     this.getdashboardCount();
+  }
+  editdetails(){
+    this.router.navigate(['/user/user-profile']);
   }
   getdashboardCount() {
 

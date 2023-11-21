@@ -495,7 +495,8 @@ export class UserAddressComponent implements OnInit{
         city:address.city,
         state:address.state,
         country:countrys,
-        pincode:address.pincode
+        pincode:address.pincode,
+        is_default:false
       })
     }
 }

@@ -21,8 +21,8 @@
                             <a class="btn mr-2 filter_btn" (click)="vendorProductfilerEnabled = !vendorProductfilerEnabled" >
                                 <i aria-hidden="true" class="fa fa-filter"></i>
                             </a>
-                        <!-- <a (click)="addNewProduct()" class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
-                            Product</a> -->
+                        <a class="btn btn-sm btn-solid mt-md-0 mt-2">Add New
+                            Product</a>
                         </div>
                       <div class="collapse" [class.show]="vendorProductfilerEnabled">
                         <div class="card card_bg card_br mt-2">
@@ -39,7 +39,7 @@
                             <form [formGroup]="vendorproductsFilterForm" class="mb_filter" style="display: flex;">
                             <div class="cols" > 
                             <div class="Categories">
-                                <select class="form-select me-2 ft_size" id="category" formControlName="category">
+                                <select class="form-select ft_size me-2" id="category" formControlName="category">
                                     <option value="null" disabled>-- Select Category --</option>                     
                                     <option value="Mobiles">Mobiles</option>
                                     <option value="laptops">Laptops</option>
